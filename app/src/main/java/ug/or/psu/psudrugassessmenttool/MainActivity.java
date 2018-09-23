@@ -10,11 +10,15 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
+
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int PERMISSION_REQUEST_CODE = 200;
+
+    PreferenceManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +27,52 @@ public class MainActivity extends AppCompatActivity {
 
         //check if permission has been accepted
         if(checkPermission()){
-            // TODO: all permissions accepted so work on authentication
+            //all permissions accepted so work on authentication
+            userAuthentication();
         } else {
             //permissions not accepted, show permission dialog
             requestPermission();
+        }
+    }
+
+    /**
+     * user authentication method for sign in or sign up depending on user status
+     */
+    public void userAuthentication(){
+        if(prefManager.isSignedIn()){
+            //user is signed in so check member category and go to respective dashboard
+            switch (prefManager.getMemberCategory()) {
+                case "1": {
+                    // TODO: go to systems administrator dashboard
+                    break;
+                }
+                case "2": {
+                    // TODO: go to psu administrator dashboard
+                    break;
+                }
+                case "3": {
+                    // TODO: go to pharmacist dashboard
+                    break;
+                }
+                case "4": {
+                    // TODO: go to pharmacy owner dashboard
+                    break;
+                }
+                case "5": {
+                    // TODO: go to nda administrator
+                    break;
+                }
+                case "6": {
+                    // TODO: go to nda supervisor
+                    break;
+                }
+                default: {
+                    // TODO: user details not set so clear all prefs and log out
+                    break;
+                }
+            }
+        } else {
+            // TODO: user is not signed in so go to sign in page
         }
     }
 
@@ -83,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     } else {
                         //location permission has been granted so continue to authentication
-                        // TODO: sign up logic here
+                        userAuthentication();
                     }
                 }
                 break;
