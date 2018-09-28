@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -113,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
                             if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION)) {
                                 userPromptPermissions(
                                         new DialogInterface.OnClickListener() {
+                                            @RequiresApi(api = Build.VERSION_CODES.M)
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 requestPermissions(new String[]{ACCESS_FINE_LOCATION},
