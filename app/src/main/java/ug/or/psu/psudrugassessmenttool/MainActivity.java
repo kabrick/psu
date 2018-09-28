@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        prefManager = new PreferenceManager(this);
+
         //check if permission has been accepted
         if(checkPermission()){
             //all permissions accepted so work on authentication
