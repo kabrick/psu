@@ -78,6 +78,11 @@ public class HelperFunctions {
                 activeNetwork.isConnectedOrConnecting();
     }
 
+    /**
+     * progress bar to show activity during network operations
+     *
+     * @param message text to be displayed
+     */
     public void genericProgressBar(String message){
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage(message);
@@ -85,6 +90,9 @@ public class HelperFunctions {
         progressDialog.show();
     }
 
+    /**
+     * stop progress bar showing network activity status
+     */
     public void stopProgressBar(){
         progressDialog.dismiss();
     }
