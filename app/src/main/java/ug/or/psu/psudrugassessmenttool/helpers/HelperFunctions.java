@@ -58,7 +58,7 @@ public class HelperFunctions {
      * @param view view to display on
      */
     public void genericSnackbar(String message, View view){
-        Snackbar mySnackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT);
+        Snackbar mySnackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
         mySnackbar.show();
     }
 
