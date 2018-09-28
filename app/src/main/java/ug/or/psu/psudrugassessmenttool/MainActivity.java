@@ -1,6 +1,7 @@
 package ug.or.psu.psudrugassessmenttool;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
+import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
@@ -75,7 +77,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         } else {
-            // TODO: user is not signed in so go to sign in page
+            //user is not signed in so go to sign in page
+            Intent intent_signin = new Intent(MainActivity.this, SignInActivity.class);
+            startActivity(intent_signin);
         }
     }
 

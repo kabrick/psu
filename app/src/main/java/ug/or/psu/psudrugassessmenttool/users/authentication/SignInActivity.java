@@ -63,6 +63,10 @@ public class SignInActivity extends AppCompatActivity {
     public void signIn(View view){
         if (mAwesomeValidation.validate()){
             if(helperFunctions.getConnectionStatus()){
+
+                //show progress dialog
+                helperFunctions.genericProgressBar("Signing you in...");
+
                 String network_address = helperFunctions.getIpAddress()
                         + "user_sign_in.php?username="
                         + username.getText().toString()
@@ -73,6 +77,9 @@ public class SignInActivity extends AppCompatActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
+                                //dismiss progress dialog
+                                helperFunctions.stopProgressBar();
+
                                 if(!response.equals("0")){
                                     //user credentials correct
                                     //String[] s = response.split(",");

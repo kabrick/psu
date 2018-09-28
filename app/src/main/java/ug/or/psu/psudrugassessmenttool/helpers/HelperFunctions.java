@@ -1,5 +1,6 @@
 package ug.or.psu.psudrugassessmenttool.helpers;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
@@ -11,7 +12,8 @@ import android.view.View;
 public class HelperFunctions {
 
     private Context context;
-    private PreferenceManager prefManager;
+    private static PreferenceManager prefManager;
+    private static ProgressDialog progressDialog;
 
     /**
      * constructor for the class
@@ -74,6 +76,17 @@ public class HelperFunctions {
 
         return activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
+    }
+
+    public void genericProgressBar(String message){
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage(message);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
+    }
+
+    public void stopProgressBar(){
+        progressDialog.dismiss();
     }
 
 }
