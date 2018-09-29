@@ -1,5 +1,6 @@
 package ug.or.psu.psudrugassessmenttool.users.authentication;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,7 @@ import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorDashboard;
 
 import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 
@@ -81,28 +83,59 @@ public class SignInActivity extends AppCompatActivity {
                                 helperFunctions.stopProgressBar();
 
                                 if(!response.equals("0")){
-                                    //user credentials correct
-                                    //String[] s = response.split(",");
+                                    //user credentials correct so set sign in to true
+                                    prefManager.setSignedIn(true);
 
-                                    //add member_category to prefs
-                                    //prefManager.setPsuId(response);
+                                    //split csv string
+                                    String[] s = response.split(",");
 
-                                    //set the logged in to true
-                                    //prefManager.setIsLoggedIn(true);
+                                    //set user psu id
+                                    prefManager.setPsuId(s[0]);
 
-                                    //set the first hour
-                                    //Calendar calendar = Calendar.getInstance();
-                                    //prefManager.setFirstHour(String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)));
+                                    //set user member category
+                                    prefManager.setMemberCategory(s[1]);
 
-                                    //check to see if the locations have been set in the database
-                                    //util.defineLocations(response);
+                                    switch (s[1]) {
+                                        case "1": {
+                                            // TODO: go to systems administrator dashboard
+                                            break;
+                                        }
+                                        case "2": {
+                                            // TODO: go to psu administrator dashboard
+                                            break;
+                                        }
+                                        case "3": {
+                                            // TODO: go to pharmacist dashboard
+                                            //set the first hour
+                                            //Calendar calendar = Calendar.getInstance();
+                                            //prefManager.setFirstHour(String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)));
 
-                                    //log user attendance
-                                    //util.registerLocation();
+                                            //check to see if the locations have been set in the database
+                                            //util.defineLocations(response);
 
-                                    //go to dashboard
-                                    //util.setDefaultDashboard(response);
-                                    helperFunctions.genericSnackbar("Log in successful", activityView);
+                                            //log user attendance
+                                            //util.registerLocation();
+                                            break;
+                                        }
+                                        case "4": {
+                                            // TODO: go to pharmacy owner dashboard
+                                            break;
+                                        }
+                                        case "5": {
+                                            // TODO: go to nda administrator
+                                            break;
+                                        }
+                                        case "6": {
+                                            //go to nda supervisor
+                                            Intent intent_nda_supervisor = new Intent(SignInActivity.this, NdaSupervisorDashboard.class);
+                                            startActivity(intent_nda_supervisor);
+                                            break;
+                                        }
+                                        default: {
+                                            // TODO: user details not set so clear all prefs and log out
+                                            break;
+                                        }
+                                    }
                                 } else {
                                     //user credentials are wrong
                                     helperFunctions.genericDialog("Username or password is incorrect");

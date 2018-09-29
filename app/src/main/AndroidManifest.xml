@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <application
@@ -22,7 +21,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".users.authentication.SignInActivity"></activity>
+        <activity android:name=".users.authentication.SignInActivity" />
+        <activity
+            android:name=".users.dashboards.ndasupervisor.NdaSupervisorDashboard"
+            android:label="@string/title_activity_nda_supervisor_dashboard"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

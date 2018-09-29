@@ -9,6 +9,7 @@ public class PreferenceManager {
     private static final String PREF_NAME = "psu_preferences";
     private static final String IS_SIGNED_IN = "logged_in";
     private static final String MEMBER_CATEGORY = "member_category";
+    private static final String PSU_ID = "psu_id";
 
     private SharedPreferences.Editor editor;
     private SharedPreferences pref;
@@ -70,6 +71,15 @@ public class PreferenceManager {
      */
     public void setMemberCategory(String category){
         this.editor.putString(MEMBER_CATEGORY, category);
+        this.editor.commit();
+    }
+
+    public String getPsuId() {
+        return this.pref.getString(PSU_ID, "");
+    }
+
+    public void setPsuId(String id) {
+        this.editor.putString(PSU_ID, id);
         this.editor.commit();
     }
 

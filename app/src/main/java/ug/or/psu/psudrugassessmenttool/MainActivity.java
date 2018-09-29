@@ -14,6 +14,7 @@ import android.os.Bundle;
 
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorDashboard;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
@@ -68,7 +69,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 }
                 case "6": {
-                    // TODO: go to nda supervisor
+                    //go to nda supervisor
+                    Intent intent_nda_supervisor = new Intent(MainActivity.this, NdaSupervisorDashboard.class);
+                    startActivity(intent_nda_supervisor);
                     break;
                 }
                 default: {
