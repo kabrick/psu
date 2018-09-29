@@ -1,5 +1,6 @@
 package ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor;
 
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -29,6 +30,9 @@ public class NdaSupervisorDashboard extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         ViewPager mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        TabLayout mTabLayout = (TabLayout) findViewById(R.id.tab);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     @Override
