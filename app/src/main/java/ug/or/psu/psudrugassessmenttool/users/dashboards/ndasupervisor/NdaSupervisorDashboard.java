@@ -13,13 +13,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import ug.or.psu.psudrugassessmenttool.R;
+import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 
 public class NdaSupervisorDashboard extends AppCompatActivity {
+
+    HelperFunctions helperFunctions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nda_supervisor_dashboard);
+
+        helperFunctions = new HelperFunctions(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -55,8 +60,9 @@ public class NdaSupervisorDashboard extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_sign_out) {
+            //user sign out
+            helperFunctions.signAdminUsersOut();
         }
 
         return super.onOptionsItemSelected(item);

@@ -3,11 +3,14 @@ package ug.or.psu.psudrugassessmenttool.helpers;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+
+import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
 
 public class HelperFunctions {
 
@@ -95,6 +98,21 @@ public class HelperFunctions {
      */
     public void stopProgressBar(){
         progressDialog.dismiss();
+    }
+
+    public void signAdminUsersOut(){
+        //reset the psu id
+        prefManager.setPsuId("");
+
+        //reset the member category
+        prefManager.setMemberCategory("");
+
+        //set sign in status to false
+        prefManager.setSignedIn(false);
+
+        //go to sign in page
+        Intent sign_out_intent = new Intent(context, SignInActivity.class);
+        context.startActivity(sign_out_intent);
     }
 
 }
