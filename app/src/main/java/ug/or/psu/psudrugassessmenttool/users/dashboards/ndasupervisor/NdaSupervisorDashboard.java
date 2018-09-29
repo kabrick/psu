@@ -109,4 +109,9 @@ public class NdaSupervisorDashboard extends AppCompatActivity {
             return super.getPageTitle(position);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        //
+    }
 }
