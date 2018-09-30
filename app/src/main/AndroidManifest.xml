@@ -25,7 +25,13 @@
         <activity
             android:name=".users.dashboards.ndasupervisor.NdaSupervisorDashboard"
             android:label="@string/title_activity_nda_supervisor_dashboard"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+
+        </activity>
     </application>
 
 </manifest>
