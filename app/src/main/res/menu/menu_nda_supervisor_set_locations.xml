@@ -4,12 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/nda_set_location_action_search"
-        android:orderInCategory="1"
-        android:title="Search"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/nda_set_location_action_sign_out"
         android:orderInCategory="1"
         android:title="Sign Out"

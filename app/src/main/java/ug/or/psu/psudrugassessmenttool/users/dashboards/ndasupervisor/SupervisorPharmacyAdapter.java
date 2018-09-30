@@ -74,7 +74,7 @@ public class SupervisorPharmacyAdapter extends RecyclerView.Adapter<SupervisorPh
 
         String image_url = helperFunctions.getIpAddress() + pharmacy.getStatusImage();
 
-                Glide.with(context)
+        Glide.with(context)
                 .load(image_url)
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.thumbnail);

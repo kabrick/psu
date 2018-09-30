@@ -64,7 +64,8 @@ public class NdaSuperSetLocationsFragment extends Fragment implements Supervisor
         recyclerView.setAdapter(mAdapter);
 
         SearchView searchView = (SearchView) view.findViewById(R.id.search_view);
-        searchView.setQueryHint("Search View");
+
+        searchView.setQueryHint("Search pharmacies");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -132,11 +133,8 @@ public class NdaSuperSetLocationsFragment extends Fragment implements Supervisor
 
         switch (item.getItemId()) {
             case R.id.nda_set_location_action_sign_out:
-                //do something
-                return true;
-
-            case R.id.nda_set_location_action_search:
-                //do something
+                //user sign out
+                helperFunctions.signAdminUsersOut();
                 return true;
         }
         return super.onOptionsItemSelected(item);
