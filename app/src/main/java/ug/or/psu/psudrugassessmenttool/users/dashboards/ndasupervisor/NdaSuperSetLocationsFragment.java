@@ -1,6 +1,7 @@
 package ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -143,7 +144,10 @@ public class NdaSuperSetLocationsFragment extends Fragment implements Supervisor
 
     @Override
     public void onPharmacySelected(SupervisorPharmacy pharmacy) {
-        Toast.makeText(getContext(), "Selected: " + pharmacy.getId(), Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getContext(), NdaSupervisorGetLocationActivity.class);
+        intent.putExtra("pharmacy_name", pharmacy.getName());
+        intent.putExtra("pharmacy_id", pharmacy.getId());
+        startActivity(intent);
     }
 
 }
