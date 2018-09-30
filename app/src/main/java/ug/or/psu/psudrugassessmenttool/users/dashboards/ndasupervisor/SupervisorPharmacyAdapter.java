@@ -40,7 +40,6 @@ public class SupervisorPharmacyAdapter extends RecyclerView.Adapter<SupervisorPh
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // send selected contact in callback
                     listener.onPharmacySelected(pharmacyListFiltered.get(getAdapterPosition()));
                 }
             });

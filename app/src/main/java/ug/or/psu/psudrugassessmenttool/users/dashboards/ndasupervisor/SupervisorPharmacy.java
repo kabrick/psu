@@ -4,6 +4,7 @@ public class SupervisorPharmacy {
     private String name;
     private String location;
     private String status;
+    private String id;
 
     public SupervisorPharmacy() {}
 
@@ -29,5 +30,13 @@ public class SupervisorPharmacy {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getId(){
+        return id;
+    }
+
+    public void setId(String id){
+        this.id = id;
     }
 }
