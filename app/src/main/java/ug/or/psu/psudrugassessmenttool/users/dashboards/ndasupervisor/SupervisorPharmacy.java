@@ -3,7 +3,7 @@ package ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor;
 public class SupervisorPharmacy {
     private String name;
     private String location;
-    private String status;
+    private String status_image;
     private String id;
 
     public SupervisorPharmacy() {}
@@ -24,12 +24,12 @@ public class SupervisorPharmacy {
         this.location = location;
     }
 
-    public String getStatus() {
-        return status;
+    public String getStatusImage() {
+        return status_image;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatusImage(String status) {
+        this.status_image = status;
     }
 
     public String getId(){

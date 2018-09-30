@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ug.or.psu.psudrugassessmenttool.R;
+import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 
 public class SupervisorPharmacyAdapter extends RecyclerView.Adapter<SupervisorPharmacyAdapter.MyViewHolder>
         implements Filterable {
@@ -26,6 +27,7 @@ public class SupervisorPharmacyAdapter extends RecyclerView.Adapter<SupervisorPh
     private List<SupervisorPharmacy> pharmacyList;
     private List<SupervisorPharmacy> pharmacyListFiltered;
     private SupervisorPharmacyAdapterListener listener;
+    private HelperFunctions helperFunctions;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name, location;
@@ -52,6 +54,7 @@ public class SupervisorPharmacyAdapter extends RecyclerView.Adapter<SupervisorPh
         this.listener = listener;
         this.pharmacyList = pharmacyList;
         this.pharmacyListFiltered = pharmacyList;
+        helperFunctions = new HelperFunctions(context);
     }
 
     @NonNull
@@ -69,8 +72,10 @@ public class SupervisorPharmacyAdapter extends RecyclerView.Adapter<SupervisorPh
         holder.name.setText(pharmacy.getName());
         holder.location.setText(pharmacy.getLocation());
 
-        Glide.with(context)
-                .load(pharmacy.getStatus())
+        String image_url = helperFunctions.getIpAddress() + pharmacy.getStatusImage();
+
+                Glide.with(context)
+                .load(image_url)
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.thumbnail);
     }

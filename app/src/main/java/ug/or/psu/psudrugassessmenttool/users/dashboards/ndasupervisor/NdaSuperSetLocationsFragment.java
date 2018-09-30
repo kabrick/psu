@@ -40,8 +40,6 @@ public class NdaSuperSetLocationsFragment extends Fragment implements Supervisor
 
     HelperFunctions helperFunctions;
 
-    private static final String URL = "http://phasouganda.000webhostapp.com/contacts.json";
-
     public NdaSuperSetLocationsFragment() {
         // Required empty public constructor
     }
@@ -89,7 +87,9 @@ public class NdaSuperSetLocationsFragment extends Fragment implements Supervisor
     }
 
     private void fetchPharmacies() {
-        JsonArrayRequest request = new JsonArrayRequest(URL,
+        String url = helperFunctions.getIpAddress() + "get_all_pharmacies.php";
+
+        JsonArrayRequest request = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -143,7 +143,7 @@ public class NdaSuperSetLocationsFragment extends Fragment implements Supervisor
 
     @Override
     public void onPharmacySelected(SupervisorPharmacy pharmacy) {
-        Toast.makeText(getContext(), "Selected: " + pharmacy.getName() + ", " + pharmacy.getLocation(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "Selected: " + pharmacy.getId(), Toast.LENGTH_LONG).show();
     }
 
 }
