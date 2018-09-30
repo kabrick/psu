@@ -113,9 +113,8 @@ public class NdaSuperSetLocationsFragment extends Fragment implements Supervisor
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // error in getting json
-                Log.e(TAG, "Error: " + error.getMessage());
-                Toast.makeText(getContext(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                // error in getting json, so recursive call till successful
+                fetchPharmacies();
             }
         });
 
