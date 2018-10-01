@@ -14,17 +14,18 @@ import ug.or.psu.psudrugassessmenttool.R;
  */
 public class NdaSuperNewsFragment extends Fragment {
 
+    private View view;
 
     public NdaSuperNewsFragment() {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_nda_super_news, container, false);
+        view = inflater.inflate(R.layout.fragment_nda_super_news, container, false);
+        return view;
     }
 
 }
