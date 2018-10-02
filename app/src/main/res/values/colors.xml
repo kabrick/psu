@@ -9,4 +9,5 @@
     <color name="background">#E0F7FA</color>
     <color name="white">#FFFFFF</color>
     <color name="errorText">#ff7878</color>
+    <color name="timestamp">#a0a3a7</color>
 </resources>

@@ -33,7 +33,6 @@ import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 public class NdaSuperSetLocationsFragment extends Fragment implements SupervisorPharmacyAdapter.SupervisorPharmacyAdapterListener {
 
     View view;
-    private static final String TAG = NdaSuperSetLocationsFragment.class.getSimpleName();
     private List<SupervisorPharmacy> pharmacyList;
     private SupervisorPharmacyAdapter mAdapter;
 
