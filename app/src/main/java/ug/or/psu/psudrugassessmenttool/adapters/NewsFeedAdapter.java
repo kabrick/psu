@@ -80,7 +80,6 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyView
 
         Glide.with(context)
                 .load(image_url)
-                .apply(RequestOptions.centerCropTransform())
                 .into(holder.image);
     }
 
