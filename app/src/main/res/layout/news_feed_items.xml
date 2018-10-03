@@ -26,13 +26,15 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:id="@+id/news_feed_text_list"
+        android:layout_marginBottom="5dp"
         android:layout_below="@id/news_feed_title_list"
         android:maxLines="2"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
+        android:layout_below="@id/news_feed_text_list"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <TextView
