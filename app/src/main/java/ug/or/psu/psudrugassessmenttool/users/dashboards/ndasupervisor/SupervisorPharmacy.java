@@ -5,6 +5,7 @@ public class SupervisorPharmacy {
     private String location;
     private String status_image;
     private String id;
+    private String location_set;
 
     public SupervisorPharmacy() {}
 
@@ -38,5 +39,13 @@ public class SupervisorPharmacy {
 
     public void setId(String id){
         this.id = id;
+    }
+
+    public String getLocationSet() {
+        return location_set;
+    }
+
+    public void setLocationSet(String location_set) {
+        this.location_set = location_set;
     }
 }

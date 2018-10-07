@@ -11,9 +11,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
@@ -31,6 +33,7 @@ public class NdaSupervisorGetLocationActivity extends AppCompatActivity implemen
     Button getLocationButton;
     String pharmacy_id;
     String pharmacy_name;
+    String location_status;
     TextView initial_text;
 
     @Override
@@ -47,6 +50,7 @@ public class NdaSupervisorGetLocationActivity extends AppCompatActivity implemen
         if (extras != null) {
             pharmacy_name = extras.getString("pharmacy_name", "1");
             pharmacy_id = extras.getString("pharmacy_id", "1");
+            location_status = extras.getString("status", "0");
         }
 
         prefManager = new PreferenceManager(this);
@@ -83,7 +87,6 @@ public class NdaSupervisorGetLocationActivity extends AppCompatActivity implemen
     @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
         assert googleMap != null;
         googleMap.setMyLocationEnabled(true);
         googleMap.setOnMyLocationButtonClickListener(this);
@@ -91,7 +94,13 @@ public class NdaSupervisorGetLocationActivity extends AppCompatActivity implemen
     }
 
     public void getLocation(View view){
-        //set location of pharmacy through the method
-        util.setPharmacyLocations(latitude, longitude, altitude, pharmacy_id);
+        //check if it is a new record or editing
+        if(location_status.equals("0")){
+            //new record
+            util.setPharmacyLocations(latitude, longitude, altitude, pharmacy_id);
+        } else {
+            //update record
+            util.editPharmacyLocations(latitude, longitude, altitude, pharmacy_id);
+        }
     }
 }

@@ -8,8 +8,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 public class NewsViewActivity extends AppCompatActivity {
 
@@ -19,46 +23,41 @@ public class NewsViewActivity extends AppCompatActivity {
     CoordinatorLayout mRootLayout;
     ImageView image;
     TextView title, text, author, timestamp;
+    String image_string, title_string, text_string, author_string, timestamp_string;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_view);
 
-        initInstances();
+        image = (ImageView)findViewById(R.id.news_feed_image_single);
+        //title = (TextView)findViewById(R.id.news_feed_text_single);
+        text = (TextView)findViewById(R.id.news_feed_text_single);
+        author = (TextView)findViewById(R.id.news_feed_author_single);
+        timestamp = (TextView)findViewById(R.id.news_feed_timestamp_single);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
-            /*pharmacy_name = extras.getString("pharmacy_name", "1");
-            pharmacy_id = extras.getString("pharmacy_id", "1");
-            pharmacy_name = extras.getString("pharmacy_name", "1");
-            pharmacy_id = extras.getString("pharmacy_id", "1");
-            pharmacy_name = extras.getString("pharmacy_name", "1");*/
+            image_string = extras.getString("image", "");
+            title_string = extras.getString("title", "");
+            text_string = extras.getString("text", "");
+            author_string = extras.getString("author", "");
+            timestamp_string = extras.getString("timestamp", "");
         }
-    }
 
-    @Override
-    public void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
+        //covert timestamp to readable format
+        CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
+                Long.parseLong(timestamp_string),
+                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
+        timestamp.setText(timeAgo);
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
+        Glide.with(this)
+                .load(image_string)
+                .apply(RequestOptions.fitCenterTransform())
+                .into(image);
 
-    private void initInstances() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayoutAndroidExample);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mRootLayout = (CoordinatorLayout) findViewById(R.id.coordinatorRootLayout);
-        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayoutAndroidExample);
-        mCollapsingToolbarLayout.setTitle("Conversions");
+        text.setText(text_string);
+        author.setText(author_string);
     }
 }

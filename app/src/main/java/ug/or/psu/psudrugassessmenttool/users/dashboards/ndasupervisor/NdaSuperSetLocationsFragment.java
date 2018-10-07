@@ -1,12 +1,15 @@
 package ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +28,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
@@ -138,9 +142,39 @@ public class NdaSuperSetLocationsFragment extends Fragment implements Supervisor
 
     @Override
     public void onPharmacySelected(SupervisorPharmacy pharmacy) {
+
+        final String pharmacy_name = pharmacy.getName();
+        final String pharmacy_id = pharmacy.getId();
+        final String location_set = pharmacy.getLocationSet();
+
+        //check if location has already been set
+        if(location_set.equals("0")){
+            //location is not set, do not show alert
+            continueToSetLocation(pharmacy_name, pharmacy_id, location_set);
+        } else {
+            //display dialog to edit location
+            final AlertDialog.Builder alert = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+
+            alert.setMessage("Pharmacy location is already set. Do you want to edit it?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    continueToSetLocation(pharmacy_name, pharmacy_id, location_set);
+                }
+            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    //do nothing
+                }
+            }).show();
+        }
+    }
+
+    public void continueToSetLocation(String name, String id, String status){
         Intent intent = new Intent(getContext(), NdaSupervisorGetLocationActivity.class);
-        intent.putExtra("pharmacy_name", pharmacy.getName());
-        intent.putExtra("pharmacy_id", pharmacy.getId());
+        intent.putExtra("pharmacy_name", name);
+        intent.putExtra("pharmacy_id", id);
+        intent.putExtra("status", status);
         startActivity(intent);
     }
 

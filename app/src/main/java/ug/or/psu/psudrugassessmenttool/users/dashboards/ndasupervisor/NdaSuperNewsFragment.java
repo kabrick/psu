@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
+import ug.or.psu.psudrugassessmenttool.NewsViewActivity;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.adapters.NewsFeedAdapter;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
@@ -106,7 +107,7 @@ public class NdaSuperNewsFragment extends Fragment implements NewsFeedAdapter.Ne
      */
     @Override
     public void onNewsItemSelected(NewsFeed news) {
-        Intent intent = new Intent(getContext(), NdaSupervisorGetLocationActivity.class);
+        Intent intent = new Intent(getContext(), NewsViewActivity.class);
         intent.putExtra("text", news.getText());
         intent.putExtra("title", news.getTitle());
         intent.putExtra("author", news.getAuthor());
