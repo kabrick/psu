@@ -24,7 +24,7 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
-import ug.or.psu.psudrugassessmenttool.NewsViewActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.NewsViewActivity;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.adapters.NewsFeedAdapter;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;

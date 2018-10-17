@@ -235,4 +235,39 @@ public class HelperFunctions {
         VolleySingleton.getInstance(context).addToRequestQueue(request);
     }
 
+    public void getDefaultDashboard(String member_category){
+        switch (member_category) {
+            case "1": {
+                // TODO: go to systems administrator dashboard
+                break;
+            }
+            case "2": {
+                // TODO: go to psu administrator dashboard
+                break;
+            }
+            case "3": {
+                // TODO: go to pharmacist dashboard
+                break;
+            }
+            case "4": {
+                // TODO: go to pharmacy owner dashboard
+                break;
+            }
+            case "5": {
+                // TODO: go to nda administrator
+                break;
+            }
+            case "6": {
+                //go to nda supervisor
+                Intent intent_nda_supervisor = new Intent(context, NdaSupervisorDashboard.class);
+                context.startActivity(intent_nda_supervisor);
+                break;
+            }
+            default: {
+                // TODO: user details not set so clear all prefs and log out
+                break;
+            }
+        }
+    }
+
 }

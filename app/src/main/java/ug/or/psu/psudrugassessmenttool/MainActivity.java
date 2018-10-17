@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorDashboard;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 200;
 
     PreferenceManager prefManager;
+    HelperFunctions helperFunctions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         prefManager = new PreferenceManager(this);
+        helperFunctions = new HelperFunctions(this);
 
         //check if permission has been accepted
         if(checkPermission()){
@@ -47,38 +50,7 @@ public class MainActivity extends AppCompatActivity {
     public void userAuthentication(){
         if(prefManager.isSignedIn()){
             //user is signed in so check member category and go to respective dashboard
-            switch (prefManager.getMemberCategory()) {
-                case "1": {
-                    // TODO: go to systems administrator dashboard
-                    break;
-                }
-                case "2": {
-                    // TODO: go to psu administrator dashboard
-                    break;
-                }
-                case "3": {
-                    // TODO: go to pharmacist dashboard
-                    break;
-                }
-                case "4": {
-                    // TODO: go to pharmacy owner dashboard
-                    break;
-                }
-                case "5": {
-                    // TODO: go to nda administrator
-                    break;
-                }
-                case "6": {
-                    //go to nda supervisor
-                    Intent intent_nda_supervisor = new Intent(MainActivity.this, NdaSupervisorDashboard.class);
-                    startActivity(intent_nda_supervisor);
-                    break;
-                }
-                default: {
-                    // TODO: user details not set so clear all prefs and log out
-                    break;
-                }
-            }
+            helperFunctions.getDefaultDashboard(prefManager.getMemberCategory());
         } else {
             //user is not signed in so go to sign in page
             Intent intent_signin = new Intent(MainActivity.this, SignInActivity.class);

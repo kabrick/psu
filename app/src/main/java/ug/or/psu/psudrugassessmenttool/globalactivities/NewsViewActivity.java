@@ -1,11 +1,6 @@
-package ug.or.psu.psudrugassessmenttool;
+package ug.or.psu.psudrugassessmenttool.globalactivities;
 
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateUtils;
@@ -15,12 +10,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import ug.or.psu.psudrugassessmenttool.R;
+
 public class NewsViewActivity extends AppCompatActivity {
 
-    CollapsingToolbarLayout mCollapsingToolbarLayout;
-    DrawerLayout mDrawerLayout;
-    ActionBarDrawerToggle mDrawerToggle;
-    CoordinatorLayout mRootLayout;
     ImageView image;
     TextView title, text, author, timestamp;
     String image_string, title_string, text_string, author_string, timestamp_string;

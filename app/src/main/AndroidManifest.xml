@@ -35,7 +35,7 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".users.dashboards.ndasupervisor.NdaSupervisorGetLocationActivity" />
-        <activity android:name=".NewsViewActivity"></activity>
+        <activity android:name=".globalactivities.NewsViewActivity"></activity>
     </application>
 
 </manifest>
