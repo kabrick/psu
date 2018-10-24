@@ -4,18 +4,19 @@ package ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.android.volley.Response;
@@ -42,12 +43,14 @@ public class NdaSuperSetLocationsFragment extends Fragment implements Supervisor
 
     HelperFunctions helperFunctions;
 
+    ProgressBar progressBar;
+
     public NdaSuperSetLocationsFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_nda_super_set_locations, container, false);
 
@@ -59,12 +62,14 @@ public class NdaSuperSetLocationsFragment extends Fragment implements Supervisor
 
         helperFunctions = new HelperFunctions(getContext());
 
+        progressBar = view.findViewById(R.id.progressBarSupervisorSetLocations);
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        SearchView searchView = (SearchView) view.findViewById(R.id.search_view);
+        SearchView searchView = view.findViewById(R.id.search_view);
 
         searchView.setQueryHint("Search pharmacies");
 
@@ -96,6 +101,10 @@ public class NdaSuperSetLocationsFragment extends Fragment implements Supervisor
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+
+                        //hide the progress bar
+                        progressBar.setVisibility(View.GONE);
+
                         if (response == null) {
                             //toast message about information not being found
                             helperFunctions.genericSnackbar("No pharmacies were found", view);

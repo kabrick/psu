@@ -17,6 +17,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Objects;
+
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -41,7 +43,7 @@ public class NdaSupervisorGetLocationActivity extends AppCompatActivity implemen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nda_supervisor_get_location);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
@@ -56,8 +58,8 @@ public class NdaSupervisorGetLocationActivity extends AppCompatActivity implemen
         prefManager = new PreferenceManager(this);
         util = new HelperFunctions(this);
 
-        getLocationButton = (Button)findViewById(R.id.get_location_button);
-        initial_text = (TextView)findViewById(R.id.pharmacy_location_map_guide_text);
+        getLocationButton = findViewById(R.id.get_location_button);
+        initial_text = findViewById(R.id.pharmacy_location_map_guide_text);
 
         //set initial text with pharmacy name
         String text = "Setting location for " + pharmacy_name +
