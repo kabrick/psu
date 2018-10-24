@@ -8,16 +8,10 @@
     android:layout_marginEnd="10dp"
     android:padding="5dp"
     android:background="@drawable/rounded_corners">
-    
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/news_feed_image_list"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/news_feed_image_list"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
         android:id="@+id/news_feed_title_list"/>
 

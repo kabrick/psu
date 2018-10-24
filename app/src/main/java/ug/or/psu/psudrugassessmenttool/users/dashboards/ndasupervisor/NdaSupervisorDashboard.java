@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import ug.or.psu.psudrugassessmenttool.R;
+import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 
 public class NdaSupervisorDashboard extends AppCompatActivity
@@ -117,7 +118,8 @@ public class NdaSupervisorDashboard extends AppCompatActivity
 
         switch (item.getItemId()){
             case R.id.nda_supervisor_post_news:
-                //
+                Intent post_news_intent = new Intent(this, CreateNewsActivity.class);
+                startActivity(post_news_intent);
                 break;
             case R.id.nda_supervisor_log_out:
                 //

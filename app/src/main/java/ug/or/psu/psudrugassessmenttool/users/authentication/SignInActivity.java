@@ -17,6 +17,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 
+import java.util.Objects;
+
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -45,10 +47,10 @@ public class SignInActivity extends AppCompatActivity {
         helperFunctions = new HelperFunctions(this);
 
         //get view components
-        username = (EditText)findViewById(R.id.signin_username);
-        password = (EditText)findViewById(R.id.signin_password);
+        username = findViewById(R.id.signin_username);
+        password = findViewById(R.id.signin_password);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 

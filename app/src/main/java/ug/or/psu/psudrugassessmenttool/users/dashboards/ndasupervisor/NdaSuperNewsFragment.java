@@ -6,12 +6,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -39,6 +41,8 @@ public class NdaSuperNewsFragment extends Fragment implements NewsFeedAdapter.Ne
 
     HelperFunctions helperFunctions;
 
+    ProgressBar progressBar;
+
     public NdaSuperNewsFragment() {
         // Required empty public constructor
     }
@@ -54,6 +58,8 @@ public class NdaSuperNewsFragment extends Fragment implements NewsFeedAdapter.Ne
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_nda_supervisor_news);
         newsList = new ArrayList<>();
         mAdapter = new NewsFeedAdapter(getContext(), newsList, this);
+
+        progressBar = view.findViewById(R.id.progressBarSupervisorNews);
 
         helperFunctions = new HelperFunctions(getContext());
 
@@ -74,6 +80,10 @@ public class NdaSuperNewsFragment extends Fragment implements NewsFeedAdapter.Ne
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+
+                        //news has been got so stop progress bar
+                        progressBar.setVisibility(View.GONE);
+
                         if (response == null) {
                             //toast message about information not being found
                             helperFunctions.genericSnackbar("No news available", view);
@@ -112,7 +122,6 @@ public class NdaSuperNewsFragment extends Fragment implements NewsFeedAdapter.Ne
         intent.putExtra("title", news.getTitle());
         intent.putExtra("author", news.getAuthor());
         intent.putExtra("timestamp", news.getTimeStamp());
-        intent.putExtra("image", news.getImage());
         startActivity(intent);
     }
 
