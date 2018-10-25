@@ -29,6 +29,7 @@ import java.util.List;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.adapters.PharmacistsAdapter;
+import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.models.Pharmacists;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
@@ -152,7 +153,7 @@ public class NdaSuperViewAttendanceFragment extends Fragment implements Pharmaci
     public void onPharmacistSelected(Pharmacists pharmacist) {
         String pharmacist_id = pharmacist.getId();
 
-        Intent intent = new Intent(getContext(), NdaSupervisorGetLocationActivity.class);
+        Intent intent = new Intent(getContext(), PharmacistAttendanceActivity.class);
         intent.putExtra("pharmacist_id", pharmacist_id);
         startActivity(intent);
     }

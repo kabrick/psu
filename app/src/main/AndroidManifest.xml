@@ -36,7 +36,8 @@
         </activity>
         <activity android:name=".users.dashboards.ndasupervisor.NdaSupervisorGetLocationActivity" />
         <activity android:name=".globalactivities.NewsViewActivity" />
-        <activity android:name=".globalactivities.CreateNewsActivity"></activity>
+        <activity android:name=".globalactivities.CreateNewsActivity" />
+        <activity android:name=".globalactivities.PharmacistAttendanceActivity"></activity>
     </application>
 
 </manifest>

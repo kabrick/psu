@@ -57,13 +57,13 @@ public class NdaSupervisorDashboard extends AppCompatActivity
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        ViewPager mViewPager = findViewById(R.id.container);
+        ViewPager mViewPager = findViewById(R.id.container_nda_supervisor);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         //set fixed cache so that tabs are not reloaded
         mViewPager.setOffscreenPageLimit(4);
 
-        TabLayout mTabLayout = findViewById(R.id.tab);
+        TabLayout mTabLayout = findViewById(R.id.tab_nda_supervisor);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
