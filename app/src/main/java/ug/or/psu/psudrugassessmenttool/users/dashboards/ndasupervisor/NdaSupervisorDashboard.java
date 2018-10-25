@@ -15,8 +15,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
@@ -26,6 +27,7 @@ public class NdaSupervisorDashboard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     HelperFunctions helperFunctions;
+    DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,17 +39,17 @@ public class NdaSupervisorDashboard extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.nda_supervisor_drawer_layout);
+        drawer = findViewById(R.id.nda_supervisor_drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         // Create the adapter that will return a fragment for each of the three
@@ -58,7 +60,10 @@ public class NdaSupervisorDashboard extends AppCompatActivity
         ViewPager mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout mTabLayout = (TabLayout) findViewById(R.id.tab);
+        //set fixed cache so that tabs are not reloaded
+        mViewPager.setOffscreenPageLimit(4);
+
+        TabLayout mTabLayout = findViewById(R.id.tab);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
@@ -106,7 +111,6 @@ public class NdaSupervisorDashboard extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.nda_supervisor_drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
@@ -129,7 +133,6 @@ public class NdaSupervisorDashboard extends AppCompatActivity
                 break;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.nda_supervisor_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
