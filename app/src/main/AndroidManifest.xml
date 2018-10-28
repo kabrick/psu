@@ -37,7 +37,8 @@
         <activity android:name=".users.dashboards.ndasupervisor.NdaSupervisorGetLocationActivity" />
         <activity android:name=".globalactivities.NewsViewActivity" />
         <activity android:name=".globalactivities.CreateNewsActivity" />
-        <activity android:name=".globalactivities.PharmacistAttendanceActivity"></activity>
+        <activity android:name=".globalactivities.PharmacistAttendanceActivity" />
+        <activity android:name=".globalactivities.PharmaciesMapActivity"></activity>
     </application>
 
 </manifest>
