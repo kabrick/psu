@@ -15,6 +15,7 @@ import ug.or.psu.psudrugassessmenttool.R;
 
 public class PharmacistAttendanceActivity extends AppCompatActivity {
 
+    String pharmacy_id;
     String pharmacist_id;
 
     @Override
@@ -25,6 +26,7 @@ public class PharmacistAttendanceActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
+            pharmacy_id = extras.getString("pharmacy_id", "1");
             pharmacist_id = extras.getString("pharmacist_id", "1");
         }
 

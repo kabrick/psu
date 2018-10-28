@@ -151,9 +151,11 @@ public class NdaSuperViewAttendanceFragment extends Fragment implements Pharmaci
 
     @Override
     public void onPharmacistSelected(Pharmacists pharmacist) {
-        String pharmacist_id = pharmacist.getId();
+        String pharmacy_id = pharmacist.getId();
+        String pharmacist_id = pharmacist.getPsu_id();
 
         Intent intent = new Intent(getContext(), PharmacistAttendanceActivity.class);
+        intent.putExtra("pharmacy_id", pharmacy_id);
         intent.putExtra("pharmacist_id", pharmacist_id);
         startActivity(intent);
     }

@@ -2,6 +2,7 @@ package ug.or.psu.psudrugassessmenttool.models;
 
 public class Pharmacists {
     public String id;
+    public String psu_id;
     public String name;
     public String pharmacy;
 
@@ -29,5 +30,13 @@ public class Pharmacists {
 
     public void setPharmacy(String pharmacy) {
         this.pharmacy = pharmacy;
+    }
+
+    public String getPsu_id() {
+        return psu_id;
+    }
+
+    public void setPsu_id(String psu_id) {
+        this.psu_id = psu_id;
     }
 }
