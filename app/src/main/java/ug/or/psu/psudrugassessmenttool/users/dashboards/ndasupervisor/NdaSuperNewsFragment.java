@@ -3,6 +3,7 @@ package ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +26,9 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.NewsViewActivity;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.adapters.NewsFeedAdapter;
@@ -42,6 +45,7 @@ public class NdaSuperNewsFragment extends Fragment implements NewsFeedAdapter.Ne
     HelperFunctions helperFunctions;
 
     ProgressBar progressBar;
+    FloatingActionButton fab;
 
     public NdaSuperNewsFragment() {
         // Required empty public constructor
@@ -60,6 +64,16 @@ public class NdaSuperNewsFragment extends Fragment implements NewsFeedAdapter.Ne
         mAdapter = new NewsFeedAdapter(getContext(), newsList, this);
 
         progressBar = view.findViewById(R.id.progressBarSupervisorNews);
+
+        fab = view.findViewById(R.id.add_news_fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent post_news_intent = new Intent(getContext(), CreateNewsActivity.class);
+                Objects.requireNonNull(getContext()).startActivity(post_news_intent);
+            }
+        });
 
         helperFunctions = new HelperFunctions(getContext());
 
