@@ -11,9 +11,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -53,8 +50,6 @@ public class NdaSuperSetLocationsFragment extends Fragment implements Supervisor
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_nda_super_set_locations, container, false);
-
-        setHasOptionsMenu(true);
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_nda_supervisor_pharmacies);
         pharmacyList = new ArrayList<>();
@@ -129,24 +124,6 @@ public class NdaSuperSetLocationsFragment extends Fragment implements Supervisor
         });
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_nda_supervisor_set_locations, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.nda_set_location_action_sign_out:
-                //user sign out
-                helperFunctions.signAdminUsersOut();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

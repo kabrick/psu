@@ -126,7 +126,7 @@ public class NdaSupervisorDashboard extends AppCompatActivity
                 startActivity(post_news_intent);
                 break;
             case R.id.nda_supervisor_log_out:
-                //
+                helperFunctions.signAdminUsersOut();
                 break;
             default:
                 //
