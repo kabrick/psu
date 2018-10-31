@@ -29,13 +29,13 @@
         <activity
             android:name=".users.dashboards.ndasupervisor.NdaSupervisorDashboard"
             android:label="@string/title_activity_nda_supervisor_dashboard"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".users.dashboards.ndasupervisor.NdaSupervisorGetLocationActivity" />
         <activity android:name=".globalactivities.NewsViewActivity" />
         <activity android:name=".globalactivities.CreateNewsActivity" />
         <activity android:name=".globalactivities.PharmacistAttendanceActivity" />
-        <activity android:name=".globalactivities.PharmaciesMapActivity"/>
+        <activity android:name=".globalactivities.PharmaciesMapActivity" />
+        <activity android:name=".users.dashboards.ndaadmin.NdaAdminDashboard"></activity>
     </application>
 
 </manifest>

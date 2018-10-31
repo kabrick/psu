@@ -19,6 +19,7 @@ import org.json.JSONException;
 
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.ndaadmin.NdaAdminDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorDashboard;
 
 public class HelperFunctions {
@@ -238,6 +239,11 @@ public class HelperFunctions {
         VolleySingleton.getInstance(context).addToRequestQueue(request);
     }
 
+    /**
+     * After login take the user to their respective dashboards
+     *
+     * @param member_category member category id of user
+     */
     public void getDefaultDashboard(String member_category){
         switch (member_category) {
             case "1": {
@@ -257,7 +263,9 @@ public class HelperFunctions {
                 break;
             }
             case "5": {
-                // TODO: go to nda administrator
+                // go to nda administrator
+                Intent intent_nda_admin = new Intent(context, NdaAdminDashboard.class);
+                context.startActivity(intent_nda_admin);
                 break;
             }
             case "6": {

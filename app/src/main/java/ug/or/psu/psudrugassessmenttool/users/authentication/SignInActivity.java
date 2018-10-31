@@ -23,6 +23,7 @@ import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.ndaadmin.NdaAdminDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorDashboard;
 
 import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
@@ -124,7 +125,9 @@ public class SignInActivity extends AppCompatActivity {
                                             break;
                                         }
                                         case "5": {
-                                            // TODO: go to nda administrator
+                                            // go to nda administrator
+                                            Intent intent_nda_admin = new Intent(SignInActivity.this, NdaAdminDashboard.class);
+                                            startActivity(intent_nda_admin);
                                             break;
                                         }
                                         case "6": {
