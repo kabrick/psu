@@ -19,6 +19,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <include
+            layout="@layout/uganda_flag"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:id="@+id/uganda_flag"/>
+
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
