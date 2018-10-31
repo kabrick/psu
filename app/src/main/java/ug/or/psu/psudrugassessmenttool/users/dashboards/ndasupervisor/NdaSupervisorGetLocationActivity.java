@@ -93,6 +93,9 @@ public class NdaSupervisorGetLocationActivity extends AppCompatActivity implemen
         googleMap.setMyLocationEnabled(true);
         googleMap.setOnMyLocationButtonClickListener(this);
         googleMap.setOnMyLocationClickListener(this);
+
+        //zoom into uganda
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(1.3733, 32.2903), 6));
     }
 
     public void getLocation(View view){

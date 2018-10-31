@@ -5,14 +5,12 @@ import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -34,7 +32,6 @@ public class PharmaciesMapActivity extends AppCompatActivity implements GoogleMa
         OnMapReadyCallback {
 
     HelperFunctions helperFunctions;
-    View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +72,10 @@ public class PharmaciesMapActivity extends AppCompatActivity implements GoogleMa
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+                        JSONObject obj;
+
                         for (int i = 0; i < response.length(); i++){
 
-                            JSONObject obj = null;
                             try {
                                 obj = response.getJSONObject(i);
 
@@ -105,5 +103,8 @@ public class PharmaciesMapActivity extends AppCompatActivity implements GoogleMa
         });
 
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
+
+        //zoom into uganda
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(1.3733, 32.2903), 6));
     }
 }
