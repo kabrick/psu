@@ -136,6 +136,7 @@ public class NdaSuperNewsFragment extends Fragment implements NewsFeedAdapter.Ne
         intent.putExtra("title", news.getTitle());
         intent.putExtra("author", news.getAuthor());
         intent.putExtra("timestamp", news.getTimeStamp());
+        intent.putExtra("id", news.getId());
         startActivity(intent);
     }
 

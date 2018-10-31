@@ -1,13 +1,17 @@
 package ug.or.psu.psudrugassessmenttool.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import org.json.JSONException;
 
 import java.util.List;
 
@@ -17,13 +21,13 @@ import ug.or.psu.psudrugassessmenttool.models.NewsFeed;
 
 public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyViewHolder> {
 
-    private Context context;
     private List<NewsFeed> newsList;
     private NewsFeedAdapterListener listener;
     private HelperFunctions helperFunctions;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView title, text, author, timestamp;
+        View read_status;
 
         MyViewHolder(View view) {
             super(view);
@@ -31,6 +35,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyView
             text = view.findViewById(R.id.news_feed_text_list);
             author = view.findViewById(R.id.news_feed_author_list);
             timestamp = view.findViewById(R.id.news_feed_timestamp_list);
+            read_status = view.findViewById(R.id.read_status);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -42,7 +47,6 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyView
     }
 
     public NewsFeedAdapter(Context context, List<NewsFeed> newsList, NewsFeedAdapterListener listener) {
-        this.context = context;
         this.listener = listener;
         this.newsList = newsList;
         helperFunctions = new HelperFunctions(context);
@@ -64,12 +68,24 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyView
         holder.title.setText(news.getTitle());
         holder.author.setText(news.getAuthor());
 
+        //verify whether the person has read the article before
+        try {
+            if (helperFunctions.isNewsRead(Integer.parseInt(news.getId()))){
+                holder.read_status.setBackgroundColor(Color.parseColor("#f4bb41"));
+            } else {
+                holder.read_status.setBackgroundColor(Color.parseColor("#adf442"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         //String image_url = helperFunctions.getIpAddress() + news.getImage();
 
         //covert timestamp to readable format
         CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
                 Long.parseLong(news.getTimeStamp()),
                 System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
+
         holder.timestamp.setText(timeAgo);
 
         /*Glide.with(context)

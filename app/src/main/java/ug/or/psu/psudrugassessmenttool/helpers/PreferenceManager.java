@@ -4,12 +4,16 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 public class PreferenceManager {
 
     private static final String PREF_NAME = "psu_preferences";
     private static final String IS_SIGNED_IN = "logged_in";
     private static final String MEMBER_CATEGORY = "member_category";
     private static final String PSU_ID = "psu_id";
+    private static final String NEWS_READ = "news_read";
 
     private SharedPreferences.Editor editor;
     private SharedPreferences pref;
@@ -80,6 +84,15 @@ public class PreferenceManager {
 
     public void setPsuId(String id) {
         this.editor.putString(PSU_ID, id);
+        this.editor.commit();
+    }
+
+    public JSONArray getNewsRead() throws JSONException {
+        return new JSONArray(this.pref.getString(NEWS_READ, "[]"));
+    }
+
+    public void setNewsRead(JSONArray values) {
+        this.editor.putString(NEWS_READ, values.toString());
         this.editor.commit();
     }
 

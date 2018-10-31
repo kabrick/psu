@@ -1,10 +1,19 @@
 package ug.or.psu.psudrugassessmenttool.models;
 
 public class NewsFeed {
+    private String id;
     private String text;
     private String author;
     private String timestamp;
     private String title;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;

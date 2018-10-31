@@ -8,20 +8,15 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
@@ -268,6 +263,30 @@ public class HelperFunctions {
                 break;
             }
         }
+    }
+
+    public void addNewsRead(int id) throws JSONException {
+        JSONArray array = prefManager.getNewsRead();
+
+        //add id to the array here
+        array.put(id);
+
+        //set new array
+        prefManager.setNewsRead(array);
+    }
+
+    public boolean isNewsRead(int id) throws JSONException {
+
+        //get the array
+        JSONArray array = prefManager.getNewsRead();
+
+        for (int i = 0; i < array.length(); i++){
+            if(id == array.getInt(i)){
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
