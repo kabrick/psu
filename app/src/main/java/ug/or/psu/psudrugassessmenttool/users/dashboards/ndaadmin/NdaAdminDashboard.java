@@ -77,11 +77,11 @@ public class NdaAdminDashboard extends AppCompatActivity
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    //return new NdaSuperNewsFragment();
+                    //return new NdaAdminNewsFragment();
                 case 1:
-                    //return new NdaSuperViewLocationsFragment();
+                    //return new NdaAdminViewLocationsFragment();
                 case 2:
-                    //return new NdaSuperViewAttendanceFragment();
+                    //return new NdaAdminViewAttendanceFragment();
             }
             return null;
         }

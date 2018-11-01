@@ -44,7 +44,6 @@
     <string name="title_activity_pharma_owner">PharmaOwnerActivity</string>
     <string name="title_activity_admin_dashboard">AdminDashboard</string>
 
-    <string name="hello_blank_fragment">Welcome to the PSU Practice App. Please use the navigation menu to continue.</string>
     <string name="title_activity_nda_supervisor_dashboard">NdaSupervisorDashboard</string>
     <string name="section_format">Hello World from section: %1$d</string>
 </resources>
