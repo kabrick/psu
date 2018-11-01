@@ -1,4 +1,5 @@
-package ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor;
+package ug.or.psu.psudrugassessmenttool.users.dashboards.ndaadmin;
+
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,7 +32,7 @@ import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.models.Pharmacists;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
-public class NdaSuperViewAttendanceFragment extends Fragment implements PharmacistsAdapter.PharmacistsAdapterListener {
+public class NdaAdminViewAttendanceFragment extends Fragment implements PharmacistsAdapter.PharmacistsAdapterListener {
 
     View view;
     private List<Pharmacists> pharmacistsList;
@@ -41,8 +42,7 @@ public class NdaSuperViewAttendanceFragment extends Fragment implements Pharmaci
 
     ProgressBar progressBar;
 
-
-    public NdaSuperViewAttendanceFragment() {
+    public NdaAdminViewAttendanceFragment() {
         // Required empty public constructor
     }
 
@@ -50,22 +50,22 @@ public class NdaSuperViewAttendanceFragment extends Fragment implements Pharmaci
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_nda_super_view_attendance, container, false);
+        view = inflater.inflate(R.layout.fragment_nda_admin_view_attendance, container, false);
 
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_nda_supervisor_attendance);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_nda_admin_attendance);
         pharmacistsList = new ArrayList<>();
         mAdapter = new PharmacistsAdapter(pharmacistsList, this);
 
         helperFunctions = new HelperFunctions(getContext());
 
-        progressBar = view.findViewById(R.id.progressBarSupervisorViewAttendance);
+        progressBar = view.findViewById(R.id.progressBarAdminViewAttendance);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        SearchView searchView = view.findViewById(R.id.search_view_attendance);
+        SearchView searchView = view.findViewById(R.id.search_view_attendance_nda_admin);
 
         searchView.setQueryHint("Search pharmacists");
 
@@ -137,4 +137,5 @@ public class NdaSuperViewAttendanceFragment extends Fragment implements Pharmaci
         intent.putExtra("pharmacist_id", pharmacist_id);
         startActivity(intent);
     }
+
 }
