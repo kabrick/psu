@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/background"
-    tools:context=".users.dashboards.ndaadmin.NdaAdminViewLocationsFragment">
+    tools:context=".globalfragments.ViewPharmaciesLocationFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

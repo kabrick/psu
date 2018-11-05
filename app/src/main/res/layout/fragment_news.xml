@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".users.dashboards.ndasupervisor.NdaSuperNewsFragment">
+    tools:context=".globalfragments.NewsFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_nda_supervisor_news"
+        android:id="@+id/recycler_view_news"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical" />
@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:id="@+id/progressBarSupervisorNews" />
+        android:id="@+id/progressBarNews" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_news_fab"

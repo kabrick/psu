@@ -1,4 +1,4 @@
-package ug.or.psu.psudrugassessmenttool.users.dashboards.ndaadmin;
+package ug.or.psu.psudrugassessmenttool.globalfragments;
 
 
 import android.content.Intent;
@@ -26,23 +26,22 @@ import ug.or.psu.psudrugassessmenttool.globalactivities.PharmaciesMapActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
-public class NdaAdminViewLocationsFragment extends Fragment {
+public class ViewPharmaciesLocationFragment extends Fragment {
 
     View view;
     TextView pharmacist_number, assigned_pharmacists, pharmacies_number, verified_pharmacies;
     Button view_pharmacy_map;
     HelperFunctions helperFunctions;
 
-    public NdaAdminViewLocationsFragment() {
+    public ViewPharmaciesLocationFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_nda_admin_view_locations, container, false);
+        view = inflater.inflate(R.layout.fragment_view_pharmacies_location, container, false);
 
         pharmacist_number = view.findViewById(R.id.pharmacist_number);
         assigned_pharmacists = view.findViewById(R.id.assigned_pharmacists);

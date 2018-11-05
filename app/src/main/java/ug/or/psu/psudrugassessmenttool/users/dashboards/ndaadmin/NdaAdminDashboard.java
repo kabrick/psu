@@ -21,6 +21,9 @@ import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
+import ug.or.psu.psudrugassessmenttool.globalfragments.NewsFragment;
+import ug.or.psu.psudrugassessmenttool.globalfragments.ViewPharmaciesLocationFragment;
+import ug.or.psu.psudrugassessmenttool.globalfragments.ViewPharmacistAttendanceFragment;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 
 public class NdaAdminDashboard extends AppCompatActivity
@@ -77,11 +80,11 @@ public class NdaAdminDashboard extends AppCompatActivity
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    //return new NdaAdminNewsFragment();
+                    return new NewsFragment();
                 case 1:
-                    //return new NdaAdminViewLocationsFragment();
+                    return new ViewPharmaciesLocationFragment();
                 case 2:
-                    //return new NdaAdminViewAttendanceFragment();
+                    return new ViewPharmacistAttendanceFragment();
             }
             return null;
         }

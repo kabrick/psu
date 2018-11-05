@@ -1,5 +1,4 @@
-package ug.or.psu.psudrugassessmenttool.users.dashboards.ndaadmin;
-
+package ug.or.psu.psudrugassessmenttool.globalfragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,7 +31,7 @@ import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.models.Pharmacists;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
-public class NdaAdminViewAttendanceFragment extends Fragment implements PharmacistsAdapter.PharmacistsAdapterListener {
+public class ViewPharmacistAttendanceFragment extends Fragment implements PharmacistsAdapter.PharmacistsAdapterListener {
 
     View view;
     private List<Pharmacists> pharmacistsList;
@@ -42,7 +41,7 @@ public class NdaAdminViewAttendanceFragment extends Fragment implements Pharmaci
 
     ProgressBar progressBar;
 
-    public NdaAdminViewAttendanceFragment() {
+    public ViewPharmacistAttendanceFragment() {
         // Required empty public constructor
     }
 
@@ -50,22 +49,22 @@ public class NdaAdminViewAttendanceFragment extends Fragment implements Pharmaci
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_nda_admin_view_attendance, container, false);
+        view = inflater.inflate(R.layout.fragment_view_pharmacist_attendance, container, false);
 
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_nda_admin_attendance);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_pharmacist_attendance);
         pharmacistsList = new ArrayList<>();
         mAdapter = new PharmacistsAdapter(pharmacistsList, this);
 
         helperFunctions = new HelperFunctions(getContext());
 
-        progressBar = view.findViewById(R.id.progressBarAdminViewAttendance);
+        progressBar = view.findViewById(R.id.progressBarViewPharmacistAttendance);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        SearchView searchView = view.findViewById(R.id.search_view_attendance_nda_admin);
+        SearchView searchView = view.findViewById(R.id.search_view_pharmacist_attendance);
 
         searchView.setQueryHint("Search pharmacists");
 

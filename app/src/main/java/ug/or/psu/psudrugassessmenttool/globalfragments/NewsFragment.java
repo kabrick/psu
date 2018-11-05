@@ -1,4 +1,5 @@
-package ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor;
+package ug.or.psu.psudrugassessmenttool.globalfragments;
+
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,15 +26,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
-import ug.or.psu.psudrugassessmenttool.globalactivities.NewsViewActivity;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.adapters.NewsFeedAdapter;
+import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.NewsViewActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.models.NewsFeed;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
-public class NdaSuperNewsFragment extends Fragment implements NewsFeedAdapter.NewsFeedAdapterListener {
+public class NewsFragment extends Fragment implements NewsFeedAdapter.NewsFeedAdapterListener {
 
     private View view;
     private List<NewsFeed> newsList;
@@ -44,7 +45,8 @@ public class NdaSuperNewsFragment extends Fragment implements NewsFeedAdapter.Ne
     ProgressBar progressBar;
     FloatingActionButton fab;
 
-    public NdaSuperNewsFragment() {
+
+    public NewsFragment() {
         // Required empty public constructor
     }
 
@@ -52,13 +54,13 @@ public class NdaSuperNewsFragment extends Fragment implements NewsFeedAdapter.Ne
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_nda_super_news, container, false);
+        view = inflater.inflate(R.layout.fragment_news, container, false);
 
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_nda_supervisor_news);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_news);
         newsList = new ArrayList<>();
         mAdapter = new NewsFeedAdapter(getContext(), newsList, this);
 
-        progressBar = view.findViewById(R.id.progressBarSupervisorNews);
+        progressBar = view.findViewById(R.id.progressBarNews);
 
         fab = view.findViewById(R.id.add_news_fab);
 
