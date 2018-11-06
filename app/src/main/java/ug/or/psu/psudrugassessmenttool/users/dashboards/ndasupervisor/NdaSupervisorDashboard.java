@@ -40,7 +40,7 @@ public class NdaSupervisorDashboard extends AppCompatActivity
 
         helperFunctions = new HelperFunctions(this);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_nda_supervisor);
         setSupportActionBar(toolbar);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
