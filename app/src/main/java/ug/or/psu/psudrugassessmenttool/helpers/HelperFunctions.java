@@ -21,6 +21,7 @@ import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.ndaadmin.NdaAdminDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorDashboard;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.PsuAdminDashboard;
 
 public class HelperFunctions {
 
@@ -251,7 +252,9 @@ public class HelperFunctions {
                 break;
             }
             case "2": {
-                // TODO: go to psu administrator dashboard
+                // go to psu administrator dashboard
+                Intent intent_nda_admin = new Intent(context, PsuAdminDashboard.class);
+                context.startActivity(intent_nda_admin);
                 break;
             }
             case "3": {

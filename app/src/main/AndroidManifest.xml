@@ -35,8 +35,13 @@
         <activity android:name=".globalactivities.CreateNewsActivity" />
         <activity android:name=".globalactivities.PharmacistAttendanceActivity" />
         <activity android:name=".globalactivities.PharmaciesMapActivity" />
-        <activity android:name=".users.dashboards.ndaadmin.NdaAdminDashboard" />
-        <activity android:name=".users.dashboards.psuadmin.PsuAdminDashboard"></activity>
+        <activity
+            android:name=".users.dashboards.ndaadmin.NdaAdminDashboard"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".users.dashboards.psuadmin.PsuAdminDashboard"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".users.dashboards.psupharmacyowner.PsuPharmacyOwnerDashboard"></activity>
     </application>
 
 </manifest>

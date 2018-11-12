@@ -25,6 +25,7 @@ import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.ndaadmin.NdaAdminDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorDashboard;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.PsuAdminDashboard;
 
 import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 
@@ -104,7 +105,9 @@ public class SignInActivity extends AppCompatActivity {
                                             break;
                                         }
                                         case "2": {
-                                            // TODO: go to psu administrator dashboard
+                                            // go to psu administrator dashboard
+                                            Intent intent_nda_admin = new Intent(SignInActivity.this, PsuAdminDashboard.class);
+                                            startActivity(intent_nda_admin);
                                             break;
                                         }
                                         case "3": {
