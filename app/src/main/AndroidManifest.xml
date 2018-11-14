@@ -42,9 +42,11 @@
             android:name=".users.dashboards.psuadmin.PsuAdminDashboard"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".users.dashboards.psupharmacyowner.PsuPharmacyOwnerDashboard" />
-        <activity android:name=".users.dashboards.psupharmacist.PsuPharmacistDashboard"></activity>
+        <activity android:name=".users.dashboards.psupharmacist.PsuPharmacistDashboard" />
 
         <service android:name=".services.TrackPharmacistService" />
+
+        <activity android:name=".globalactivities.FeedbackActivity"></activity>
     </application>
 
 </manifest>

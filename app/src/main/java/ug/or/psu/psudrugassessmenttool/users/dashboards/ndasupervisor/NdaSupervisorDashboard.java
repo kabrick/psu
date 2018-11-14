@@ -22,6 +22,7 @@ import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.FeedbackActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.NewsFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.ViewPharmaciesLocationFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.ViewPharmacistAttendanceFragment;
@@ -149,6 +150,10 @@ public class NdaSupervisorDashboard extends AppCompatActivity
                 break;
             case R.id.nda_supervisor_log_out:
                 helperFunctions.signAdminUsersOut();
+                break;
+            case R.id.nda_supervisor_feedback:
+                Intent give_feedback_intent = new Intent(this, FeedbackActivity.class);
+                startActivity(give_feedback_intent);
                 break;
             default:
                 //
