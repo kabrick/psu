@@ -1,9 +1,11 @@
 package ug.or.psu.psudrugassessmenttool.helpers;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.design.widget.Snackbar;
@@ -13,15 +15,22 @@ import android.view.View;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.concurrent.TimeUnit;
+
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
+import ug.or.psu.psudrugassessmenttool.services.TrackPharmacistService;
 import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.ndaadmin.NdaAdminDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.PsuAdminDashboard;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.psupharmacist.PsuPharmacistDashboard;
 
 public class HelperFunctions {
 
@@ -258,7 +267,9 @@ public class HelperFunctions {
                 break;
             }
             case "3": {
-                // TODO: go to pharmacist dashboard
+                // go to pharmacist dashboard
+                Intent intent_psu_pharmacist = new Intent(context, PsuPharmacistDashboard.class);
+                context.startActivity(intent_psu_pharmacist);
                 break;
             }
             case "4": {
@@ -278,7 +289,7 @@ public class HelperFunctions {
                 break;
             }
             default: {
-                // TODO: user details not set so clear all prefs and log out
+                // user details not set so clear all prefs and log out
                 break;
             }
         }
@@ -306,6 +317,97 @@ public class HelperFunctions {
         }
 
         return false;
+    }
+
+    @SuppressLint("MissingPermission")
+    public void setCurrentLocation(){
+        FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
+
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        //Toast.makeText(MyIntentService.this, "", Toast.LENGTH_SHORT).show();
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            prefManager.setCurrentLatitude(location.getLatitude());
+                            prefManager.setCurrentLongitude(location.getLongitude());
+                        }
+                    }
+                });
+    }
+
+    public void signPharmacistOut(){
+
+        //get the timestamp out
+        Long time_out = System.currentTimeMillis();
+        Long time_in = prefManager.getTimeIn();
+        Long time_diff = time_out - time_in;
+
+        //get working hours
+        Long working_hours = TimeUnit.MILLISECONDS.toHours(time_diff);
+
+        //start progress bar
+        genericProgressBar("Logging you out...");
+
+        String network_address = getIpAddress()
+                + "set_new_attendance.php?psu_id=" + prefManager.getPsuId()
+                + "&time_in=" + String.valueOf(time_in)
+                + "&time_out=" + String.valueOf(time_out)
+                + "&latitude_in=" + String.valueOf(prefManager.getCurrentLatitude())
+                + "&longitude_in=" + String.valueOf(prefManager.getCurrentLongitude())
+                + "&latitude_out=" + String.valueOf(prefManager.getLastLatitude())
+                + "&longitude_out=" + String.valueOf(prefManager.getLastLongitude())
+                + "&working_hours=" + String.valueOf(working_hours)
+                + "&pharmacy_id=" + prefManager.getPharmacyId()
+                + "&day_id=" + String.valueOf(prefManager.getDayIn())
+                + "&month_id=" + String.valueOf(prefManager.getMonthIn() + 1);
+
+        // Request a string response from the provided URL.
+        StringRequest request = new StringRequest(network_address,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //stop progress bar
+                        stopProgressBar();
+
+                        //check if location has been saved successfully
+                        if(response.equals("1")){
+                            //reset the psu id
+                            prefManager.setPsuId("");
+
+                            //reset the member category
+                            prefManager.setMemberCategory("");
+
+                            //set sign in status to false
+                            prefManager.setSignedIn(false);
+
+                            //set location set to false
+                            prefManager.setIsPharmacyLocationSet(false);
+
+                            //clear the service
+                            Intent intent = new Intent(context, TrackPharmacistService.class);
+                            intent.setAction("stop");
+                            context.startService(intent);
+
+                            //go to sign in page
+                            Intent sign_out_intent = new Intent(context, SignInActivity.class);
+                            context.startActivity(sign_out_intent);
+                        } else {
+                            //did not save
+                            genericDialog("Oops! An error occurred. Please try again later");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //stop progress bar
+                stopProgressBar();
+                genericDialog("Oops! An error occurred. Please try again later");
+            }
+        });
+
+        VolleySingleton.getInstance(context).addToRequestQueue(request);
     }
 
 }

@@ -14,6 +14,18 @@ public class PreferenceManager {
     private static final String MEMBER_CATEGORY = "member_category";
     private static final String PSU_ID = "psu_id";
     private static final String NEWS_READ = "news_read";
+    private static final String TIME_IN = "time_in";
+    private static final String CURRENT_LATITUDE = "current_latitude";
+    private static final String CURRENT_LONGITUDE = "current_longitude";
+    private static final String LAST_LATITUDE = "last_latitude";
+    private static final String LAST_LONGITUDE = "last_longitude";
+    private static final String IS_PHARMACY_LOCATION_SET = "pharmacy_location_set";
+    private static final String PHARMACY_NAME = "pharmacy_name";
+    private static final String PHARMACY_ID = "pharmacy_id";
+    private static final String PHARMACY_LATITUDE = "pharmacy_latitude";
+    private static final String PHARMACY_LONGITUDE = "pharmacy_longitude";
+    private static final String DAY_IN = "day_in";
+    private static final String MONTH_IN = "month_in";
 
     private SharedPreferences.Editor editor;
     private SharedPreferences pref;
@@ -93,6 +105,114 @@ public class PreferenceManager {
 
     public void setNewsRead(JSONArray values) {
         this.editor.putString(NEWS_READ, values.toString());
+        this.editor.commit();
+    }
+
+    public Long getTimeIn() {
+        return this.pref.getLong(TIME_IN, 0);
+    }
+
+    public void setTimeIn(Long time_in) {
+        this.editor.putLong(TIME_IN, time_in);
+        this.editor.commit();
+    }
+
+    public Double getCurrentLatitude() {
+        return Double.parseDouble(this.pref.getString(CURRENT_LATITUDE, "0.0"));
+    }
+
+    public void setCurrentLatitude(Double value) {
+        this.editor.putString(CURRENT_LATITUDE, String.valueOf(value));
+        this.editor.commit();
+    }
+
+    public Double getCurrentLongitude() {
+        return Double.parseDouble(this.pref.getString(CURRENT_LONGITUDE, "0.0"));
+    }
+
+    public void setCurrentLongitude(Double value) {
+        this.editor.putString(CURRENT_LONGITUDE, String.valueOf(value));
+        this.editor.commit();
+    }
+
+    public Double getLastLatitude() {
+        return Double.parseDouble(this.pref.getString(LAST_LATITUDE, "0.0"));
+    }
+
+    public void setLastLatitude(Double value) {
+        this.editor.putString(LAST_LATITUDE, String.valueOf(value));
+        this.editor.commit();
+    }
+
+    public Double getLastLongitude() {
+        return Double.parseDouble(this.pref.getString(LAST_LONGITUDE, "0.0"));
+    }
+
+    public void setLastLongitude(Double value) {
+        this.editor.putString(LAST_LONGITUDE, String.valueOf(value));
+        this.editor.commit();
+    }
+
+    public Double getPharmacyLatitude() {
+        return Double.parseDouble(this.pref.getString(PHARMACY_LATITUDE, "0.0"));
+    }
+
+    public void setPharmacyLatitude(Double value) {
+        this.editor.putString(PHARMACY_LATITUDE, String.valueOf(value));
+        this.editor.commit();
+    }
+
+    public Double getPharmacyLongitude() {
+        return Double.parseDouble(this.pref.getString(PHARMACY_LONGITUDE, "0.0"));
+    }
+
+    public void setPharmacyLongitude(Double value) {
+        this.editor.putString(PHARMACY_LONGITUDE, String.valueOf(value));
+        this.editor.commit();
+    }
+
+    public int getDayIn() {
+        return this.pref.getInt(DAY_IN, 1);
+    }
+
+    public void setDayIn(int id) {
+        this.editor.putInt(DAY_IN, id);
+        this.editor.commit();
+    }
+
+    public int getMonthIn() {
+        return this.pref.getInt(MONTH_IN, 0);
+    }
+
+    public void setMonthIn(int value) {
+        this.editor.putInt(MONTH_IN, value);
+        this.editor.commit();
+    }
+
+    public boolean isPharmacyLocationSet(){
+        return this.pref.getBoolean(IS_PHARMACY_LOCATION_SET, false);
+    }
+
+    public void setIsPharmacyLocationSet(boolean value){
+        this.editor.putBoolean(IS_PHARMACY_LOCATION_SET, value);
+        this.editor.commit();
+    }
+
+    public String getPharmacyName(){
+        return this.pref.getString(PHARMACY_NAME, "");
+    }
+
+    public void setPharmacyName(String value){
+        this.editor.putString(PHARMACY_NAME, value);
+        this.editor.commit();
+    }
+
+    public String getPharmacyId(){
+        return this.pref.getString(PHARMACY_ID, "");
+    }
+
+    public void setPharmacyId(String value){
+        this.editor.putString(PHARMACY_ID, value);
         this.editor.commit();
     }
 

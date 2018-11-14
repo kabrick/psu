@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
@@ -26,6 +27,7 @@ import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.ndaadmin.NdaAdminDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.PsuAdminDashboard;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.psupharmacist.PsuPharmacistDashboard;
 
 import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 
@@ -111,16 +113,24 @@ public class SignInActivity extends AppCompatActivity {
                                             break;
                                         }
                                         case "3": {
-                                            // TODO: go to pharmacist dashboard
-                                            //set the first hour
-                                            //Calendar calendar = Calendar.getInstance();
-                                            //prefManager.setFirstHour(String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)));
+                                            //create instance of calender
+                                            Calendar calendar = Calendar.getInstance();
 
-                                            //check to see if the locations have been set in the database
-                                            //util.defineLocations(response);
+                                            //get time_in timestamp
+                                            prefManager.setTimeIn(System.currentTimeMillis());
 
-                                            //log user attendance
-                                            //util.registerLocation();
+                                            //get current location in, latitude and longitude
+                                            helperFunctions.setCurrentLocation();
+
+                                            //get day
+                                            prefManager.setDayIn(calendar.get(Calendar.DAY_OF_WEEK));
+
+                                            //get month
+                                            prefManager.setMonthIn(calendar.get(Calendar.MONTH));
+
+                                            //go to the pharmacist dashboard
+                                            Intent intent_psu_pharmacist = new Intent(SignInActivity.this, PsuPharmacistDashboard.class);
+                                            startActivity(intent_psu_pharmacist);
                                             break;
                                         }
                                         case "4": {
@@ -140,7 +150,8 @@ public class SignInActivity extends AppCompatActivity {
                                             break;
                                         }
                                         default: {
-                                            // TODO: user details not set so clear all prefs and log out
+                                            //user details not set so clear all prefs and log out
+                                            helperFunctions.signAdminUsersOut();
                                             break;
                                         }
                                     }
