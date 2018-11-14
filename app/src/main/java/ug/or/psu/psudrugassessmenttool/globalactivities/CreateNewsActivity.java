@@ -1,6 +1,5 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -82,7 +81,7 @@ public class CreateNewsActivity extends AppCompatActivity {
                 } else if (error instanceof NetworkError) {
                     helperFunctions.genericSnackbar("Network error", activityView);
                 } else if (error instanceof ParseError) {
-                    helperFunctions.genericSnackbar("Data from server not Available", activityView);
+                    helperFunctions.genericSnackbar("Data from server not available", activityView);
                 }
             }
         });

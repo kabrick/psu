@@ -12,10 +12,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.util.Objects;
+
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorDashboard;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
@@ -31,15 +32,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // add icon to the action bar
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         prefManager = new PreferenceManager(this);
         helperFunctions = new HelperFunctions(this);
 
-        //check if permission has been accepted
+        // check if permission has been accepted
         if(checkPermission()){
-            //all permissions accepted so work on authentication
+            // all permissions accepted so work on authentication
             userAuthentication();
         } else {
-            //permissions not accepted, show permission dialog
+            // permissions not accepted, show permission dialog
             requestPermission();
         }
     }
@@ -49,12 +55,12 @@ public class MainActivity extends AppCompatActivity {
      */
     public void userAuthentication(){
         if(prefManager.isSignedIn()){
-            //user is signed in so check member category and go to respective dashboard
+            // user is signed in so check member category and go to respective dashboard
             helperFunctions.getDefaultDashboard(prefManager.getMemberCategory());
         } else {
-            //user is not signed in so go to sign in page
-            Intent intent_signin = new Intent(MainActivity.this, SignInActivity.class);
-            startActivity(intent_signin);
+            // user is not signed in so go to sign in page
+            Intent intent_sign_in = new Intent(MainActivity.this, SignInActivity.class);
+            startActivity(intent_sign_in);
         }
     }
 
@@ -90,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
 
                     if (!locationAccepted){
-                        //location permission has not been granted so request for it
+                        // location permission has not been granted so request for it
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION)) {
                                 userPromptPermissions(
@@ -104,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                                         }, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
+                                                // close the app if user has not accepted permissions
                                                 finish();
                                             }
                                         });
