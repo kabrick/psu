@@ -35,19 +35,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/news_feed_title_single"
-                    android:gravity="center"
                     android:layout_marginBottom="20dp"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textStyle="bold"
+                        android:textColor="@color/errorText"
                         android:id="@+id/news_feed_author_single"/>
 
                     <TextView
@@ -55,7 +56,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="end"
-                        android:textColor="@color/timestamp"
+                        android:textColor="@color/errorText"
                         android:id="@+id/news_feed_timestamp_single"/>
 
                 </LinearLayout>
