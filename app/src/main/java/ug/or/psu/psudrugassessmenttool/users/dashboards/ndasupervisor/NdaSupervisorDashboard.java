@@ -17,6 +17,8 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.Objects;
 
@@ -28,11 +30,13 @@ import ug.or.psu.psudrugassessmenttool.globalfragments.NewsFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.ViewPharmaciesLocationFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.ViewPharmacistAttendanceFragment;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
+import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 
 public class NdaSupervisorDashboard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     HelperFunctions helperFunctions;
+    PreferenceManager preferenceManager;
     DrawerLayout drawer;
 
     @Override
@@ -41,6 +45,7 @@ public class NdaSupervisorDashboard extends AppCompatActivity
         setContentView(R.layout.activity_nda_supervisor_dashboard);
 
         helperFunctions = new HelperFunctions(this);
+        preferenceManager = new PreferenceManager(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar_nda_supervisor);
         setSupportActionBar(toolbar);
@@ -57,6 +62,13 @@ public class NdaSupervisorDashboard extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //get header view
+        View header_view = navigationView.getHeaderView(0);
+
+        //add user name to drawer
+        TextView user_name = header_view.findViewById(R.id.supervisor_name);
+        user_name.setText(preferenceManager.getPsuName());
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.

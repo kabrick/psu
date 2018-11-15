@@ -69,7 +69,7 @@ public class FeedbackActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void postNews(View view){
+    public void postFeedback(View view){
         //show progress dialog
         helperFunctions.genericProgressBar("Posting your feedback...");
 

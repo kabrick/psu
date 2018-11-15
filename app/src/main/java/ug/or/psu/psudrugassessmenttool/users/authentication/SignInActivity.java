@@ -101,6 +101,9 @@ public class SignInActivity extends AppCompatActivity {
                                     //set user member category
                                     prefManager.setMemberCategory(s[1]);
 
+                                    //set the user's name
+                                    prefManager.setPsuName(s[2]);
+
                                     switch (s[1]) {
                                         case "1": {
                                             // TODO: go to systems administrator dashboard

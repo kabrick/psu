@@ -13,6 +13,7 @@ public class PreferenceManager {
     private static final String IS_SIGNED_IN = "logged_in";
     private static final String MEMBER_CATEGORY = "member_category";
     private static final String PSU_ID = "psu_id";
+    private static final String PSU_NAME = "psu_name";
     private static final String NEWS_READ = "news_read";
     private static final String TIME_IN = "time_in";
     private static final String CURRENT_LATITUDE = "current_latitude";
@@ -96,6 +97,15 @@ public class PreferenceManager {
 
     public void setPsuId(String id) {
         this.editor.putString(PSU_ID, id);
+        this.editor.commit();
+    }
+
+    public String getPsuName() {
+        return this.pref.getString(PSU_NAME, "");
+    }
+
+    public void setPsuName(String value) {
+        this.editor.putString(PSU_NAME, value);
         this.editor.commit();
     }
 
