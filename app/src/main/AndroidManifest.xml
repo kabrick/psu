@@ -46,7 +46,9 @@
 
         <service android:name=".services.TrackPharmacistService" />
 
-        <activity android:name=".globalactivities.FeedbackActivity"></activity>
+        <activity android:name=".globalactivities.FeedbackActivity" />
+        <activity android:name=".globalactivities.CreateJobsActivity" />
+        <activity android:name=".globalactivities.JobsViewActivity"></activity>
     </application>
 
 </manifest>

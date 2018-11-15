@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_phone_job"
+        android:enabled="true"
+        android:icon="@drawable/phone"
+        android:title="Call Advertiser" />
+    <item
+        android:id="@+id/action_email_job"
+        android:enabled="true"
+        android:icon="@drawable/email"
+        android:title="Email Advertiser"/>
+</menu>

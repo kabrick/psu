@@ -23,6 +23,7 @@ import java.util.Objects;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.FeedbackActivity;
+import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.NewsFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.ViewPharmaciesLocationFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.ViewPharmacistAttendanceFragment;
@@ -89,13 +90,15 @@ public class NdaSupervisorDashboard extends AppCompatActivity
                     return new ViewPharmaciesLocationFragment();
                 case 3:
                     return new ViewPharmacistAttendanceFragment();
+                case 4:
+                    return new JobFragment();
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return 5;
         }
 
         @Override
@@ -109,6 +112,8 @@ public class NdaSupervisorDashboard extends AppCompatActivity
                     return "View Locations";
                 case 3:
                     return "View Attendance";
+                case 4:
+                    return "Job Adverts";
             }
             return super.getPageTitle(position);
         }
