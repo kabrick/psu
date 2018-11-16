@@ -66,7 +66,7 @@ public class NdaAdminDashboard extends AppCompatActivity
         View header_view = navigationView.getHeaderView(0);
 
         //add user name to drawer
-        TextView user_name = header_view.findViewById(R.id.supervisor_name);
+        TextView user_name = header_view.findViewById(R.id.nda_admin_name);
         user_name.setText(preferenceManager.getPsuName());
 
         // Create the adapter that will return a fragment for each of the three

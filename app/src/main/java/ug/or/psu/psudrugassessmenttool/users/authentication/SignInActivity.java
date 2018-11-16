@@ -28,6 +28,7 @@ import ug.or.psu.psudrugassessmenttool.users.dashboards.ndaadmin.NdaAdminDashboa
 import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.PsuAdminDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.psupharmacist.PsuPharmacistDashboard;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.psupharmacyowner.PsuPharmacyOwnerDashboard;
 
 import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 
@@ -137,7 +138,9 @@ public class SignInActivity extends AppCompatActivity {
                                             break;
                                         }
                                         case "4": {
-                                            // TODO: go to pharmacy owner dashboard
+                                            // go to pharmacy owner dashboard
+                                            Intent intent_pharmacy_owner = new Intent(SignInActivity.this, PsuPharmacyOwnerDashboard.class);
+                                            startActivity(intent_pharmacy_owner);
                                             break;
                                         }
                                         case "5": {
@@ -147,13 +150,13 @@ public class SignInActivity extends AppCompatActivity {
                                             break;
                                         }
                                         case "6": {
-                                            //go to nda supervisor
+                                            // go to nda supervisor
                                             Intent intent_nda_supervisor = new Intent(SignInActivity.this, NdaSupervisorDashboard.class);
                                             startActivity(intent_nda_supervisor);
                                             break;
                                         }
                                         default: {
-                                            //user details not set so clear all prefs and log out
+                                            // user details not set so clear all prefs and log out
                                             helperFunctions.signAdminUsersOut();
                                             break;
                                         }

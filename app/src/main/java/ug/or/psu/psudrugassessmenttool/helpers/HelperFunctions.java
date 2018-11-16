@@ -31,6 +31,7 @@ import ug.or.psu.psudrugassessmenttool.users.dashboards.ndaadmin.NdaAdminDashboa
 import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.PsuAdminDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.psupharmacist.PsuPharmacistDashboard;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.psupharmacyowner.PsuPharmacyOwnerDashboard;
 
 public class HelperFunctions {
 
@@ -273,7 +274,9 @@ public class HelperFunctions {
                 break;
             }
             case "4": {
-                // TODO: go to pharmacy owner dashboard
+                // go to pharmacy owner dashboard
+                Intent intent_pharmacy_owner = new Intent(context, PsuPharmacyOwnerDashboard.class);
+                context.startActivity(intent_pharmacy_owner);
                 break;
             }
             case "5": {
@@ -290,6 +293,7 @@ public class HelperFunctions {
             }
             default: {
                 // user details not set so clear all prefs and log out
+                signAdminUsersOut();
                 break;
             }
         }
@@ -339,6 +343,9 @@ public class HelperFunctions {
 
     public void signPharmacistOut(){
 
+        //start progress bar
+        genericProgressBar("Logging you out...");
+
         //get the timestamp out
         Long time_out = System.currentTimeMillis();
         Long time_in = prefManager.getTimeIn();
@@ -346,9 +353,6 @@ public class HelperFunctions {
 
         //get working hours
         Long working_hours = TimeUnit.MILLISECONDS.toHours(time_diff);
-
-        //start progress bar
-        genericProgressBar("Logging you out...");
 
         String network_address = getIpAddress()
                 + "set_new_attendance.php?psu_id=" + prefManager.getPsuId()

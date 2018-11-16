@@ -41,14 +41,19 @@
         <activity
             android:name=".users.dashboards.psuadmin.PsuAdminDashboard"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".users.dashboards.psupharmacyowner.PsuPharmacyOwnerDashboard" />
-        <activity android:name=".users.dashboards.psupharmacist.PsuPharmacistDashboard" />
+        <activity
+            android:name=".users.dashboards.psupharmacyowner.PsuPharmacyOwnerDashboard"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".users.dashboards.psupharmacist.PsuPharmacistDashboard"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service android:name=".services.TrackPharmacistService" />
 
         <activity android:name=".globalactivities.FeedbackActivity" />
         <activity android:name=".globalactivities.CreateJobsActivity" />
-        <activity android:name=".globalactivities.JobsViewActivity"></activity>
+        <activity android:name=".globalactivities.JobsViewActivity" />
+        <activity android:name=".globalactivities.WholesaleInspectionActivity"></activity>
     </application>
 
 </manifest>
