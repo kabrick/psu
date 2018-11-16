@@ -16,20 +16,26 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.FeedbackActivity;
+import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.NewsFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.ViewPharmaciesLocationFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.ViewPharmacistAttendanceFragment;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
+import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 
 public class NdaAdminDashboard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     HelperFunctions helperFunctions;
+    PreferenceManager preferenceManager;
     DrawerLayout drawer;
 
     @Override
@@ -38,6 +44,7 @@ public class NdaAdminDashboard extends AppCompatActivity
         setContentView(R.layout.activity_nda_admin_dashboard);
 
         helperFunctions = new HelperFunctions(this);
+        preferenceManager = new PreferenceManager(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar_nda_admin);
         setSupportActionBar(toolbar);
@@ -54,6 +61,13 @@ public class NdaAdminDashboard extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //get header view
+        View header_view = navigationView.getHeaderView(0);
+
+        //add user name to drawer
+        TextView user_name = header_view.findViewById(R.id.supervisor_name);
+        user_name.setText(preferenceManager.getPsuName());
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -85,13 +99,15 @@ public class NdaAdminDashboard extends AppCompatActivity
                     return new ViewPharmaciesLocationFragment();
                 case 2:
                     return new ViewPharmacistAttendanceFragment();
+                case 3:
+                    return new JobFragment();
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         @Override
@@ -103,6 +119,8 @@ public class NdaAdminDashboard extends AppCompatActivity
                     return "View Locations";
                 case 2:
                     return "View Attendance";
+                case 3:
+                    return "Job Adverts";
             }
             return super.getPageTitle(position);
         }
@@ -144,6 +162,10 @@ public class NdaAdminDashboard extends AppCompatActivity
                 break;
             case R.id.nda_admin_log_out:
                 helperFunctions.signAdminUsersOut();
+                break;
+            case R.id.nda_admin_feedback:
+                Intent give_feedback_intent = new Intent(this, FeedbackActivity.class);
+                startActivity(give_feedback_intent);
                 break;
             default:
                 //
