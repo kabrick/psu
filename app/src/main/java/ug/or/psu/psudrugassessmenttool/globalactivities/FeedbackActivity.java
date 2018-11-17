@@ -3,6 +3,7 @@ package ug.or.psu.psudrugassessmenttool.globalactivities;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,6 +71,20 @@ public class FeedbackActivity extends AppCompatActivity {
     }
 
     public void postFeedback(View view){
+
+        String title = feedback_title.getText().toString();
+        String text = feedback_text.getText().toString();
+
+        if(TextUtils.isEmpty(title)) {
+            feedback_title.setError("Please fill in the title");
+            return;
+        }
+
+        if(TextUtils.isEmpty(text)) {
+            feedback_text.setError("Please fill in the text");
+            return;
+        }
+
         //show progress dialog
         helperFunctions.genericProgressBar("Posting your feedback...");
 
@@ -77,8 +92,8 @@ public class FeedbackActivity extends AppCompatActivity {
         Long timestamp_long = System.currentTimeMillis();
 
         String network_address = helperFunctions.getIpAddress()
-                + "post_feedback.php?title=" + feedback_title.getText().toString()
-                + "&text=" + feedback_text.getText().toString()
+                + "post_feedback.php?title=" + title
+                + "&text=" + text
                 + "&author_id=" + preferenceManager.getPsuId()
                 + "&model=" + Build.MODEL
                 + "&brand=" + Build.BRAND

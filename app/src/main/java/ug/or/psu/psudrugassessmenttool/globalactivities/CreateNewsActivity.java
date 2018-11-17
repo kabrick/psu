@@ -2,6 +2,7 @@ package ug.or.psu.psudrugassessmenttool.globalactivities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -69,6 +70,20 @@ public class CreateNewsActivity extends AppCompatActivity {
     }
 
     public void postNews(View view){
+
+        String title = news_title.getText().toString();
+        String text = news_text.getText().toString();
+
+        if(TextUtils.isEmpty(title)) {
+            news_title.setError("Please fill in the title");
+            return;
+        }
+
+        if(TextUtils.isEmpty(text)) {
+            news_text.setError("Please fill in the text");
+            return;
+        }
+
         //show progress dialog
         helperFunctions.genericProgressBar("Posting your news article...");
 
@@ -76,8 +91,8 @@ public class CreateNewsActivity extends AppCompatActivity {
         Long timestamp_long = System.currentTimeMillis();
 
         String network_address = helperFunctions.getIpAddress()
-                + "post_news.php?title=" + news_title.getText().toString()
-                + "&text=" + news_text.getText().toString()
+                + "post_news.php?title=" + title
+                + "&text=" + text
                 + "&author_id=" + preferenceManager.getPsuId()
                 + "&timestamp=" + timestamp_long.toString();
 

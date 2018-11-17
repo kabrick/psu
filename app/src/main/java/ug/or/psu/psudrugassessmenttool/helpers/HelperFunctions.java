@@ -121,6 +121,8 @@ public class HelperFunctions {
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage(message);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
     }
 

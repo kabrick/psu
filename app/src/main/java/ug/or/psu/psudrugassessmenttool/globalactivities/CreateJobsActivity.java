@@ -2,6 +2,7 @@ package ug.or.psu.psudrugassessmenttool.globalactivities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -71,6 +72,20 @@ public class CreateJobsActivity extends AppCompatActivity {
     }
 
     public void postNews(View view){
+
+        String title = jobs_title.getText().toString();
+        String text = jobs_text.getText().toString();
+
+        if(TextUtils.isEmpty(title)) {
+            jobs_title.setError("Please fill in the title");
+            return;
+        }
+
+        if(TextUtils.isEmpty(text)) {
+            jobs_text.setError("Please fill in the text");
+            return;
+        }
+
         //show progress dialog
         helperFunctions.genericProgressBar("Posting your job advert...");
 
@@ -78,8 +93,8 @@ public class CreateJobsActivity extends AppCompatActivity {
         Long timestamp_long = System.currentTimeMillis();
 
         String network_address = helperFunctions.getIpAddress()
-                + "post_jobs.php?title=" + jobs_title.getText().toString()
-                + "&text=" + jobs_text.getText().toString()
+                + "post_jobs.php?title=" + title
+                + "&text=" + text
                 + "&contact=" + jobs_phone.getText().toString()
                 + "&email=" + jobs_email.getText().toString()
                 + "&author_id=" + preferenceManager.getPsuId()
