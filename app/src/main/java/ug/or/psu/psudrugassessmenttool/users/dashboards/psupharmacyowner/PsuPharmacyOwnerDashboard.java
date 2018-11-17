@@ -14,11 +14,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -170,10 +170,10 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
                 viewPharmacistAttendance();
                 break;
             case R.id.pharmacy_owner_inspection_retail:
-                //
+                Toast.makeText(this, "Feature not available", Toast.LENGTH_LONG).show();
                 break;
             case R.id.pharmacy_owner_inspection_wholesale:
-                //
+                Toast.makeText(this, "Feature not available", Toast.LENGTH_LONG).show();
                 break;
             case R.id.pharmacy_owner_log_out:
                 helperFunctions.signAdminUsersOut();

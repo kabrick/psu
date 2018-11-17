@@ -32,6 +32,7 @@ import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervi
 import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.PsuAdminDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.psupharmacist.PsuPharmacistDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.psupharmacyowner.PsuPharmacyOwnerDashboard;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.sysadmin.SystemsAdministratorDashboard;
 
 public class HelperFunctions {
 
@@ -258,7 +259,9 @@ public class HelperFunctions {
     public void getDefaultDashboard(String member_category){
         switch (member_category) {
             case "1": {
-                // TODO: go to systems administrator dashboard
+                // go to systems administrator dashboard
+                Intent intent_sys_admin = new Intent(context, SystemsAdministratorDashboard.class);
+                context.startActivity(intent_sys_admin);
                 break;
             }
             case "2": {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="ug.or.psu.psudrugassessmenttool">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -13,7 +14,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBd46NlOmxCgW6mbzbpAViSjfxV8FbGgY0" />
@@ -53,7 +55,11 @@
         <activity android:name=".globalactivities.FeedbackActivity" />
         <activity android:name=".globalactivities.CreateJobsActivity" />
         <activity android:name=".globalactivities.JobsViewActivity" />
-        <activity android:name=".globalactivities.WholesaleInspectionActivity"></activity>
+        <activity android:name=".globalactivities.WholesaleInspectionActivity" />
+        <activity
+            android:name=".users.dashboards.sysadmin.SystemsAdministratorDashboard"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".globalactivities.FeedbackDetailsActivity"></activity>
     </application>
 
 </manifest>

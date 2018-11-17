@@ -29,6 +29,7 @@ import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervi
 import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.PsuAdminDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.psupharmacist.PsuPharmacistDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.psupharmacyowner.PsuPharmacyOwnerDashboard;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.sysadmin.SystemsAdministratorDashboard;
 
 import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 
@@ -107,7 +108,9 @@ public class SignInActivity extends AppCompatActivity {
 
                                     switch (s[1]) {
                                         case "1": {
-                                            // TODO: go to systems administrator dashboard
+                                            // go to systems administrator dashboard
+                                            Intent intent_sys_admin = new Intent(SignInActivity.this, SystemsAdministratorDashboard.class);
+                                            startActivity(intent_sys_admin);
                                             break;
                                         }
                                         case "2": {
