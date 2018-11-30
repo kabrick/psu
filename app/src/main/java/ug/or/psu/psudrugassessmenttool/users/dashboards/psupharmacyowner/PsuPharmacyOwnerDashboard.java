@@ -34,6 +34,7 @@ import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.FeedbackActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.WholesaleInspectionActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.NewsFragment;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
@@ -173,7 +174,8 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
                 Toast.makeText(this, "Feature not available", Toast.LENGTH_LONG).show();
                 break;
             case R.id.pharmacy_owner_inspection_wholesale:
-                Toast.makeText(this, "Feature not available", Toast.LENGTH_LONG).show();
+                Intent intent_wholesale_inspection = new Intent(this, WholesaleInspectionActivity.class);
+                startActivity(intent_wholesale_inspection);
                 break;
             case R.id.pharmacy_owner_log_out:
                 helperFunctions.signAdminUsersOut();
