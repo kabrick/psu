@@ -59,7 +59,9 @@
         <activity
             android:name=".users.dashboards.sysadmin.SystemsAdministratorDashboard"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".globalactivities.FeedbackDetailsActivity"></activity>
+        <activity android:name=".globalactivities.FeedbackDetailsActivity" />
+        <activity android:name=".globalactivities.NewsViewPostedActivity" />
+        <activity android:name=".globalactivities.EditNewsActivity"></activity>
     </application>
 
 </manifest>

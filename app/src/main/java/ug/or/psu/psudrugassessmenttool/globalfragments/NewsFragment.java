@@ -10,6 +10,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -30,6 +33,7 @@ import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.adapters.NewsFeedAdapter;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.NewsViewActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.NewsViewPostedActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.models.NewsFeed;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
@@ -55,6 +59,8 @@ public class NewsFragment extends Fragment implements NewsFeedAdapter.NewsFeedAd
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_news, container, false);
+
+        setHasOptionsMenu(true);
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_news);
         newsList = new ArrayList<>();
@@ -135,6 +141,27 @@ public class NewsFragment extends Fragment implements NewsFeedAdapter.NewsFeedAd
         intent.putExtra("timestamp", news.getTimeStamp());
         intent.putExtra("id", news.getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_fragment_news, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.action_view_own_news:
+                Intent intent_own_news = new Intent(getContext(), NewsViewPostedActivity.class);
+                Objects.requireNonNull(getContext()).startActivity(intent_own_news);
+                break;
+            default:
+                //
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }
