@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -61,7 +63,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".globalactivities.FeedbackDetailsActivity" />
         <activity android:name=".globalactivities.NewsViewPostedActivity" />
-        <activity android:name=".globalactivities.EditNewsActivity"></activity>
+        <activity android:name=".globalactivities.EditNewsActivity" />
+        <activity android:name=".globalactivities.EditProfileActivity" />
+        <activity android:name=".globalactivities.EditProfilePictureActivity"></activity>
     </application>
 
 </manifest>

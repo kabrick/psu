@@ -9,6 +9,8 @@
             android:title="View Wholesale Pharmacy Inspection" />
         <item android:id="@+id/psu_admin_view_retail_inspection"
             android:title="View Retail Pharmacy Inspection" />
+        <item android:id="@+id/psu_admin_edit_profile"
+            android:title="Edit Profile" />
         <item android:id="@+id/psu_admin_log_out"
             android:title="Log Out" />
     </group>
