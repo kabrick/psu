@@ -65,7 +65,8 @@
         <activity android:name=".globalactivities.NewsViewPostedActivity" />
         <activity android:name=".globalactivities.EditNewsActivity" />
         <activity android:name=".globalactivities.EditProfileActivity" />
-        <activity android:name=".globalactivities.EditProfilePictureActivity"></activity>
+        <activity android:name=".globalactivities.EditProfilePictureActivity" />
+        <activity android:name=".globalactivities.UserNewsDetailsActivity"></activity>
     </application>
 
 </manifest>
