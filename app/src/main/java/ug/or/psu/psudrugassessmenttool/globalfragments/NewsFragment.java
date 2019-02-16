@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -44,7 +43,6 @@ import ug.or.psu.psudrugassessmenttool.adapters.NewsFeedAdapter;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.NewsViewActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.NewsViewPostedActivity;
-import ug.or.psu.psudrugassessmenttool.globalactivities.UserNewsDetailsActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.models.NewsFeed;
@@ -61,11 +59,6 @@ public class NewsFragment extends Fragment implements NewsFeedAdapter.NewsFeedAd
 
     ProgressBar progressBar;
     FloatingActionButton fab;
-    LinearLayout user_news_details;
-
-    TextView name, email, position, news_count, date;
-    ImageView profile_picture;
-
 
     public NewsFragment() {
         // Required empty public constructor
@@ -95,24 +88,6 @@ public class NewsFragment extends Fragment implements NewsFeedAdapter.NewsFeedAd
             }
         });
 
-        user_news_details = view.findViewById(R.id.user_news_details);
-
-        user_news_details.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // go to user details view page
-                Intent user_news_details_intent = new Intent(getContext(), NewsViewPostedActivity.class);
-                startActivity(user_news_details_intent);
-            }
-        });
-
-        name = view.findViewById(R.id.news_username);
-        position = view.findViewById(R.id.news_position);
-        email = view.findViewById(R.id.news_email);
-        news_count = view.findViewById(R.id.news_count);
-        date = view.findViewById(R.id.news_date);
-        profile_picture = view.findViewById(R.id.news_user_profile_pic);
-
         helperFunctions = new HelperFunctions(getContext());
         preferenceManager = new PreferenceManager((Objects.requireNonNull(getContext())));
 
@@ -123,46 +98,7 @@ public class NewsFragment extends Fragment implements NewsFeedAdapter.NewsFeedAd
 
         fetchNews();
 
-        fetchUserNewsDetails();
-
         return view;
-    }
-
-    private void fetchUserNewsDetails() {
-        String network_address = helperFunctions.getIpAddress()
-                + "get_user_news_details.php?id=" + preferenceManager.getPsuId();
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        try {
-                            name.setText(response.getString("name"));
-                            position.setText(response.getString("position"));
-                            email.setText(response.getString("email"));
-                            news_count.setText(response.getString("news_count"));
-                            // date.setText(response.getString("date"));
-
-                            String image_url = helperFunctions.getIpAddress() + response.getString("profile_picture");
-
-                            Glide.with(Objects.requireNonNull(getContext()))
-                                    .load(image_url)
-                                    .apply(RequestOptions.circleCropTransform())
-                                    .into(profile_picture);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //
-            }
-        });
-
-        VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
     }
 
     private void fetchNews() {
