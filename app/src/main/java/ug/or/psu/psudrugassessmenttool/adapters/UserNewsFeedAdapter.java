@@ -54,7 +54,7 @@ public class UserNewsFeedAdapter extends RecyclerView.Adapter<UserNewsFeedAdapte
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.news_feed_items, parent, false);
+                .inflate(R.layout.user_news_feed_items, parent, false);
 
         return new MyViewHolder(itemView);
     }
