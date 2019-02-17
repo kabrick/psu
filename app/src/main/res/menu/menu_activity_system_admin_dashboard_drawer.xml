@@ -5,6 +5,8 @@
     <group android:id="@+id/group_menu">
         <item android:id="@+id/sys_admin_post_news"
             android:title="Post News" />
+        <item android:id="@+id/sys_admin_edit_profile"
+            android:title="Edit Profile" />
         <item android:id="@+id/sys_admin_log_out"
             android:title="Log Out" />
     </group>

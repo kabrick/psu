@@ -10,6 +10,8 @@
             android:title="Feedback"/>
         <item android:id="@+id/pharmacy_owner_attendance"
             android:title="View Pharmacist Attendance"/>
+        <item android:id="@+id/pharmacy_owner_edit_profile"
+            android:title="Edit Profile" />
         <item android:id="@+id/pharmacy_owner_inspection_wholesale"
             android:title="Wholesale Pharmacy Self Inspection"/>
         <item android:id="@+id/pharmacy_owner_inspection_retail"

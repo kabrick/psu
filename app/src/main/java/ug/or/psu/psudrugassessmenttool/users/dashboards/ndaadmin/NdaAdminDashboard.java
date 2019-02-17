@@ -23,6 +23,7 @@ import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.FeedbackActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.NewsFragment;
@@ -162,6 +163,10 @@ public class NdaAdminDashboard extends AppCompatActivity
                 break;
             case R.id.nda_admin_log_out:
                 helperFunctions.signAdminUsersOut();
+                break;
+            case R.id.nda_admin_edit_profile:
+                Intent edit_profile = new Intent(this, EditProfileActivity.class);
+                startActivity(edit_profile);
                 break;
             case R.id.nda_admin_feedback:
                 Intent give_feedback_intent = new Intent(this, FeedbackActivity.class);

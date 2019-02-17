@@ -8,6 +8,8 @@
             android:title="Post News" />
         <item android:id="@+id/nda_admin_feedback"
             android:title="Feedback"/>
+        <item android:id="@+id/nda_admin_edit_profile"
+            android:title="Edit Profile" />
         <item android:id="@+id/nda_admin_log_out"
             android:title="Log Out" />
     </group>

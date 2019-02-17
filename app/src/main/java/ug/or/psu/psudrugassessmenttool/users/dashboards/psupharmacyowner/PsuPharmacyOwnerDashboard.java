@@ -32,6 +32,7 @@ import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.FeedbackActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.WholesaleInspectionActivity;
@@ -169,6 +170,10 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
                 break;
             case R.id.pharmacy_owner_attendance:
                 viewPharmacistAttendance();
+                break;
+            case R.id.pharmacy_owner_edit_profile:
+                Intent edit_profile = new Intent(this, EditProfileActivity.class);
+                startActivity(edit_profile);
                 break;
             case R.id.pharmacy_owner_inspection_retail:
                 Toast.makeText(this, "Feature not available", Toast.LENGTH_LONG).show();
