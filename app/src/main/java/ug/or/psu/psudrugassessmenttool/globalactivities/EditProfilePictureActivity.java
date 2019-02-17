@@ -111,7 +111,7 @@ public class EditProfilePictureActivity extends AppCompatActivity {
                 try {
 
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
-                    // imageView.setImageBitmap(bitmap);
+                    profile_picture.setImageBitmap(bitmap);
                     helperFunctions.genericProgressBar("Updating your profile picture");
                     uploadProfilePicture(bitmap);
 
@@ -131,33 +131,8 @@ public class EditProfilePictureActivity extends AppCompatActivity {
                     public void onResponse(NetworkResponse response) {
                         rQueue.getCache().clear();
                         helperFunctions.stopProgressBar();
+                        helperFunctions.genericDialog("Profile picture updated successfully");
                         helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
-                        /*try {
-                            JSONObject jsonObject = new JSONObject(new String(response.data));
-                            Log.e("pp", jsonObject.toString());
-
-                            jsonObject.toString().replace("\\\\","");
-
-                            Log.e("pp", jsonObject.toString());
-
-                            if (jsonObject.getString("status").equals("true")) {
-
-                                JSONArray dataArray = jsonObject.getJSONArray("data");
-
-                                Log.e("dd", dataArray.toString());
-
-                                helperFunctions.stopProgressBar();
-
-                                String url = "";
-                                for (int i = 0; i < dataArray.length(); i++) {
-                                    JSONObject dataobj = dataArray.getJSONObject(i);
-                                    url = dataobj.optString("photo");
-                                }
-                                Picasso.get().load(url).into(profile_picture);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }*/
                     }
                 },
                 new Response.ErrorListener() {
