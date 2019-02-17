@@ -15,24 +15,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +32,8 @@ import java.util.Objects;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.adapters.NewsFeedAdapter;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
-import ug.or.psu.psudrugassessmenttool.globalactivities.NewsViewActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.NewsViewPostedActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.UserNewsActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.models.NewsFeed;
@@ -145,12 +136,8 @@ public class NewsFragment extends Fragment implements NewsFeedAdapter.NewsFeedAd
      */
     @Override
     public void onNewsItemSelected(NewsFeed news) {
-        Intent intent = new Intent(getContext(), NewsViewActivity.class);
-        intent.putExtra("text", news.getText());
-        intent.putExtra("title", news.getTitle());
-        intent.putExtra("author", news.getAuthor());
-        intent.putExtra("timestamp", news.getTimeStamp());
-        intent.putExtra("id", news.getId());
+        Intent intent = new Intent(getContext(), UserNewsActivity.class);
+        intent.putExtra("user_id", news.getId());
         startActivity(intent);
     }
 

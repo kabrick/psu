@@ -56,6 +56,10 @@ public class UserNewsActivity extends AppCompatActivity implements UserNewsFeedA
             user_id = extras.getString("user_id", "");
         }
 
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         RecyclerView recyclerView = findViewById(R.id.recycler_view_user_news);
         newsList = new ArrayList<>();
         mAdapter = new UserNewsFeedAdapter(this, newsList, this);

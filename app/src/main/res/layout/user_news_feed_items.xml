@@ -11,7 +11,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:id="@+id/read_status"
+        android:id="@+id/user_read_status"
         android:layout_weight="0.03"/>
 
     <RelativeLayout
@@ -24,21 +24,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
-            android:id="@+id/news_feed_title_list"/>
+            android:id="@+id/user_news_feed_title_list"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:id="@+id/news_feed_text_list"
+            android:id="@+id/user_news_feed_text_list"
             android:layout_marginBottom="5dp"
-            android:layout_below="@id/news_feed_title_list"
+            android:layout_below="@id/user_news_feed_title_list"
             android:maxLines="2"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/news_feed_text_list"
+            android:layout_below="@id/user_news_feed_text_list"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
@@ -47,7 +47,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:id="@+id/news_feed_author_list"/>
+                android:id="@+id/user_news_feed_author_list"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -55,7 +55,7 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:textColor="@color/timestamp"
-                android:id="@+id/news_feed_timestamp_list"/>
+                android:id="@+id/user_news_feed_timestamp_list"/>
 
         </LinearLayout>
 

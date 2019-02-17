@@ -8,11 +8,12 @@
     android:background="@drawable/rounded_corners"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <View
+    <ImageView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:id="@+id/read_status"
-        android:layout_weight="0.03"/>
+        android:id="@+id/news_feed_profile_picture"
+        android:src="@drawable/person"
+        android:layout_weight="1"/>
 
     <RelativeLayout
         android:layout_width="0dp"

@@ -9,7 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import org.json.JSONException;
 
@@ -24,10 +28,11 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyView
     private List<NewsFeed> newsList;
     private NewsFeedAdapterListener listener;
     private HelperFunctions helperFunctions;
+    private Context context;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView title, text, author, timestamp;
-        View read_status;
+        ImageView profile_picture;
 
         MyViewHolder(View view) {
             super(view);
@@ -35,7 +40,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyView
             text = view.findViewById(R.id.news_feed_text_list);
             author = view.findViewById(R.id.news_feed_author_list);
             timestamp = view.findViewById(R.id.news_feed_timestamp_list);
-            read_status = view.findViewById(R.id.read_status);
+            profile_picture = view.findViewById(R.id.news_feed_profile_picture);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -49,6 +54,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyView
     public NewsFeedAdapter(Context context, List<NewsFeed> newsList, NewsFeedAdapterListener listener) {
         this.listener = listener;
         this.newsList = newsList;
+        this.context = context;
         helperFunctions = new HelperFunctions(context);
     }
 
@@ -68,19 +74,6 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyView
         holder.title.setText(news.getTitle());
         holder.author.setText(news.getAuthor());
 
-        //verify whether the person has read the article before
-        try {
-            if (helperFunctions.isNewsRead(Integer.parseInt(news.getId()))){
-                holder.read_status.setBackgroundColor(Color.parseColor("#f4bb41"));
-            } else {
-                holder.read_status.setBackgroundColor(Color.parseColor("#adf442"));
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        //String image_url = helperFunctions.getIpAddress() + news.getImage();
-
         //covert timestamp to readable format
         CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
                 Long.parseLong(news.getTimeStamp()),
@@ -88,10 +81,12 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyView
 
         holder.timestamp.setText(timeAgo);
 
-        /*Glide.with(context)
+        String image_url = helperFunctions.getIpAddress() + news.getImage();
+
+        Glide.with(context)
                 .load(image_url)
                 .apply(RequestOptions.fitCenterTransform())
-                .into(holder.image);*/
+                .into(holder.profile_picture);
     }
 
     @Override

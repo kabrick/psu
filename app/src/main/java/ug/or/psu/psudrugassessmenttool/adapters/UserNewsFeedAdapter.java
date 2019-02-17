@@ -29,11 +29,11 @@ public class UserNewsFeedAdapter extends RecyclerView.Adapter<UserNewsFeedAdapte
 
         MyViewHolder(View view) {
             super(view);
-            title = view.findViewById(R.id.news_feed_title_list);
-            text = view.findViewById(R.id.news_feed_text_list);
-            author = view.findViewById(R.id.news_feed_author_list);
-            timestamp = view.findViewById(R.id.news_feed_timestamp_list);
-            read_status = view.findViewById(R.id.read_status);
+            title = view.findViewById(R.id.user_news_feed_title_list);
+            text = view.findViewById(R.id.user_news_feed_text_list);
+            author = view.findViewById(R.id.user_news_feed_author_list);
+            timestamp = view.findViewById(R.id.user_news_feed_timestamp_list);
+            read_status = view.findViewById(R.id.user_read_status);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
