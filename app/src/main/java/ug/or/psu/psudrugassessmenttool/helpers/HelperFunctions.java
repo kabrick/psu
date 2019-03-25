@@ -182,9 +182,8 @@ public class HelperFunctions {
 
                         //check if location has been saved successfully
                         if(response.equals("1")){
-                            //go back to NDA supervisor dashboard
-                            Intent intent_save_location = new Intent(context, NdaSupervisorDashboard.class);
-                            context.startActivity(intent_save_location);
+                            //go back to user dashboard
+                            getDefaultDashboard(prefManager.getMemberCategory());
                         } else {
                             //did not save
                             genericDialog("Oops! An error occurred. Please try again later");
@@ -233,9 +232,8 @@ public class HelperFunctions {
 
                         //check if location has been saved successfully
                         if(response.equals("1")){
-                            //go back to NDA supervisor dashboard
-                            Intent intent_save_location = new Intent(context, NdaSupervisorDashboard.class);
-                            context.startActivity(intent_save_location);
+                            //go back to user dashboard
+                            getDefaultDashboard(prefManager.getMemberCategory());
                         } else {
                             //did not save
                             genericDialog("Oops! An error occurred. Please try again later");

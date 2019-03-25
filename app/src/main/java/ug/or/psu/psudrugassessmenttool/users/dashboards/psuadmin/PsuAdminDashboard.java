@@ -71,6 +71,11 @@ public class PsuAdminDashboard extends AppCompatActivity
 
         TabLayout mTabLayout = findViewById(R.id.tab_psu_admin);
         mTabLayout.setupWithViewPager(mViewPager);
+
+        /*mTabLayout.getTabAt(0).setIcon(R.drawable.news);
+        mTabLayout.getTabAt(1).setIcon(R.drawable.briefcase);
+        mTabLayout.getTabAt(2).setIcon(R.drawable.map);
+        mTabLayout.getTabAt(3).setIcon(R.drawable.attendance);*/
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -85,18 +90,19 @@ public class PsuAdminDashboard extends AppCompatActivity
                 case 0:
                     return new NewsFragment();
                 case 1:
-                    return new ViewPharmaciesLocationFragment();
+                    return new JobFragment();
                 case 2:
                     return new ViewPharmacistAttendanceFragment();
-                case 3:
-                    return new JobFragment();
+                /*case 3:
+                    return new ViewPharmaciesLocationFragment();*/
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 4;
+            // return 4;
+            return 3;
         }
 
         @Override
@@ -105,11 +111,12 @@ public class PsuAdminDashboard extends AppCompatActivity
                 case 0:
                     return "News";
                 case 1:
-                    return "View Locations";
-                case 2:
-                    return "View Attendance";
-                case 3:
                     return "Job Adverts";
+                case 2:
+                    return "Attendance";
+                /*case 3:
+                    //return "View Attendance";
+                    return null;*/
             }
             return super.getPageTitle(position);
         }
@@ -150,6 +157,18 @@ public class PsuAdminDashboard extends AppCompatActivity
                 break;
             case R.id.psu_admin_view_retail_inspection:
                 Toast.makeText(this, "Feature not available", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.psu_admin_approve_news_posts:
+                Intent approve_news_intent = new Intent(this, ApproveNewsActivity.class);
+                startActivity(approve_news_intent);
+                break;
+            case R.id.psu_admin_set_pharmacy_locations:
+                Intent set_pharmacy_location = new Intent(this, SetPharmacyLocationActivity.class);
+                startActivity(set_pharmacy_location);
+                break;
+            case R.id.psu_admin_view_pharmacy_location:
+                Intent view_pharmacy_location = new Intent(this, ViewPharmacyActivity.class);
+                startActivity(view_pharmacy_location);
                 break;
             case R.id.psu_admin_post_news:
                 Intent post_news_intent = new Intent(this, CreateNewsActivity.class);

@@ -33,6 +33,12 @@ public class CreateJobsActivity extends AppCompatActivity {
     View activityView;
 
     @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_jobs);
@@ -40,6 +46,7 @@ public class CreateJobsActivity extends AppCompatActivity {
         // add icon to the action bar
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         jobs_title = findViewById(R.id.jobs_title);

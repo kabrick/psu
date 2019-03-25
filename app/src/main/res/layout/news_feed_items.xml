@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_margin="10dp"
+    android:padding="5dp"
     android:background="@drawable/rounded_corners"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:id="@+id/news_feed_profile_picture"
         android:src="@drawable/person"
-        android:layout_weight="1"/>
+        android:layout_weight="0.5"/>
 
     <RelativeLayout
         android:layout_width="0dp"

@@ -45,6 +45,7 @@ public class EditNewsActivity extends AppCompatActivity {
         // add icon to the action bar
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         news_text = findViewById(R.id.news_text_edit);
@@ -62,6 +63,12 @@ public class EditNewsActivity extends AppCompatActivity {
             id = extras.getString("id", "1");
             getNewsDetails(id);
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     public void getNewsDetails(String id){

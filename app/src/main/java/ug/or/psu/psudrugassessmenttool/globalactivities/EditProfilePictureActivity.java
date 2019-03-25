@@ -51,6 +51,7 @@ public class EditProfilePictureActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         profile_picture = findViewById(R.id.profile_picture);
 
@@ -60,7 +61,15 @@ public class EditProfilePictureActivity extends AppCompatActivity {
         getProfilePicture();
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     public void getProfilePicture(){
+
+        helperFunctions.genericProgressBar("Fetching profile picture...");
 
         String network_address = helperFunctions.getIpAddress()
                 + "get_profile_picture.php?id=" + preferenceManager.getPsuId();
@@ -71,8 +80,12 @@ public class EditProfilePictureActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
 
                         try {
+
+                            helperFunctions.stopProgressBar();
+
+                            String picture = helperFunctions.getIpAddress() + response.getString("photo");
                             Glide.with(EditProfilePictureActivity.this)
-                                    .load(response.getString("photo"))
+                                    .load(picture)
                                     .into(profile_picture);
                                     //.apply(RequestOptions.circleCropTransform())
                         } catch (JSONException e) {

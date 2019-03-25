@@ -88,5 +88,5 @@
         android:layout_margin="10dp"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:text="Pharmaceutical Society of Uganda 2018"/>
+        android:text="Pharmaceutical Society of Uganda 2019"/>
 </RelativeLayout>

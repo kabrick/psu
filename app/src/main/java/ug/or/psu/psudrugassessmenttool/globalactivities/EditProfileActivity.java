@@ -41,6 +41,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         preferenceManager = new PreferenceManager(this);
@@ -55,6 +56,9 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     public void getProfileDetails(){
+
+        helperFunctions.genericProgressBar("Fetching records...");
+
         String network_address = helperFunctions.getIpAddress()
                 + "get_profile_details.php?id=" + preferenceManager.getPsuId();
 
@@ -62,6 +66,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+
+                        helperFunctions.stopProgressBar();
 
                         try {
                             name.setText(response.getString("name"));
@@ -122,5 +128,11 @@ public class EditProfileActivity extends AppCompatActivity {
     public void editProfilePicture(View view){
         Intent intent_profile = new Intent(EditProfileActivity.this, EditProfilePictureActivity.class);
         startActivity(intent_profile);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

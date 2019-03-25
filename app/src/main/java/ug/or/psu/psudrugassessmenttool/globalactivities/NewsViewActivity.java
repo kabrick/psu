@@ -13,23 +13,28 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +50,7 @@ import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 public class NewsViewActivity extends AppCompatActivity {
 
     TextView title, text, author, timestamp;
+    ImageView news_image;
     String title_string, text_string, author_string, timestamp_string, id;
     HelperFunctions helperFunctions;
     FloatingActionButton create_comment_fab;
@@ -66,6 +72,7 @@ public class NewsViewActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         helperFunctions = new HelperFunctions(this);
         preferenceManager = new PreferenceManager(this);
@@ -107,6 +114,8 @@ public class NewsViewActivity extends AppCompatActivity {
         author = findViewById(R.id.news_feed_author_single);
         timestamp = findViewById(R.id.news_feed_timestamp_single);
 
+        news_image = findViewById(R.id.news_image);
+
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
@@ -144,6 +153,54 @@ public class NewsViewActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
         fetchComments();
+
+        fetchNewsImage();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    public void fetchNewsImage(){
+        helperFunctions.genericProgressBar("Fetching news...");
+
+        String network_address = helperFunctions.getIpAddress()
+                + "get_news_picture.php?id=" + id;
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        helperFunctions.stopProgressBar();
+
+                        try {
+                            // check if image is null
+                            if(response.getString("photo").equals("0")){
+                                //
+                            } else {
+                                String picture = helperFunctions.getIpAddress() + response.getString("photo");
+
+                                Glide.with(NewsViewActivity.this)
+                                        .load(picture)
+                                        .into(news_image);
+
+                                news_image.setVisibility(View.VISIBLE);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //
+            }
+        });
+
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
 
     public void fetchComments(){
@@ -175,10 +232,10 @@ public class NewsViewActivity extends AppCompatActivity {
     }
 
     public void postComment(String comment){
-        //show progress dialog
+        // show progress dialog
         helperFunctions.genericProgressBar("Posting your comment...");
 
-        //get the current timestamp
+        // get the current timestamp
         Long timestamp_long = System.currentTimeMillis();
 
         String network_address = helperFunctions.getIpAddress()
@@ -222,5 +279,13 @@ public class NewsViewActivity extends AppCompatActivity {
 
         //add to request queue in singleton class
         VolleySingleton.getInstance(this).addToRequestQueue(request);
+    }
+
+    public void shareClick(View view){
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, title_string);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, text_string);
+        startActivity(Intent.createChooser(sharingIntent, "Share Article"));
     }
 }

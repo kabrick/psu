@@ -56,6 +56,7 @@ public class NewsViewPostedActivity extends AppCompatActivity implements NewsFee
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view_news_posted);
         newsList = new ArrayList<>();
@@ -72,6 +73,12 @@ public class NewsViewPostedActivity extends AppCompatActivity implements NewsFee
         recyclerView.setAdapter(mAdapter);
 
         fetchNews();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     private void fetchNews() {

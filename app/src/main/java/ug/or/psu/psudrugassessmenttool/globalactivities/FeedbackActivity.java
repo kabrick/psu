@@ -42,6 +42,7 @@ public class FeedbackActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         feedback_text = findViewById(R.id.feedback_text);
         feedback_title = findViewById(R.id.feedback_title);
@@ -50,6 +51,12 @@ public class FeedbackActivity extends AppCompatActivity {
         preferenceManager = new PreferenceManager(this);
 
         activityView = findViewById(R.id.create_feedback);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override

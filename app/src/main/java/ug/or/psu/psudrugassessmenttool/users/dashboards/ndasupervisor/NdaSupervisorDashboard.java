@@ -84,6 +84,12 @@ public class NdaSupervisorDashboard extends AppCompatActivity
 
         TabLayout mTabLayout = findViewById(R.id.tab_nda_supervisor);
         mTabLayout.setupWithViewPager(mViewPager);
+
+        mTabLayout.getTabAt(0).setIcon(R.drawable.news);
+        mTabLayout.getTabAt(1).setIcon(R.drawable.briefcase);
+        mTabLayout.getTabAt(2).setIcon(R.drawable.map);
+        mTabLayout.getTabAt(3).setIcon(R.drawable.map_pin);
+        mTabLayout.getTabAt(4).setIcon(R.drawable.attendance);
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -98,13 +104,13 @@ public class NdaSupervisorDashboard extends AppCompatActivity
                 case 0:
                     return new NewsFragment();
                 case 1:
-                    return new NdaSuperSetLocationsFragment();
-                case 2:
-                    return new ViewPharmaciesLocationFragment();
-                case 3:
-                    return new ViewPharmacistAttendanceFragment();
-                case 4:
                     return new JobFragment();
+                case 2:
+                    return new NdaSuperSetLocationsFragment();
+                case 3:
+                    return new ViewPharmaciesLocationFragment();
+                case 4:
+                    return new ViewPharmacistAttendanceFragment();
             }
             return null;
         }
@@ -118,15 +124,20 @@ public class NdaSupervisorDashboard extends AppCompatActivity
         public CharSequence getPageTitle(int position){
             switch (position) {
                 case 0:
-                    return "News";
+                    //return "News";
+                    return null;
                 case 1:
-                    return "Set Locations";
+                    //return "Job Adverts";
+                    return null;
                 case 2:
-                    return "View Locations";
+                    //return "Set Locations";
+                    return null;
                 case 3:
-                    return "View Attendance";
+                    //return "View Locations";
+                    return null;
                 case 4:
-                    return "Job Adverts";
+                    //return "View Attendance";
+                    return null;
             }
             return super.getPageTitle(position);
         }
