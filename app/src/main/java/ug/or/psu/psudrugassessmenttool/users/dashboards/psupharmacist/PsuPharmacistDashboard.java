@@ -185,7 +185,7 @@ public class PsuPharmacistDashboard extends AppCompatActivity
                 startActivity(post_news_intent);
                 break;
             case R.id.pharmacist_log_out:
-                helperFunctions.signAdminUsersOut();
+                helperFunctions.signPharmacistOut();
                 break;
             case R.id.pharmacist_edit_profile:
                 Intent edit_profile = new Intent(this, EditProfileActivity.class);
