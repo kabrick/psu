@@ -6,17 +6,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".users.authentication.SignInActivity">
 
-    <include
-        layout="@layout/uganda_flag"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:id="@+id/uganda_flag"
-        android:layout_alignParentTop="true"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/uganda_flag"
         xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:background="@color/background"

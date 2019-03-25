@@ -8,17 +8,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".globalactivities.EditNewsActivity">
 
-    <include
-        layout="@layout/uganda_flag"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:id="@+id/uganda_flag"
-        android:layout_alignParentTop="true"/>
-
     <LinearLayout
         android:background="@color/background"
         android:layout_width="match_parent"
-        android:layout_below="@id/uganda_flag"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="20dp">
