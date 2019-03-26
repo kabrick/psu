@@ -71,7 +71,8 @@
         <activity android:name=".users.dashboards.psuadmin.SetPharmacyLocationActivity" />
         <activity android:name=".users.dashboards.psuadmin.ViewPharmacyActivity" />
         <activity android:name=".users.dashboards.psuadmin.ApproveNewsActivity" />
-        <activity android:name=".users.dashboards.psuadmin.ApproveNewsItemActivity"></activity>
+        <activity android:name=".users.dashboards.psuadmin.ApproveNewsItemActivity" />
+        <activity android:name=".globalactivities.PharmacistAssessmentFormActivity"></activity>
     </application>
 
 </manifest>

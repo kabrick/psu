@@ -7,7 +7,7 @@
         <item android:id="@+id/pharmacist_post_news"
             android:title="Post News" />
         <item android:id="@+id/pharmacist_feedback"
-            android:title="Feedback"/>
+            android:title="Post Feedback"/>
         <item android:id="@+id/pharmacist_edit_profile"
             android:title="Edit Profile" />
         <item android:id="@+id/pharmacist_log_out"

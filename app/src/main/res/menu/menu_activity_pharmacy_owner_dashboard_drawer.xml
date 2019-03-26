@@ -7,11 +7,13 @@
         <item android:id="@+id/pharmacy_owner_post_news"
             android:title="Post News" />
         <item android:id="@+id/pharmacy_owner_feedback"
-            android:title="Feedback"/>
+            android:title="Post Feedback"/>
         <item android:id="@+id/pharmacy_owner_attendance"
             android:title="View Pharmacist Attendance"/>
         <item android:id="@+id/pharmacy_owner_edit_profile"
             android:title="Edit Profile" />
+        <item android:id="@+id/pharmacy_owner_pharmacist_assessment_form"
+            android:title="Pharmacist Assessment Form" />
         <item android:id="@+id/pharmacy_owner_inspection_wholesale"
             android:title="Wholesale Pharmacy Self Inspection"/>
         <item android:id="@+id/pharmacy_owner_inspection_retail"
