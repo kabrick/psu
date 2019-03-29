@@ -72,7 +72,9 @@
         <activity android:name=".users.dashboards.psuadmin.ApproveNewsActivity" />
         <activity android:name=".users.dashboards.psuadmin.ApproveNewsItemActivity" />
         <activity android:name=".globalactivities.PharmacistAssessmentFormActivity" />
-        <activity android:name=".globalactivities.ConfirmPharmacistAssessmentFormActivity"></activity>
+        <activity android:name=".globalactivities.ConfirmPharmacistAssessmentFormActivity" />
+        <activity android:name=".globalactivities.PharmacistAssessmentFormFeedActivity" />
+        <activity android:name=".globalactivities.PharmacistAssessmentFormFeedOwnerActivity"></activity>
     </application>
 
 </manifest>

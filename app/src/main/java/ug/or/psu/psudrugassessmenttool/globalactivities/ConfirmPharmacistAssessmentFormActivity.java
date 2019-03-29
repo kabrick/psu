@@ -113,6 +113,8 @@ public class ConfirmPharmacistAssessmentFormActivity extends AppCompatActivity {
                         //check if location has been saved successfully
                         if(response.equals("1")){
                             //go to views page for submitted pharmacists
+                            Intent intent = new Intent(ConfirmPharmacistAssessmentFormActivity.this, PharmacistAssessmentFormFeedOwnerActivity.class);
+                            startActivity(intent);
                         } else {
                             //did not save
                             helperFunctions.genericDialog("Oops! An error occurred. Please try again later");

@@ -34,7 +34,7 @@ import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.FeedbackActivity;
-import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAssessmentFormActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAssessmentFormFeedOwnerActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.WholesaleInspectionActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
@@ -177,7 +177,7 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
                 startActivity(edit_profile);
                 break;
             case R.id.pharmacy_owner_pharmacist_assessment_form:
-                Intent owner_pharmacist_assessment_form_intent = new Intent(this, PharmacistAssessmentFormActivity.class);
+                Intent owner_pharmacist_assessment_form_intent = new Intent(this, PharmacistAssessmentFormFeedOwnerActivity.class);
                 startActivity(owner_pharmacist_assessment_form_intent);
                 break;
             case R.id.pharmacy_owner_inspection_retail:
