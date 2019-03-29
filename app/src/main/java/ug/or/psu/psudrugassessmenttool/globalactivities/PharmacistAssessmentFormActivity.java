@@ -1,12 +1,10 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -29,11 +27,9 @@ public class PharmacistAssessmentFormActivity extends AppCompatActivity {
     String pharmacy_id, pharmacist_id;
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
-    TextView pharmacy_name, pharmacist_name, average_score;
-    LinearLayout hidden_linear_1, hidden_linear_2;
-    Button continue_button, submit_button;
+    TextView pharmacy_name, pharmacist_name;
     EditText appraiser_name, appraiser_title, from_period, to_period, score_one,
-            score_two, score_three, score_four, score_five, remarks;
+            score_two, score_three, score_four, score_five;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,15 +48,6 @@ public class PharmacistAssessmentFormActivity extends AppCompatActivity {
         // TextViews
         pharmacy_name = findViewById(R.id.pharmacist_assessment_pharmacy_name);
         pharmacist_name = findViewById(R.id.pharmacist_assessment_pharmacist_name);
-        average_score = findViewById(R.id.pharmacist_assessment_average_score);
-
-        // Linears
-        hidden_linear_1 = findViewById(R.id.hidden_linear_1);
-        hidden_linear_2 = findViewById(R.id.hidden_linear_2);
-
-        // Buttons
-        continue_button = findViewById(R.id.pharmacist_assessment_continue_button);
-        submit_button = findViewById(R.id.pharmacist_assessment_submit_button);
 
         // EditText
         appraiser_name = findViewById(R.id.pharmacist_assessment_appraiser_name);
@@ -72,33 +59,6 @@ public class PharmacistAssessmentFormActivity extends AppCompatActivity {
         score_three = findViewById(R.id.pharmacist_assessment_score_three);
         score_four = findViewById(R.id.pharmacist_assessment_score_four);
         score_five = findViewById(R.id.pharmacist_assessment_score_five);
-        remarks = findViewById(R.id.pharmacist_assessment_remarks);
-
-        continue_button.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View view) {
-                // get average of all inputs
-
-                int average_score_number = Integer.parseInt(score_one.getText().toString()) + Integer.parseInt(score_two.getText().toString()) +
-                        Integer.parseInt(score_three.getText().toString()) + Integer.parseInt(score_four.getText().toString()) + Integer.parseInt(score_five.getText().toString());
-
-                average_score_number = average_score_number / 5;
-
-                hidden_linear_1.setVisibility(View.VISIBLE);
-                hidden_linear_2.setVisibility(View.VISIBLE);
-                submit_button.setVisibility(View.VISIBLE);
-
-                average_score.setText(Integer.toString(average_score_number));
-            }
-        });
-
-        submit_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //
-            }
-        });
 
         setUpForm();
     }
@@ -176,5 +136,31 @@ public class PharmacistAssessmentFormActivity extends AppCompatActivity {
         });
 
         VolleySingleton.getInstance(this).addToRequestQueue(request);
+    }
+
+    public void continueForm(View view){
+
+        // calculate the average score
+        int average_score_number = Integer.parseInt(score_one.getText().toString()) + Integer.parseInt(score_two.getText().toString()) +
+                Integer.parseInt(score_three.getText().toString()) + Integer.parseInt(score_four.getText().toString()) + Integer.parseInt(score_five.getText().toString());
+
+        average_score_number = average_score_number / 5;
+
+        // create intent and add listings
+        Intent continue_intent = new Intent(PharmacistAssessmentFormActivity.this, ConfirmPharmacistAssessmentFormActivity.class);
+        continue_intent.putExtra("average_score_number", average_score_number);
+        continue_intent.putExtra("pharmacy_id", pharmacy_id);
+        continue_intent.putExtra("pharmacist_id", pharmacist_id);
+        continue_intent.putExtra("appraiser_name", appraiser_name.getText().toString());
+        continue_intent.putExtra("appraiser_title", appraiser_title.getText().toString());
+        continue_intent.putExtra("from_period", from_period.getText().toString());
+        continue_intent.putExtra("to_period", to_period.getText().toString());
+        continue_intent.putExtra("score_one", score_one.getText().toString());
+        continue_intent.putExtra("score_two", score_two.getText().toString());
+        continue_intent.putExtra("score_three", score_three.getText().toString());
+        continue_intent.putExtra("score_four", score_four.getText().toString());
+        continue_intent.putExtra("score_five", score_five.getText().toString());
+
+        startActivity(continue_intent);
     }
 }

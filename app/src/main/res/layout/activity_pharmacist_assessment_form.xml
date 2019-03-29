@@ -299,63 +299,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorAccent"
                 android:text="Continue"
-                android:id="@+id/pharmacist_assessment_continue_button"
+                android:onClick="continueForm"
                 android:layout_marginBottom="20dp"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                android:id="@+id/hidden_linear_1">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textStyle="bold"
-                    android:text="Average Score"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:id="@+id/pharmacist_assessment_average_score"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                android:id="@+id/hidden_linear_2">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textStyle="bold"
-                    android:text="Remarks"/>
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:inputType="textMultiLine"
-                    android:id="@+id/pharmacist_assessment_remarks"/>
-
-            </LinearLayout>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
-                android:text="Submit"
-                android:visibility="gone"
-                android:id="@+id/pharmacist_assessment_submit_button"/>
 
         </LinearLayout>
     </ScrollView>
