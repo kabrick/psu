@@ -11,6 +11,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -117,7 +118,31 @@ public class ViewPharmacistAssessmentFormOwnerActivity extends AppCompatActivity
     }
 
     public void deleteForm(View view){
-        //
+        helperFunctions.genericProgressBar("Deleting form...");
+        String network_address = helperFunctions.getIpAddress() + "delete_pharmacist_assessment_form.php?id=" + id;
+
+        // Request a string response from the provided URL
+        StringRequest request = new StringRequest(network_address,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        helperFunctions.stopProgressBar();
+
+                        if(response.equals("1")){
+                            Intent delete_intent = new Intent(ViewPharmacistAssessmentFormOwnerActivity.this, PharmacistAssessmentFormFeedOwnerActivity.class);
+                            startActivity(delete_intent);
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //
+            }
+        });
+
+        //add to request queue in singleton class
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
 
     public void editForm(View view){
