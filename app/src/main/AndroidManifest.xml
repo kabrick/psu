@@ -76,7 +76,8 @@
         <activity android:name=".globalactivities.PharmacistAssessmentFormFeedActivity" />
         <activity android:name=".globalactivities.PharmacistAssessmentFormFeedOwnerActivity" />
         <activity android:name=".globalactivities.ViewPharmacistAssessmentFormOwnerActivity" />
-        <activity android:name=".globalactivities.EditPharmacistAssessmentFormActivity"></activity>
+        <activity android:name=".globalactivities.EditPharmacistAssessmentFormActivity" />
+        <activity android:name=".globalactivities.ViewPharmacistAssessmentFormActivity"></activity>
     </application>
 
 </manifest>
