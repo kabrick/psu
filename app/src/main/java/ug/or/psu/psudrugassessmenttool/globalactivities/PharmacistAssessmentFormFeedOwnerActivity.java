@@ -117,10 +117,8 @@ public class PharmacistAssessmentFormFeedOwnerActivity extends AppCompatActivity
 
     @Override
     public void onFormSelected(PharmacistAssessmentFeedOwner form) {
-        /*Intent intent = new Intent(this, UserNewsActivity.class);
-        intent.putExtra("user_id", form.getId());
-        startActivity(intent);*/
-
-        Toast.makeText(this, form.getScore(), Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, ViewPharmacistAssessmentFormOwnerActivity.class);
+        intent.putExtra("id", form.getId());
+        startActivity(intent);
     }
 }
