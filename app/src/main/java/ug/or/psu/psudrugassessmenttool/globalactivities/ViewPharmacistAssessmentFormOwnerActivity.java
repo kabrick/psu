@@ -146,7 +146,21 @@ public class ViewPharmacistAssessmentFormOwnerActivity extends AppCompatActivity
     }
 
     public void editForm(View view){
-        //
+        Intent edit_intent = new Intent(ViewPharmacistAssessmentFormOwnerActivity.this, EditPharmacistAssessmentFormActivity.class);
+        edit_intent.putExtra("id", id);
+        edit_intent.putExtra("pharmacy_name", pharmacy_name.getText().toString());
+        edit_intent.putExtra("pharmacist_name", pharmacist_name.getText().toString());
+        edit_intent.putExtra("appraiser_name", appraiser_name.getText().toString());
+        edit_intent.putExtra("appraiser_title", appraiser_title.getText().toString());
+        edit_intent.putExtra("from_period", from_period.getText().toString());
+        edit_intent.putExtra("to_period", to_period.getText().toString());
+        edit_intent.putExtra("score_one", score_one.getText().toString());
+        edit_intent.putExtra("score_two", score_two.getText().toString());
+        edit_intent.putExtra("score_three", score_three.getText().toString());
+        edit_intent.putExtra("score_four", score_four.getText().toString());
+        edit_intent.putExtra("score_five", score_five.getText().toString());
+        edit_intent.putExtra("remarks", remarks.getText().toString());
+        startActivity(edit_intent);
     }
 
     @Override
