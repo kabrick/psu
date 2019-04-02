@@ -67,7 +67,7 @@ public class PharmacistAssessmentFeedOwnerAdapter extends RecyclerView.Adapter<P
             holder.score.setTextColor(Color.RED);
         } else if (average_score_number <= 74){
             // orange
-            holder.score.setTextColor(Color.YELLOW);
+            holder.score.setTextColor(Color.parseColor("#FFA500"));
         } else {
             // green
             holder.score.setTextColor(Color.GREEN);
