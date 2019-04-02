@@ -1,6 +1,8 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -11,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -26,6 +29,8 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -47,8 +52,11 @@ public class CreateNewsActivity extends AppCompatActivity {
     private RequestQueue rQueue;
     View activityView;
     boolean is_picture_set = false;
+    String picture_name;
     private final int IMAGE_REQUEST_CODE = 1;
     Bitmap bitmap;
+    FloatingActionMenu fam;
+    FloatingActionButton view_attachments_fab, add_attachments_fab, post_news_fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +71,41 @@ public class CreateNewsActivity extends AppCompatActivity {
 
         news_text = findViewById(R.id.news_text);
         news_title = findViewById(R.id.news_title);
+
+        post_news_fab = findViewById(R.id.post_news_fab);
+        add_attachments_fab = findViewById(R.id.add_attachments_fab);
+        view_attachments_fab = findViewById(R.id.view_attachments_fab);
+        fam = findViewById(R.id.news_fam);
+
+        // apply listeners
+        post_news_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fam.close(true);
+                postNews();
+            }
+        });
+
+        add_attachments_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addPicture();
+                fam.close(true);
+            }
+        });
+
+        view_attachments_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fam.close(true);
+
+                if(is_picture_set){
+                    Toast.makeText(CreateNewsActivity.this, picture_name, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(CreateNewsActivity.this, "No picture selected", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         helperFunctions = new HelperFunctions(this);
         preferenceManager = new PreferenceManager(this);
@@ -94,18 +137,13 @@ public class CreateNewsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void postNews(View view){
+    public void postNews(){
 
         String title = news_title.getText().toString();
         String text = news_text.getText().toString();
 
         if(TextUtils.isEmpty(title)) {
             news_title.setError("Please fill in the title");
-            return;
-        }
-
-        if(TextUtils.isEmpty(text)) {
-            news_text.setError("Please fill in the text");
             return;
         }
 
@@ -163,7 +201,7 @@ public class CreateNewsActivity extends AppCompatActivity {
         VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
 
-    public void addPicture(View view){
+    public void addPicture(){
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, IMAGE_REQUEST_CODE);
@@ -184,11 +222,47 @@ public class CreateNewsActivity extends AppCompatActivity {
                 try {
 
                     bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
+
+                    Uri uri = getImageUri(this, bitmap);
+                    String path = getRealPathFromURI(this, uri);
+                    String filename = path.substring(path.lastIndexOf("/")+1);
+
+                    if (filename.indexOf(".") > 0) {
+                        picture_name = filename.substring(0, filename.lastIndexOf("."));
+                    } else {
+                        picture_name =  filename;
+                    }
+
+                    // set that the picture has been received
                     is_picture_set = true;
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        }
+    }
+
+    private Uri getImageUri(Context context, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    private String getRealPathFromURI(Context context, Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = { MediaStore.Images.Media.DATA };
+            cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } catch (Exception e) {
+            return "";
+        } finally {
+            if (cursor != null) {
+                cursor.close();
             }
         }
     }
