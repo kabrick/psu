@@ -53,7 +53,7 @@ public class NewsViewActivity extends AppCompatActivity {
     ImageView news_image;
     String title_string, text_string, author_string, timestamp_string, id;
     HelperFunctions helperFunctions;
-    FloatingActionButton create_comment_fab;
+    FloatingActionButton create_comment_fab, share_news_fab;
 
     PreferenceManager preferenceManager;
 
@@ -78,6 +78,18 @@ public class NewsViewActivity extends AppCompatActivity {
         preferenceManager = new PreferenceManager(this);
 
         create_comment_fab = findViewById(R.id.create_comment_fab);
+        share_news_fab = findViewById(R.id.share_news_fab);
+
+        share_news_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, title_string);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, text_string);
+                startActivity(Intent.createChooser(sharingIntent, "Share Article"));
+            }
+        });
 
         create_comment_fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -279,13 +291,5 @@ public class NewsViewActivity extends AppCompatActivity {
 
         //add to request queue in singleton class
         VolleySingleton.getInstance(this).addToRequestQueue(request);
-    }
-
-    public void shareClick(View view){
-        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-        sharingIntent.setType("text/plain");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, title_string);
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, text_string);
-        startActivity(Intent.createChooser(sharingIntent, "Share Article"));
     }
 }
