@@ -6,30 +6,33 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
-import ug.or.psu.psudrugassessmenttool.adapters.NewsFeedAdapter;
 import ug.or.psu.psudrugassessmenttool.adapters.UserNewsFeedAdapter;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
-import ug.or.psu.psudrugassessmenttool.models.NewsFeed;
 import ug.or.psu.psudrugassessmenttool.models.UserNewsFeed;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
@@ -44,6 +47,9 @@ public class UserNewsActivity extends AppCompatActivity implements UserNewsFeedA
     ProgressBar progressBar;
 
     String user_id;
+
+    TextView user_news_name, user_news_position, user_news_email;
+    ImageView user_news_profile_picture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +72,10 @@ public class UserNewsActivity extends AppCompatActivity implements UserNewsFeedA
         mAdapter = new UserNewsFeedAdapter(this, newsList, this);
 
         progressBar = findViewById(R.id.progressBarUserNews);
+        user_news_name = findViewById(R.id.user_news_name);
+        user_news_position = findViewById(R.id.user_news_position);
+        user_news_email = findViewById(R.id.user_news_email);
+        user_news_profile_picture = findViewById(R.id.user_news_profile_picture);
 
         helperFunctions = new HelperFunctions(this);
         preferenceManager = new PreferenceManager(this);
@@ -75,13 +85,80 @@ public class UserNewsActivity extends AppCompatActivity implements UserNewsFeedA
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        fetchNews();
+        fetchUserDetails();
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    private void fetchUserDetails() {
+        helperFunctions.genericProgressBar("Fetching profile details...");
+
+        String network_address = helperFunctions.getIpAddress()
+                + "get_profile_details.php?id=" + user_id;
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        getProfilePicture();
+
+                        try {
+                            user_news_name.setText(response.getString("name"));
+                            user_news_email.setText(response.getString("email"));
+                            user_news_position.setText(response.getString("phone"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //
+            }
+        });
+
+        VolleySingleton.getInstance(UserNewsActivity.this).addToRequestQueue(request);
+    }
+
+    public void getProfilePicture(){
+
+        String network_address = helperFunctions.getIpAddress()
+                + "get_profile_picture.php?id=" + user_id;
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+
+                            helperFunctions.stopProgressBar();
+
+                            String picture = helperFunctions.getIpAddress() + response.getString("photo");
+                            Glide.with(UserNewsActivity.this)
+                                    .load(picture)
+                                    .apply(RequestOptions.circleCropTransform())
+                                    .into(user_news_profile_picture);
+
+                            fetchNews();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //
+            }
+        });
+
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
 
     private void fetchNews() {
