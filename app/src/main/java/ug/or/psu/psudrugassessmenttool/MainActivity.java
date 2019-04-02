@@ -19,6 +19,7 @@ import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,14 +73,16 @@ public class MainActivity extends AppCompatActivity {
     private boolean checkPermission() {
         int result = ContextCompat.checkSelfPermission(getApplicationContext(), ACCESS_FINE_LOCATION);
 
-        return result == PackageManager.PERMISSION_GRANTED;
+        int result2 = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
+
+        return result == PackageManager.PERMISSION_GRANTED && result2 == PackageManager.PERMISSION_GRANTED;
     }
 
     /**
      *  request permissions from user using android inbuilt dialogs
      */
     private void requestPermission() {
-        ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
+        ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION, WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
     }
 
     /**
@@ -94,8 +97,9 @@ public class MainActivity extends AppCompatActivity {
             case PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0) {
                     boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean storageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
-                    if (!locationAccepted){
+                    if (!locationAccepted && !storageAccepted){
                         // location permission has not been granted so request for it
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION)) {
@@ -104,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                                             @RequiresApi(api = Build.VERSION_CODES.M)
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                requestPermissions(new String[]{ACCESS_FINE_LOCATION},
+                                                requestPermissions(new String[]{ACCESS_FINE_LOCATION, WRITE_EXTERNAL_STORAGE},
                                                         PERMISSION_REQUEST_CODE);
                                             }
                                         }, new DialogInterface.OnClickListener() {
@@ -135,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void userPromptPermissions(DialogInterface.OnClickListener okListener, DialogInterface.OnClickListener cancel) {
         new AlertDialog.Builder(MainActivity.this)
-                .setMessage("You need to allow access to location permission to continue")
+                .setMessage("You need to allow access to location and storage permissions to continue")
                 .setPositiveButton("OK", okListener)
                 .setNegativeButton("Cancel", cancel)
                 .create()
