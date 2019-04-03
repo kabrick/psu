@@ -49,7 +49,7 @@ public class UserNewsActivity extends AppCompatActivity implements UserNewsFeedA
 
     String user_id;
 
-    TextView user_news_name, user_news_position, user_news_email;
+    TextView user_news_name, user_news_position;
     ImageView user_news_profile_picture;
 
     @Override
@@ -75,7 +75,6 @@ public class UserNewsActivity extends AppCompatActivity implements UserNewsFeedA
         progressBar = findViewById(R.id.progressBarUserNews);
         user_news_name = findViewById(R.id.user_news_name);
         user_news_position = findViewById(R.id.user_news_position);
-        user_news_email = findViewById(R.id.user_news_email);
         user_news_profile_picture = findViewById(R.id.user_news_profile_picture);
 
         helperFunctions = new HelperFunctions(this);
@@ -110,7 +109,6 @@ public class UserNewsActivity extends AppCompatActivity implements UserNewsFeedA
 
                         try {
                             user_news_name.setText(response.getString("name"));
-                            user_news_email.setText(response.getString("email"));
                             user_news_position.setText(response.getString("phone"));
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -143,7 +141,6 @@ public class UserNewsActivity extends AppCompatActivity implements UserNewsFeedA
                             String picture = helperFunctions.getIpAddress() + response.getString("photo");
                             Glide.with(UserNewsActivity.this)
                                     .load(picture)
-                                    .apply(RequestOptions.circleCropTransform())
                                     .into(user_news_profile_picture);
 
                             fetchNews();
