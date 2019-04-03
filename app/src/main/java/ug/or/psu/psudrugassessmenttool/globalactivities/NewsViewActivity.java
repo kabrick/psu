@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +52,7 @@ public class NewsViewActivity extends AppCompatActivity {
 
     TextView title, text, author, timestamp;
     ImageView news_image;
-    String title_string, text_string, author_string, timestamp_string, id;
+    String title_string, text_string, author_string, timestamp_string, id, image_string;
     HelperFunctions helperFunctions;
     FloatingActionButton create_comment_fab, share_news_fab;
 
@@ -83,10 +84,11 @@ public class NewsViewActivity extends AppCompatActivity {
         share_news_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String share_string = title_string + "\n\n" + text_string + "\n\n" + image_string;
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, title_string);
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, text_string);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, share_string);
                 startActivity(Intent.createChooser(sharingIntent, "Share Article"));
             }
         });
@@ -193,10 +195,10 @@ public class NewsViewActivity extends AppCompatActivity {
                             if(response.getString("photo").equals("0")){
                                 //
                             } else {
-                                String picture = helperFunctions.getIpAddress() + response.getString("photo");
+                                image_string = helperFunctions.getIpAddress() + response.getString("photo");
 
                                 Glide.with(NewsViewActivity.this)
-                                        .load(picture)
+                                        .load(image_string)
                                         .into(news_image);
 
                                 news_image.setVisibility(View.VISIBLE);
