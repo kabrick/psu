@@ -26,14 +26,24 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
             android:id="@+id/user_news_feed_title_list"/>
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="7dp"
+            android:layout_marginTop="7dp"
+            android:layout_below="@id/user_news_feed_title_list"
+            android:id="@+id/user_news_feed_image"
+            android:scaleType="fitXY"
+            android:visibility="gone"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:id="@+id/user_news_feed_text_list"
             android:layout_marginBottom="5dp"
-            android:layout_below="@id/user_news_feed_title_list"
-            android:maxLines="2"/>
+            android:layout_below="@id/user_news_feed_image"
+            android:maxLines="6"/>
 
         <LinearLayout
             android:layout_width="match_parent"

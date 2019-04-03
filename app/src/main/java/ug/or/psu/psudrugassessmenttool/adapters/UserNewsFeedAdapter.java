@@ -5,10 +5,15 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import org.json.JSONException;
 
@@ -22,9 +27,11 @@ public class UserNewsFeedAdapter extends RecyclerView.Adapter<UserNewsFeedAdapte
     private List<UserNewsFeed> newsList;
     private UserNewsFeedAdapterListener listener;
     private HelperFunctions helperFunctions;
+    private Context context;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView title, text, author, timestamp;
+        ImageView image;
         View read_status;
 
         MyViewHolder(View view) {
@@ -34,6 +41,7 @@ public class UserNewsFeedAdapter extends RecyclerView.Adapter<UserNewsFeedAdapte
             author = view.findViewById(R.id.user_news_feed_author_list);
             timestamp = view.findViewById(R.id.user_news_feed_timestamp_list);
             read_status = view.findViewById(R.id.user_read_status);
+            image = view.findViewById(R.id.user_news_feed_image);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -47,6 +55,7 @@ public class UserNewsFeedAdapter extends RecyclerView.Adapter<UserNewsFeedAdapte
     public UserNewsFeedAdapter(Context context, List<UserNewsFeed> newsList, UserNewsFeedAdapterListener listener) {
         this.listener = listener;
         this.newsList = newsList;
+        this.context = context;
         helperFunctions = new HelperFunctions(context);
     }
 
@@ -77,8 +86,6 @@ public class UserNewsFeedAdapter extends RecyclerView.Adapter<UserNewsFeedAdapte
             e.printStackTrace();
         }
 
-        //String image_url = helperFunctions.getIpAddress() + news.getImage();
-
         //covert timestamp to readable format
         CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
                 Long.parseLong(news.getTimeStamp()),
@@ -86,10 +93,17 @@ public class UserNewsFeedAdapter extends RecyclerView.Adapter<UserNewsFeedAdapte
 
         holder.timestamp.setText(timeAgo);
 
-        /*Glide.with(context)
-                .load(image_url)
-                .apply(RequestOptions.fitCenterTransform())
-                .into(holder.image);*/
+        if(news.getImage().equals("0")){
+            //
+        } else {
+            String image_url = helperFunctions.getIpAddress() + news.getImage();
+
+            Glide.with(context)
+                    .load(image_url)
+                    .into(holder.image);
+
+            holder.image.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

@@ -6,6 +6,7 @@ public class UserNewsFeed {
     private String author;
     private String timestamp;
     private String title;
+    private String image;
 
     public String getId() {
         return id;
@@ -45,5 +46,13 @@ public class UserNewsFeed {
 
     public void setTimeStamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
