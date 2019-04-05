@@ -38,6 +38,8 @@ public class PharmacistAssessmentFormFeedActivity extends AppCompatActivity impl
 
     ProgressBar progressBar;
 
+    String pharmacist_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,12 @@ public class PharmacistAssessmentFormFeedActivity extends AppCompatActivity impl
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            pharmacist_id = extras.getString("id", "1");
+        }
 
         RecyclerView recyclerView = findViewById(R.id.recycler_assessment);
         formList = new ArrayList<>();
@@ -73,7 +81,7 @@ public class PharmacistAssessmentFormFeedActivity extends AppCompatActivity impl
     }
 
     private void fetchForms() {
-        String url = helperFunctions.getIpAddress() + "get_pharmacist_assessment_forms.php";
+        String url = helperFunctions.getIpAddress() + "get_pharmacist_assessment_forms.php?id=" + pharmacist_id;
 
         JsonArrayRequest request = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
