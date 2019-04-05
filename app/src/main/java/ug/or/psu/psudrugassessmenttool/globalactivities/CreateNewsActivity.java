@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,13 +33,18 @@ import com.android.volley.toolbox.Volley;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
+import net.gotev.uploadservice.MultipartUploadRequest;
+import net.gotev.uploadservice.UploadNotificationConfig;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 import ug.or.psu.psudrugassessmenttool.R;
+import ug.or.psu.psudrugassessmenttool.helpers.FilePath;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.network.VolleyMultipartRequest;
@@ -52,11 +58,14 @@ public class CreateNewsActivity extends AppCompatActivity {
     private RequestQueue rQueue;
     View activityView;
     boolean is_picture_set = false;
+    boolean is_pdf_set = false;
     String picture_name;
     private final int IMAGE_REQUEST_CODE = 1;
+    private final int PDF_REQUEST_CODE = 2;
+    private Uri filePath;
     Bitmap bitmap;
     FloatingActionMenu fam;
-    FloatingActionButton view_attachments_fab, add_attachments_fab, post_news_fab;
+    FloatingActionButton add_picture_fab, add_attachments_fab, post_news_fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +83,7 @@ public class CreateNewsActivity extends AppCompatActivity {
 
         post_news_fab = findViewById(R.id.post_news_fab);
         add_attachments_fab = findViewById(R.id.add_attachments_fab);
-        view_attachments_fab = findViewById(R.id.view_attachments_fab);
+        add_picture_fab = findViewById(R.id.add_picture_fab);
         fam = findViewById(R.id.news_fam);
 
         // apply listeners
@@ -86,7 +95,7 @@ public class CreateNewsActivity extends AppCompatActivity {
             }
         });
 
-        add_attachments_fab.setOnClickListener(new View.OnClickListener() {
+        add_picture_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addPicture();
@@ -94,16 +103,11 @@ public class CreateNewsActivity extends AppCompatActivity {
             }
         });
 
-        view_attachments_fab.setOnClickListener(new View.OnClickListener() {
+        add_attachments_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                addAttachment();
                 fam.close(true);
-
-                if(is_picture_set){
-                    Toast.makeText(CreateNewsActivity.this, picture_name, Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(CreateNewsActivity.this, "No picture selected", Toast.LENGTH_LONG).show();
-                }
             }
         });
 
@@ -171,9 +175,14 @@ public class CreateNewsActivity extends AppCompatActivity {
                         } else {
                             // check if image is selected
                             if(is_picture_set){
-                                // upload picture and pass the buck to that function
+                                // upload picture
                                 uploadProfilePicture(bitmap, response);
                             } else {
+                                if(is_pdf_set){
+                                    // upload pdf
+                                    uploadPdf(response);
+                                }
+
                                 // saved article successfully
                                 helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
                                 helperFunctions.stopProgressBar();
@@ -205,6 +214,14 @@ public class CreateNewsActivity extends AppCompatActivity {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, IMAGE_REQUEST_CODE);
+    }
+
+    //method to show file chooser
+    public void addAttachment() {
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Pdf"), PDF_REQUEST_CODE);
     }
 
     @Override
@@ -241,6 +258,40 @@ public class CreateNewsActivity extends AppCompatActivity {
                 }
             }
         }
+
+        // check if the user has selected a pdf
+        if (requestCode == PDF_REQUEST_CODE && data != null && data.getData() != null) {
+            filePath = data.getData();
+            is_pdf_set = true;
+            /*String path = getRealPathFromURI(this, filePath);
+            String filename = path.substring(path.lastIndexOf("/")+1);
+            if (filename.indexOf(".") > 0) {
+                filename = filename.substring(0, filename.lastIndexOf("."));
+            }*/
+        }
+    }
+
+    public void uploadPdf(String id) {
+        //getting the actual path of the image
+        String path = FilePath.getPath(this, filePath);
+
+        //Uploading code
+        try {
+            String uploadId = UUID.randomUUID().toString();
+
+            String upload_URL = helperFunctions.getIpAddress() + "upload_news_attachment.php";
+
+            //Creating a multi part request
+            new MultipartUploadRequest(this, uploadId, upload_URL)
+                    .addFileToUpload(path, "pdf") //Adding file
+                    .addParameter("id", id) //Adding text parameter to the request
+                    .setNotificationConfig(new UploadNotificationConfig())
+                    .setMaxRetries(2)
+                    .startUpload(); //Starting the upload
+
+        } catch (Exception exc) {
+            Toast.makeText(this, exc.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
     private Uri getImageUri(Context context, Bitmap inImage) {
@@ -255,6 +306,7 @@ public class CreateNewsActivity extends AppCompatActivity {
         try {
             String[] proj = { MediaStore.Images.Media.DATA };
             cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
+            assert cursor != null;
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(column_index);

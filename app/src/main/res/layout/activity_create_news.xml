@@ -45,8 +45,8 @@
         android:paddingEnd="@dimen/activity_horizontal_margin"
         fab:menu_backgroundColor="#ccffffff"
         fab:menu_fab_label="Choose an action"
-        fab:fab_colorNormal="#DA4336"
-        fab:fab_colorPressed="#E75043"
+        fab:menu_colorNormal="@color/colorAccent"
+        fab:menu_colorPressed="@color/colorAccent"
         fab:fab_colorRipple="#99FFFFFF"
         fab:fab_showShadow="true"
         fab:menu_labels_colorNormal="#333333"
@@ -65,6 +65,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_save"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_colorPressed="@color/colorAccent"
             fab:fab_label="Post News"
             fab:fab_size="mini" />
 
@@ -73,15 +75,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_add"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_colorPressed="@color/colorAccent"
             fab:fab_label="Add Attachment"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/view_attachments_fab"
+            android:id="@+id/add_picture_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_more"
-            fab:fab_label="View Attachment"
+            android:src="@android:drawable/ic_menu_add"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_colorPressed="@color/colorAccent"
+            fab:fab_label="Add Picture"
             fab:fab_size="mini" />
 
     </com.github.clans.fab.FloatingActionMenu>
