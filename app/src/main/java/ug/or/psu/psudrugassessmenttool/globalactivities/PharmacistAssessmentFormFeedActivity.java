@@ -7,15 +7,22 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +44,9 @@ public class PharmacistAssessmentFormFeedActivity extends AppCompatActivity impl
     PreferenceManager preferenceManager;
 
     ProgressBar progressBar;
+
+    TextView pharmacist_assessment_name, pharmacist_assessment_position;
+    ImageView pharmacist_assessment_profile_picture;
 
     String pharmacist_id;
 
@@ -62,6 +72,9 @@ public class PharmacistAssessmentFormFeedActivity extends AppCompatActivity impl
         mAdapter = new PharmacistAssessmentFeedAdapter(formList, this);
 
         progressBar = findViewById(R.id.progressBarAssessment);
+        pharmacist_assessment_name = findViewById(R.id.pharmacist_assessment_name);
+        pharmacist_assessment_position = findViewById(R.id.pharmacist_assessment_position);
+        pharmacist_assessment_profile_picture = findViewById(R.id.pharmacist_assessment_profile_picture);
 
         helperFunctions = new HelperFunctions(this);
         preferenceManager = new PreferenceManager(this);
@@ -71,7 +84,72 @@ public class PharmacistAssessmentFormFeedActivity extends AppCompatActivity impl
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        fetchForms();
+        fetchUserDetails();
+    }
+
+    private void fetchUserDetails() {
+        helperFunctions.genericProgressBar("Fetching profile details...");
+
+        String network_address = helperFunctions.getIpAddress()
+                + "get_profile_details.php?id=" + pharmacist_id;
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        getProfilePicture();
+
+                        try {
+                            pharmacist_assessment_name.setText(response.getString("name"));
+                            pharmacist_assessment_position.setText(response.getString("phone"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //
+            }
+        });
+
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
+    }
+
+    public void getProfilePicture(){
+
+        String network_address = helperFunctions.getIpAddress()
+                + "get_profile_picture.php?id=" + pharmacist_id;
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+
+                            helperFunctions.stopProgressBar();
+
+                            String picture = helperFunctions.getIpAddress() + response.getString("photo");
+                            Glide.with(PharmacistAssessmentFormFeedActivity.this)
+                                    .load(picture)
+                                    .into(pharmacist_assessment_profile_picture);
+
+                            fetchForms();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //
+            }
+        });
+
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
 
     @Override

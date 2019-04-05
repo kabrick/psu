@@ -8,9 +8,47 @@
     android:background="@color/background"
     tools:context=".globalactivities.PharmacistAssessmentFormFeedActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:id="@+id/linear11"
+        android:background="@drawable/rounded_corners"
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/pharmacist_assessment_profile_picture"
+            android:src="@drawable/person"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/pharmacist_assessment_name"
+                tools:ignore="NestedWeights" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/pharmacist_assessment_position"/>
+        </LinearLayout>
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_assessment"
         android:layout_width="match_parent"
+        android:layout_below="@id/linear11"
         android:layout_height="wrap_content"
         android:scrollbars="vertical" />
 
