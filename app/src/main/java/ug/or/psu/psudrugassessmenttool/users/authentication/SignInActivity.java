@@ -120,7 +120,7 @@ public class SignInActivity extends AppCompatActivity {
                                             break;
                                         }
                                         case "3": {
-                                            //create instance of calender
+                                            /*//create instance of calender
                                             Calendar calendar = Calendar.getInstance();
 
                                             //get time_in timestamp
@@ -133,7 +133,7 @@ public class SignInActivity extends AppCompatActivity {
                                             prefManager.setDayIn(calendar.get(Calendar.DAY_OF_WEEK));
 
                                             //get month
-                                            prefManager.setMonthIn(calendar.get(Calendar.MONTH));
+                                            prefManager.setMonthIn(calendar.get(Calendar.MONTH));*/
 
                                             //go to the pharmacist dashboard
                                             Intent intent_psu_pharmacist = new Intent(SignInActivity.this, PsuPharmacistDashboard.class);

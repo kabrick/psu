@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -77,12 +78,12 @@ public class PsuPharmacistDashboard extends AppCompatActivity
         pharmacy_id = new ArrayList<>();
 
         //check if location is already set
-        if(!preferenceManager.isPharmacyLocationSet()){
+        /*if(!preferenceManager.isPharmacyLocationSet()){
             //start dialog
             helperFunctions.genericProgressBar("Getting your allocated pharmacies...");
             //not so start procedure to set it
             getPharmacies();
-        }
+        }*/
 
         drawer = findViewById(R.id.pharmacist_drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -169,7 +170,8 @@ public class PsuPharmacistDashboard extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.action_log_out_psu_pharmacist_dashboard) {
-            helperFunctions.signPharmacistOut();
+            //helperFunctions.signPharmacistOut();
+            helperFunctions.signAdminUsersOut();
         }
 
         return super.onOptionsItemSelected(item);
@@ -185,11 +187,24 @@ public class PsuPharmacistDashboard extends AppCompatActivity
                 startActivity(post_news_intent);
                 break;
             case R.id.pharmacist_log_out:
-                helperFunctions.signPharmacistOut();
+                //helperFunctions.signPharmacistOut();
+                helperFunctions.signAdminUsersOut();
                 break;
             case R.id.pharmacist_edit_profile:
                 Intent edit_profile = new Intent(this, EditProfileActivity.class);
                 startActivity(edit_profile);
+                break;
+            case R.id.pharmacist_add_pharmacy:
+                Toast.makeText(this, "Feature not ready", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.pharmacist_new_attendance:
+                Toast.makeText(this, "Feature not ready", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.pharmacist_set_location:
+                Toast.makeText(this, "Feature not ready", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.pharmacist_own_attendance:
+                Toast.makeText(this, "Feature not ready", Toast.LENGTH_LONG).show();
                 break;
             case R.id.pharmacist_feedback:
                 Intent give_feedback_intent = new Intent(this, FeedbackActivity.class);

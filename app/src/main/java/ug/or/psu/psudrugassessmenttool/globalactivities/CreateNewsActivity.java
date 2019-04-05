@@ -106,7 +106,7 @@ public class CreateNewsActivity extends AppCompatActivity {
         add_attachments_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addAttachment();
+                // addAttachment();
                 fam.close(true);
             }
         });
