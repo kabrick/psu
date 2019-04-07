@@ -2,6 +2,7 @@ package ug.or.psu.psudrugassessmenttool.globalactivities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -54,7 +55,7 @@ public class NewsViewActivity extends AppCompatActivity {
     ImageView news_image;
     String title_string, text_string, author_string, timestamp_string, id, image_string;
     HelperFunctions helperFunctions;
-    FloatingActionButton create_comment_fab, share_news_fab;
+    FloatingActionButton create_comment_fab, share_news_fab, download_news_attachment_fab;
 
     PreferenceManager preferenceManager;
 
@@ -62,6 +63,7 @@ public class NewsViewActivity extends AppCompatActivity {
     private NewsCommentsAdapter mAdapter;
 
     View activityView;
+    String pdf_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,7 @@ public class NewsViewActivity extends AppCompatActivity {
 
         create_comment_fab = findViewById(R.id.create_comment_fab);
         share_news_fab = findViewById(R.id.share_news_fab);
+        download_news_attachment_fab = findViewById(R.id.download_news_attachment_fab);
 
         share_news_fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +93,13 @@ public class NewsViewActivity extends AppCompatActivity {
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, title_string);
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, share_string);
                 startActivity(Intent.createChooser(sharingIntent, "Share Article"));
+            }
+        });
+
+        download_news_attachment_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadPdf();
             }
         });
 
@@ -167,7 +177,6 @@ public class NewsViewActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
         fetchComments();
-
         fetchNewsImage();
     }
 
@@ -188,7 +197,7 @@ public class NewsViewActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        helperFunctions.stopProgressBar();
+                        fetchPdfUrl();
 
                         try {
                             // check if image is null
@@ -215,6 +224,48 @@ public class NewsViewActivity extends AppCompatActivity {
         });
 
         VolleySingleton.getInstance(this).addToRequestQueue(request);
+    }
+
+    public void fetchPdfUrl(){
+        String network_address = helperFunctions.getIpAddress()
+                + "get_news_pdf.php?id=" + id;
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        helperFunctions.stopProgressBar();
+
+                        try {
+                            // check if image is null
+                            if(response.getString("pdf").equals("0")){
+                                //
+                            } else {
+                                pdf_url = helperFunctions.getIpAddress() + response.getString("pdf");
+
+                                download_news_attachment_fab.setVisibility(View.VISIBLE);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //
+            }
+        });
+
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
+    }
+
+    public void downloadPdf(){
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setData(Uri.parse(pdf_url));
+        startActivity(intent);
     }
 
     public void fetchComments(){

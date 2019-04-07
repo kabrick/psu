@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_above="@id/linear2"
+        android:layout_above="@id/reject_news_fab"
         android:padding="20dp">
 
         <ScrollView
@@ -73,29 +73,32 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/approve_news_fab"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:id="@+id/linear2"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/tick" />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="5dp"
-            android:layout_height="wrap_content"
-            android:text="Approve news"
-            android:background="@color/colorAccent"
-            android:onClick="approveNews"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/download_news_attachment_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/approve_news_fab"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:visibility="gone"
+        android:src="@drawable/download" />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Reject news"
-            android:background="@color/colorAccent"
-            android:onClick="rejectNews"/>
-    </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/reject_news_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/cross" />
 
 </RelativeLayout>

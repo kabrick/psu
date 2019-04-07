@@ -106,7 +106,7 @@ public class CreateNewsActivity extends AppCompatActivity {
         add_attachments_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // addAttachment();
+                addAttachment();
                 fam.close(true);
             }
         });
@@ -328,6 +328,7 @@ public class CreateNewsActivity extends AppCompatActivity {
                     public void onResponse(NetworkResponse response) {
                         rQueue.getCache().clear();
                         helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                        uploadPdf(id);
                         helperFunctions.stopProgressBar();
                     }
                 },
