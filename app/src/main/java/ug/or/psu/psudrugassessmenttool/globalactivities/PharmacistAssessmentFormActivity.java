@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -28,8 +29,13 @@ public class PharmacistAssessmentFormActivity extends AppCompatActivity {
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
     TextView pharmacy_name, pharmacist_name;
-    EditText appraiser_name, appraiser_title, from_period, to_period, score_one,
-            score_two, score_three, score_four, score_five;
+    EditText appraiser_name, appraiser_title, from_period, to_period;
+    RadioGroup score_three_radio, score_one_radio,
+            score_two_radio, score_four_radio, score_five_radio;
+    int score_three_int = 0, score_one_int = 0,
+            score_two_int = 0, score_four_int = 0, score_five_int = 0;
+    String score_three = "", score_one = "",
+            score_two = "", score_four = "", score_five = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +60,152 @@ public class PharmacistAssessmentFormActivity extends AppCompatActivity {
         appraiser_title = findViewById(R.id.pharmacist_assessment_appraiser_title);
         from_period = findViewById(R.id.pharmacist_assessment_from_period);
         to_period = findViewById(R.id.pharmacist_assessment_to_period);
-        score_one = findViewById(R.id.pharmacist_assessment_score_one);
-        score_two = findViewById(R.id.pharmacist_assessment_score_two);
-        score_three = findViewById(R.id.pharmacist_assessment_score_three);
-        score_four = findViewById(R.id.pharmacist_assessment_score_four);
-        score_five = findViewById(R.id.pharmacist_assessment_score_five);
+        score_one_radio = findViewById(R.id.pharmacist_assessment_score_one);
+        score_two_radio = findViewById(R.id.pharmacist_assessment_score_two);
+        score_three_radio = findViewById(R.id.pharmacist_assessment_score_three);
+        score_four_radio = findViewById(R.id.pharmacist_assessment_score_four);
+        score_five_radio = findViewById(R.id.pharmacist_assessment_score_five);
+
+        // set the listeners
+        score_three_radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checked_id) {
+                switch (checked_id) {
+                    case R.id.pharmacist_assessment_score_one1:
+                        score_one_int = 100;
+                        score_one = "Very Good";
+                        break;
+                    case R.id.pharmacist_assessment_score_one2:
+                        score_one_int = 75;
+                        score_one = "Good";
+                        break;
+                    case R.id.pharmacist_assessment_score_one3:
+                        score_one_int = 50;
+                        score_one = "Fair";
+                        break;
+                    case R.id.pharmacist_assessment_score_one4:
+                        score_one_int = 25;
+                        score_one = "Poor";
+                        break;
+                    case R.id.pharmacist_assessment_score_one5:
+                        score_one_int = 0;
+                        score_one = "Very Poor";
+                        break;
+                }
+            }
+        });
+
+        score_two_radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checked_id) {
+                switch (checked_id) {
+                    case R.id.pharmacist_assessment_score_two1:
+                        score_two_int = 100;
+                        score_two = "Very Good";
+                        break;
+                    case R.id.pharmacist_assessment_score_two2:
+                        score_two_int = 75;
+                        score_two = "Good";
+                        break;
+                    case R.id.pharmacist_assessment_score_two3:
+                        score_two_int = 50;
+                        score_two = "Fair";
+                        break;
+                    case R.id.pharmacist_assessment_score_two4:
+                        score_two_int = 25;
+                        score_two = "Poor";
+                        break;
+                    case R.id.pharmacist_assessment_score_two5:
+                        score_two_int = 0;
+                        score_two = "Very Poor";
+                        break;
+                }
+            }
+        });
+
+        score_three_radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checked_id) {
+                switch (checked_id) {
+                    case R.id.pharmacist_assessment_score_three1:
+                        score_three_int = 100;
+                        score_three = "Very Good";
+                        break;
+                    case R.id.pharmacist_assessment_score_three2:
+                        score_three_int = 75;
+                        score_three = "Good";
+                        break;
+                    case R.id.pharmacist_assessment_score_three3:
+                        score_three_int = 100;
+                        score_three = "Fair";
+                        break;
+                    case R.id.pharmacist_assessment_score_three4:
+                        score_three_int = 25;
+                        score_three = "Poor";
+                        break;
+                    case R.id.pharmacist_assessment_score_three5:
+                        score_three_int = 0;
+                        score_three = "Very Poor";
+                        break;
+                }
+            }
+        });
+
+        score_four_radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checked_id) {
+                switch (checked_id) {
+                    case R.id.pharmacist_assessment_score_four1:
+                        score_four_int = 100;
+                        score_four = "Very Good";
+                        break;
+                    case R.id.pharmacist_assessment_score_four2:
+                        score_four_int = 75;
+                        score_four = "Good";
+                        break;
+                    case R.id.pharmacist_assessment_score_four3:
+                        score_four_int = 50;
+                        score_four = "Fair";
+                        break;
+                    case R.id.pharmacist_assessment_score_four4:
+                        score_four_int = 25;
+                        score_four = "Poor";
+                        break;
+                    case R.id.pharmacist_assessment_score_four5:
+                        score_four_int = 0;
+                        score_four = "Very Poor";
+                        break;
+                }
+            }
+        });
+
+        score_five_radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checked_id) {
+                switch (checked_id) {
+                    case R.id.pharmacist_assessment_score_five1:
+                        score_five_int = 100;
+                        score_five = "Very Good";
+                        break;
+                    case R.id.pharmacist_assessment_score_five2:
+                        score_five_int = 75;
+                        score_five = "Good";
+                        break;
+                    case R.id.pharmacist_assessment_score_five3:
+                        score_five_int = 50;
+                        score_five = "Fair";
+                        break;
+                    case R.id.pharmacist_assessment_score_five4:
+                        score_five_int = 25;
+                        score_five = "Poor";
+                        break;
+                    case R.id.pharmacist_assessment_score_five5:
+                        score_five_int = 0;
+                        score_five = "Very Poor";
+                        break;
+                }
+            }
+        });
 
         setUpForm();
     }
@@ -141,8 +288,8 @@ public class PharmacistAssessmentFormActivity extends AppCompatActivity {
     public void continueForm(View view){
 
         // calculate the average score
-        int average_score_number = Integer.parseInt(score_one.getText().toString()) + Integer.parseInt(score_two.getText().toString()) +
-                Integer.parseInt(score_three.getText().toString()) + Integer.parseInt(score_four.getText().toString()) + Integer.parseInt(score_five.getText().toString());
+        int average_score_number = score_one_int + score_two_int +
+                score_three_int + score_four_int + score_five_int;
 
         average_score_number = average_score_number / 5;
 
@@ -155,11 +302,11 @@ public class PharmacistAssessmentFormActivity extends AppCompatActivity {
         continue_intent.putExtra("appraiser_title", appraiser_title.getText().toString());
         continue_intent.putExtra("from_period", from_period.getText().toString());
         continue_intent.putExtra("to_period", to_period.getText().toString());
-        continue_intent.putExtra("score_one", score_one.getText().toString());
-        continue_intent.putExtra("score_two", score_two.getText().toString());
-        continue_intent.putExtra("score_three", score_three.getText().toString());
-        continue_intent.putExtra("score_four", score_four.getText().toString());
-        continue_intent.putExtra("score_five", score_five.getText().toString());
+        continue_intent.putExtra("score_one", score_one);
+        continue_intent.putExtra("score_two", score_two);
+        continue_intent.putExtra("score_three", score_three);
+        continue_intent.putExtra("score_four", score_four);
+        continue_intent.putExtra("score_five", score_five);
 
         startActivity(continue_intent);
     }
