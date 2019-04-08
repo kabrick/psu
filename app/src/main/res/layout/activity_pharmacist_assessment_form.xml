@@ -210,7 +210,7 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Very Good"
+                        android:text="Excellent"
                         android:layout_marginEnd="20dp"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_one1" />
@@ -225,7 +225,7 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fair"
+                        android:text="Average"
                         android:layout_marginEnd="20dp"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_one3" />
@@ -233,14 +233,14 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Poor"
+                        android:text="Fair"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_one4" />
 
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Very Poor"
+                        android:text="Poor"
                         android:layout_marginEnd="20dp"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_one5" />
@@ -271,7 +271,7 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Very Good"
+                        android:text="Excellent"
                         android:layout_marginEnd="20dp"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_two1" />
@@ -286,7 +286,7 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fair"
+                        android:text="Average"
                         android:layout_marginEnd="20dp"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_two3" />
@@ -294,14 +294,14 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Poor"
+                        android:text="Fair"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_two4" />
 
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Very Poor"
+                        android:text="Poor"
                         android:layout_marginEnd="20dp"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_two5" />
@@ -332,7 +332,7 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Very Good"
+                        android:text="Excellent"
                         android:layout_marginEnd="20dp"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_three1" />
@@ -347,7 +347,7 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fair"
+                        android:text="Average"
                         android:layout_marginEnd="20dp"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_three3" />
@@ -355,14 +355,14 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Poor"
+                        android:text="Fair"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_three4" />
 
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Very Poor"
+                        android:text="Poor"
                         android:layout_marginEnd="20dp"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_three5" />
@@ -393,7 +393,7 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Very Good"
+                        android:text="Excellent"
                         android:layout_marginEnd="20dp"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_four1" />
@@ -408,7 +408,7 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fair"
+                        android:text="Average"
                         android:layout_marginEnd="20dp"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_four3" />
@@ -416,14 +416,14 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Poor"
+                        android:text="Fair"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_four4" />
 
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Very Poor"
+                        android:text="Poor"
                         android:layout_marginEnd="20dp"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_four5" />
@@ -454,7 +454,7 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Very Good"
+                        android:text="Excellent"
                         android:layout_marginEnd="20dp"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_five1" />
@@ -469,7 +469,7 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fair"
+                        android:text="Average"
                         android:layout_marginEnd="20dp"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_five3" />
@@ -477,14 +477,14 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Poor"
+                        android:text="Fair"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_five4" />
 
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Very Poor"
+                        android:text="Poor"
                         android:layout_marginEnd="20dp"
                         android:checked="false"
                         android:id="@+id/pharmacist_assessment_score_five5" />

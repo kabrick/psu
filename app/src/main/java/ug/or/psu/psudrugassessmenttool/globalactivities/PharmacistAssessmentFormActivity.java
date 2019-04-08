@@ -73,7 +73,7 @@ public class PharmacistAssessmentFormActivity extends AppCompatActivity {
                 switch (checked_id) {
                     case R.id.pharmacist_assessment_score_one1:
                         score_one_int = 100;
-                        score_one = "Very Good";
+                        score_one = "Excellent";
                         break;
                     case R.id.pharmacist_assessment_score_one2:
                         score_one_int = 75;
@@ -81,15 +81,15 @@ public class PharmacistAssessmentFormActivity extends AppCompatActivity {
                         break;
                     case R.id.pharmacist_assessment_score_one3:
                         score_one_int = 50;
-                        score_one = "Fair";
+                        score_one = "Average";
                         break;
                     case R.id.pharmacist_assessment_score_one4:
                         score_one_int = 25;
-                        score_one = "Poor";
+                        score_one = "Fair";
                         break;
                     case R.id.pharmacist_assessment_score_one5:
                         score_one_int = 0;
-                        score_one = "Very Poor";
+                        score_one = "Poor";
                         break;
                 }
             }
@@ -101,7 +101,7 @@ public class PharmacistAssessmentFormActivity extends AppCompatActivity {
                 switch (checked_id) {
                     case R.id.pharmacist_assessment_score_two1:
                         score_two_int = 100;
-                        score_two = "Very Good";
+                        score_two = "Excellent";
                         break;
                     case R.id.pharmacist_assessment_score_two2:
                         score_two_int = 75;
@@ -109,15 +109,15 @@ public class PharmacistAssessmentFormActivity extends AppCompatActivity {
                         break;
                     case R.id.pharmacist_assessment_score_two3:
                         score_two_int = 50;
-                        score_two = "Fair";
+                        score_two = "Average";
                         break;
                     case R.id.pharmacist_assessment_score_two4:
                         score_two_int = 25;
-                        score_two = "Poor";
+                        score_two = "Fair";
                         break;
                     case R.id.pharmacist_assessment_score_two5:
                         score_two_int = 0;
-                        score_two = "Very Poor";
+                        score_two = "Poor";
                         break;
                 }
             }
@@ -129,7 +129,7 @@ public class PharmacistAssessmentFormActivity extends AppCompatActivity {
                 switch (checked_id) {
                     case R.id.pharmacist_assessment_score_three1:
                         score_three_int = 100;
-                        score_three = "Very Good";
+                        score_three = "Excellent";
                         break;
                     case R.id.pharmacist_assessment_score_three2:
                         score_three_int = 75;
@@ -137,15 +137,15 @@ public class PharmacistAssessmentFormActivity extends AppCompatActivity {
                         break;
                     case R.id.pharmacist_assessment_score_three3:
                         score_three_int = 100;
-                        score_three = "Fair";
+                        score_three = "Average";
                         break;
                     case R.id.pharmacist_assessment_score_three4:
                         score_three_int = 25;
-                        score_three = "Poor";
+                        score_three = "Fair";
                         break;
                     case R.id.pharmacist_assessment_score_three5:
                         score_three_int = 0;
-                        score_three = "Very Poor";
+                        score_three = "Poor";
                         break;
                 }
             }
@@ -157,7 +157,7 @@ public class PharmacistAssessmentFormActivity extends AppCompatActivity {
                 switch (checked_id) {
                     case R.id.pharmacist_assessment_score_four1:
                         score_four_int = 100;
-                        score_four = "Very Good";
+                        score_four = "Excellent";
                         break;
                     case R.id.pharmacist_assessment_score_four2:
                         score_four_int = 75;
@@ -165,15 +165,15 @@ public class PharmacistAssessmentFormActivity extends AppCompatActivity {
                         break;
                     case R.id.pharmacist_assessment_score_four3:
                         score_four_int = 50;
-                        score_four = "Fair";
+                        score_four = "Average";
                         break;
                     case R.id.pharmacist_assessment_score_four4:
                         score_four_int = 25;
-                        score_four = "Poor";
+                        score_four = "Fair";
                         break;
                     case R.id.pharmacist_assessment_score_four5:
                         score_four_int = 0;
-                        score_four = "Very Poor";
+                        score_four = "Poor";
                         break;
                 }
             }
@@ -185,7 +185,7 @@ public class PharmacistAssessmentFormActivity extends AppCompatActivity {
                 switch (checked_id) {
                     case R.id.pharmacist_assessment_score_five1:
                         score_five_int = 100;
-                        score_five = "Very Good";
+                        score_five = "Excellent";
                         break;
                     case R.id.pharmacist_assessment_score_five2:
                         score_five_int = 75;
@@ -193,15 +193,15 @@ public class PharmacistAssessmentFormActivity extends AppCompatActivity {
                         break;
                     case R.id.pharmacist_assessment_score_five3:
                         score_five_int = 50;
-                        score_five = "Fair";
+                        score_five = "Average";
                         break;
                     case R.id.pharmacist_assessment_score_five4:
                         score_five_int = 25;
-                        score_five = "Poor";
+                        score_five = "Fair";
                         break;
                     case R.id.pharmacist_assessment_score_five5:
                         score_five_int = 0;
-                        score_five = "Very Poor";
+                        score_five = "Poor";
                         break;
                 }
             }
