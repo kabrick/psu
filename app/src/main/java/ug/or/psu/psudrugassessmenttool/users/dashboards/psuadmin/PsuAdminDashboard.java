@@ -32,6 +32,7 @@ import ug.or.psu.psudrugassessmenttool.globalfragments.ViewPharmacistAttendanceF
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.models.PharmacistAssessmentFeed;
 import ug.or.psu.psudrugassessmenttool.models.PharmacistAssessmentFeedOwner;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSuperSetLocationsFragment;
 
 public class PsuAdminDashboard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -96,17 +97,18 @@ public class PsuAdminDashboard extends AppCompatActivity
                 case 1:
                     return new JobFragment();
                 case 2:
+                    return new NdaSuperSetLocationsFragment();
+                case 3:
+                    return new ViewPharmaciesLocationFragment();
+                case 4:
                     return new ViewPharmacistAttendanceFragment();
-                /*case 3:
-                    return new ViewPharmaciesLocationFragment();*/
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            // return 4;
-            return 3;
+            return 5;
         }
 
         @Override
@@ -117,10 +119,11 @@ public class PsuAdminDashboard extends AppCompatActivity
                 case 1:
                     return "Job Adverts";
                 case 2:
+                    return "Set Locations";
+                case 3:
+                    return "View Locations";
+                case 4:
                     return "Attendance";
-                /*case 3:
-                    //return "View Attendance";
-                    return null;*/
             }
             return super.getPageTitle(position);
         }
