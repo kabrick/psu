@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/signup_view"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".users.authentication.SignUpActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:orientation="vertical"
+            android:background="@color/background"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:text="Sign up with correct credentials below"
+                android:layout_gravity="center"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#ffff"
+                    android:drawableStart="@drawable/user"
+                    android:hint="Names"
+                    android:inputType="textPersonName"
+                    android:id="@+id/sign_up_full_name"
+                    android:textSize="20sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#ffff"
+                    android:drawableStart="@drawable/email"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:id="@+id/sign_up_email"
+                    android:textSize="20sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#ffff"
+                    android:drawableStart="@drawable/phone"
+                    android:hint="Phone Number"
+                    android:inputType="phone"
+                    android:id="@+id/sign_up_phone"
+                    android:textSize="20sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#ffff"
+                    android:drawableStart="@drawable/user"
+                    android:hint="Username"
+                    android:inputType="textPersonName"
+                    android:id="@+id/sign_up_username"
+                    android:textSize="20sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#ffff"
+                    android:drawableStart="@drawable/lock"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:id="@+id/sign_up_password"
+                    android:textSize="20sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/sign_up_mem_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:entries="@array/membership_array" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:onClick="signIn"
+                android:text="Already have an account? Sign in here"
+                android:textSize="16sp" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="@color/colorAccent"
+                android:onClick="signUp"
+                android:text="Sign Up" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -12,11 +12,7 @@
         <item>Choose your membership type</item>
         <item>Pharmacist</item>
         <item>Pharmacy Owner</item>
-        <item>Doctor</item>
-        <item>Hospital Director</item>
-        <item>Administrator</item>
-        <item>NDA Administrator</item>
-        <item>NDA Supervisor</item>
+        <item>Other</item>
     </string-array>
 
     <string-array name="search_choices_pharmacists">

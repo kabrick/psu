@@ -67,7 +67,8 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void signUp(View view){
-        helperFunctions.genericSnackbar("Feature under development", activityView);
+        Intent sign_up_intent = new Intent(this, SignUpActivity.class);
+        startActivity(sign_up_intent);
     }
 
     public void signIn(View view){
@@ -172,6 +173,9 @@ public class SignInActivity extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        //dismiss progress dialog
+                        helperFunctions.stopProgressBar();
+
                         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                             helperFunctions.genericSnackbar("Connection Error. Please check your connection", activityView);
                         } else if (error instanceof AuthFailureError) {
