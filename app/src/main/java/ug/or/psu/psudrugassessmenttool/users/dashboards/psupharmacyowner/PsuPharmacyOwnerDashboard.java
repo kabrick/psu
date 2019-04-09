@@ -39,6 +39,7 @@ import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActi
 import ug.or.psu.psudrugassessmenttool.globalactivities.WholesaleInspectionActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.NewsFragment;
+import ug.or.psu.psudrugassessmenttool.globalfragments.PharmacyOwnerAttendanceFragment;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
@@ -110,13 +111,15 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
                     return new NewsFragment();
                 case 1:
                     return new JobFragment();
+                case 2:
+                    return new PharmacyOwnerAttendanceFragment();
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override
@@ -126,6 +129,8 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
                     return "News";
                 case 1:
                     return "Job Adverts";
+                case 2:
+                    return "Attendance";
             }
             return super.getPageTitle(position);
         }
