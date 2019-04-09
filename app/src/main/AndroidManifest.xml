@@ -79,7 +79,7 @@
         <activity android:name=".globalactivities.EditPharmacistAssessmentFormActivity" />
         <activity android:name=".globalactivities.ViewPharmacistAssessmentFormActivity" />
         <activity android:name=".globalactivities.SearchPharmacistAssessmentFormsActivity" />
-        <activity android:name=".users.authentication.SignUpActivity"></activity>
+        <activity android:name=".users.authentication.SignUpActivity" />
     </application>
 
 </manifest>

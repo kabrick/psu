@@ -419,4 +419,65 @@ public class HelperFunctions {
         VolleySingleton.getInstance(context).addToRequestQueue(request);
     }
 
+    public void signPharmacistOutTemp(){
+
+        //start progress bar
+        genericProgressBar("Logging you out...");
+
+        //get the timestamp out
+        Long time_out = System.currentTimeMillis();
+        Long time_in = prefManager.getTimeIn();
+        Long time_diff = time_out - time_in;
+
+        //get working hours
+        Long working_hours = TimeUnit.MILLISECONDS.toHours(time_diff);
+
+        String network_address = getIpAddress()
+                + "set_new_attendance.php?psu_id=" + prefManager.getPsuId()
+                + "&time_in=" + String.valueOf(time_in)
+                + "&time_out=" + String.valueOf(time_out)
+                + "&latitude_in=" + String.valueOf(prefManager.getCurrentLatitude())
+                + "&longitude_in=" + String.valueOf(prefManager.getCurrentLongitude())
+                + "&latitude_out=" + String.valueOf(prefManager.getLastLatitude())
+                + "&longitude_out=" + String.valueOf(prefManager.getLastLongitude())
+                + "&working_hours=" + String.valueOf(working_hours)
+                + "&pharmacy_id=" + prefManager.getPharmacyId()
+                + "&day_id=" + String.valueOf(prefManager.getDayIn())
+                + "&month_id=" + String.valueOf(prefManager.getMonthIn() + 1);
+
+        // Request a string response from the provided URL.
+        StringRequest request = new StringRequest(network_address,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //stop progress bar
+                        stopProgressBar();
+
+                        //check if location has been saved successfully
+                        if(response.equals("1")){
+
+                            //set location set to false
+                            prefManager.setIsPharmacyLocationSet(false);
+
+                            //clear the service
+                            Intent intent = new Intent(context, TrackPharmacistService.class);
+                            intent.setAction("stop");
+                            context.startService(intent);
+                        } else {
+                            //did not save
+                            genericDialog("Oops! An error occurred. Please try again later");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //stop progress bar
+                stopProgressBar();
+                genericDialog("Oops! An error occurred. Please try again later");
+            }
+        });
+
+        VolleySingleton.getInstance(context).addToRequestQueue(request);
+    }
+
 }

@@ -102,13 +102,15 @@ public class PsuAdminDashboard extends AppCompatActivity
                     return new ViewPharmaciesLocationFragment();
                 case 4:
                     return new ViewPharmacistAttendanceFragment();
+                case 5:
+                    return new MyAttendanceAdminFragment();
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 5;
+            return 6;
         }
 
         @Override
@@ -124,6 +126,8 @@ public class PsuAdminDashboard extends AppCompatActivity
                     return "View Locations";
                 case 4:
                     return "Attendance";
+                case 5:
+                    return "My Attendance";
             }
             return super.getPageTitle(position);
         }
