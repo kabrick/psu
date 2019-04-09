@@ -1,11 +1,13 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -59,9 +61,15 @@ public class CreateNewsActivity extends AppCompatActivity {
     View activityView;
     boolean is_picture_set = false;
     boolean is_pdf_set = false;
+    boolean is_word_set = false;
+    boolean is_excel_set = false;
+    boolean is_powerpoint_set = false;
     String picture_name;
     private final int IMAGE_REQUEST_CODE = 1;
     private final int PDF_REQUEST_CODE = 2;
+    private final int WORD_REQUEST_CODE = 3;
+    private final int EXCEL_REQUEST_CODE = 4;
+    private final int POWERPOINT_REQUEST_CODE = 5;
     private Uri filePath;
     Bitmap bitmap;
     FloatingActionMenu fam;
@@ -180,7 +188,22 @@ public class CreateNewsActivity extends AppCompatActivity {
                             } else {
                                 if(is_pdf_set){
                                     // upload pdf
-                                    uploadPdf(response);
+                                    uploadAttachment(response, "pdf");
+                                }
+
+                                if(is_word_set){
+                                    // upload pdf
+                                    uploadAttachment(response, "word");
+                                }
+
+                                if(is_excel_set){
+                                    // upload pdf
+                                    uploadAttachment(response, "excel");
+                                }
+
+                                if(is_powerpoint_set){
+                                    // upload pdf
+                                    uploadAttachment(response, "powerpoint");
                                 }
 
                                 // saved article successfully
@@ -218,10 +241,42 @@ public class CreateNewsActivity extends AppCompatActivity {
 
     //method to show file chooser
     public void addAttachment() {
-        Intent intent = new Intent();
-        intent.setType("application/pdf");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Pdf"), PDF_REQUEST_CODE);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose your file type");
+
+        String[] string_array = new String[]{"Pdf", "Word", "Excel", "Powerpoint"};
+
+        builder.setItems(string_array, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                if(i == 0){
+                    Intent intent = new Intent();
+                    intent.setType("application/pdf");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Select Pdf"), PDF_REQUEST_CODE);
+                } else if (i == 1){
+                    Intent intent = new Intent();
+                    intent.setType("application/msword");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Select Word"), WORD_REQUEST_CODE);
+                } else if (i == 2){
+                    Intent intent = new Intent();
+                    intent.setType("application/vnd.ms-excel");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Select Excel"), EXCEL_REQUEST_CODE);
+                } else if (i == 3){
+                    Intent intent = new Intent();
+                    intent.setType("application/ms-powerpoint");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Select Powerpoint"), POWERPOINT_REQUEST_CODE);
+                }
+            }
+        });
+
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override
@@ -269,9 +324,39 @@ public class CreateNewsActivity extends AppCompatActivity {
                 filename = filename.substring(0, filename.lastIndexOf("."));
             }*/
         }
+
+        if (requestCode == WORD_REQUEST_CODE && data != null && data.getData() != null) {
+            filePath = data.getData();
+            is_word_set = true;
+            /*String path = getRealPathFromURI(this, filePath);
+            String filename = path.substring(path.lastIndexOf("/")+1);
+            if (filename.indexOf(".") > 0) {
+                filename = filename.substring(0, filename.lastIndexOf("."));
+            }*/
+        }
+
+        if (requestCode == EXCEL_REQUEST_CODE && data != null && data.getData() != null) {
+            filePath = data.getData();
+            is_excel_set = true;
+            /*String path = getRealPathFromURI(this, filePath);
+            String filename = path.substring(path.lastIndexOf("/")+1);
+            if (filename.indexOf(".") > 0) {
+                filename = filename.substring(0, filename.lastIndexOf("."));
+            }*/
+        }
+
+        if (requestCode == POWERPOINT_REQUEST_CODE && data != null && data.getData() != null) {
+            filePath = data.getData();
+            is_powerpoint_set = true;
+            /*String path = getRealPathFromURI(this, filePath);
+            String filename = path.substring(path.lastIndexOf("/")+1);
+            if (filename.indexOf(".") > 0) {
+                filename = filename.substring(0, filename.lastIndexOf("."));
+            }*/
+        }
     }
 
-    public void uploadPdf(String id) {
+    public void uploadAttachment(String id, String type) {
         //getting the actual path of the image
         String path = FilePath.getPath(this, filePath);
 
@@ -285,12 +370,13 @@ public class CreateNewsActivity extends AppCompatActivity {
             new MultipartUploadRequest(this, uploadId, upload_URL)
                     .addFileToUpload(path, "pdf") //Adding file
                     .addParameter("id", id) //Adding text parameter to the request
+                    .addParameter("type", type)
                     .setNotificationConfig(new UploadNotificationConfig())
                     .setMaxRetries(2)
                     .startUpload(); //Starting the upload
 
         } catch (Exception exc) {
-            Toast.makeText(this, exc.getMessage(), Toast.LENGTH_LONG).show();
+            // Toast.makeText(this, exc.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -327,9 +413,29 @@ public class CreateNewsActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(NetworkResponse response) {
                         rQueue.getCache().clear();
-                        helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
-                        uploadPdf(id);
+
+                        if(is_pdf_set){
+                            // upload pdf
+                            uploadAttachment(id, "pdf");
+                        }
+
+                        if(is_word_set){
+                            // upload pdf
+                            uploadAttachment(id, "word");
+                        }
+
+                        if(is_excel_set){
+                            // upload pdf
+                            uploadAttachment(id, "excel");
+                        }
+
+                        if(is_powerpoint_set){
+                            // upload pdf
+                            uploadAttachment(id, "powerpoint");
+                        }
+
                         helperFunctions.stopProgressBar();
+                        helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
                     }
                 },
                 new Response.ErrorListener() {

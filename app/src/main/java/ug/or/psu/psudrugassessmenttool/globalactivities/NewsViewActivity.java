@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -55,7 +56,9 @@ public class NewsViewActivity extends AppCompatActivity {
     ImageView news_image;
     String title_string, text_string, author_string, timestamp_string, id, image_string;
     HelperFunctions helperFunctions;
-    FloatingActionButton create_comment_fab, share_news_fab, download_news_attachment_fab;
+    CardView activity_news_powerpoint, activity_news_excel, activity_news_word, activity_news_pdf;
+    TextView activity_news_powerpoint_text, activity_news_excel_text, activity_news_word_text, activity_news_pdf_text;
+    FloatingActionButton create_comment_fab, share_news_fab;
 
     PreferenceManager preferenceManager;
 
@@ -82,7 +85,42 @@ public class NewsViewActivity extends AppCompatActivity {
 
         create_comment_fab = findViewById(R.id.create_comment_fab);
         share_news_fab = findViewById(R.id.share_news_fab);
-        download_news_attachment_fab = findViewById(R.id.download_news_attachment_fab);
+        activity_news_pdf = findViewById(R.id.activity_news_pdf);
+        activity_news_word = findViewById(R.id.activity_news_word);
+        activity_news_excel = findViewById(R.id.activity_news_excel);
+        activity_news_powerpoint = findViewById(R.id.activity_news_powerpoint);
+        activity_news_pdf_text = findViewById(R.id.activity_news_pdf_text);
+        activity_news_word_text = findViewById(R.id.activity_news_word_text);
+        activity_news_excel_text = findViewById(R.id.activity_news_excel_text);
+        activity_news_powerpoint_text = findViewById(R.id.activity_news_powerpoint_text);
+
+        activity_news_pdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadPdf();
+            }
+        });
+
+        activity_news_word.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadPdf();
+            }
+        });
+
+        activity_news_excel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadPdf();
+            }
+        });
+
+        activity_news_powerpoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadPdf();
+            }
+        });
 
         share_news_fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,13 +131,6 @@ public class NewsViewActivity extends AppCompatActivity {
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, title_string);
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, share_string);
                 startActivity(Intent.createChooser(sharingIntent, "Share Article"));
-            }
-        });
-
-        download_news_attachment_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                downloadPdf();
             }
         });
 
@@ -235,16 +266,113 @@ public class NewsViewActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
 
+                        try {
+                            // check if image is null
+                            if(response.getString("pdf").equals("0")){
+                                fetchWordUrl();
+                            } else {
+                                pdf_url = helperFunctions.getIpAddress() + response.getString("pdf");
+                                helperFunctions.stopProgressBar();
+                                activity_news_pdf.setVisibility(View.VISIBLE);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //
+            }
+        });
+
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
+    }
+
+    public void fetchWordUrl(){
+        String network_address = helperFunctions.getIpAddress()
+                + "get_news_word.php?id=" + id;
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+                            // check if image is null
+                            if(response.getString("word").equals("0")){
+                                fetchExcelUrl();
+                            } else {
+                                helperFunctions.stopProgressBar();
+
+                                pdf_url = helperFunctions.getIpAddress() + response.getString("word");
+
+                                activity_news_word.setVisibility(View.VISIBLE);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //
+            }
+        });
+
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
+    }
+
+    public void fetchExcelUrl(){
+        String network_address = helperFunctions.getIpAddress()
+                + "get_news_excel.php?id=" + id;
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+                            // check if image is null
+                            if(response.getString("excel").equals("0")){
+                                fetchPowerpointUrl();
+                            } else {
+                                pdf_url = helperFunctions.getIpAddress() + response.getString("excel");
+                                helperFunctions.stopProgressBar();
+                                activity_news_excel.setVisibility(View.VISIBLE);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //
+            }
+        });
+
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
+    }
+
+    public void fetchPowerpointUrl(){
+        String network_address = helperFunctions.getIpAddress()
+                + "get_news_pdf.php?id=" + id;
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
                         helperFunctions.stopProgressBar();
 
                         try {
                             // check if image is null
-                            if(response.getString("pdf").equals("0")){
+                            if(response.getString("powerpoint").equals("0")){
                                 //
-                            } else {
-                                pdf_url = helperFunctions.getIpAddress() + response.getString("pdf");
+                            } else {helperFunctions.stopProgressBar();
+                                pdf_url = helperFunctions.getIpAddress() + response.getString("powerpoint");
 
-                                download_news_attachment_fab.setVisibility(View.VISIBLE);
+                                activity_news_powerpoint.setVisibility(View.VISIBLE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
