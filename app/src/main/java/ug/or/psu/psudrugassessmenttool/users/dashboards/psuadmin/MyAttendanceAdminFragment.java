@@ -12,7 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -42,7 +45,6 @@ import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervi
  */
 public class MyAttendanceAdminFragment extends Fragment {
 
-    CardView add_pharmacy_admin, sign_in_out_admin, view_attendance_admin, set_location_admin;
     EditText pharmacy_name, pharmacy_location;
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
@@ -66,6 +68,42 @@ public class MyAttendanceAdminFragment extends Fragment {
         helperFunctions = new HelperFunctions(getContext());
         preferenceManager = new PreferenceManager(Objects.requireNonNull(getContext()));
 
+        // prepare the lists
+        String[] list_items = {"Choose Pharmacy", "Login / Logout Attendance", "View Attendance", "Set Pharmacy Location"};
+
+        ArrayAdapter<String> listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, list_items);
+
+        ListView attendance_list_view = view.findViewById(R.id.attendance_list_view);
+
+        attendance_list_view.setAdapter(listAdapter);
+
+        attendance_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                switch (position){
+                    case 0:
+                        choosePharmacy1();
+                        break;
+                    case 1:
+                        if(!preferenceManager.isPharmacyLocationSet()){
+                            //start dialog
+                            helperFunctions.genericProgressBar("Getting your allocated pharmacies...");
+                            //not so start procedure to set it
+                            getPharmacies();
+                        } else {
+                            helperFunctions.signPharmacistOutTemp();
+                        }
+                        break;
+                    case 2:
+                        viewAttendance();
+                        break;
+                    case 3:
+                        getUnsetPharmacies();
+                        break;
+                }
+            }
+        });
+
         //create array list objects
         pharmacy_names = new ArrayList<>();
         pharmacy_id = new ArrayList<>();
@@ -74,77 +112,38 @@ public class MyAttendanceAdminFragment extends Fragment {
         pharmacy_names_attendance = new ArrayList<>();
         pharmacy_id_attendance = new ArrayList<>();
 
-        add_pharmacy_admin = view.findViewById(R.id.add_pharmacy_admin);
-
-        add_pharmacy_admin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LayoutInflater inflater1 = LayoutInflater.from(getContext());
-
-                View view1 = inflater1.inflate(R.layout.new_pharmacy_view, null);
-
-                pharmacy_name = view1.findViewById(R.id.pharmacy_name);
-                pharmacy_location = view1.findViewById(R.id.pharmacy_location);
-
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
-                alertDialog.setTitle("New Pharmacy Dialog");
-                alertDialog.setView(view1);
-
-                alertDialog.setCancelable(false)
-                        .setPositiveButton("Okay",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
-                                        createNewPharmacy(pharmacy_name.getText().toString(), pharmacy_location.getText().toString());
-                                    }
-                                })
-                        .setNegativeButton("Cancel",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                AlertDialog alertDialog1 = alertDialog.create();
-
-                alertDialog1.show();
-            }
-        });
-
-        sign_in_out_admin = view.findViewById(R.id.sign_in_out_admin);
-
-        sign_in_out_admin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!preferenceManager.isPharmacyLocationSet()){
-                    //start dialog
-                    helperFunctions.genericProgressBar("Getting your allocated pharmacies...");
-                    //not so start procedure to set it
-                    getPharmacies();
-                } else {
-                    helperFunctions.signPharmacistOutTemp();
-                }
-            }
-        });
-
-        view_attendance_admin = view.findViewById(R.id.view_attendance_admin);
-
-        view_attendance_admin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewAttendance();
-            }
-        });
-
-        set_location_admin = view.findViewById(R.id.set_location_admin);
-
-        set_location_admin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getUnsetPharmacies();
-            }
-        });
-
         return view;
+    }
+
+    public void choosePharmacy1(){
+        LayoutInflater inflater1 = LayoutInflater.from(getContext());
+
+        View view1 = inflater1.inflate(R.layout.new_pharmacy_view, null);
+
+        pharmacy_name = view1.findViewById(R.id.pharmacy_name);
+        pharmacy_location = view1.findViewById(R.id.pharmacy_location);
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+        alertDialog.setTitle("New Pharmacy Dialog");
+        alertDialog.setView(view1);
+
+        alertDialog.setCancelable(false)
+                .setPositiveButton("Okay",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                createNewPharmacy(pharmacy_name.getText().toString(), pharmacy_location.getText().toString());
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        AlertDialog alertDialog1 = alertDialog.create();
+
+        alertDialog1.show();
     }
 
     private void createNewPharmacy(String name, String location){
