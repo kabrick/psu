@@ -229,6 +229,7 @@ public class NewsViewActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
 
                         fetchPdfUrl();
+                        helperFunctions.stopProgressBar();
 
                         try {
                             // check if image is null
@@ -363,7 +364,6 @@ public class NewsViewActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        helperFunctions.stopProgressBar();
 
                         try {
                             // check if image is null

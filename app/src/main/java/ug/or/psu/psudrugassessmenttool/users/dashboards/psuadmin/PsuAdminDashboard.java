@@ -72,15 +72,10 @@ public class PsuAdminDashboard extends AppCompatActivity
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         //set fixed cache so that tabs are not reloaded
-        mViewPager.setOffscreenPageLimit(4);
+        mViewPager.setOffscreenPageLimit(3);
 
         TabLayout mTabLayout = findViewById(R.id.tab_psu_admin);
         mTabLayout.setupWithViewPager(mViewPager);
-
-        /*mTabLayout.getTabAt(0).setIcon(R.drawable.news);
-        mTabLayout.getTabAt(1).setIcon(R.drawable.briefcase);
-        mTabLayout.getTabAt(2).setIcon(R.drawable.map);
-        mTabLayout.getTabAt(3).setIcon(R.drawable.attendance);*/
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -96,13 +91,9 @@ public class PsuAdminDashboard extends AppCompatActivity
                     return new NewsFragment();
                 case 1:
                     return new JobFragment();
+                /*case 2:
+                    return new ViewPharmacistAttendanceFragment();*/
                 case 2:
-                    return new NdaSuperSetLocationsFragment();
-                case 3:
-                    return new ViewPharmaciesLocationFragment();
-                case 4:
-                    return new ViewPharmacistAttendanceFragment();
-                case 5:
                     return new MyAttendanceAdminFragment();
             }
             return null;
@@ -110,7 +101,7 @@ public class PsuAdminDashboard extends AppCompatActivity
 
         @Override
         public int getCount() {
-            return 6;
+            return 3;
         }
 
         @Override
@@ -120,14 +111,10 @@ public class PsuAdminDashboard extends AppCompatActivity
                     return "News";
                 case 1:
                     return "Job Adverts";
+                /*case 2:
+                    return "Attendance";*/
                 case 2:
-                    return "Set Locations";
-                case 3:
-                    return "View Locations";
-                case 4:
                     return "Attendance";
-                case 5:
-                    return "My Attendance";
             }
             return super.getPageTitle(position);
         }
@@ -163,12 +150,6 @@ public class PsuAdminDashboard extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.psu_admin_view_wholesale_inspection:
-                Toast.makeText(this, "Feature not available", Toast.LENGTH_LONG).show();
-                break;
-            case R.id.psu_admin_view_retail_inspection:
-                Toast.makeText(this, "Feature not available", Toast.LENGTH_LONG).show();
-                break;
             case R.id.psu_admin_approve_news_posts:
                 Intent approve_news_intent = new Intent(this, ApproveNewsActivity.class);
                 startActivity(approve_news_intent);

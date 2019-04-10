@@ -5,10 +5,6 @@
     <group android:id="@+id/group_menu">
         <item android:id="@+id/psu_admin_post_news"
             android:title="Post News" />
-        <item android:id="@+id/psu_admin_view_wholesale_inspection"
-            android:title="View Wholesale Pharmacy Inspection" />
-        <item android:id="@+id/psu_admin_view_retail_inspection"
-            android:title="View Retail Pharmacy Inspection" />
         <item android:id="@+id/psu_admin_approve_news_posts"
             android:title="Verify News Posts" />
         <item android:id="@+id/psu_admin_view_pharmacist_assessment_form"
