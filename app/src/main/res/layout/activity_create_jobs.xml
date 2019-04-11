@@ -21,7 +21,7 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
             android:layout_width="match_parent"
             android:layout_marginBottom="10dp"
-            android:hint="News Title"
+            android:hint="Job Title"
             android:id="@+id/jobs_title"
             android:layout_height="0dp" />
 
@@ -30,7 +30,7 @@
             android:id="@+id/jobs_text"
             android:layout_width="match_parent"
             android:inputType="textMultiLine"
-            android:hint="Add news here"
+            android:hint="Add job here"
             android:gravity="top"
             android:layout_height="0dp" />
 
@@ -61,6 +61,7 @@
             android:onClick="postNews"
             android:background="@color/colorAccent"
             android:layout_width="match_parent"
+            android:textColor="@color/white"
             android:layout_height="0dp" />
 
     </LinearLayout>

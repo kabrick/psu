@@ -14,10 +14,6 @@
             android:title="Edit Profile" />
         <item android:id="@+id/pharmacy_owner_pharmacist_assessment_form"
             android:title="Pharmacist Assessment Form" />
-        <item android:id="@+id/pharmacy_owner_inspection_wholesale"
-            android:title="Wholesale Pharmacy Self Inspection"/>
-        <item android:id="@+id/pharmacy_owner_inspection_retail"
-            android:title="Retail Pharmacy Self Inspection"/>
         <item android:id="@+id/pharmacy_owner_log_out"
             android:title="Log Out" />
     </group>

@@ -17,10 +17,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:textColor="@color/colorPrimary"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:text="Sign in with correct credentials below"
-            android:layout_gravity="center"/>
+            android:text="Sign in"/>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -55,22 +54,25 @@
                 android:textSize="20sp" />
         </android.support.design.widget.TextInputLayout>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@color/colorAccent"
+            android:onClick="signIn"
+            android:textColor="@color/white"
+            android:text="Sign In" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:onClick="signUp"
+            android:textColor="@color/colorPrimary"
             android:text="Don't have an account? Sign up here"
             android:textSize="16sp" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@color/colorAccent"
-            android:onClick="signIn"
-            android:text="Sign In" />
 
     </LinearLayout>
 

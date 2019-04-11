@@ -6,14 +6,6 @@
     <group android:id="@+id/group_menu">
         <item android:id="@+id/pharmacist_post_news"
             android:title="Post News" />
-        <item android:id="@+id/pharmacist_add_pharmacy"
-            android:title="Add / Choose Pharmacy"/>
-        <item android:id="@+id/pharmacist_new_attendance"
-            android:title="New Attendance"/>
-        <item android:id="@+id/pharmacist_set_location"
-            android:title="Set Pharmacy Location"/>
-        <item android:id="@+id/pharmacist_own_attendance"
-            android:title="View Your attendance"/>
         <item android:id="@+id/pharmacist_feedback"
             android:title="Post Feedback"/>
         <item android:id="@+id/pharmacist_edit_profile"

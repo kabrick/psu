@@ -39,6 +39,7 @@
         android:layout_weight="0.2"
         android:text="Submit Form"
         android:onClick="submitForm"
+        android:textColor="@color/white"
         android:background="@color/colorAccent"/>
 
 </LinearLayout>

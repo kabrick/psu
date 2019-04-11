@@ -22,6 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textColor="@color/colorPrimary"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:text="Sign up with correct credentials below"
                 android:layout_gravity="center"/>
@@ -114,22 +115,25 @@
                 android:layout_marginTop="10dp"
                 android:entries="@array/membership_array" />
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="@color/colorAccent"
+                android:onClick="signUp"
+                android:textColor="@color/white"
+                android:text="Sign Up" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
                 android:onClick="signIn"
+                android:textColor="@color/colorPrimary"
                 android:text="Already have an account? Sign in here"
                 android:textSize="16sp" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:background="@color/colorAccent"
-                android:onClick="signUp"
-                android:text="Sign Up" />
 
         </LinearLayout>
     </ScrollView>

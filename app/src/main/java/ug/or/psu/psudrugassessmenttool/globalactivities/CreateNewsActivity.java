@@ -308,6 +308,8 @@ public class CreateNewsActivity extends AppCompatActivity {
                     // set that the picture has been received
                     is_picture_set = true;
 
+                    helperFunctions.genericDialog("Picture has been added successfully");
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -318,6 +320,8 @@ public class CreateNewsActivity extends AppCompatActivity {
         if (requestCode == PDF_REQUEST_CODE && data != null && data.getData() != null) {
             filePath = data.getData();
             is_pdf_set = true;
+
+            helperFunctions.genericDialog("PDF document has been added successfully");
             /*String path = getRealPathFromURI(this, filePath);
             String filename = path.substring(path.lastIndexOf("/")+1);
             if (filename.indexOf(".") > 0) {
@@ -328,6 +332,8 @@ public class CreateNewsActivity extends AppCompatActivity {
         if (requestCode == WORD_REQUEST_CODE && data != null && data.getData() != null) {
             filePath = data.getData();
             is_word_set = true;
+
+            helperFunctions.genericDialog("Word document has been added successfully");
             /*String path = getRealPathFromURI(this, filePath);
             String filename = path.substring(path.lastIndexOf("/")+1);
             if (filename.indexOf(".") > 0) {
@@ -338,6 +344,8 @@ public class CreateNewsActivity extends AppCompatActivity {
         if (requestCode == EXCEL_REQUEST_CODE && data != null && data.getData() != null) {
             filePath = data.getData();
             is_excel_set = true;
+
+            helperFunctions.genericDialog("Excel document has been added successfully");
             /*String path = getRealPathFromURI(this, filePath);
             String filename = path.substring(path.lastIndexOf("/")+1);
             if (filename.indexOf(".") > 0) {
@@ -348,6 +356,8 @@ public class CreateNewsActivity extends AppCompatActivity {
         if (requestCode == POWERPOINT_REQUEST_CODE && data != null && data.getData() != null) {
             filePath = data.getData();
             is_powerpoint_set = true;
+
+            helperFunctions.genericDialog("Powerpoint document has been added successfully");
             /*String path = getRealPathFromURI(this, filePath);
             String filename = path.substring(path.lastIndexOf("/")+1);
             if (filename.indexOf(".") > 0) {
@@ -435,7 +445,15 @@ public class CreateNewsActivity extends AppCompatActivity {
                         }
 
                         helperFunctions.stopProgressBar();
-                        helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+
+                        AlertDialog.Builder alert = new AlertDialog.Builder(CreateNewsActivity.this);
+
+                        alert.setMessage("Your news article has been posted. It will be reviewed later for approval").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                            }
+                        }).show();
                     }
                 },
                 new Response.ErrorListener() {

@@ -111,15 +111,15 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
                     return new NewsFragment();
                 case 1:
                     return new JobFragment();
-                case 2:
-                    return new PharmacyOwnerAttendanceFragment();
+                /*case 2:
+                    return new PharmacyOwnerAttendanceFragment();*/
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
 
         @Override
@@ -129,8 +129,8 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
                     return "News";
                 case 1:
                     return "Job Adverts";
-                case 2:
-                    return "Attendance";
+                /*case 2:
+                    return "Attendance";*/
             }
             return super.getPageTitle(position);
         }
@@ -184,13 +184,6 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
             case R.id.pharmacy_owner_pharmacist_assessment_form:
                 Intent owner_pharmacist_assessment_form_intent = new Intent(this, PharmacistAssessmentFormFeedOwnerActivity.class);
                 startActivity(owner_pharmacist_assessment_form_intent);
-                break;
-            case R.id.pharmacy_owner_inspection_retail:
-                Toast.makeText(this, "Feature not available", Toast.LENGTH_LONG).show();
-                break;
-            case R.id.pharmacy_owner_inspection_wholesale:
-                Intent intent_wholesale_inspection = new Intent(this, WholesaleInspectionActivity.class);
-                startActivity(intent_wholesale_inspection);
                 break;
             case R.id.pharmacy_owner_log_out:
                 helperFunctions.signAdminUsersOut();

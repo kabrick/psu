@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".users.dashboards.psuadmin.ViewGeneralAttendanceActivity"></activity>
+        <activity android:name=".users.dashboards.psuadmin.ChoosePharmacyActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBd46NlOmxCgW6mbzbpAViSjfxV8FbGgY0" />

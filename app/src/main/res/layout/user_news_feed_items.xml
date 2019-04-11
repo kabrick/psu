@@ -30,6 +30,9 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
                 android:id="@+id/user_news_feed_title_list"
+                android:maxLines="1"
+                android:textSize="20sp"
+                android:ellipsize="end"
                 android:layout_weight="3"/>
 
             <ImageView

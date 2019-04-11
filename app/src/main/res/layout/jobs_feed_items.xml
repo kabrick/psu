@@ -11,6 +11,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textSize="20sp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
         android:id="@+id/jobs_feed_title_list"/>
 

@@ -45,7 +45,6 @@ import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervi
  */
 public class MyAttendanceAdminFragment extends Fragment {
 
-    EditText pharmacy_name, pharmacy_location;
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
     ArrayList<String> pharmacy_names;
@@ -69,9 +68,9 @@ public class MyAttendanceAdminFragment extends Fragment {
         preferenceManager = new PreferenceManager(Objects.requireNonNull(getContext()));
 
         // prepare the lists
-        String[] list_items = {"Choose Pharmacy", "Login / Logout Attendance", "View Attendance", "Set Pharmacy Location"};
+        String[] list_items = {"Choose / Add Pharmacy", "Set Pharmacy Location", "Login / Logout Attendance", "View Attendance", "View General Attendance"};
 
-        ArrayAdapter<String> listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, list_items);
+        ArrayAdapter<String> listAdapter = new ArrayAdapter<>(getContext(), R.layout.my_attendance_list_view, R.id.my_attendance_text, list_items);
 
         ListView attendance_list_view = view.findViewById(R.id.attendance_list_view);
 
@@ -85,6 +84,9 @@ public class MyAttendanceAdminFragment extends Fragment {
                         choosePharmacy1();
                         break;
                     case 1:
+                        getUnsetPharmacies();
+                        break;
+                    case 2:
                         if(!preferenceManager.isPharmacyLocationSet()){
                             //start dialog
                             helperFunctions.genericProgressBar("Getting your allocated pharmacies...");
@@ -94,11 +96,12 @@ public class MyAttendanceAdminFragment extends Fragment {
                             helperFunctions.signPharmacistOutTemp();
                         }
                         break;
-                    case 2:
+                    case 3:
                         viewAttendance();
                         break;
-                    case 3:
-                        getUnsetPharmacies();
+                    case 4:
+                        Intent intent = new Intent(getContext(), ViewGeneralAttendanceActivity.class);
+                        startActivity(intent);
                         break;
                 }
             }
@@ -116,72 +119,8 @@ public class MyAttendanceAdminFragment extends Fragment {
     }
 
     public void choosePharmacy1(){
-        LayoutInflater inflater1 = LayoutInflater.from(getContext());
-
-        View view1 = inflater1.inflate(R.layout.new_pharmacy_view, null);
-
-        pharmacy_name = view1.findViewById(R.id.pharmacy_name);
-        pharmacy_location = view1.findViewById(R.id.pharmacy_location);
-
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
-        alertDialog.setTitle("New Pharmacy Dialog");
-        alertDialog.setView(view1);
-
-        alertDialog.setCancelable(false)
-                .setPositiveButton("Okay",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                createNewPharmacy(pharmacy_name.getText().toString(), pharmacy_location.getText().toString());
-                            }
-                        })
-                .setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-        AlertDialog alertDialog1 = alertDialog.create();
-
-        alertDialog1.show();
-    }
-
-    private void createNewPharmacy(String name, String location){
-        //start progress bar
-        helperFunctions.genericProgressBar("Saving pharmacy location...");
-
-        String network_address = helperFunctions.getIpAddress()
-                + "set_new_pharmacy.php?name=" + name
-                + "&location=" + location
-                + "&id=" + preferenceManager.getPsuId();
-
-        // Request a string response from the provided URL.
-        StringRequest request = new StringRequest(network_address,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //stop progress bar
-                        helperFunctions.stopProgressBar();
-
-                        //check if location has been saved successfully
-                        if(response.equals("1")){
-                            //go back to user dashboard
-                            helperFunctions.genericDialog("Pharmacy saved successfully");
-                        } else {
-                            //did not save
-                            helperFunctions.genericDialog("Oops! An error occurred. Please try again later");
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //stop progress bar
-                helperFunctions.stopProgressBar();
-                helperFunctions.genericDialog("Oops! An error occurred. Please try again later");
-            }
-        });
-
-        VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
+        Intent choose_pharmacy_intent = new Intent(getContext(), ChoosePharmacyActivity.class);
+        startActivity(choose_pharmacy_intent);
     }
 
     public void getPharmacies(){

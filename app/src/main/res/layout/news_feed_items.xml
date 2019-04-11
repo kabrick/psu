@@ -25,7 +25,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
-            android:id="@+id/news_feed_title_list"/>
+            android:id="@+id/news_feed_title_list"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="20sp"/>
 
         <TextView
             android:layout_width="match_parent"

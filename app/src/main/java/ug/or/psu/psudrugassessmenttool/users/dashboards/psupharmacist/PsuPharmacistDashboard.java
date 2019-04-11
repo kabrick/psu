@@ -131,15 +131,15 @@ public class PsuPharmacistDashboard extends AppCompatActivity
                     return new NewsFragment();
                 case 1:
                     return new JobFragment();
-                case 2:
-                    return new PharmacistAttendanceFragment();
+                /*case 2:
+                    return new PharmacistAttendanceFragment();*/
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
 
         @Override
@@ -149,8 +149,8 @@ public class PsuPharmacistDashboard extends AppCompatActivity
                     return "News";
                 case 1:
                     return "Job Adverts";
-                case 2:
-                    return "Attendance";
+                /*case 2:
+                    return "Attendance";*/
             }
             return super.getPageTitle(position);
         }
@@ -198,18 +198,6 @@ public class PsuPharmacistDashboard extends AppCompatActivity
             case R.id.pharmacist_edit_profile:
                 Intent edit_profile = new Intent(this, EditProfileActivity.class);
                 startActivity(edit_profile);
-                break;
-            case R.id.pharmacist_add_pharmacy:
-                Toast.makeText(this, "Feature not ready", Toast.LENGTH_LONG).show();
-                break;
-            case R.id.pharmacist_new_attendance:
-                Toast.makeText(this, "Feature not ready", Toast.LENGTH_LONG).show();
-                break;
-            case R.id.pharmacist_set_location:
-                Toast.makeText(this, "Feature not ready", Toast.LENGTH_LONG).show();
-                break;
-            case R.id.pharmacist_own_attendance:
-                Toast.makeText(this, "Feature not ready", Toast.LENGTH_LONG).show();
                 break;
             case R.id.pharmacist_feedback:
                 Intent give_feedback_intent = new Intent(this, FeedbackActivity.class);
