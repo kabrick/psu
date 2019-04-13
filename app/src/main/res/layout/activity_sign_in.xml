@@ -23,7 +23,7 @@
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_marginTop="30dp"
-        android:src="@drawable/ic_launcher"
+        android:src="@drawable/logo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
@@ -121,25 +121,12 @@
         android:layout_marginTop="20dp"
         android:onClick="signUp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-        android:textColor="#999999"
+        android:textColor="@color/colorAccent"
         android:textStyle="bold"
-        android:id="@+id/no_account"
         app:layout_constraintTop_toBottomOf="@+id/sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:text="Don't have an account? Sign up here"
         android:textSize="16sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="center"
-        android:text="Pharmaceutical Society of Uganda 2019"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/no_account"
-        tools:layout_editor_absoluteX="10dp" />
 
 </android.support.constraint.ConstraintLayout>

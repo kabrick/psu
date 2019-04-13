@@ -25,6 +25,8 @@ import org.json.JSONException;
 
 import java.util.concurrent.TimeUnit;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 import ug.or.psu.psudrugassessmenttool.services.TrackPharmacistService;
 import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
@@ -39,7 +41,8 @@ public class HelperFunctions {
 
     private Context context;
     private static PreferenceManager prefManager;
-    private static ProgressDialog progressDialog;
+    //private static ProgressDialog progressDialog;
+    private SweetAlertDialog pDialog;
 
     /**
      * constructor for the class
@@ -120,19 +123,26 @@ public class HelperFunctions {
      * @param message text to be displayed
      */
     public void genericProgressBar(String message){
-        progressDialog = new ProgressDialog(context);
+        /*progressDialog = new ProgressDialog(context);
         progressDialog.setMessage(message);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
+        progressDialog.show();*/
+
+        pDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper();
+        pDialog.setTitleText(message);
+        pDialog.setCancelable(false);
+        pDialog.show();
     }
 
     /**
      * stop progress bar showing network activity status
      */
     public void stopProgressBar(){
-        progressDialog.dismiss();
+        //progressDialog.dismiss();
+        pDialog.dismiss();
     }
 
     /**

@@ -20,6 +20,7 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import java.util.Calendar;
 import java.util.Objects;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -163,7 +164,10 @@ public class SignInActivity extends AppCompatActivity {
                                     }
                                 } else {
                                     //user credentials are wrong
-                                    helperFunctions.genericDialog("Username or password is incorrect");
+                                    new SweetAlertDialog(SignInActivity.this, SweetAlertDialog.WARNING_TYPE)
+                                            .setContentText("Username or password is incorrect")
+                                            .setConfirmText("Okay")
+                                            .show();
                                 }
                             }
                         }, new Response.ErrorListener() {
@@ -171,25 +175,20 @@ public class SignInActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //dismiss progress dialog
                         helperFunctions.stopProgressBar();
-
-                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                            helperFunctions.genericSnackbar("Connection Error. Please check your connection", activityView);
-                        } else if (error instanceof AuthFailureError) {
-                            helperFunctions.genericSnackbar("Authentication error", activityView);
-                        } else if (error instanceof ServerError) {
-                            helperFunctions.genericSnackbar("Server error", activityView);
-                        } else if (error instanceof NetworkError) {
-                            helperFunctions.genericSnackbar("Network error", activityView);
-                        } else if (error instanceof ParseError) {
-                            helperFunctions.genericSnackbar("Data from server not Available", activityView);
-                        }
+                        new SweetAlertDialog(SignInActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Oops...")
+                                .setContentText("Something went wrong! Please try again")
+                                .show();
                     }
                 });
 
                 //add to request queue in singleton class
                 VolleySingleton.getInstance(this).addToRequestQueue(request);
             } else {
-                helperFunctions.genericSnackbar("Please ensure that you are connected to the internet", activityView);
+                new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Oops...")
+                        .setContentText("Internet connection has been lost!")
+                        .show();
             }
         }
     }
