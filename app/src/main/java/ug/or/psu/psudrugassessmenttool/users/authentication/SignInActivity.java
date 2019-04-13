@@ -56,10 +56,6 @@ public class SignInActivity extends AppCompatActivity {
         username = findViewById(R.id.signin_username);
         password = findViewById(R.id.signin_password);
 
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-
         //add validation for the fields
         mAwesomeValidation = new AwesomeValidation(BASIC);
         mAwesomeValidation.addValidation(this, R.id.signin_username, "[a-zA-Z0-9\\s]+", R.string.missing_username);

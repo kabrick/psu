@@ -47,10 +47,6 @@ public class SignUpActivity extends AppCompatActivity {
         prefManager = new PreferenceManager(this);
         helperFunctions = new HelperFunctions(this);
 
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-
         sign_up_password = findViewById(R.id.sign_up_password);
         sign_up_username = findViewById(R.id.sign_up_username);
         sign_up_phone = findViewById(R.id.sign_up_phone);
