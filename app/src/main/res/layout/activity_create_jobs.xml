@@ -30,7 +30,7 @@
             android:id="@+id/jobs_text"
             android:layout_width="match_parent"
             android:inputType="textMultiLine"
-            android:hint="Add job here"
+            android:hint="Add job description here"
             android:gravity="top"
             android:layout_height="0dp" />
 

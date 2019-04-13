@@ -324,6 +324,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorAccent"
                 android:text="Save Form"
+                android:textColor="@color/white"
                 android:layout_marginBottom="20dp"
                 android:onClick="saveForm"/>
 

@@ -151,8 +151,8 @@ public class NewsFragment extends Fragment implements NewsFeedAdapter.NewsFeedAd
 
         switch (item.getItemId()){
             case R.id.action_view_own_news:
-                Intent intent_own_news = new Intent(getContext(), NewsViewPostedActivity.class);
-                Objects.requireNonNull(getContext()).startActivity(intent_own_news);
+                /*Intent intent_own_news = new Intent(getContext(), NewsViewPostedActivity.class);
+                Objects.requireNonNull(getContext()).startActivity(intent_own_news);*/
                 break;
             default:
                 //

@@ -1,4 +1,4 @@
-package ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin;
+package ug.or.psu.psudrugassessmenttool.globalfragments;
 
 
 import android.content.DialogInterface;
@@ -7,23 +7,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,11 +34,12 @@ import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 import ug.or.psu.psudrugassessmenttool.services.TrackPharmacistService;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorGetLocationActivity;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.ChoosePharmacyActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyAttendanceAdminFragment extends Fragment {
+public class MyAttendanceFragment extends Fragment {
 
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
@@ -54,7 +50,7 @@ public class MyAttendanceAdminFragment extends Fragment {
     ArrayList<String> pharmacy_names_attendance;
     ArrayList<String> pharmacy_id_attendance;
 
-    public MyAttendanceAdminFragment() {
+    public MyAttendanceFragment() {
         // Required empty public constructor
     }
 
@@ -62,17 +58,17 @@ public class MyAttendanceAdminFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_my_attendance_admin, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_attendance, container, false);
 
         helperFunctions = new HelperFunctions(getContext());
         preferenceManager = new PreferenceManager(Objects.requireNonNull(getContext()));
 
         // prepare the lists
-        String[] list_items = {"Choose || Add Pharmacy", "Set Pharmacy Location", "Login || Logout Attendance", "View Attendance", "View General Attendance"};
+        String[] list_items = {"Choose || Add Pharmacy", "Set Pharmacy Location", "Login || Logout Attendance", "View Attendance"};
 
         ArrayAdapter<String> listAdapter = new ArrayAdapter<>(getContext(), R.layout.my_attendance_list_view, R.id.my_attendance_text, list_items);
 
-        ListView attendance_list_view = view.findViewById(R.id.attendance_list_view);
+        ListView attendance_list_view = view.findViewById(R.id.my_attendance_list);
 
         attendance_list_view.setAdapter(listAdapter);
 
@@ -98,10 +94,6 @@ public class MyAttendanceAdminFragment extends Fragment {
                         break;
                     case 3:
                         viewAttendance();
-                        break;
-                    case 4:
-                        Intent intent = new Intent(getContext(), ViewGeneralAttendanceActivity.class);
-                        startActivity(intent);
                         break;
                 }
             }

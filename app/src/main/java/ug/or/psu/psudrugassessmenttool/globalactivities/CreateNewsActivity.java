@@ -256,9 +256,15 @@ public class CreateNewsActivity extends AppCompatActivity {
                     intent.setAction(Intent.ACTION_GET_CONTENT);
                     startActivityForResult(Intent.createChooser(intent, "Select Pdf"), PDF_REQUEST_CODE);
                 } else if (i == 1){
-                    Intent intent = new Intent();
+                    /*Intent intent = new Intent();
                     intent.setType("application/msword");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Select Word"), WORD_REQUEST_CODE);*/
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.setType("*/*");
+                    String[] mimetypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/msword"};
+                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
                     startActivityForResult(Intent.createChooser(intent, "Select Word"), WORD_REQUEST_CODE);
                 } else if (i == 2){
                     Intent intent = new Intent();

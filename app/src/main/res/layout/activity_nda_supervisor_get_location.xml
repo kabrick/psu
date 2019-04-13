@@ -38,6 +38,7 @@
             android:id="@+id/get_location_button"
             android:layout_weight="1"
             android:onClick="getLocation"
+            android:textColor="@color/white"
             android:background="@color/colorAccent"
             android:text="Set Location" />
 

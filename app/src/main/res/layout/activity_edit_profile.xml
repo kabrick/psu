@@ -95,6 +95,7 @@
         android:background="@color/colorAccent"
         android:onClick="saveProfile"
         android:text="Save Profile"
+        android:textColor="@color/white"
         android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

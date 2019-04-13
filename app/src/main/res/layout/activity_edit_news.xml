@@ -41,6 +41,7 @@
             android:onClick="postNews"
             android:background="@color/colorAccent"
             android:layout_width="match_parent"
+            android:textColor="@color/white"
             android:layout_height="0dp" />
 
     </LinearLayout>

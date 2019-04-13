@@ -8,7 +8,7 @@
         <item android:id="@+id/psu_admin_approve_news_posts"
             android:title="Verify News Posts" />
         <item android:id="@+id/psu_admin_view_pharmacist_assessment_form"
-            android:title="View Pharmacist Assessments" />
+            android:title="Pharmacists Assessments" />
         <item android:id="@+id/psu_admin_set_pharmacy_locations"
             android:title="Set Pharmacy Locations" />
         <item android:id="@+id/psu_admin_view_pharmacy_location"
