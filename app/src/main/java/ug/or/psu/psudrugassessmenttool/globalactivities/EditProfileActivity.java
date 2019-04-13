@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -156,8 +157,16 @@ public class EditProfileActivity extends AppCompatActivity {
                         helperFunctions.stopProgressBar();
 
                         if(response.equals("1")){
-                            //saved article successfully
-                            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                            new SweetAlertDialog(EditProfileActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                    .setTitleText("Success!")
+                                    .setContentText("Profile updated successfully!")
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                                        }
+                                    })
+                                    .show();
                         } else {
                             helperFunctions.genericDialog("Failed to update profile");
                         }
@@ -215,7 +224,10 @@ public class EditProfileActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         rQueue.getCache().clear();
                         helperFunctions.stopProgressBar();
-                        helperFunctions.genericDialog("Profile picture updated successfully");
+                        new SweetAlertDialog(EditProfileActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                .setTitleText("Success!")
+                                .setContentText("Profile picture updated successfully!")
+                                .show();
                     }
                 },
                 new Response.ErrorListener() {
