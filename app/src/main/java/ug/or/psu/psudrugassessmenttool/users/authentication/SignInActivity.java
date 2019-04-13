@@ -164,9 +164,8 @@ public class SignInActivity extends AppCompatActivity {
                                     }
                                 } else {
                                     //user credentials are wrong
-                                    new SweetAlertDialog(SignInActivity.this, SweetAlertDialog.WARNING_TYPE)
+                                    new SweetAlertDialog(SignInActivity.this, SweetAlertDialog.ERROR_TYPE)
                                             .setContentText("Username or password is incorrect")
-                                            .setConfirmText("Okay")
                                             .show();
                                 }
                             }

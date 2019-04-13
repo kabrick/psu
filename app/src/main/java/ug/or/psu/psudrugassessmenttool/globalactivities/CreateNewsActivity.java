@@ -425,9 +425,9 @@ public class CreateNewsActivity extends AppCompatActivity {
         String upload_URL = helperFunctions.getIpAddress() + "upload_news_picture.php";
 
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, upload_URL,
-                new Response.Listener<NetworkResponse>() {
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(NetworkResponse response) {
+                    public void onResponse(String response) {
                         rQueue.getCache().clear();
 
                         if(is_pdf_set){

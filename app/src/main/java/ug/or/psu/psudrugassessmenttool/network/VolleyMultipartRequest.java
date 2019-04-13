@@ -15,19 +15,19 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
-public class VolleyMultipartRequest extends Request<NetworkResponse> {
+public class VolleyMultipartRequest extends Request<String> {
 
     private final String twoHyphens = "--";
     private final String lineEnd = "\r\n";
     private final String boundary = "apiclient-" + System.currentTimeMillis();
 
-    private Response.Listener<NetworkResponse> mListener;
+    private Response.Listener<String> mListener;
     private Response.ErrorListener mErrorListener;
     private Map<String, String> mHeaders;
 
 
     public VolleyMultipartRequest(int method, String url,
-                                  Response.Listener<NetworkResponse> listener,
+                                  Response.Listener<String> listener,
                                   Response.ErrorListener errorListener) {
         super(method, url, errorListener);
         this.mListener = listener;
@@ -82,18 +82,18 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
     }
 
     @Override
-    protected Response<NetworkResponse> parseNetworkResponse(NetworkResponse response) {
+    protected Response<String> parseNetworkResponse(NetworkResponse response) {
+        String parsed;
         try {
-            return Response.success(
-                    response,
-                    HttpHeaderParser.parseCacheHeaders(response));
-        } catch (Exception e) {
-            return Response.error(new ParseError(e));
+            parsed = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+        } catch (UnsupportedEncodingException e) {
+            parsed = new String(response.data);
         }
+        return Response.success(parsed, HttpHeaderParser.parseCacheHeaders(response));
     }
 
     @Override
-    protected void deliverResponse(NetworkResponse response) {
+    protected void deliverResponse(String response) {
         mListener.onResponse(response);
     }
 

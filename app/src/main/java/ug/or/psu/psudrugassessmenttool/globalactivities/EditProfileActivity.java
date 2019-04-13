@@ -210,9 +210,9 @@ public class EditProfileActivity extends AppCompatActivity {
         String upload_URL = helperFunctions.getIpAddress() + "update_user_profile_picture.php";
 
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, upload_URL,
-                new Response.Listener<NetworkResponse>() {
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(NetworkResponse response) {
+                    public void onResponse(String response) {
                         rQueue.getCache().clear();
                         helperFunctions.stopProgressBar();
                         helperFunctions.genericDialog("Profile picture updated successfully");

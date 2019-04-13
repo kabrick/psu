@@ -1,29 +1,40 @@
 package ug.or.psu.psudrugassessmenttool.users.authentication;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.ImageView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
-import java.util.Objects;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
+import ug.or.psu.psudrugassessmenttool.network.VolleyMultipartRequest;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
 import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
@@ -33,8 +44,11 @@ public class SignUpActivity extends AppCompatActivity {
     AwesomeValidation mAwesomeValidation;
     PreferenceManager prefManager;
     HelperFunctions helperFunctions;
-    View activityView;
-    Spinner sign_up_mem_status;
+    MaterialSpinner sign_up_mem_status;
+    Bitmap bitmap;
+    ImageView profile_picture;
+    private final int IMAGE_REQUEST_CODE = 1;
+    private RequestQueue rQueue;
     EditText sign_up_password, sign_up_username, sign_up_phone, sign_up_email, sign_up_full_name;
 
     @Override
@@ -42,10 +56,12 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        activityView = findViewById(R.id.signup_view);
-
         prefManager = new PreferenceManager(this);
         helperFunctions = new HelperFunctions(this);
+
+        bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.person);
+
+        profile_picture = findViewById(R.id.sign_up_profile_picture);
 
         sign_up_password = findViewById(R.id.sign_up_password);
         sign_up_username = findViewById(R.id.sign_up_username);
@@ -53,6 +69,8 @@ public class SignUpActivity extends AppCompatActivity {
         sign_up_email = findViewById(R.id.sign_up_email);
         sign_up_full_name = findViewById(R.id.sign_up_full_name);
         sign_up_mem_status = findViewById(R.id.sign_up_mem_status);
+
+        sign_up_mem_status.setItems("Pharmacist", "Pharmacy Owner","Other");
 
         //add validation for the fields
         mAwesomeValidation = new AwesomeValidation(BASIC);
@@ -63,6 +81,41 @@ public class SignUpActivity extends AppCompatActivity {
         // missing_mem_type
     }
 
+    public void changeProfilePicture(View view){
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        startActivityForResult(galleryIntent, IMAGE_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_CANCELED) {
+            return;
+        }
+
+        // check if user has selected an image
+        if (requestCode == IMAGE_REQUEST_CODE) {
+            if (data != null) {
+                Uri contentURI = data.getData();
+                try {
+
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
+                    profile_picture.setImageBitmap(bitmap);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void uploadProfilePicture(){
+        //
+    }
+
     public void signUp(View view){
         if (mAwesomeValidation.validate()){
             if(helperFunctions.getConnectionStatus()){
@@ -70,7 +123,7 @@ public class SignUpActivity extends AppCompatActivity {
                 //show progress dialog
                 helperFunctions.genericProgressBar("Signing you up...");
 
-                String mem_status = sign_up_mem_status.getSelectedItem().toString();
+                String mem_status = sign_up_mem_status.getText().toString();
 
                 switch (mem_status) {
                     case "Pharmacist":
@@ -84,62 +137,131 @@ public class SignUpActivity extends AppCompatActivity {
                         break;
                     default:
                         helperFunctions.stopProgressBar();
-                        helperFunctions.genericDialog("Please select membership status");
+                        new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                .setContentText("Select membership status")
+                                .show();
                         return;
                 }
 
-                String network_address = helperFunctions.getIpAddress()
-                        + "user_sign_up.php?full_names=" + sign_up_full_name.getText().toString()
-                        + "&email=" + sign_up_email.getText().toString()
-                        + "&phone=" + sign_up_phone.getText().toString()
-                        + "&password=" + sign_up_password.getText().toString()
-                        + "&username=" + sign_up_username.getText().toString()
-                        + "&mem_status=" + mem_status;
+                String upload_URL = helperFunctions.getIpAddress() + "user_sign_up.php";
 
-                // Request a string response from the provided URL.
-                StringRequest request = new StringRequest(network_address,
+                final String finalMem_status = mem_status;
+                VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, upload_URL,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                //dismiss progress dialog
+                                rQueue.getCache().clear();
                                 helperFunctions.stopProgressBar();
 
-                                if(response.equals("1")){
-                                    // user registered successfully
-                                    helperFunctions.genericSnackbar("Your profile has been created. Sign in to continue", activityView);
-                                    Intent sign_in_intent = new Intent(SignUpActivity.this, SignInActivity.class);
-                                    startActivity(sign_in_intent);
-                                } else {
-                                    //user credentials are wrong
-                                    helperFunctions.genericDialog("Something went wrong. Please try again later");
+                                switch (response) {
+                                    case "0": {
+                                        new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                                .setTitleText("Oops...")
+                                                .setContentText("Something went wrong! Please try again")
+                                                .show();
+                                        break;
+                                    }
+                                    case "1": {
+                                        // user registered successfully
+                                        new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                                .setTitleText("Success!")
+                                                .setContentText("Your profile has been created. Sign in to continue")
+                                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                    @Override
+                                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                        Intent sign_in_intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                                                        startActivity(sign_in_intent);
+                                                    }
+                                                })
+                                                .show();
+                                        break;
+                                    }
+                                    case "2": {
+                                        // email already taken
+                                        new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                                .setTitleText("Oops...")
+                                                .setContentText("Email address has already been registered")
+                                                .show();
+                                        break;
+                                    }
+                                    case "3": {
+                                        // username already taken
+                                        new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                                .setTitleText("Oops...")
+                                                .setContentText("User name has already been registered")
+                                                .show();
+                                        break;
+                                    }
+                                    case "4": {
+                                        // phone number already taken
+                                        new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                                .setTitleText("Oops...")
+                                                .setContentText("Phone number has already been registered")
+                                                .show();
+                                        break;
+                                    }
+                                    default:
+                                        new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                                .setTitleText("Oops...")
+                                                .setContentText("Something went wrong! Please try again")
+                                                .show();
+                                        break;
                                 }
                             }
-                        }, new Response.ErrorListener() {
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                helperFunctions.stopProgressBar();
+                                new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                        .setTitleText("Oops...")
+                                        .setContentText("Something went wrong! Please try again")
+                                        .show();
+                            }
+                        }) {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //dismiss progress dialog
-                        helperFunctions.stopProgressBar();
-
-                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                            helperFunctions.genericSnackbar("Connection Error. Please check your connection", activityView);
-                        } else if (error instanceof AuthFailureError) {
-                            helperFunctions.genericSnackbar("Authentication error", activityView);
-                        } else if (error instanceof ServerError) {
-                            helperFunctions.genericSnackbar("Server error", activityView);
-                        } else if (error instanceof NetworkError) {
-                            helperFunctions.genericSnackbar("Network error", activityView);
-                        } else if (error instanceof ParseError) {
-                            helperFunctions.genericSnackbar("Data from server not Available", activityView);
-                        }
+                    protected Map<String, String> getParams(){
+                        Map<String, String> params = new HashMap<>();
+                        params.put("full_names", sign_up_full_name.getText().toString());
+                        params.put("email", sign_up_email.getText().toString());
+                        params.put("phone", sign_up_phone.getText().toString());
+                        params.put("password", sign_up_password.getText().toString());
+                        params.put("username", sign_up_username.getText().toString());
+                        params.put("mem_status", finalMem_status);
+                        return params;
                     }
-                });
 
-                //add to request queue in singleton class
-                VolleySingleton.getInstance(this).addToRequestQueue(request);
+                    /*
+                     *pass files using below method
+                     * */
+                    @Override
+                    protected Map<String, DataPart> getByteData() {
+                        Map<String, DataPart> params = new HashMap<>();
+                        long imagename = System.currentTimeMillis();
+                        params.put("filename", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                        return params;
+                    }
+                };
+
+                volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(
+                        0,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                rQueue = Volley.newRequestQueue(this);
+                rQueue.add(volleyMultipartRequest);
             } else {
-                helperFunctions.genericSnackbar("Please ensure that you are connected to the internet", activityView);
+                new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Oops...")
+                        .setContentText("Internet connection has been lost!")
+                        .show();
             }
         }
+    }
+
+    public byte[] getFileDataFromDrawable(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
     }
 
     public void signIn(View view){
