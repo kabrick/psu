@@ -84,12 +84,6 @@ public class NdaSupervisorDashboard extends AppCompatActivity
 
         TabLayout mTabLayout = findViewById(R.id.tab_nda_supervisor);
         mTabLayout.setupWithViewPager(mViewPager);
-
-        mTabLayout.getTabAt(0).setIcon(R.drawable.news);
-        mTabLayout.getTabAt(1).setIcon(R.drawable.briefcase);
-        mTabLayout.getTabAt(2).setIcon(R.drawable.map);
-        mTabLayout.getTabAt(3).setIcon(R.drawable.map_pin);
-        mTabLayout.getTabAt(4).setIcon(R.drawable.attendance);
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -124,20 +118,15 @@ public class NdaSupervisorDashboard extends AppCompatActivity
         public CharSequence getPageTitle(int position){
             switch (position) {
                 case 0:
-                    //return "News";
-                    return null;
+                    return "News";
                 case 1:
-                    //return "Job Adverts";
-                    return null;
+                    return "Job Adverts";
                 case 2:
-                    //return "Set Locations";
-                    return null;
+                    return "Set Locations";
                 case 3:
-                    //return "View Locations";
-                    return null;
+                    return "View Locations";
                 case 4:
-                    //return "View Attendance";
-                    return null;
+                    return "View Attendance";
             }
             return super.getPageTitle(position);
         }

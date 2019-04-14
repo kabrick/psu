@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -129,8 +130,17 @@ public class ViewPharmacistAssessmentFormOwnerActivity extends AppCompatActivity
                         helperFunctions.stopProgressBar();
 
                         if(response.equals("1")){
-                            Intent delete_intent = new Intent(ViewPharmacistAssessmentFormOwnerActivity.this, PharmacistAssessmentFormFeedOwnerActivity.class);
-                            startActivity(delete_intent);
+                            new SweetAlertDialog(ViewPharmacistAssessmentFormOwnerActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                    .setTitleText("Success!")
+                                    .setContentText("Assessment form deleted")
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                            Intent delete_intent = new Intent(ViewPharmacistAssessmentFormOwnerActivity.this, PharmacistAssessmentFormFeedOwnerActivity.class);
+                                            startActivity(delete_intent);
+                                        }
+                                    })
+                                    .show();
                         }
 
                     }

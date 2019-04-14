@@ -168,7 +168,10 @@ public class EditProfileActivity extends AppCompatActivity {
                                     })
                                     .show();
                         } else {
-                            helperFunctions.genericDialog("Failed to update profile");
+                            new SweetAlertDialog(EditProfileActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Oops...")
+                                    .setContentText("Something went wrong! Please try again")
+                                    .show();
                         }
                     }
                 }, new Response.ErrorListener() {

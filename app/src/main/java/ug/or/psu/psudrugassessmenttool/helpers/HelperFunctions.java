@@ -195,10 +195,22 @@ public class HelperFunctions {
                         //check if location has been saved successfully
                         if(response.equals("1")){
                             //go back to user dashboard
-                            getDefaultDashboard(prefManager.getMemberCategory());
+                            new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+                                    .setTitleText("Success!")
+                                    .setContentText("Pharmacy location set")
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                            getDefaultDashboard(prefManager.getMemberCategory());
+                                        }
+                                    })
+                                    .show();
                         } else {
                             //did not save
-                            genericDialog("Oops! An error occurred. Please try again later");
+                            new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Oops...")
+                                    .setContentText("Something went wrong! Please try again")
+                                    .show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -206,7 +218,10 @@ public class HelperFunctions {
             public void onErrorResponse(VolleyError error) {
                 //stop progress bar
                 stopProgressBar();
-                genericDialog("Oops! An error occurred. Please try again later");
+                new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Oops...")
+                        .setContentText("Something went wrong! Please try again")
+                        .show();
             }
         });
 
@@ -245,10 +260,22 @@ public class HelperFunctions {
                         //check if location has been saved successfully
                         if(response.equals("1")){
                             //go back to user dashboard
-                            getDefaultDashboard(prefManager.getMemberCategory());
+                            new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+                                    .setTitleText("Success!")
+                                    .setContentText("Pharmacy location edited")
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                            getDefaultDashboard(prefManager.getMemberCategory());
+                                        }
+                                    })
+                                    .show();
                         } else {
                             //did not save
-                            genericDialog("Oops! An error occurred. Please try again later");
+                            new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Oops...")
+                                    .setContentText("Something went wrong! Please try again")
+                                    .show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -256,7 +283,10 @@ public class HelperFunctions {
             public void onErrorResponse(VolleyError error) {
                 //stop progress bar
                 stopProgressBar();
-                genericDialog("Oops! An error occurred. Please try again later");
+                new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Oops...")
+                        .setContentText("Something went wrong! Please try again")
+                        .show();
             }
         });
 
@@ -414,7 +444,10 @@ public class HelperFunctions {
                             context.startActivity(sign_out_intent);
                         } else {
                             //did not save
-                            genericDialog("Oops! An error occurred. Please try again later");
+                            new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Oops...")
+                                    .setContentText("Something went wrong! Please try again")
+                                    .show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -422,7 +455,10 @@ public class HelperFunctions {
             public void onErrorResponse(VolleyError error) {
                 //stop progress bar
                 stopProgressBar();
-                genericDialog("Oops! An error occurred. Please try again later");
+                new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Oops...")
+                        .setContentText("Something went wrong! Please try again")
+                        .show();
             }
         });
 
@@ -473,9 +509,17 @@ public class HelperFunctions {
                             Intent intent = new Intent(context, TrackPharmacistService.class);
                             intent.setAction("stop");
                             context.startService(intent);
+
+                            new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+                                    .setTitleText("Success!")
+                                    .setContentText("You have been logged out")
+                                    .show();
                         } else {
                             //did not save
-                            genericDialog("Oops! An error occurred. Please try again later");
+                            new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Oops...")
+                                    .setContentText("Something went wrong! Please try again")
+                                    .show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -483,7 +527,10 @@ public class HelperFunctions {
             public void onErrorResponse(VolleyError error) {
                 //stop progress bar
                 stopProgressBar();
-                genericDialog("Oops! An error occurred. Please try again later");
+                new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Oops...")
+                        .setContentText("Something went wrong! Please try again")
+                        .show();
             }
         });
 

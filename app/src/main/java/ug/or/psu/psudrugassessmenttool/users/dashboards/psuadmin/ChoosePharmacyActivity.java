@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.adapters.PharmaciesAdapter;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
@@ -153,12 +154,22 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
 
                         //check if location has been saved successfully
                         if(response.equals("1")){
-                            //go back to user dashboard
-                            helperFunctions.genericDialog("Pharmacy saved successfully");
-                            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                            new SweetAlertDialog(ChoosePharmacyActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                    .setTitleText("Success!")
+                                    .setContentText("Pharmacy saved successfully")
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                                        }
+                                    })
+                                    .show();
                         } else {
                             //did not save
-                            helperFunctions.genericDialog("Oops! An error occurred. Please try again later");
+                            new SweetAlertDialog(ChoosePharmacyActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Oops...")
+                                    .setContentText("Something went wrong! Please try again")
+                                    .show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -166,7 +177,10 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
             public void onErrorResponse(VolleyError error) {
                 //stop progress bar
                 helperFunctions.stopProgressBar();
-                helperFunctions.genericDialog("Oops! An error occurred. Please try again later");
+                new SweetAlertDialog(ChoosePharmacyActivity.this, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Oops...")
+                        .setContentText("Something went wrong! Please try again")
+                        .show();
             }
         });
 
@@ -232,12 +246,22 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
 
                         //check if location has been saved successfully
                         if(response.equals("1")){
-                            //go back to user dashboard
-                            helperFunctions.genericDialog("Pharmacy info saved successfully");
-                            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                            new SweetAlertDialog(ChoosePharmacyActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                    .setTitleText("Success!")
+                                    .setContentText("Pharmacy info saved successfully")
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                                        }
+                                    })
+                                    .show();
                         } else {
                             //did not save
-                            helperFunctions.genericDialog("Oops! An error occurred. Please try again later");
+                            new SweetAlertDialog(ChoosePharmacyActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Oops...")
+                                    .setContentText("Something went wrong! Please try again")
+                                    .show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -245,7 +269,10 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
             public void onErrorResponse(VolleyError error) {
                 //stop progress bar
                 helperFunctions.stopProgressBar();
-                helperFunctions.genericDialog("Oops! An error occurred. Please try again later");
+                new SweetAlertDialog(ChoosePharmacyActivity.this, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Oops...")
+                        .setContentText("Something went wrong! Please try again")
+                        .show();
             }
         });
 

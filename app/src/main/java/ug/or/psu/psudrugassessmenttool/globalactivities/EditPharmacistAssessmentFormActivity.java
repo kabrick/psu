@@ -13,6 +13,7 @@ import com.android.volley.toolbox.StringRequest;
 
 import java.util.Objects;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -118,11 +119,23 @@ public class EditPharmacistAssessmentFormActivity extends AppCompatActivity {
                         //check if location has been saved successfully
                         if(response.equals("1")){
                             //go to views page for submitted pharmacists
-                            Intent intent = new Intent(EditPharmacistAssessmentFormActivity.this, PharmacistAssessmentFormFeedOwnerActivity.class);
-                            startActivity(intent);
+                            new SweetAlertDialog(EditPharmacistAssessmentFormActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                    .setTitleText("Success!")
+                                    .setContentText("Assessment form edited")
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                            Intent intent = new Intent(EditPharmacistAssessmentFormActivity.this, PharmacistAssessmentFormFeedOwnerActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .show();
                         } else {
                             //did not save
-                            helperFunctions.genericDialog("Oops! An error occurred. Please try again later");
+                            new SweetAlertDialog(EditPharmacistAssessmentFormActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Oops...")
+                                    .setContentText("Something went wrong! Please try again")
+                                    .show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -130,7 +143,10 @@ public class EditPharmacistAssessmentFormActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 //stop progress bar
                 helperFunctions.stopProgressBar();
-                helperFunctions.genericDialog("Oops! An error occurred. Please try again later");
+                new SweetAlertDialog(EditPharmacistAssessmentFormActivity.this, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Oops...")
+                        .setContentText("Something went wrong! Please try again")
+                        .show();
             }
         });
 

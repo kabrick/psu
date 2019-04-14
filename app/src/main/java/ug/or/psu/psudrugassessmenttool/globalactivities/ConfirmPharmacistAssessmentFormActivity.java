@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -110,14 +111,25 @@ public class ConfirmPharmacistAssessmentFormActivity extends AppCompatActivity {
                         //stop progress bar
                         helperFunctions.stopProgressBar();
 
-                        //check if location has been saved successfully
                         if(response.equals("1")){
                             //go to views page for submitted pharmacists
-                            Intent intent = new Intent(ConfirmPharmacistAssessmentFormActivity.this, PharmacistAssessmentFormFeedOwnerActivity.class);
-                            startActivity(intent);
+                            new SweetAlertDialog(ConfirmPharmacistAssessmentFormActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                    .setTitleText("Success!")
+                                    .setContentText("Assessment form submitted")
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                            Intent intent = new Intent(ConfirmPharmacistAssessmentFormActivity.this, PharmacistAssessmentFormFeedOwnerActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .show();
                         } else {
                             //did not save
-                            helperFunctions.genericDialog("Oops! An error occurred. Please try again later");
+                            new SweetAlertDialog(ConfirmPharmacistAssessmentFormActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Oops...")
+                                    .setContentText("Something went wrong! Please try again")
+                                    .show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -125,7 +137,10 @@ public class ConfirmPharmacistAssessmentFormActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 //stop progress bar
                 helperFunctions.stopProgressBar();
-                helperFunctions.genericDialog("Oops! An error occurred. Please try again later");
+                new SweetAlertDialog(ConfirmPharmacistAssessmentFormActivity.this, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Oops...")
+                        .setContentText("Something went wrong! Please try again")
+                        .show();
             }
         });
 

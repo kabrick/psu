@@ -20,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 
 import java.util.Objects;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -117,25 +118,30 @@ public class CreateJobsActivity extends AppCompatActivity {
 
                         if(response.equals("1")){
                             //saved article successfully
-                            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                            new SweetAlertDialog(CreateJobsActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                    .setTitleText("Success!")
+                                    .setContentText("Job has been posted")
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                                        }
+                                    })
+                                    .show();
                         } else {
-                            helperFunctions.genericSnackbar("Posting job advert failed!", activityView);
+                            new SweetAlertDialog(CreateJobsActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Oops...")
+                                    .setContentText("Something went wrong! Please try again")
+                                    .show();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    helperFunctions.genericSnackbar("Connection Error. Please check your connection", activityView);
-                } else if (error instanceof AuthFailureError) {
-                    helperFunctions.genericSnackbar("Authentication error", activityView);
-                } else if (error instanceof ServerError) {
-                    helperFunctions.genericSnackbar("Server error", activityView);
-                } else if (error instanceof NetworkError) {
-                    helperFunctions.genericSnackbar("Network error", activityView);
-                } else if (error instanceof ParseError) {
-                    helperFunctions.genericSnackbar("Data from server not available", activityView);
-                }
+                new SweetAlertDialog(CreateJobsActivity.this, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Oops...")
+                        .setContentText("Something went wrong! Please try again")
+                        .show();
             }
         });
 

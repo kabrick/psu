@@ -1,6 +1,5 @@
 package ug.or.psu.psudrugassessmenttool.globalfragments;
 
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,23 +9,24 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Objects;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
@@ -36,9 +36,6 @@ import ug.or.psu.psudrugassessmenttool.services.TrackPharmacistService;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorGetLocationActivity;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.ChoosePharmacyActivity;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MyAttendanceFragment extends Fragment {
 
     HelperFunctions helperFunctions;
@@ -49,6 +46,7 @@ public class MyAttendanceFragment extends Fragment {
     ArrayList<String> pharmacy_id_admin;
     ArrayList<String> pharmacy_names_attendance;
     ArrayList<String> pharmacy_id_attendance;
+    RelativeLayout relative1, relative2, relative3, relative4;
 
     public MyAttendanceFragment() {
         // Required empty public constructor
@@ -63,39 +61,43 @@ public class MyAttendanceFragment extends Fragment {
         helperFunctions = new HelperFunctions(getContext());
         preferenceManager = new PreferenceManager(Objects.requireNonNull(getContext()));
 
-        // prepare the lists
-        String[] list_items = {"Choose || Add Pharmacy", "Set Pharmacy Location", "Login || Logout Attendance", "View Attendance"};
+        relative1 = view.findViewById(R.id.relative1);
+        relative2 = view.findViewById(R.id.relative2);
+        relative3 = view.findViewById(R.id.relative3);
+        relative4 = view.findViewById(R.id.relative4);
 
-        ArrayAdapter<String> listAdapter = new ArrayAdapter<>(getContext(), R.layout.my_attendance_list_view, R.id.my_attendance_text, list_items);
-
-        ListView attendance_list_view = view.findViewById(R.id.my_attendance_list);
-
-        attendance_list_view.setAdapter(listAdapter);
-
-        attendance_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        relative1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                switch (position){
-                    case 0:
-                        choosePharmacy1();
-                        break;
-                    case 1:
-                        getUnsetPharmacies();
-                        break;
-                    case 2:
-                        if(!preferenceManager.isPharmacyLocationSet()){
-                            //start dialog
-                            helperFunctions.genericProgressBar("Getting your allocated pharmacies...");
-                            //not so start procedure to set it
-                            getPharmacies();
-                        } else {
-                            helperFunctions.signPharmacistOutTemp();
-                        }
-                        break;
-                    case 3:
-                        viewAttendance();
-                        break;
+            public void onClick(View view) {
+                isUserValid();
+            }
+        });
+
+        relative2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getUnsetPharmacies();
+            }
+        });
+
+        relative3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!preferenceManager.isPharmacyLocationSet()){
+                    //start dialog
+                    helperFunctions.genericProgressBar("Getting your allocated pharmacies...");
+                    //not so start procedure to set it
+                    getPharmacies();
+                } else {
+                    helperFunctions.signPharmacistOutTemp();
                 }
+            }
+        });
+
+        relative4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewAttendance();
             }
         });
 
@@ -110,9 +112,47 @@ public class MyAttendanceFragment extends Fragment {
         return view;
     }
 
-    public void choosePharmacy1(){
-        Intent choose_pharmacy_intent = new Intent(getContext(), ChoosePharmacyActivity.class);
-        startActivity(choose_pharmacy_intent);
+    public void isUserValid(){
+        // check if the user has not exceeded the limit of 2 pharmacies
+
+        //show progress dialog
+        helperFunctions.genericProgressBar("Confirming your status...");
+
+        String network_address = helperFunctions.getIpAddress() + "check_valid_pharmacies.php?id=" + preferenceManager.getPsuId();
+
+        // Request a string response from the provided URL.
+        StringRequest request = new StringRequest(network_address,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //dismiss progress dialog
+                        helperFunctions.stopProgressBar();
+
+                        if(response.equals("0")){
+                            // not allowed
+                            new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Oops...")
+                                    .setContentText("You can not add another pharmacy")
+                                    .show();
+                        } else if (response.equals("1")){
+                            // allowed
+                            Intent choose_pharmacy_intent = new Intent(getContext(), ChoosePharmacyActivity.class);
+                            startActivity(choose_pharmacy_intent);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                helperFunctions.stopProgressBar();
+                new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Oops...")
+                        .setContentText("Something went wrong! Please try again")
+                        .show();
+            }
+        });
+
+        //add to request queue in singleton class
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
     }
 
     public void getPharmacies(){
@@ -154,18 +194,28 @@ public class MyAttendanceFragment extends Fragment {
     }
 
     public void choosePharmacy(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
-        builder.setTitle("Choose your pharmacy");
 
         //convert array list to string array
         String[] mStringArray = new String[pharmacy_names.size()];
         mStringArray = pharmacy_names.toArray(mStringArray);
 
+        // confirm that pharmacies exist
+        if(mStringArray.length < 1){
+            new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("Oops...")
+                    .setContentText("Pharmacies not available")
+                    .show();
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+        builder.setTitle("Choose your pharmacy");
+
         builder.setItems(mStringArray, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //open working on something dialog
-                helperFunctions.genericProgressBar("Setting pharmacy location...");
+                helperFunctions.genericProgressBar("Logging you in...");
 
                 //set the selected pharmacy in prefs
                 preferenceManager.setPharmacyId(pharmacy_id.get(i));
@@ -186,6 +236,21 @@ public class MyAttendanceFragment extends Fragment {
                                     //set pharmacy location
                                     preferenceManager.setIsPharmacyLocationSet(true);
 
+                                    //create instance of calender
+                                    Calendar calendar = Calendar.getInstance();
+
+                                    //get time_in timestamp
+                                    preferenceManager.setTimeIn(System.currentTimeMillis());
+
+                                    //get current location in, latitude and longitude
+                                    helperFunctions.setCurrentLocation();
+
+                                    //get day
+                                    preferenceManager.setDayIn(calendar.get(Calendar.DAY_OF_WEEK));
+
+                                    //get month
+                                    preferenceManager.setMonthIn(calendar.get(Calendar.MONTH));
+
                                     //start service
                                     Intent intent = new Intent(getContext(), TrackPharmacistService.class);
                                     intent.setAction("start");
@@ -193,6 +258,11 @@ public class MyAttendanceFragment extends Fragment {
 
                                     //dismiss dialog and snack success
                                     helperFunctions.stopProgressBar();
+
+                                    new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.SUCCESS_TYPE)
+                                            .setTitleText("Success!")
+                                            .setContentText("You have been logged in")
+                                            .show();
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -228,6 +298,10 @@ public class MyAttendanceFragment extends Fragment {
 
                         JSONObject obj;
 
+                        // reset values
+                        pharmacy_id_admin.clear();
+                        pharmacy_names_admin.clear();
+
                         for (int i = 0; i < response.length(); i++){
 
                             try {
@@ -255,12 +329,21 @@ public class MyAttendanceFragment extends Fragment {
     }
 
     public void choosePharmacyAdmin(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
-        builder.setTitle("Choose your pharmacy");
-
         //convert array list to string array
         String[] mStringArray = new String[pharmacy_names_admin.size()];
         mStringArray = pharmacy_names_admin.toArray(mStringArray);
+
+        // confirm that pharmacies exist
+        if(mStringArray.length < 1){
+            new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("Oops...")
+                    .setContentText("Pharmacies not available")
+                    .show();
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+        builder.setTitle("Choose your pharmacy");
 
         builder.setItems(mStringArray, new DialogInterface.OnClickListener() {
             @Override
@@ -293,6 +376,9 @@ public class MyAttendanceFragment extends Fragment {
 
                         JSONObject obj;
 
+                        pharmacy_id_attendance.clear();
+                        pharmacy_names_attendance.clear();
+
                         for (int i = 0; i < response.length(); i++){
 
                             try {
@@ -321,12 +407,21 @@ public class MyAttendanceFragment extends Fragment {
 
     public void viewAttendanceAdmin(){
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
-        builder.setTitle("Choose your pharmacy");
-
         //convert array list to string array
         String[] mStringArray = new String[pharmacy_names_attendance.size()];
         mStringArray = pharmacy_names_attendance.toArray(mStringArray);
+
+        // confirm that pharmacies exist
+        if(mStringArray.length < 1){
+            new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("Oops...")
+                    .setContentText("Pharmacies not available")
+                    .show();
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+        builder.setTitle("Choose your pharmacy");
 
         builder.setItems(mStringArray, new DialogInterface.OnClickListener() {
             @Override

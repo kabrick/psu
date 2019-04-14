@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PSU Practice App</string>
+    <string name="app_name">PSU</string>
 
     <string-array name="sex_array">
         <item>Choose your gender</item>
