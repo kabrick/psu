@@ -1,7 +1,9 @@
 package ug.or.psu.psudrugassessmenttool.globalfragments;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -166,6 +168,10 @@ public class MyAttendanceFragment extends Fragment {
                         helperFunctions.stopProgressBar();
 
                         JSONObject obj;
+
+                        // reset values
+                        pharmacy_id.clear();
+                        pharmacy_names.clear();
 
                         for (int i = 0; i < response.length(); i++){
 
@@ -349,11 +355,35 @@ public class MyAttendanceFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                Intent intent = new Intent(getContext(), NdaSupervisorGetLocationActivity.class);
-                intent.putExtra("pharmacy_name", pharmacy_names_admin.get(i));
-                intent.putExtra("pharmacy_id", pharmacy_id_admin.get(i));
-                intent.putExtra("status", "0");
-                startActivity(intent);
+                // check if location is turned on
+                LocationManager locationManager = (LocationManager) Objects.requireNonNull(getActivity()).getSystemService(Context.LOCATION_SERVICE);
+
+                assert locationManager != null;
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                    // location not enabled
+
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+                    builder.setMessage("Your location seems to be disabled. Do you want to enable it to continue?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(final DialogInterface dialog, final int id) {
+                                    startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(final DialogInterface dialog, final int id) {
+                                    //
+                                }
+                            });
+                    final AlertDialog alert = builder.create();
+                    alert.show();
+                } else {
+                    Intent intent = new Intent(getContext(), NdaSupervisorGetLocationActivity.class);
+                    intent.putExtra("pharmacy_name", pharmacy_names_admin.get(i));
+                    intent.putExtra("pharmacy_id", pharmacy_id_admin.get(i));
+                    intent.putExtra("status", "0");
+                    startActivity(intent);
+                }
             }
         });
 

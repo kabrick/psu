@@ -1,8 +1,10 @@
 package ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -161,11 +163,36 @@ public class NdaSuperSetLocationsFragment extends Fragment implements Supervisor
     }
 
     public void continueToSetLocation(String name, String id, String status){
-        Intent intent = new Intent(getContext(), NdaSupervisorGetLocationActivity.class);
-        intent.putExtra("pharmacy_name", name);
-        intent.putExtra("pharmacy_id", id);
-        intent.putExtra("status", status);
-        startActivity(intent);
+
+        // check if location is turned on
+        LocationManager locationManager = (LocationManager) Objects.requireNonNull(getActivity()).getSystemService(Context.LOCATION_SERVICE);
+
+        assert locationManager != null;
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            // location not enabled
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+            builder.setMessage("Your location seems to be disabled. Do you want to enable it to continue?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(final DialogInterface dialog, final int id) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(final DialogInterface dialog, final int id) {
+                            //
+                        }
+                    });
+            final AlertDialog alert = builder.create();
+            alert.show();
+        } else {
+            Intent intent = new Intent(getContext(), NdaSupervisorGetLocationActivity.class);
+            intent.putExtra("pharmacy_name", name);
+            intent.putExtra("pharmacy_id", id);
+            intent.putExtra("status", status);
+            startActivity(intent);
+        }
     }
 
 }

@@ -58,38 +58,13 @@ public class MainActivity extends AppCompatActivity {
      * user authentication method for sign in or sign up depending on user status
      */
     public void userAuthentication(){
-
-        // check if location is turned on
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        assert locationManager != null;
-        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            // location not enabled
-
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Your location seems to be disabled. Do you want to enable it to continue?")
-                    .setCancelable(false)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(final DialogInterface dialog, final int id) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        public void onClick(final DialogInterface dialog, final int id) {
-                            finish();
-                        }
-                    });
-            final AlertDialog alert = builder.create();
-            alert.show();
+        if(prefManager.isSignedIn()){
+            // user is signed in so check member category and go to respective dashboard
+            helperFunctions.getDefaultDashboard(prefManager.getMemberCategory());
         } else {
-            if(prefManager.isSignedIn()){
-                // user is signed in so check member category and go to respective dashboard
-                helperFunctions.getDefaultDashboard(prefManager.getMemberCategory());
-            } else {
-                // user is not signed in so go to sign in page
-                Intent intent_sign_in = new Intent(MainActivity.this, SignInActivity.class);
-                startActivity(intent_sign_in);
-            }
+            // user is not signed in so go to sign in page
+            Intent intent_sign_in = new Intent(MainActivity.this, SignInActivity.class);
+            startActivity(intent_sign_in);
         }
     }
 

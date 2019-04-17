@@ -95,7 +95,7 @@ public class UserNewsActivity extends AppCompatActivity implements UserNewsFeedA
     }
 
     private void fetchUserDetails() {
-        helperFunctions.genericProgressBar("Fetching profile details...");
+        helperFunctions.genericProgressBar("Fetching news...");
 
         String network_address = helperFunctions.getIpAddress()
                 + "get_profile_details.php?id=" + user_id;

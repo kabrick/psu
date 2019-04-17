@@ -273,6 +273,7 @@ public class NewsViewActivity extends AppCompatActivity {
                                 fetchWordUrl();
                             } else {
                                 pdf_url = helperFunctions.getIpAddress() + response.getString("pdf");
+                                // String pdf = response.getString("pdf").replace("images/news/", "");
                                 helperFunctions.stopProgressBar();
                                 activity_news_pdf.setVisibility(View.VISIBLE);
                             }
