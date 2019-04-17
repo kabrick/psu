@@ -50,7 +50,7 @@ public class MyAttendanceAdminFragment extends Fragment {
     ArrayList<String> pharmacy_id_admin;
     ArrayList<String> pharmacy_names_attendance;
     ArrayList<String> pharmacy_id_attendance;
-    RelativeLayout relative1, relative2, relative3, relative4, relative5, relative6;
+    RelativeLayout relative1, relative2, relative3, relative4, relative5, relative6, relative7;
 
     public MyAttendanceAdminFragment() {
         // Required empty public constructor
@@ -71,6 +71,7 @@ public class MyAttendanceAdminFragment extends Fragment {
         relative4 = view.findViewById(R.id.relative4);
         relative5 = view.findViewById(R.id.relative5);
         relative6 = view.findViewById(R.id.relative6);
+        relative7 = view.findViewById(R.id.relative7);
 
         relative1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +96,24 @@ public class MyAttendanceAdminFragment extends Fragment {
                     //not so start procedure to set it
                     getPharmacies();
                 } else {
+                    new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Oops...")
+                            .setContentText("You are already logged in")
+                            .show();
+                }
+            }
+        });
+
+        relative7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(preferenceManager.isPharmacyLocationSet()){
                     helperFunctions.signPharmacistOutTemp();
+                } else {
+                    new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Oops...")
+                            .setContentText("You are not logged in")
+                            .show();
                 }
             }
         });

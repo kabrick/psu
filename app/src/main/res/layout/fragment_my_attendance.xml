@@ -77,6 +77,7 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:id="@+id/image5"
+                android:scaleY="-1"
                 android:src="@drawable/location_blue"/>
 
             <TextView
@@ -117,7 +118,32 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_below="@id/image3"
-                android:text="Login || Logout Attendance"/>
+                android:text="Login Attendance"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/relative6"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:alpha="1"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:id="@+id/image6"
+                android:scaleX="-1"
+                android:src="@drawable/login_blue"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_below="@id/image6"
+                android:text="Logout Attendance"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -143,11 +169,6 @@
                 android:layout_below="@id/image4"
                 android:text="View Attendance"/>
         </RelativeLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
 
     </LinearLayout>
 
