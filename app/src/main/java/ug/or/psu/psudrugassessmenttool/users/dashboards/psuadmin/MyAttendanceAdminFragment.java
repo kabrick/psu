@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import java.util.Objects;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.ViewPharmacyLocationActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
@@ -48,7 +50,7 @@ public class MyAttendanceAdminFragment extends Fragment {
     ArrayList<String> pharmacy_id_admin;
     ArrayList<String> pharmacy_names_attendance;
     ArrayList<String> pharmacy_id_attendance;
-    RelativeLayout relative1, relative2, relative3, relative4, relative5;
+    RelativeLayout relative1, relative2, relative3, relative4, relative5, relative6;
 
     public MyAttendanceAdminFragment() {
         // Required empty public constructor
@@ -68,6 +70,7 @@ public class MyAttendanceAdminFragment extends Fragment {
         relative3 = view.findViewById(R.id.relative3);
         relative4 = view.findViewById(R.id.relative4);
         relative5 = view.findViewById(R.id.relative5);
+        relative6 = view.findViewById(R.id.relative6);
 
         relative1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +112,15 @@ public class MyAttendanceAdminFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), ViewGeneralAttendanceActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        relative6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //start dialog
+                helperFunctions.genericProgressBar("Getting your allocated pharmacies...");
+                viewPharmacyLocations();
             }
         });
 
@@ -164,6 +176,114 @@ public class MyAttendanceAdminFragment extends Fragment {
 
         //add to request queue in singleton class
         VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
+    }
+
+    public void viewPharmacyLocations(){
+        String network_address = helperFunctions.getIpAddress() + "get_pharmacist_pharmacies.php?id=" + preferenceManager.getPsuId();
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, network_address, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        //close the generic progressbar
+                        helperFunctions.stopProgressBar();
+
+                        JSONObject obj;
+
+                        // reset values
+                        pharmacy_id.clear();
+                        pharmacy_names.clear();
+
+                        for (int i = 0; i < response.length(); i++){
+
+                            try {
+                                obj = response.getJSONObject(i);
+
+                                pharmacy_names.add(obj.getString("pharmacy_name"));
+                                pharmacy_id.add(obj.getString("pharmacy_id"));
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        //continue to display
+                        choosePharmacyLocation();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //
+            }
+        });
+
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
+    }
+
+    public void choosePharmacyLocation(){
+        //convert array list to string array
+        String[] mStringArray = new String[pharmacy_names.size()];
+        mStringArray = pharmacy_names.toArray(mStringArray);
+
+        // confirm that pharmacies exist
+        if(mStringArray.length < 1){
+            new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("Oops...")
+                    .setContentText("Pharmacies not available")
+                    .show();
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+        builder.setTitle("Choose your pharmacy");
+
+        builder.setItems(mStringArray, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                // get the location
+                helperFunctions.genericProgressBar("Retrieving pharmacy location...");
+
+                final String pharmacy_id_string = pharmacy_id.get(i);
+                final String pharmacy_name_string = pharmacy_names.get(i);
+
+                //fetch the coordinates for the pharmacy
+                String network_address = helperFunctions.getIpAddress()
+                        + "get_pharmacy_coordinates.php?id=" + pharmacy_id_string;
+
+                JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    //dismiss dialog
+                                    helperFunctions.stopProgressBar();
+
+                                    Intent intent = new Intent(getContext(), ViewPharmacyLocationActivity.class);
+                                    intent.putExtra("pharmacy_id", pharmacy_id_string);
+                                    intent.putExtra("pharmacy_name", pharmacy_name_string);
+                                    intent.putExtra("latitude", Double.parseDouble(response.getString("latitude")));
+                                    intent.putExtra("longitude", Double.parseDouble(response.getString("longitude")));
+                                    startActivity(intent);
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //
+                    }
+                });
+
+                VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
+            }
+        });
+
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public void getPharmacies(){

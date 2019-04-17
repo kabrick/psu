@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="ug.or.psu.psudrugassessmenttool">
 
@@ -19,11 +18,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon"
-        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-
-        <activity android:name=".users.dashboards.psuadmin.ViewGeneralAttendanceActivity"/>
-
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning"
+        tools:replace="android:icon">
+        <activity android:name=".globalactivities.ViewPharmacyLocationActivity"></activity>
+        <activity android:name=".users.dashboards.psuadmin.ViewGeneralAttendanceActivity" />
         <activity android:name=".users.dashboards.psuadmin.ChoosePharmacyActivity" />
 
         <meta-data
@@ -39,7 +37,7 @@
         </activity>
         <activity
             android:name=".users.authentication.SignInActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".users.dashboards.ndasupervisor.NdaSupervisorDashboard"
             android:label="@string/title_activity_nda_supervisor_dashboard"
@@ -91,7 +89,7 @@
         <activity android:name=".globalactivities.SearchPharmacistAssessmentFormsActivity" />
         <activity
             android:name=".users.authentication.SignUpActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
