@@ -82,80 +82,80 @@
                         android:src="@drawable/person"
                         android:onClick="changeProfilePicture"/>
 
-                    <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
-                        android:layout_width="match_parent"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_height="wrap_content"
-                        app:labelText="Full Names"
-                        app:hasClearButton="true"
-                        android:layout_marginTop="30dp">
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="30dp"
+                        xmlns:android="http://schemas.android.com/apk/res/android">
 
-                        <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                        <EditText
                             android:id="@+id/sign_up_full_name"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textPersonName"/>
+                            android:inputType="textPersonName"
+                            android:hint="Full Names"/>
 
-                    </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+                    </android.support.design.widget.TextInputLayout>
 
-                    <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
-                        android:layout_width="match_parent"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_height="wrap_content"
-                        app:labelText="Email"
-                        app:hasClearButton="true"
-                        android:layout_marginTop="20dp">
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="20dp"
+                        xmlns:android="http://schemas.android.com/apk/res/android">
 
-                        <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                        <EditText
                             android:id="@+id/sign_up_email"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textEmailAddress"/>
+                            android:inputType="textEmailAddress"
+                            android:hint="Email"/>
 
-                    </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+                    </android.support.design.widget.TextInputLayout>
 
-                    <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
-                        android:layout_width="match_parent"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_height="wrap_content"
-                        app:labelText="Phone Number"
-                        app:hasClearButton="true"
-                        android:layout_marginTop="20dp">
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="20dp"
+                        xmlns:android="http://schemas.android.com/apk/res/android">
 
-                        <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                        <EditText
                             android:id="@+id/sign_up_phone"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="phone"/>
+                            android:inputType="phone"
+                            android:hint="Phone Number"/>
 
-                    </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+                    </android.support.design.widget.TextInputLayout>
 
-                    <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
-                        android:layout_width="match_parent"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_height="wrap_content"
-                        app:labelText="Username"
-                        app:hasClearButton="true"
-                        android:layout_marginTop="20dp">
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="20dp"
+                        xmlns:android="http://schemas.android.com/apk/res/android">
 
-                        <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                        <EditText
                             android:id="@+id/sign_up_username"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textPersonName"/>
+                            android:inputType="textPersonName"
+                            android:hint="Username"/>
 
-                    </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+                    </android.support.design.widget.TextInputLayout>
 
-                    <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
-                        android:layout_width="match_parent"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_height="wrap_content"
-                        app:labelText="Password"
-                        app:hasClearButton="true"
+                        android:layout_width="match_parent"
+                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_marginTop="20dp">
 
-                        <studio.carbonylgroup.textfieldboxes.ExtendedEditText
-                            android:id="@+id/sign_up_password"
-                            android:layout_width="wrap_content"
+                        <EditText
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textPassword"/>
+                            android:inputType="textPassword"
+                            android:hint="Password"
+                            android:id="@+id/sign_up_password"/>
 
-                    </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+                    </android.support.design.widget.TextInputLayout>
 
                     <com.jaredrummler.materialspinner.MaterialSpinner
                         android:id="@+id/sign_up_mem_status"

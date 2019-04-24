@@ -62,35 +62,35 @@
                     android:textColor="@color/colorAccent"
                     android:textStyle="bold" />
 
-                <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
-                    android:layout_width="match_parent"
+                <android.support.design.widget.TextInputLayout
                     android:layout_height="wrap_content"
-                    app:labelText="Username"
-                    app:hasClearButton="true"
-                    android:layout_marginTop="30dp">
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="20dp"
+                    xmlns:android="http://schemas.android.com/apk/res/android">
 
-                    <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                    <EditText
                         android:id="@+id/signin_username"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName"/>
+                        android:inputType="textPersonName"
+                        android:hint="Username"/>
 
-                </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+                </android.support.design.widget.TextInputLayout>
 
-                <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
-                    android:layout_width="match_parent"
+                <android.support.design.widget.TextInputLayout
                     android:layout_height="wrap_content"
-                    app:labelText="Password"
-                    app:hasClearButton="true"
-                    android:layout_marginTop="20dp">
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="20dp"
+                    xmlns:android="http://schemas.android.com/apk/res/android">
 
-                    <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                    <EditText
                         android:id="@+id/signin_password"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPassword"/>
+                        android:inputType="textPassword"
+                        android:hint="Password"/>
 
-                </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+                </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
 
