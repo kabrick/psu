@@ -13,12 +13,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -43,7 +41,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourPharmacies;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
-import ug.or.psu.psudrugassessmenttool.globalactivities.ViewPharmacyLocationActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.ViewYourPharmacyActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
@@ -218,7 +216,8 @@ public class MyAttendanceAdminFragment extends Fragment {
                     Intent intent = new Intent(getContext(), EditYourPharmacies.class);
                     startActivity(intent);
                 } else if (i == 1){
-                    //
+                    Intent intent = new Intent(getContext(), ViewYourPharmacyActivity.class);
+                    startActivity(intent);
                 }
             }
         });

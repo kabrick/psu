@@ -50,7 +50,7 @@ public class EditYourPharmacies extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        onBackPressed();
+        helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
         return true;
     }
 

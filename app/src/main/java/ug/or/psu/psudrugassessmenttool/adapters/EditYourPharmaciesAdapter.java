@@ -1,8 +1,10 @@
 package ug.or.psu.psudrugassessmenttool.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -11,15 +13,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
+import java.util.Objects;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
+import ug.or.psu.psudrugassessmenttool.globalactivities.EditPharmacyInformationActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourPharmacies;
+import ug.or.psu.psudrugassessmenttool.globalactivities.ViewPharmacyLocationActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.models.Pharmacies;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
@@ -49,11 +59,63 @@ public class EditYourPharmaciesAdapter extends RecyclerView.Adapter<EditYourPhar
                     // get the patient id
                     int position = getAdapterPosition();
                     Pharmacies pharmacy = pharmaciesList.get(position);
-                    String id = pharmacy.getId();
+                    final String id = pharmacy.getId();
+                    final String name = pharmacy.getName();
 
-                    /*Intent intent = new Intent(context, ViewPatientVitalsActivity.class);
-                    intent.putExtra("id", id);
-                    context.startActivity(intent);*/
+                    final HelperFunctions helperFunctions = new HelperFunctions(context);
+
+                    String[] mStringArray = {"Edit pharmacy information", "Edit pharmacy location"};
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Choose your action");
+
+                    builder.setItems(mStringArray, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            if (i == 0){
+                                Intent intent = new Intent(context, EditPharmacyInformationActivity.class);
+                                intent.putExtra("id", id);
+                                context.startActivity(intent);
+                            } else if (i == 1){
+                                helperFunctions.genericProgressBar("Retrieving details...");
+                                //fetch the coordinates for the pharmacy
+                                String network_address = helperFunctions.getIpAddress()
+                                        + "get_pharmacy_coordinates.php?id=" + id;
+
+                                JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
+                                        new Response.Listener<JSONObject>() {
+                                            @Override
+                                            public void onResponse(JSONObject response) {
+                                                try {
+                                                    //dismiss dialog
+                                                    helperFunctions.stopProgressBar();
+
+                                                    Intent intent = new Intent(context, ViewPharmacyLocationActivity.class);
+                                                    intent.putExtra("pharmacy_id", id);
+                                                    intent.putExtra("pharmacy_name", name);
+                                                    intent.putExtra("latitude", Double.parseDouble(response.getString("latitude")));
+                                                    intent.putExtra("longitude", Double.parseDouble(response.getString("longitude")));
+                                                    context.startActivity(intent);
+
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        //
+                                    }
+                                });
+
+                                VolleySingleton.getInstance(context).addToRequestQueue(request);
+                            }
+                        }
+                    });
+
+                    // create and show the alert dialog
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             });
 
