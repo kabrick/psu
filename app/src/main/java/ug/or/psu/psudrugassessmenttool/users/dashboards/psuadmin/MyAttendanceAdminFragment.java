@@ -1,12 +1,16 @@
 package ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin;
 
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -14,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -21,6 +26,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +41,7 @@ import java.util.Objects;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
+import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourPharmacies;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.ViewPharmacyLocationActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
@@ -136,8 +146,6 @@ public class MyAttendanceAdminFragment extends Fragment {
         relative6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //start dialog
-                helperFunctions.genericProgressBar("Getting your allocated pharmacies...");
                 viewPharmacyLocations();
             }
         });
@@ -154,7 +162,7 @@ public class MyAttendanceAdminFragment extends Fragment {
     }
 
     public void isUserValid(){
-        // check if the user has not exceeded the limit of 2 pharmacies
+        // check if the user has not exceeded the limit of 5 pharmacies
 
         //show progress dialog
         helperFunctions.genericProgressBar("Confirming your status...");
@@ -173,7 +181,7 @@ public class MyAttendanceAdminFragment extends Fragment {
                             // not allowed
                             new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
                                     .setTitleText("Oops...")
-                                    .setContentText("You can not add another pharmacy")
+                                    .setContentText("You have reached your limit of 5 pharmacies")
                                     .show();
                         } else if (response.equals("1")){
                             // allowed
@@ -197,105 +205,21 @@ public class MyAttendanceAdminFragment extends Fragment {
     }
 
     public void viewPharmacyLocations(){
-        String network_address = helperFunctions.getIpAddress() + "get_pharmacist_pharmacies.php?id=" + preferenceManager.getPsuId();
-
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, network_address, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        //close the generic progressbar
-                        helperFunctions.stopProgressBar();
-
-                        JSONObject obj;
-
-                        // reset values
-                        pharmacy_id.clear();
-                        pharmacy_names.clear();
-
-                        for (int i = 0; i < response.length(); i++){
-
-                            try {
-                                obj = response.getJSONObject(i);
-
-                                pharmacy_names.add(obj.getString("pharmacy_name"));
-                                pharmacy_id.add(obj.getString("pharmacy_id"));
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        //continue to display
-                        choosePharmacyLocation();
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //
-            }
-        });
-
-        VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
-    }
-
-    public void choosePharmacyLocation(){
-        //convert array list to string array
-        String[] mStringArray = new String[pharmacy_names.size()];
-        mStringArray = pharmacy_names.toArray(mStringArray);
-
-        // confirm that pharmacies exist
-        if(mStringArray.length < 1){
-            new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
-                    .setTitleText("Oops...")
-                    .setContentText("Pharmacies not available")
-                    .show();
-            return;
-        }
+        // , "View Pharmacy Information"
+        String[] mStringArray = {"Edit || Remove Pharmacies", "View Pharmacies Locations"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
-        builder.setTitle("Choose your pharmacy");
+        builder.setTitle("Choose your action");
 
         builder.setItems(mStringArray, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
-                // get the location
-                helperFunctions.genericProgressBar("Retrieving pharmacy location...");
-
-                final String pharmacy_id_string = pharmacy_id.get(i);
-                final String pharmacy_name_string = pharmacy_names.get(i);
-
-                //fetch the coordinates for the pharmacy
-                String network_address = helperFunctions.getIpAddress()
-                        + "get_pharmacy_coordinates.php?id=" + pharmacy_id_string;
-
-                JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    //dismiss dialog
-                                    helperFunctions.stopProgressBar();
-
-                                    Intent intent = new Intent(getContext(), ViewPharmacyLocationActivity.class);
-                                    intent.putExtra("pharmacy_id", pharmacy_id_string);
-                                    intent.putExtra("pharmacy_name", pharmacy_name_string);
-                                    intent.putExtra("latitude", Double.parseDouble(response.getString("latitude")));
-                                    intent.putExtra("longitude", Double.parseDouble(response.getString("longitude")));
-                                    startActivity(intent);
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //
-                    }
-                });
-
-                VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
+                if (i == 0){
+                    Intent intent = new Intent(getContext(), EditYourPharmacies.class);
+                    startActivity(intent);
+                } else if (i == 1){
+                    //
+                }
             }
         });
 
@@ -386,36 +310,85 @@ public class MyAttendanceAdminFragment extends Fragment {
                                     preferenceManager.setPharmacyLatitude(Double.parseDouble(response.getString("latitude")));
                                     preferenceManager.setPharmacyLongitude(Double.parseDouble(response.getString("longitude")));
 
-                                    //set pharmacy location
-                                    preferenceManager.setIsPharmacyLocationSet(true);
+                                    // check for the location
 
-                                    //create instance of calender
-                                    Calendar calendar = Calendar.getInstance();
+                                    FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getContext()));
 
-                                    //get time_in timestamp
-                                    preferenceManager.setTimeIn(System.currentTimeMillis());
+                                    if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                        return;
+                                    }
+                                    mFusedLocationClient.getLastLocation()
+                                            .addOnSuccessListener(new OnSuccessListener<Location>() {
+                                                @Override
+                                                public void onSuccess(Location location) {
+                                                    // Got last known location. In some rare situations this can be null.
+                                                    if (location != null) {
+                                                        double current_latitude = location.getLatitude();
+                                                        double current_longitude = location.getLongitude();
 
-                                    //get current location in, latitude and longitude
-                                    helperFunctions.setCurrentLocation();
+                                                        double pharmacy_latitude = preferenceManager.getPharmacyLatitude();
+                                                        double pharmacy_longitude = preferenceManager.getPharmacyLongitude();
 
-                                    //get day
-                                    preferenceManager.setDayIn(calendar.get(Calendar.DAY_OF_WEEK));
+                                                        //calculate distance here
+                                                        float distance = helperFunctions.getDistance(current_latitude, current_longitude ,pharmacy_latitude, pharmacy_longitude);
 
-                                    //get month
-                                    preferenceManager.setMonthIn(calendar.get(Calendar.MONTH));
+                                                        //check if distance is more than 100m and add to counter
+                                                        if(distance > 100){
+                                                            new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
+                                                                    .setTitleText("Oops...")
+                                                                    .setContentText("You are out of pharmacy locations")
+                                                                    .show();
 
-                                    //start service
-                                    Intent intent = new Intent(getContext(), TrackPharmacistService.class);
-                                    intent.setAction("start");
-                                    Objects.requireNonNull(getActivity()).startService(intent);
+                                                            //dismiss dialog and snack success
+                                                            helperFunctions.stopProgressBar();
+                                                        } else {
+                                                            //user in range
+                                                            //set pharmacy location
+                                                            preferenceManager.setIsPharmacyLocationSet(true);
 
-                                    //dismiss dialog and snack success
-                                    helperFunctions.stopProgressBar();
+                                                            //create instance of calender
+                                                            Calendar calendar = Calendar.getInstance();
 
-                                    new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.SUCCESS_TYPE)
-                                            .setTitleText("Success!")
-                                            .setContentText("You have been logged in")
-                                            .show();
+                                                            //get time_in timestamp
+                                                            preferenceManager.setTimeIn(System.currentTimeMillis());
+
+                                                            //get current location in, latitude and longitude
+                                                            helperFunctions.setCurrentLocation();
+
+                                                            //get day
+                                                            preferenceManager.setDayIn(calendar.get(Calendar.DAY_OF_WEEK));
+
+                                                            //get month
+                                                            preferenceManager.setMonthIn(calendar.get(Calendar.MONTH));
+
+                                                            //start service
+                                                            Intent intent = new Intent(getContext(), TrackPharmacistService.class);
+                                                            intent.setAction("start");
+                                                            Objects.requireNonNull(getActivity()).startService(intent);
+
+                                                            //dismiss dialog and snack success
+                                                            helperFunctions.stopProgressBar();
+
+                                                            new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.SUCCESS_TYPE)
+                                                                    .setTitleText("Success!")
+                                                                    .setContentText("You have been logged in")
+                                                                    .show();
+                                                        }
+                                                    }
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
+                                                            .setTitleText("Oops...")
+                                                            .setContentText("Something went wrong. Please try again")
+                                                            .show();
+
+                                                    //dismiss dialog and snack success
+                                                    helperFunctions.stopProgressBar();
+                                                }
+                                            });
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();

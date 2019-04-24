@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -206,6 +207,8 @@ public class AttendanceSessionsFragment extends Fragment {
 
                         List<AttendanceSession> items = new Gson().fromJson(response.toString(), new TypeToken<List<AttendanceSession>>() {
                         }.getType());
+
+                        Log.e("ff", response.toString());
 
                         attendanceList.clear();
                         attendanceList.addAll(items);

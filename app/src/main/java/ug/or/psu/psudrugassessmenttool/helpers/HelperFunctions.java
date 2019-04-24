@@ -71,7 +71,7 @@ public class HelperFunctions {
      * @return start year
      */
     public int getStartYear() {
-        return 2018;
+        return 2019;
     }
 
     /**
@@ -99,6 +99,14 @@ public class HelperFunctions {
     public void genericSnackbar(String message, View view){
         Snackbar mySnackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
         mySnackbar.show();
+    }
+
+    public float getDistance(double lat1, double long1, double lat2, double long2){
+        float[] result = new float[1];
+
+        Location.distanceBetween(lat1, long1, lat2, long2, result);
+
+        return result[0];
     }
 
     /**
@@ -376,7 +384,6 @@ public class HelperFunctions {
                 .addOnSuccessListener(new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
-                        //Toast.makeText(MyIntentService.this, "", Toast.LENGTH_SHORT).show();
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
                             prefManager.setCurrentLatitude(location.getLatitude());

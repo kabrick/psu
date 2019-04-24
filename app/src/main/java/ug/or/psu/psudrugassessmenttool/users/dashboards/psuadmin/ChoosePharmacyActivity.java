@@ -224,8 +224,28 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
 
     @Override
     public void onPharmacySelected(Pharmacies pharmacy) {
-        String pharmacy_id = pharmacy.getId();
-        updatePharmacyInfo(pharmacy_id, preferenceManager.getPsuId());
+        final String pharmacy_id = pharmacy.getId();
+
+        String confirm_text = "Assign yourself to " + pharmacy.getName() + "?";
+
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Are you sure?")
+                .setContentText(confirm_text)
+                .setConfirmText("Yes")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        updatePharmacyInfo(pharmacy_id, preferenceManager.getPsuId());
+                    }
+                })
+                .showCancelButton(true)
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.cancel();
+                    }
+                })
+                .show();
     }
 
     private void updatePharmacyInfo(String id, String pharmacist){

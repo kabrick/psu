@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_below="@id/image6"
-                android:text="View Set Locations"/>
+                android:text="View || Edit Your Pharmacies"/>
         </RelativeLayout>
 
     </LinearLayout>

@@ -5,18 +5,21 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import java.util.Objects;
 
+import lib.kingja.switchbutton.SwitchMultiButton;
 import ug.or.psu.psudrugassessmenttool.R;
 
 public class PharmacistAttendanceActivity extends AppCompatActivity {
 
     String pharmacy_id;
     String pharmacist_id;
+    Fragment summary_fragment = new AttendanceSummaryFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +38,11 @@ public class PharmacistAttendanceActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        // implement switch
+        ((SwitchMultiButton) findViewById(R.id.switch_pharmacist_attendance)).setText("Summary", "Sessions").setOnSwitchListener
+                (onSwitchListener);
 
-        // Set up the ViewPager with the sections adapter.
-        ViewPager mViewPager = findViewById(R.id.container_pharmacist_attendance);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        //set fixed cache so that tabs are not reloaded
-        mViewPager.setOffscreenPageLimit(2);
-
-        TabLayout mTabLayout = findViewById(R.id.tab_pharmacist_attendance);
-        mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        enableFragment(summary_fragment);
     }
 
     @Override
@@ -57,37 +51,22 @@ public class PharmacistAttendanceActivity extends AppCompatActivity {
         return true;
     }
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
+    private SwitchMultiButton.OnSwitchListener onSwitchListener = new SwitchMultiButton.OnSwitchListener() {
         @Override
-        public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return new AttendanceSummaryFragment();
-                case 1:
-                    return new AttendanceSessionsFragment();
+        public void onSwitch(int position, String tabText) {
+            if(position == 0){
+                enableFragment(summary_fragment);
+            } else if(position == 1){
+                Fragment sessions_fragment = new AttendanceSessionsFragment();
+                enableFragment(sessions_fragment);
             }
-            return null;
         }
+    };
 
-        @Override
-        public int getCount() {
-            return 2;
-        }
+    private void enableFragment(Fragment fragment){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        @Override
-        public CharSequence getPageTitle(int position){
-            switch (position) {
-                case 0:
-                    return "Summary";
-                case 1:
-                    return "Sessions";
-            }
-            return super.getPageTitle(position);
-        }
+        //use replace instead of add to avoid unpredictable behaviour
+        transaction.replace(R.id.frame_view_patients, fragment).commit();
     }
 }

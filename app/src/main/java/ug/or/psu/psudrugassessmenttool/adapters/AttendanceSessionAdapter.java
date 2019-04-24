@@ -52,23 +52,8 @@ public class AttendanceSessionAdapter extends RecyclerView.Adapter<AttendanceSes
 
         //get words from date
         String startDateString = attendanceSession.getDate();
-        @SuppressLint("SimpleDateFormat")
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
-        // Convert from String to Date
-        Date date = null;
-
-        try {
-            date = dateFormat.parse(startDateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        // Converting to String again, using an alternative format
-        @SuppressLint("SimpleDateFormat")
-        DateFormat dateFormat1 = new SimpleDateFormat("E, MMM dd yyyy");
-
-        holder.session_date.setText(dateFormat1.format(date));
+        holder.session_date.setText(startDateString);
 
         //get time from the timestamps and post
         @SuppressLint("SimpleDateFormat")
