@@ -484,6 +484,9 @@ public class HelperFunctions {
 
         //get working hours
         Long working_hours = TimeUnit.MILLISECONDS.toHours(time_diff);
+        Long working_minutes = TimeUnit.MILLISECONDS.toMinutes(time_diff) % 60;
+
+        final String content_text = "You have been logged out after a duration of " + String.valueOf(working_hours) + " hour(s) and " + String.valueOf(working_minutes) + " minute(s)";
 
         String network_address = getIpAddress()
                 + "set_new_attendance.php?psu_id=" + prefManager.getPsuId()
@@ -519,7 +522,7 @@ public class HelperFunctions {
 
                             new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
                                     .setTitleText("Success!")
-                                    .setContentText("You have been logged out")
+                                    .setContentText(content_text)
                                     .show();
                         } else {
                             //did not save
