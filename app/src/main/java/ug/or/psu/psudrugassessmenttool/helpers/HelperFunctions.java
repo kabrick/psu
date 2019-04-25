@@ -142,6 +142,13 @@ public class HelperFunctions {
         pDialog.getProgressHelper();
         pDialog.setTitleText(message);
         pDialog.setCancelable(false);
+        pDialog.setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                VolleySingleton.getInstance(context).cancelPendingRequests();
+                pDialog.dismiss();
+            }
+        });
         pDialog.show();
     }
 

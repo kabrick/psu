@@ -60,9 +60,14 @@ public class VolleySingleton {
         return mImageLoader;
     }
 
-    public void cancelPendingRequests(Object tag) {
+    public void cancelPendingRequests() {
         if (mRequestQueue != null) {
-            mRequestQueue.cancelAll(tag);
+            mRequestQueue.cancelAll(new RequestQueue.RequestFilter() {
+                @Override
+                public boolean apply(Request<?> request) {
+                    return true;
+                }
+            });
         }
     }
 }
