@@ -160,7 +160,7 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
                                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                         @Override
                                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                                            onBackPressed();
                                         }
                                     })
                                     .show();
@@ -272,7 +272,7 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
                                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                         @Override
                                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                                            onBackPressed();
                                         }
                                     })
                                     .show();

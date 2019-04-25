@@ -25,7 +25,6 @@ public class VolleyMultipartRequest extends Request<String> {
     private Response.ErrorListener mErrorListener;
     private Map<String, String> mHeaders;
 
-
     public VolleyMultipartRequest(int method, String url,
                                   Response.Listener<String> listener,
                                   Response.ErrorListener errorListener) {
@@ -188,9 +187,6 @@ public class VolleyMultipartRequest extends Request<String> {
         private String fileName;
         private byte[] content;
         private String type;
-
-        public DataPart() {
-        }
 
         public DataPart(String name, byte[] data) {
             fileName = name;

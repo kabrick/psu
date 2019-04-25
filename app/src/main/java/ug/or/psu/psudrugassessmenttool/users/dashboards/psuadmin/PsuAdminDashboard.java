@@ -76,6 +76,12 @@ public class PsuAdminDashboard extends AppCompatActivity
 
         TabLayout mTabLayout = findViewById(R.id.tab_psu_admin);
         mTabLayout.setupWithViewPager(mViewPager);
+
+        /*// reload to the attendance tab
+        final Intent intent = getIntent();
+        if (intent.hasExtra("tab")) {
+            mViewPager.setCurrentItem(2);
+        }*/
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
