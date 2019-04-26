@@ -57,7 +57,7 @@ public class JobFragment extends Fragment implements JobsFeedAdapter.JobsFeedAda
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_jobs);
         jobsList = new ArrayList<>();
-        mAdapter = new JobsFeedAdapter(jobsList, this);
+        mAdapter = new JobsFeedAdapter(jobsList, this, getContext());
 
         progressBar = view.findViewById(R.id.progressBarJobs);
 

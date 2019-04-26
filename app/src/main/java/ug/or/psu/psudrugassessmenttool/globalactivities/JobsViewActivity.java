@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -120,6 +121,8 @@ public class JobsViewActivity extends AppCompatActivity {
         String network_address = helperFunctions.getIpAddress()
                 + "get_job_details.php?id=" + id;
 
+        Log.e("ff", network_address);
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -127,6 +130,7 @@ public class JobsViewActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
 
                         try {
+                            Log.e("ss", response.toString());
                             //covert timestamp to readable format
                             CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
                                     Long.parseLong(response.getString("timestamp")),

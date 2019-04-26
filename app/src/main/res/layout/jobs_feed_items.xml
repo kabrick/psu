@@ -1,52 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    android:orientation="horizontal"
+    android:padding="5dp"
     android:background="@drawable/rounded_corners"
-    android:padding="5dp">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:textSize="20sp"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
-        android:id="@+id/jobs_feed_title_list"/>
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/jobs_feed_profile_picture"
+        android:src="@drawable/person"
+        android:layout_weight="0.5"/>
 
-    <TextView
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="2"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:id="@+id/jobs_feed_text_list"
-        android:layout_marginBottom="5dp"
-        android:layout_below="@id/jobs_feed_title_list"
-        android:maxLines="2"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/jobs_feed_text_list"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:padding="5dp">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:id="@+id/jobs_feed_author_list"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textSize="20sp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+            android:id="@+id/jobs_feed_title_list"/>
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:textColor="@color/timestamp"
-            android:id="@+id/jobs_feed_timestamp_list"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:id="@+id/jobs_feed_text_list"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@id/jobs_feed_title_list"
+            android:maxLines="2"/>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/jobs_feed_text_list"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
 
-</RelativeLayout>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:id="@+id/jobs_feed_author_list"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:textColor="@color/timestamp"
+                android:id="@+id/jobs_feed_timestamp_list"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

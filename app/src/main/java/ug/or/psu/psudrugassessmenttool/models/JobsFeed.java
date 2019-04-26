@@ -6,6 +6,15 @@ public class JobsFeed {
     private String author;
     private String timestamp;
     private String title;
+    private String photo;
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     public String getId() {
         return id;

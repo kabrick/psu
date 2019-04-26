@@ -32,7 +32,6 @@ import java.util.Objects;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.adapters.NewsFeedAdapter;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
-import ug.or.psu.psudrugassessmenttool.globalactivities.NewsViewPostedActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.UserNewsActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
