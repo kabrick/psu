@@ -20,7 +20,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon">
-        <activity android:name=".globalactivities.ViewYourPharmacyActivity"></activity>
+        <activity android:name=".globalactivities.EResourcesActivity"></activity>
+        <activity android:name=".globalactivities.ViewYourPharmacyActivity" />
         <activity android:name=".globalactivities.EditPharmacyInformationActivity" />
         <activity android:name=".globalactivities.EditYourPharmacies" />
         <activity android:name=".globalactivities.ViewPharmacyLocationActivity" />

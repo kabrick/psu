@@ -14,6 +14,8 @@
             android:title="Edit Profile" />
         <item android:id="@+id/pharmacy_owner_pharmacist_assessment_form"
             android:title="Pharmacist Assessment Form" />
+        <item android:id="@+id/pharmacy_owner_eresources"
+            android:title="E Resources" />
         <item android:id="@+id/pharmacy_owner_log_out"
             android:title="Log Out" />
     </group>

@@ -37,6 +37,7 @@ import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.EResourcesActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.FeedbackActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
@@ -203,6 +204,10 @@ public class PsuPharmacistDashboard extends AppCompatActivity
             case R.id.pharmacist_feedback:
                 Intent give_feedback_intent = new Intent(this, FeedbackActivity.class);
                 startActivity(give_feedback_intent);
+                break;
+            case R.id.pharmacist_admin_eresources:
+                Intent eresources_intent = new Intent(this, EResourcesActivity.class);
+                startActivity(eresources_intent);
                 break;
             default:
                 //

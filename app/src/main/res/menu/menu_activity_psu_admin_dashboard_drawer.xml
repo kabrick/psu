@@ -15,6 +15,8 @@
             android:title="View Pharmacy Locations" />
         <item android:id="@+id/psu_admin_edit_profile"
             android:title="Edit Profile" />
+        <item android:id="@+id/psu_admin_eresources"
+            android:title="E Resources" />
         <item android:id="@+id/psu_admin_log_out"
             android:title="Log Out" />
     </group>

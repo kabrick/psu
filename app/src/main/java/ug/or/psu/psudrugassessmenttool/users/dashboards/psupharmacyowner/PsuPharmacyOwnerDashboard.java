@@ -32,6 +32,7 @@ import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.EResourcesActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.FeedbackActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAssessmentFormFeedOwnerActivity;
@@ -188,6 +189,10 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
                 break;
             case R.id.pharmacy_owner_log_out:
                 helperFunctions.signAdminUsersOut();
+                break;
+            case R.id.pharmacy_owner_eresources:
+                Intent eresources_intent = new Intent(this, EResourcesActivity.class);
+                startActivity(eresources_intent);
                 break;
             default:
                 //

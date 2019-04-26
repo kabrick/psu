@@ -22,6 +22,7 @@ import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.EResourcesActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAssessmentFormFeedActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.SearchPharmacistAssessmentFormsActivity;
@@ -179,6 +180,10 @@ public class PsuAdminDashboard extends AppCompatActivity
             case R.id.psu_admin_edit_profile:
                 Intent edit_profile = new Intent(this, EditProfileActivity.class);
                 startActivity(edit_profile);
+                break;
+            case R.id.psu_admin_eresources:
+                Intent eresources_intent = new Intent(this, EResourcesActivity.class);
+                startActivity(eresources_intent);
                 break;
             case R.id.psu_admin_log_out:
                 helperFunctions.signAdminUsersOut();
