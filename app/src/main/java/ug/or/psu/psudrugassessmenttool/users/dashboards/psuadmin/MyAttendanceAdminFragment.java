@@ -1,6 +1,7 @@
 package ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -30,8 +31,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -276,7 +279,7 @@ public class MyAttendanceAdminFragment extends Fragment {
         if(mStringArray.length < 1){
             new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
                     .setTitleText("Oops...")
-                    .setContentText("Pharmacies not available")
+                    .setContentText("Please set locations for your pharmacies")
                     .show();
             return;
         }
@@ -332,7 +335,7 @@ public class MyAttendanceAdminFragment extends Fragment {
                                                         if(distance > 100){
                                                             new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
                                                                     .setTitleText("Oops...")
-                                                                    .setContentText("You are out of pharmacy locations")
+                                                                    .setContentText("You are out of bounds. Please make sure you are at the pharmacy premises before you log in")
                                                                     .show();
 
                                                             //dismiss dialog and snack success
@@ -365,9 +368,12 @@ public class MyAttendanceAdminFragment extends Fragment {
                                                             //dismiss dialog and snack success
                                                             helperFunctions.stopProgressBar();
 
+                                                            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+                                                            String currentTime = sdf.format(new Date());
+
                                                             new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.SUCCESS_TYPE)
                                                                     .setTitleText("Success!")
-                                                                    .setContentText("You have been logged in")
+                                                                    .setContentText("You have been logged in at " + currentTime)
                                                                     .show();
                                                         }
                                                     }
@@ -459,7 +465,7 @@ public class MyAttendanceAdminFragment extends Fragment {
         if(mStringArray.length < 1){
             new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
                     .setTitleText("Oops...")
-                    .setContentText("Pharmacies not available")
+                    .setContentText("Pharmacies without locations not available")
                     .show();
             return;
         }

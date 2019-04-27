@@ -121,8 +121,6 @@ public class JobsViewActivity extends AppCompatActivity {
         String network_address = helperFunctions.getIpAddress()
                 + "get_job_details.php?id=" + id;
 
-        Log.e("ff", network_address);
-
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
                 new Response.Listener<JSONObject>() {
                     @Override
