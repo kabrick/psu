@@ -113,11 +113,18 @@ public class MyAttendanceFragment extends Fragment {
         relative6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(preferenceManager.isPharmacyLocationSet()){
-                    helperFunctions.signPharmacistOutTemp();
-                } else {
-                    helperFunctions.genericDialog("You are not logged in to any pharmacy");
-                }
+                AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+
+                alert.setMessage("Are you sure you want to log out").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if(preferenceManager.isPharmacyLocationSet()){
+                            helperFunctions.signPharmacistOut();
+                        } else {
+                            helperFunctions.genericDialog("You are not logged in to any pharmacy");
+                        }
+                    }
+                }).show();
             }
         });
 
@@ -342,9 +349,6 @@ public class MyAttendanceFragment extends Fragment {
 
                                                             //get day
                                                             preferenceManager.setDayIn(calendar.get(Calendar.DAY_OF_WEEK));
-
-                                                            //get month
-                                                            preferenceManager.setMonthIn(calendar.get(Calendar.MONTH));
 
                                                             //start service
                                                             Intent intent = new Intent(getContext(), TrackPharmacistService.class);

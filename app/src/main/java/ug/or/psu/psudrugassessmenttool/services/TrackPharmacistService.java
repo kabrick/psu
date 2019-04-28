@@ -76,7 +76,7 @@ public class TrackPharmacistService extends Service {
                 }
 
                 //if counter is more than 4 then log the user out
-                if(check_out_of_range > 4){
+                if(check_out_of_range > 2){
                     //notify the user here
 
                     //log the user out

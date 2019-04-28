@@ -26,7 +26,6 @@ public class PreferenceManager {
     private static final String PHARMACY_LATITUDE = "pharmacy_latitude";
     private static final String PHARMACY_LONGITUDE = "pharmacy_longitude";
     private static final String DAY_IN = "day_in";
-    private static final String MONTH_IN = "month_in";
 
     private SharedPreferences.Editor editor;
     private SharedPreferences pref;
@@ -187,15 +186,6 @@ public class PreferenceManager {
 
     public void setDayIn(int id) {
         this.editor.putInt(DAY_IN, id);
-        this.editor.commit();
-    }
-
-    public int getMonthIn() {
-        return this.pref.getInt(MONTH_IN, 0);
-    }
-
-    public void setMonthIn(int value) {
-        this.editor.putInt(MONTH_IN, value);
         this.editor.commit();
     }
 
