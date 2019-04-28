@@ -10,7 +10,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 
 import com.android.volley.Response;
@@ -26,7 +25,6 @@ import org.json.JSONException;
 import java.util.concurrent.TimeUnit;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 import ug.or.psu.psudrugassessmenttool.services.TrackPharmacistService;
 import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
@@ -41,8 +39,7 @@ public class HelperFunctions {
 
     private Context context;
     private static PreferenceManager prefManager;
-    //private static ProgressDialog progressDialog;
-    private SweetAlertDialog pDialog;
+    private static ProgressDialog progressDialog;
 
     /**
      * constructor for the class
@@ -131,33 +128,25 @@ public class HelperFunctions {
      * @param message text to be displayed
      */
     public void genericProgressBar(String message){
-        /*progressDialog = new ProgressDialog(context);
+        progressDialog = new ProgressDialog(context);
         progressDialog.setMessage(message);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();*/
-
-        pDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper();
-        pDialog.setTitleText(message);
-        pDialog.setCancelable(false);
-        pDialog.setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+        progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(SweetAlertDialog sweetAlertDialog) {
+            public void onClick(DialogInterface dialogInterface, int i) {
                 VolleySingleton.getInstance(context).cancelPendingRequests();
-                pDialog.dismiss();
             }
         });
-        pDialog.show();
+        progressDialog.show();
     }
 
     /**
      * stop progress bar showing network activity status
      */
     public void stopProgressBar(){
-        //progressDialog.dismiss();
-        pDialog.dismiss();
+        progressDialog.dismiss();
     }
 
     /**
