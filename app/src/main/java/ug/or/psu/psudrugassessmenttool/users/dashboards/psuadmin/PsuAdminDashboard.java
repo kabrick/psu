@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -24,16 +23,11 @@ import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EResourcesActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
-import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAssessmentFormFeedActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.SearchPharmacistAssessmentFormsActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
+import ug.or.psu.psudrugassessmenttool.globalfragments.MyAttendanceFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.NewsFragment;
-import ug.or.psu.psudrugassessmenttool.globalfragments.ViewPharmaciesLocationFragment;
-import ug.or.psu.psudrugassessmenttool.globalfragments.ViewPharmacistAttendanceFragment;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
-import ug.or.psu.psudrugassessmenttool.models.PharmacistAssessmentFeed;
-import ug.or.psu.psudrugassessmenttool.models.PharmacistAssessmentFeedOwner;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSuperSetLocationsFragment;
 
 public class PsuAdminDashboard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -101,7 +95,7 @@ public class PsuAdminDashboard extends AppCompatActivity
                 /*case 2:
                     return new ViewPharmacistAttendanceFragment();*/
                 case 2:
-                    return new MyAttendanceAdminFragment();
+                    return new MyAttendanceFragment();
             }
             return null;
         }

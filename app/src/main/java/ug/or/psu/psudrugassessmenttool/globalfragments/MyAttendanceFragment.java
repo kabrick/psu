@@ -48,6 +48,7 @@ import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 import ug.or.psu.psudrugassessmenttool.services.TrackPharmacistService;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorGetLocationActivity;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.ChoosePharmacyActivity;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.ViewGeneralAttendanceActivity;
 
 public class MyAttendanceFragment extends Fragment {
 
@@ -59,7 +60,7 @@ public class MyAttendanceFragment extends Fragment {
     ArrayList<String> pharmacy_id_admin;
     ArrayList<String> pharmacy_names_attendance;
     ArrayList<String> pharmacy_id_attendance;
-    RelativeLayout relative1, relative2, relative3, relative4, relative5, relative6;
+    RelativeLayout relative1, relative2, relative3, relative4, relative5, relative6, relative7;
 
     public MyAttendanceFragment() {
         // Required empty public constructor
@@ -80,6 +81,7 @@ public class MyAttendanceFragment extends Fragment {
         relative4 = view.findViewById(R.id.relative4);
         relative5 = view.findViewById(R.id.relative5);
         relative6 = view.findViewById(R.id.relative6);
+        relative7 = view.findViewById(R.id.relative7);
 
         relative1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +139,18 @@ public class MyAttendanceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 viewPharmacyLocations();
+            }
+        });
+
+        relative7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(preferenceManager.getMemberCategory().equals("2")){
+                    Intent intent = new Intent(getContext(), ViewGeneralAttendanceActivity.class);
+                    startActivity(intent);
+                } else {
+                    helperFunctions.genericDialog("You are not allowed to view general attendance");
+                }
             }
         });
 
