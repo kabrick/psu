@@ -37,7 +37,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourPharmacies;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
@@ -106,10 +105,7 @@ public class MyAttendanceFragment extends Fragment {
                     //not so start procedure to set it
                     getPharmacies();
                 } else {
-                    new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
-                            .setTitleText("Oops...")
-                            .setContentText("You are already logged in")
-                            .show();
+                    helperFunctions.genericDialog("You are already logged in at a pharmacy.");
                 }
             }
         });
@@ -120,10 +116,7 @@ public class MyAttendanceFragment extends Fragment {
                 if(preferenceManager.isPharmacyLocationSet()){
                     helperFunctions.signPharmacistOutTemp();
                 } else {
-                    new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
-                            .setTitleText("Oops...")
-                            .setContentText("You are not logged in")
-                            .show();
+                    helperFunctions.genericDialog("You are not logged in to any pharmacy");
                 }
             }
         });
@@ -183,10 +176,7 @@ public class MyAttendanceFragment extends Fragment {
 
                         if(response.equals("0")){
                             // not allowed
-                            new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
-                                    .setTitleText("Oops...")
-                                    .setContentText("You can not add another pharmacy")
-                                    .show();
+                            helperFunctions.genericDialog("You can not add another pharmacy");
                         } else if (response.equals("1")){
                             // allowed
                             Intent choose_pharmacy_intent = new Intent(getContext(), ChoosePharmacyActivity.class);
@@ -197,10 +187,7 @@ public class MyAttendanceFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 helperFunctions.stopProgressBar();
-                new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
-                        .setTitleText("Oops...")
-                        .setContentText("Something went wrong! Please try again")
-                        .show();
+                helperFunctions.genericDialog("Something went wrong! Please try again");
             }
         });
 
@@ -209,8 +196,7 @@ public class MyAttendanceFragment extends Fragment {
     }
 
     public void viewPharmacyLocations(){
-        // , "View Pharmacy Information"
-        String[] mStringArray = {"Edit || Remove Pharmacies", "View Pharmacies Locations"};
+        String[] mStringArray = {"Edit || Remove Pharmacies", "View Your Pharmacies Locations"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
         builder.setTitle("Choose your action");
@@ -283,10 +269,7 @@ public class MyAttendanceFragment extends Fragment {
 
         // confirm that pharmacies exist
         if(mStringArray.length < 1){
-            new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
-                    .setTitleText("Oops...")
-                    .setContentText("Please set locations for your pharmacies")
-                    .show();
+            helperFunctions.genericDialog("Please register your pharmacies and set their locations to continue");
             return;
         }
 
@@ -339,10 +322,7 @@ public class MyAttendanceFragment extends Fragment {
 
                                                         //check if distance is more than 100m and add to counter
                                                         if(distance > 100){
-                                                            new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
-                                                                    .setTitleText("Oops...")
-                                                                    .setContentText("You are out of bounds. Please make sure you are at the pharmacy premises before you log in")
-                                                                    .show();
+                                                            helperFunctions.genericDialog("You are out of bounds. Please make sure you are at the pharmacy premises before you log in");
 
                                                             //dismiss dialog and snack success
                                                             helperFunctions.stopProgressBar();
@@ -377,10 +357,7 @@ public class MyAttendanceFragment extends Fragment {
                                                             @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
                                                             String currentTime = sdf.format(new Date());
 
-                                                            new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.SUCCESS_TYPE)
-                                                                    .setTitleText("Success!")
-                                                                    .setContentText("You have been logged in at " + currentTime)
-                                                                    .show();
+                                                            helperFunctions.genericDialog("You have been logged in at " + currentTime);
                                                         }
                                                     }
                                                 }
@@ -388,10 +365,7 @@ public class MyAttendanceFragment extends Fragment {
                                             .addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
-                                                    new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
-                                                            .setTitleText("Oops...")
-                                                            .setContentText("Something went wrong. Please try again")
-                                                            .show();
+                                                    helperFunctions.genericDialog("Something went wrong. Please try again");
 
                                                     //dismiss dialog and snack success
                                                     helperFunctions.stopProgressBar();
@@ -469,10 +443,7 @@ public class MyAttendanceFragment extends Fragment {
 
         // confirm that pharmacies exist
         if(mStringArray.length < 1){
-            new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
-                    .setTitleText("Oops...")
-                    .setContentText("Pharmacies not available")
-                    .show();
+            helperFunctions.genericDialog("Please register or add your pharmacies to continue");
             return;
         }
 
@@ -546,10 +517,7 @@ public class MyAttendanceFragment extends Fragment {
 
         // confirm that pharmacies exist
         if(mStringArray.length < 1){
-            new SweetAlertDialog(Objects.requireNonNull(getContext()), SweetAlertDialog.ERROR_TYPE)
-                    .setTitleText("Oops...")
-                    .setContentText("Pharmacies not available")
-                    .show();
+            helperFunctions.genericDialog("Please register your pharmacies and set their locations to continue");
             return;
         }
 
