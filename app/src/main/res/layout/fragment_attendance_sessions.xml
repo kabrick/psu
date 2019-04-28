@@ -7,18 +7,11 @@
     android:background="@color/background"
     tools:context=".globalactivities.AttendanceSessionsFragment">
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="20dp"
-        android:background="@color/colorAccent"
-        android:id="@+id/attendance_sessions_spinner"/>
-
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/attendance_sessions_recycler"
-        android:layout_below="@id/attendance_sessions_spinner"
+        android:layout_marginTop="20dp"
         android:scrollbars="vertical"/>
 
 </RelativeLayout>

@@ -50,10 +50,10 @@ public class AttendanceSessionAdapter extends RecyclerView.Adapter<AttendanceSes
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         final AttendanceSession attendanceSession = attendanceList.get(position);
 
-        //get words from date
-        String startDateString = attendanceSession.getDate();
+        @SuppressLint("SimpleDateFormat")
+        String date = new java.text.SimpleDateFormat("E, dd MMMM yyyy").format(new java.util.Date (Long.parseLong(attendanceSession.getTime_out())));
 
-        holder.session_date.setText(startDateString);
+        holder.session_date.setText(date);
 
         //get time from the timestamps and post
         @SuppressLint("SimpleDateFormat")

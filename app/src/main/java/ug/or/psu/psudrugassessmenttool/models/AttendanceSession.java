@@ -1,18 +1,10 @@
 package ug.or.psu.psudrugassessmenttool.models;
 
 public class AttendanceSession {
-    public String date;
+
     public String time_in;
     public String time_out;
     public String duration;
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
 
     public String getTime_in() {
         return time_in;

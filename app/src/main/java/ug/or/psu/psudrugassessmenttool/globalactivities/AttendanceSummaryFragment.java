@@ -1,9 +1,9 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,14 +68,25 @@ public class AttendanceSummaryFragment extends Fragment {
     }
 
     public void display_summary(){
+
+        PharmacistAttendanceActivity activity = (PharmacistAttendanceActivity) getActivity();
+        assert activity != null;
+
+        helperFunctions.genericProgressBar("Getting attendance records...");
+
         String network_address = helperFunctions.getIpAddress()
                 + "get_pharmacist_summary.php?id=" + pharmacy_id
+                + "&start_date=" + String.valueOf(activity.start_date)
+                + "&end_date=" + String.valueOf(activity.end_date)
                 + "&psu_id=" + pharmacist_id;
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+
+                        helperFunctions.stopProgressBar();
+
                         try {
                             total_hours.setText(response.getString("total_hours"));
                             monday_hours.setText(response.getString("monday_hours"));
