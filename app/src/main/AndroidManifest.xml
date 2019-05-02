@@ -21,7 +21,11 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon">
 
-        <activity android:name=".globalactivities.EResourcesActivity"/>
+        <activity
+            android:name=".globalactivities.JobsCompleteApplicationActivity"
+            android:label="Job Application"/>
+
+        <activity android:name=".globalactivities.EResourcesActivity" />
         <activity android:name=".globalactivities.ViewYourPharmacyActivity" />
         <activity android:name=".globalactivities.EditPharmacyInformationActivity" />
         <activity android:name=".globalactivities.EditYourPharmacies" />
@@ -70,10 +74,10 @@
         <activity android:name=".globalactivities.FeedbackActivity" />
         <activity
             android:name=".globalactivities.CreateJobsActivity"
-            android:label="Add Job Advert"/>
+            android:label="Add Job Advert" />
         <activity
             android:name=".globalactivities.JobsViewActivity"
-            android:label="View Job Advert"/>
+            android:label="View Job Advert" />
         <activity android:name=".globalactivities.WholesaleInspectionActivity" />
         <activity
             android:name=".users.dashboards.sysadmin.SystemsAdministratorDashboard"
