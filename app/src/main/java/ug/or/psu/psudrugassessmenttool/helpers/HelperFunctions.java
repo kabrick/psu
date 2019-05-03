@@ -63,15 +63,6 @@ public class HelperFunctions {
     }
 
     /**
-     * get the start year for the application
-     *
-     * @return start year
-     */
-    public int getStartYear() {
-        return 2019;
-    }
-
-    /**
      * display alert dialog anywhere in app
      *
      * @param message text to display

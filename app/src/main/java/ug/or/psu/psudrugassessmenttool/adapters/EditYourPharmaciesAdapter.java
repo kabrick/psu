@@ -122,7 +122,6 @@ public class EditYourPharmaciesAdapter extends RecyclerView.Adapter<EditYourPhar
             remove_your_pharmacies.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // get the patient id
                     int position = getAdapterPosition();
 
                     Pharmacies pharmacy = pharmaciesList.get(position);
