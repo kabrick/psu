@@ -197,12 +197,17 @@ public class EditJobAdvertActivity extends AppCompatActivity {
                         try {
                             jobs_title.setText(response.getString("title"));
                             jobs_description.setText(response.getString("text"));
-                            jobs_email.setText("Email: " + response.getString("email"));
-                            jobs_phone.setText("Phone: " + response.getString("contact"));
+                            jobs_email.setText(response.getString("email"));
+                            jobs_phone.setText(response.getString("contact"));
                             jobs_salary.setText("Salary range: " + response.getString("salary_range"));
                             jobs_location.setText("Location: " + response.getString("location"));
                             jobs_contract.setText("Contract type: " + response.getString("contract_type"));
-                            jobs_company.setText("Company name: " + response.getString("company_name"));
+                            jobs_company.setText(response.getString("company_name"));
+
+                            deadline = response.getString("deadline");
+                            salary = response.getString("salary_range");
+                            contract = response.getString("contract_type");
+                            location = response.getString("location");
 
                             Long deadline_timestamp = Long.parseLong(response.getString("deadline"));
 

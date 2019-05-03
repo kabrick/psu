@@ -31,7 +31,8 @@ import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 public class CreateJobsActivity extends AppCompatActivity {
 
     EditText jobs_title, jobs_description, jobs_phone, jobs_email, jobs_company;
-    String deadline, salary, contract, location = "N/A";
+    String salary, contract, location = "N/A";
+    String deadline = String.valueOf(System.currentTimeMillis());
     TextView jobs_deadline, jobs_location, jobs_contract, jobs_salary;
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
