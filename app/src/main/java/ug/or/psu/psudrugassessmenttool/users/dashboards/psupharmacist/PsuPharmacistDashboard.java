@@ -26,6 +26,7 @@ import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EResourcesActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.FeedbackActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.MyJobAdvertsActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.MyAttendanceFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.NewsFragment;
@@ -144,7 +145,6 @@ public class PsuPharmacistDashboard extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.action_log_out_psu_pharmacist_dashboard) {
-            //helperFunctions.signPharmacistOut();
             helperFunctions.signAdminUsersOut();
         }
 
@@ -161,7 +161,6 @@ public class PsuPharmacistDashboard extends AppCompatActivity
                 startActivity(post_news_intent);
                 break;
             case R.id.pharmacist_log_out:
-                //helperFunctions.signPharmacistOut();
                 helperFunctions.signAdminUsersOut();
                 break;
             case R.id.pharmacist_edit_profile:
@@ -175,6 +174,10 @@ public class PsuPharmacistDashboard extends AppCompatActivity
             case R.id.pharmacist_admin_eresources:
                 Intent eresources_intent = new Intent(this, EResourcesActivity.class);
                 startActivity(eresources_intent);
+                break;
+            case R.id.pharmacy_owner_my_job_adverts:
+                Intent my_job_adverts_intent = new Intent(this, MyJobAdvertsActivity.class);
+                startActivity(my_job_adverts_intent);
                 break;
             default:
                 //

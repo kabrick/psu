@@ -35,6 +35,7 @@ import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EResourcesActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.FeedbackActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.MyJobAdvertsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAssessmentFormFeedOwnerActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.WholesaleInspectionActivity;
@@ -193,6 +194,10 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
             case R.id.pharmacy_owner_eresources:
                 Intent eresources_intent = new Intent(this, EResourcesActivity.class);
                 startActivity(eresources_intent);
+                break;
+            case R.id.pharmacy_owner_my_job_adverts:
+                Intent my_job_adverts_intent = new Intent(this, MyJobAdvertsActivity.class);
+                startActivity(my_job_adverts_intent);
                 break;
             default:
                 //

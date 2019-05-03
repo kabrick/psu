@@ -23,6 +23,7 @@ import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EResourcesActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.MyJobAdvertsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.SearchPharmacistAssessmentFormsActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.MyAttendanceFragment;
@@ -71,12 +72,6 @@ public class PsuAdminDashboard extends AppCompatActivity
 
         TabLayout mTabLayout = findViewById(R.id.tab_psu_admin);
         mTabLayout.setupWithViewPager(mViewPager);
-
-        /*// reload to the attendance tab
-        final Intent intent = getIntent();
-        if (intent.hasExtra("tab")) {
-            mViewPager.setCurrentItem(2);
-        }*/
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -112,8 +107,6 @@ public class PsuAdminDashboard extends AppCompatActivity
                     return "News";
                 case 1:
                     return "Job Adverts";
-                /*case 2:
-                    return "Attendance";*/
                 case 2:
                     return "Attendance";
             }
@@ -178,6 +171,10 @@ public class PsuAdminDashboard extends AppCompatActivity
             case R.id.psu_admin_eresources:
                 Intent eresources_intent = new Intent(this, EResourcesActivity.class);
                 startActivity(eresources_intent);
+                break;
+            case R.id.psu_admin_my_job_adverts:
+                Intent my_job_adverts_intent = new Intent(this, MyJobAdvertsActivity.class);
+                startActivity(my_job_adverts_intent);
                 break;
             case R.id.psu_admin_log_out:
                 helperFunctions.signAdminUsersOut();

@@ -20,11 +20,10 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon">
-
+        <activity android:name=".globalactivities.MyJobAdvertsActivity"></activity>
         <activity
             android:name=".globalactivities.JobsCompleteApplicationActivity"
-            android:label="Job Application"/>
-
+            android:label="Job Application" />
         <activity android:name=".globalactivities.EResourcesActivity" />
         <activity android:name=".globalactivities.ViewYourPharmacyActivity" />
         <activity android:name=".globalactivities.EditPharmacyInformationActivity" />

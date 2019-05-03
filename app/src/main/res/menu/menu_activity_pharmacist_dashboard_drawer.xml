@@ -8,12 +8,25 @@
             android:title="Post News" />
         <item android:id="@+id/pharmacist_feedback"
             android:title="Post Feedback"/>
-        <item android:id="@+id/pharmacist_edit_profile"
-            android:title="Edit Profile" />
         <item android:id="@+id/pharmacist_admin_eresources"
             android:title="E Resources" />
-        <item android:id="@+id/pharmacist_log_out"
-            android:title="Log Out" />
     </group>
+
+    <item android:title="Jobs">
+        <menu>
+            <item
+                android:id="@+id/pharmacist_my_job_adverts"
+                android:title="My Job Adverts" />
+        </menu>
+    </item>
+
+    <item android:title="Other">
+        <menu>
+            <item android:id="@+id/pharmacist_edit_profile"
+                android:title="Edit Profile" />
+            <item android:id="@+id/pharmacist_log_out"
+                android:title="Log Out" />
+        </menu>
+    </item>
 
 </menu>
