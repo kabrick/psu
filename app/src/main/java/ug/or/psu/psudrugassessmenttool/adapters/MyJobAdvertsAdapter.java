@@ -20,12 +20,13 @@ import java.util.List;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditJobAdvertActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.JobApplicationsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.MyJobAdvertsActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.models.MyJobAdverts;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
-public class MyJobAdvertsAdapter extends RecyclerView.Adapter<MyJobAdvertsAdapter.MyViewHolder>   {
+public class MyJobAdvertsAdapter extends RecyclerView.Adapter<MyJobAdvertsAdapter.MyViewHolder> {
     private List<MyJobAdverts> advertsList;
     private Context context;
 
@@ -50,6 +51,18 @@ public class MyJobAdvertsAdapter extends RecyclerView.Adapter<MyJobAdvertsAdapte
                     final MyJobAdverts advert = advertsList.get(position);
 
                     Intent intent = new Intent(context, EditJobAdvertActivity.class);
+                    intent.putExtra("id", advert.getId());
+                    context.startActivity(intent);
+                }
+            });
+
+            view_applications.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    final MyJobAdverts advert = advertsList.get(position);
+
+                    Intent intent = new Intent(context, JobApplicationsActivity.class);
                     intent.putExtra("id", advert.getId());
                     context.startActivity(intent);
                 }
