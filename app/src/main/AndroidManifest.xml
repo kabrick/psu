@@ -20,7 +20,11 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon">
-        <activity android:name=".globalactivities.MyJobAdvertsActivity"></activity>
+
+        <activity android:name=".globalactivities.EditJobAdvertActivity"
+            android:label="Edit Job Advert"/>
+        <activity android:name=".globalactivities.MyJobAdvertsActivity"
+            android:label="My Job Adverts"/>
         <activity
             android:name=".globalactivities.JobsCompleteApplicationActivity"
             android:label="Job Application" />

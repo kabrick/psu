@@ -19,6 +19,7 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.List;
 
 import ug.or.psu.psudrugassessmenttool.R;
+import ug.or.psu.psudrugassessmenttool.globalactivities.EditJobAdvertActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.MyJobAdvertsActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.models.MyJobAdverts;
@@ -41,6 +42,18 @@ public class MyJobAdvertsAdapter extends RecyclerView.Adapter<MyJobAdvertsAdapte
             edit = view.findViewById(R.id.edit_job);
             view_applications = view.findViewById(R.id.view_applications);
             delete = view.findViewById(R.id.delete_job);
+
+            edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    final MyJobAdverts advert = advertsList.get(position);
+
+                    Intent intent = new Intent(context, EditJobAdvertActivity.class);
+                    intent.putExtra("id", advert.getId());
+                    context.startActivity(intent);
+                }
+            });
 
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
