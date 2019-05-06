@@ -4,8 +4,6 @@
     tools:showIn="navigation_view">
 
     <group android:id="@+id/group_menu">
-        <item android:id="@+id/pharmacy_owner_post_news"
-            android:title="Post News" />
         <item android:id="@+id/pharmacy_owner_feedback"
             android:title="Post Feedback"/>
         <item android:id="@+id/pharmacy_owner_attendance"
@@ -15,6 +13,15 @@
         <item android:id="@+id/pharmacy_owner_eresources"
             android:title="E Resources" />
     </group>
+
+    <item android:title="News">
+        <menu>
+            <item android:id="@+id/pharmacy_owner_post_news"
+                android:title="Post News" />
+            <item android:id="@+id/pharmacy_owner_edit_news_posts"
+                android:title="Edit Your Posts" />
+        </menu>
+    </item>
 
     <item android:title="Jobs">
         <menu>

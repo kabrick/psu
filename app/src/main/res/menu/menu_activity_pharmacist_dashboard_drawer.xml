@@ -4,13 +4,20 @@
     tools:showIn="navigation_view">
 
     <group android:id="@+id/group_menu">
-        <item android:id="@+id/pharmacist_post_news"
-            android:title="Post News" />
         <item android:id="@+id/pharmacist_feedback"
             android:title="Post Feedback"/>
         <item android:id="@+id/pharmacist_admin_eresources"
             android:title="E Resources" />
     </group>
+
+    <item android:title="News">
+        <menu>
+            <item android:id="@+id/pharmacist_post_news"
+                android:title="Post News" />
+            <item android:id="@+id/pharmacist_edit_news_posts"
+                android:title="Edit Your Posts" />
+        </menu>
+    </item>
 
     <item android:title="Jobs">
         <menu>

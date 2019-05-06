@@ -21,7 +21,6 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
             android:layout_width="match_parent"
             android:layout_marginBottom="10dp"
-            android:hint="News Title"
             android:id="@+id/news_title_edit"
             android:layout_height="0dp" />
 
@@ -30,14 +29,13 @@
             android:id="@+id/news_text_edit"
             android:layout_width="match_parent"
             android:inputType="textMultiLine"
-            android:hint="Add news here"
             android:gravity="top"
             android:layout_height="0dp" />
 
         <Button
             android:layout_marginTop="10dp"
             android:layout_weight="0.3"
-            android:text="Post News"
+            android:text="Edit News"
             android:onClick="postNews"
             android:background="@color/colorAccent"
             android:layout_width="match_parent"

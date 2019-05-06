@@ -20,8 +20,11 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon">
-        <activity android:name=".globalactivities.JobApplicationsActivity"
-            android:label="View Job Applications"/>
+        <activity android:name=".globalactivities.EditYourNewsActivity"
+            android:label="View Your News"/>
+        <activity
+            android:name=".globalactivities.JobApplicationsActivity"
+            android:label="View Job Applications" />
         <activity
             android:name=".globalactivities.EditJobAdvertActivity"
             android:label="Edit Job Advert" />
@@ -59,7 +62,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".users.dashboards.ndasupervisor.NdaSupervisorGetLocationActivity" />
         <activity android:name=".globalactivities.NewsViewActivity" />
-        <activity android:name=".globalactivities.CreateNewsActivity" />
+        <activity
+            android:name=".globalactivities.CreateNewsActivity"
+            android:label="Post News" />
         <activity android:name=".globalactivities.PharmacistAttendanceActivity" />
         <activity android:name=".globalactivities.PharmaciesMapActivity" />
         <activity
@@ -92,11 +97,17 @@
         <activity android:name=".globalactivities.NewsViewPostedActivity" />
         <activity android:name=".globalactivities.EditNewsActivity" />
         <activity android:name=".globalactivities.EditProfileActivity" />
-        <activity android:name=".globalactivities.UserNewsActivity" />
+        <activity
+            android:name=".globalactivities.UserNewsActivity"
+            android:label="View News"/>
         <activity android:name=".users.dashboards.psuadmin.SetPharmacyLocationActivity" />
         <activity android:name=".users.dashboards.psuadmin.ViewPharmacyActivity" />
-        <activity android:name=".users.dashboards.psuadmin.ApproveNewsActivity" />
-        <activity android:name=".users.dashboards.psuadmin.ApproveNewsItemActivity" />
+        <activity
+            android:name=".users.dashboards.psuadmin.ApproveNewsActivity"
+            android:label="Approve News"/>
+        <activity
+            android:name=".users.dashboards.psuadmin.ApproveNewsItemActivity"
+            android:label="Approve News"/>
         <activity android:name=".globalactivities.PharmacistAssessmentFormActivity" />
         <activity android:name=".globalactivities.ConfirmPharmacistAssessmentFormActivity" />
         <activity android:name=".globalactivities.PharmacistAssessmentFormFeedActivity" />

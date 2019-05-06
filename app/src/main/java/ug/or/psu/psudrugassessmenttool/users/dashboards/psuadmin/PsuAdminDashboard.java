@@ -23,6 +23,7 @@ import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EResourcesActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.MyJobAdvertsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.SearchPharmacistAssessmentFormsActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
@@ -175,6 +176,10 @@ public class PsuAdminDashboard extends AppCompatActivity
             case R.id.psu_admin_my_job_adverts:
                 Intent my_job_adverts_intent = new Intent(this, MyJobAdvertsActivity.class);
                 startActivity(my_job_adverts_intent);
+                break;
+            case R.id.psu_admin_edit_news_posts:
+                Intent edit_news_intent = new Intent(this, EditYourNewsActivity.class);
+                startActivity(edit_news_intent);
                 break;
             case R.id.psu_admin_log_out:
                 helperFunctions.signAdminUsersOut();

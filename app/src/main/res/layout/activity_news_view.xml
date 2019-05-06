@@ -80,128 +80,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     card_view:cardCornerRadius="4dp"
-                    android:id="@+id/activity_news_pdf"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    android:id="@+id/attachment_card">
 
-                    <LinearLayout
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/pdf_logo"/>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="3"
-                            android:textStyle="bold"
-                            android:gravity="center"
-                            android:text="Download Pdf document"
-                            android:id="@+id/activity_news_pdf_text"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:layout_margin="20dp"
-                    card_view:contentPadding="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    card_view:cardCornerRadius="4dp"
-                    android:id="@+id/activity_news_word"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/word_logo"/>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="3"
-                            android:id="@+id/activity_news_word_text"
-                            android:textStyle="bold"
-                            android:gravity="center"
-                            android:text="Download Word document"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:layout_margin="20dp"
-                    card_view:contentPadding="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    card_view:cardCornerRadius="4dp"
-                    android:id="@+id/activity_news_excel"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/excel_logo"/>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="3"
-                            android:id="@+id/activity_news_excel_text"
-                            android:textStyle="bold"
-                            android:gravity="center"
-                            android:text="Download Excel document"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:layout_margin="20dp"
-                    card_view:contentPadding="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    card_view:cardCornerRadius="4dp"
-                    android:id="@+id/activity_news_powerpoint"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/powerpoint_logo"/>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="3"
-                            android:textStyle="bold"
-                            android:gravity="center"
-                            android:text="Download Powerpoint document"
-                            android:id="@+id/activity_news_powerpoint_text"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:text="Download Pdf document"
+                        android:id="@+id/attachment_name"/>
 
                 </android.support.v7.widget.CardView>
 

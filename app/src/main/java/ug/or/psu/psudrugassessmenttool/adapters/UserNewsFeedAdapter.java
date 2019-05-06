@@ -31,7 +31,7 @@ public class UserNewsFeedAdapter extends RecyclerView.Adapter<UserNewsFeedAdapte
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView title, text, author, timestamp;
-        ImageView image, user_news_attachment_image;
+        ImageView image;
         View read_status;
 
         MyViewHolder(View view) {
@@ -42,7 +42,6 @@ public class UserNewsFeedAdapter extends RecyclerView.Adapter<UserNewsFeedAdapte
             timestamp = view.findViewById(R.id.user_news_feed_timestamp_list);
             read_status = view.findViewById(R.id.user_read_status);
             image = view.findViewById(R.id.user_news_feed_image);
-            user_news_attachment_image = view.findViewById(R.id.user_news_attachment_image);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,7 +75,7 @@ public class UserNewsFeedAdapter extends RecyclerView.Adapter<UserNewsFeedAdapte
         holder.title.setText(news.getTitle());
         holder.author.setText(news.getAuthor());
 
-        //verify whether the person has read the article before
+        // verify whether the person has read the article before
         try {
             if (helperFunctions.isNewsRead(Integer.parseInt(news.getId()))){
                 holder.read_status.setBackgroundColor(Color.parseColor("#f4bb41"));
@@ -104,25 +103,6 @@ public class UserNewsFeedAdapter extends RecyclerView.Adapter<UserNewsFeedAdapte
                     .into(holder.image);
 
             holder.image.setVisibility(View.VISIBLE);
-        }
-
-        switch (news.getAttachment()) {
-            case "pdf":
-                holder.user_news_attachment_image.setImageResource(R.drawable.pdf_logo);
-                holder.user_news_attachment_image.setVisibility(View.VISIBLE);
-                break;
-            case "word":
-                holder.user_news_attachment_image.setImageResource(R.drawable.word_logo);
-                holder.user_news_attachment_image.setVisibility(View.VISIBLE);
-                break;
-            case "excel":
-                holder.user_news_attachment_image.setImageResource(R.drawable.excel_logo);
-                holder.user_news_attachment_image.setVisibility(View.VISIBLE);
-                break;
-            case "powerpoint":
-                holder.user_news_attachment_image.setImageResource(R.drawable.powerpoint_logo);
-                holder.user_news_attachment_image.setVisibility(View.VISIBLE);
-                break;
         }
     }
 

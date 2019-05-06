@@ -1,5 +1,6 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -56,8 +57,8 @@ public class NewsViewActivity extends AppCompatActivity {
     ImageView news_image;
     String title_string, text_string, author_string, timestamp_string, id, image_string;
     HelperFunctions helperFunctions;
-    CardView activity_news_powerpoint, activity_news_excel, activity_news_word, activity_news_pdf;
-    TextView activity_news_powerpoint_text, activity_news_excel_text, activity_news_word_text, activity_news_pdf_text;
+    CardView attachment_card;
+    TextView attachment_name;
     FloatingActionButton create_comment_fab, share_news_fab;
 
     PreferenceManager preferenceManager;
@@ -66,7 +67,7 @@ public class NewsViewActivity extends AppCompatActivity {
     private NewsCommentsAdapter mAdapter;
 
     View activityView;
-    String pdf_url;
+    String attachment_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,40 +86,13 @@ public class NewsViewActivity extends AppCompatActivity {
 
         create_comment_fab = findViewById(R.id.create_comment_fab);
         share_news_fab = findViewById(R.id.share_news_fab);
-        activity_news_pdf = findViewById(R.id.activity_news_pdf);
-        activity_news_word = findViewById(R.id.activity_news_word);
-        activity_news_excel = findViewById(R.id.activity_news_excel);
-        activity_news_powerpoint = findViewById(R.id.activity_news_powerpoint);
-        activity_news_pdf_text = findViewById(R.id.activity_news_pdf_text);
-        activity_news_word_text = findViewById(R.id.activity_news_word_text);
-        activity_news_excel_text = findViewById(R.id.activity_news_excel_text);
-        activity_news_powerpoint_text = findViewById(R.id.activity_news_powerpoint_text);
+        attachment_card = findViewById(R.id.attachment_card);
+        attachment_name = findViewById(R.id.attachment_name);
 
-        activity_news_pdf.setOnClickListener(new View.OnClickListener() {
+        attachment_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                downloadPdf();
-            }
-        });
-
-        activity_news_word.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                downloadPdf();
-            }
-        });
-
-        activity_news_excel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                downloadPdf();
-            }
-        });
-
-        activity_news_powerpoint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                downloadPdf();
+                downloadAttachment();
             }
         });
 
@@ -228,7 +202,7 @@ public class NewsViewActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        fetchPdfUrl();
+                        fetchAttachmentUrl();
                         helperFunctions.stopProgressBar();
 
                         try {
@@ -258,58 +232,25 @@ public class NewsViewActivity extends AppCompatActivity {
         VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
 
-    public void fetchPdfUrl(){
+    public void fetchAttachmentUrl(){
         String network_address = helperFunctions.getIpAddress()
-                + "get_news_pdf.php?id=" + id;
+                + "get_news_attachment.php?id=" + id;
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
                 new Response.Listener<JSONObject>() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onResponse(JSONObject response) {
 
                         try {
-                            // check if image is null
-                            if(response.getString("pdf").equals("0")){
-                                fetchWordUrl();
-                            } else {
-                                pdf_url = helperFunctions.getIpAddress() + response.getString("pdf");
-                                // String pdf = response.getString("pdf").replace("images/news/", "");
+
+                            if(response.getString("attachment_url").equals("0")){
                                 helperFunctions.stopProgressBar();
-                                activity_news_pdf.setVisibility(View.VISIBLE);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //
-            }
-        });
-
-        VolleySingleton.getInstance(this).addToRequestQueue(request);
-    }
-
-    public void fetchWordUrl(){
-        String network_address = helperFunctions.getIpAddress()
-                + "get_news_word.php?id=" + id;
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        try {
-                            // check if image is null
-                            if(response.getString("word").equals("0")){
-                                fetchExcelUrl();
                             } else {
+                                attachment_url = helperFunctions.getIpAddress() + response.getString("attachment_url");
+                                attachment_name.setText("Download " + response.getString("attachment_name"));
                                 helperFunctions.stopProgressBar();
-
-                                pdf_url = helperFunctions.getIpAddress() + response.getString("word");
-
-                                activity_news_word.setVisibility(View.VISIBLE);
+                                attachment_card.setVisibility(View.VISIBLE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -325,75 +266,11 @@ public class NewsViewActivity extends AppCompatActivity {
         VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
 
-    public void fetchExcelUrl(){
-        String network_address = helperFunctions.getIpAddress()
-                + "get_news_excel.php?id=" + id;
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        try {
-                            // check if image is null
-                            if(response.getString("excel").equals("0")){
-                                fetchPowerpointUrl();
-                            } else {
-                                pdf_url = helperFunctions.getIpAddress() + response.getString("excel");
-                                helperFunctions.stopProgressBar();
-                                activity_news_excel.setVisibility(View.VISIBLE);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //
-            }
-        });
-
-        VolleySingleton.getInstance(this).addToRequestQueue(request);
-    }
-
-    public void fetchPowerpointUrl(){
-        String network_address = helperFunctions.getIpAddress()
-                + "get_news_pdf.php?id=" + id;
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        try {
-                            // check if image is null
-                            if(response.getString("powerpoint").equals("0")){
-                                //
-                            } else {helperFunctions.stopProgressBar();
-                                pdf_url = helperFunctions.getIpAddress() + response.getString("powerpoint");
-
-                                activity_news_powerpoint.setVisibility(View.VISIBLE);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //
-            }
-        });
-
-        VolleySingleton.getInstance(this).addToRequestQueue(request);
-    }
-
-    public void downloadPdf(){
+    public void downloadAttachment(){
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
-        intent.setData(Uri.parse(pdf_url));
+        intent.setData(Uri.parse(attachment_url));
         startActivity(intent);
     }
 

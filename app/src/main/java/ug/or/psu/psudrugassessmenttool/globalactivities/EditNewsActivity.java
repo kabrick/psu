@@ -1,20 +1,16 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -24,7 +20,6 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -137,25 +132,20 @@ public class EditNewsActivity extends AppCompatActivity {
 
                         if(response.equals("1")){
                             //saved article successfully
-                            new SweetAlertDialog(EditNewsActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                                    .setTitleText("Success!")
-                                    .setContentText("News edited")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
-                                        }
-                                    })
-                                    .show();
+                            AlertDialog.Builder alert = new AlertDialog.Builder(EditNewsActivity.this);
+
+                            alert.setMessage("News edited successfully").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                                }
+                            }).show();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                new SweetAlertDialog(EditNewsActivity.this, SweetAlertDialog.ERROR_TYPE)
-                        .setTitleText("Oops...")
-                        .setContentText("Something went wrong! Please try again")
-                        .show();
+                helperFunctions.genericDialog("Something went wrong. Please try again later");
             }
         });
 

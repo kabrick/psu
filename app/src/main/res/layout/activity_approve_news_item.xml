@@ -83,16 +83,6 @@
         android:src="@drawable/tick" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/download_news_attachment_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/approve_news_fab"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="16dp"
-        android:visibility="gone"
-        android:src="@drawable/download" />
-
-    <android.support.design.widget.FloatingActionButton
         android:id="@+id/reject_news_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

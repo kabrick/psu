@@ -14,7 +14,10 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -57,20 +60,18 @@ public class CreateNewsActivity extends AppCompatActivity {
     private RequestQueue rQueue;
     View activityView;
     boolean is_picture_set = false;
-    boolean is_pdf_set = false;
-    boolean is_word_set = false;
-    boolean is_excel_set = false;
-    boolean is_powerpoint_set = false;
+    boolean is_attachment_set = false;
+    private String fileExtension;
+    String filename;
     String picture_name;
+    ImageView image;
+    TextView attachment_name;
     private final int IMAGE_REQUEST_CODE = 1;
-    private final int PDF_REQUEST_CODE = 2;
-    private final int WORD_REQUEST_CODE = 3;
-    private final int EXCEL_REQUEST_CODE = 4;
-    private final int POWERPOINT_REQUEST_CODE = 5;
+    private final int ATTACHMENT_REQUEST_CODE = 2;
     private Uri filePath;
     Bitmap bitmap;
     FloatingActionMenu fam;
-    FloatingActionButton add_picture_fab, add_attachments_fab, post_news_fab;
+    FloatingActionButton add_picture_fab, add_attachments_fab, remove_attachments_fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,20 +86,14 @@ public class CreateNewsActivity extends AppCompatActivity {
 
         news_text = findViewById(R.id.news_text);
         news_title = findViewById(R.id.news_title);
+        image = findViewById(R.id.create_news_image);
 
-        post_news_fab = findViewById(R.id.post_news_fab);
+        attachment_name = findViewById(R.id.attachment_name);
+
         add_attachments_fab = findViewById(R.id.add_attachments_fab);
         add_picture_fab = findViewById(R.id.add_picture_fab);
+        remove_attachments_fab = findViewById(R.id.remove_attachments_fab);
         fam = findViewById(R.id.news_fam);
-
-        // apply listeners
-        post_news_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fam.close(true);
-                postNews();
-            }
-        });
 
         add_picture_fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +108,16 @@ public class CreateNewsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 addAttachment();
                 fam.close(true);
+            }
+        });
+
+        remove_attachments_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attachment_name.setText("");
+                attachment_name.setVisibility(View.GONE);
+                is_attachment_set = false;
+                Toast.makeText(CreateNewsActivity.this, "Attachment has been removed", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -139,8 +144,8 @@ public class CreateNewsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_cancel_create_news) {
-            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+        if (id == R.id.action_post_create_news) {
+            postNews();
         }
 
         return super.onOptionsItemSelected(item);
@@ -183,46 +188,26 @@ public class CreateNewsActivity extends AppCompatActivity {
                                 // upload picture
                                 uploadProfilePicture(bitmap, response);
                             } else {
-                                if(is_pdf_set){
+                                if(is_attachment_set){
                                     // upload pdf
-                                    uploadAttachment(response, "pdf");
+                                    uploadAttachment(response);
                                 }
-
-                                if(is_word_set){
-                                    // upload pdf
-                                    uploadAttachment(response, "word");
-                                }
-
-                                if(is_excel_set){
-                                    // upload pdf
-                                    uploadAttachment(response, "excel");
-                                }
-
-                                if(is_powerpoint_set){
-                                    // upload pdf
-                                    uploadAttachment(response, "powerpoint");
-                                }
-
-                                // saved article successfully
-                                helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
                                 helperFunctions.stopProgressBar();
+                                AlertDialog.Builder alert = new AlertDialog.Builder(CreateNewsActivity.this);
+
+                                alert.setMessage("Your news article has been posted. It will be reviewed later for approval").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                                    }
+                                }).show();
                             }
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    helperFunctions.genericSnackbar("Connection Error. Please check your connection", activityView);
-                } else if (error instanceof AuthFailureError) {
-                    helperFunctions.genericSnackbar("Authentication error", activityView);
-                } else if (error instanceof ServerError) {
-                    helperFunctions.genericSnackbar("Server error", activityView);
-                } else if (error instanceof NetworkError) {
-                    helperFunctions.genericSnackbar("Network error", activityView);
-                } else if (error instanceof ParseError) {
-                    helperFunctions.genericSnackbar("Data from server not available", activityView);
-                }
+                helperFunctions.genericDialog("Something went wrong. Please try again later");
             }
         });
 
@@ -236,50 +221,13 @@ public class CreateNewsActivity extends AppCompatActivity {
         startActivityForResult(galleryIntent, IMAGE_REQUEST_CODE);
     }
 
-    //method to show file chooser
     public void addAttachment() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Choose your file type");
-
-        String[] string_array = new String[]{"Pdf", "Word", "Excel", "Powerpoint"};
-
-        builder.setItems(string_array, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                if(i == 0){
-                    Intent intent = new Intent();
-                    intent.setType("application/pdf");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent, "Select Pdf"), PDF_REQUEST_CODE);
-                } else if (i == 1){
-                    /*Intent intent = new Intent();
-                    intent.setType("application/msword");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent, "Select Word"), WORD_REQUEST_CODE);*/
-                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
-                    intent.setType("*/*");
-                    String[] mimetypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/msword"};
-                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
-                    startActivityForResult(Intent.createChooser(intent, "Select Word"), WORD_REQUEST_CODE);
-                } else if (i == 2){
-                    Intent intent = new Intent();
-                    intent.setType("application/vnd.ms-excel");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent, "Select Excel"), EXCEL_REQUEST_CODE);
-                } else if (i == 3){
-                    Intent intent = new Intent();
-                    intent.setType("application/ms-powerpoint");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent, "Select Powerpoint"), POWERPOINT_REQUEST_CODE);
-                }
-            }
-        });
-
-        // create and show the alert dialog
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        String[] mimetypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/msword", "application/pdf", "application/vnd.ms-excel", "application/ms-powerpoint"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+        startActivityForResult(Intent.createChooser(intent, "Select attachment"), ATTACHMENT_REQUEST_CODE);
     }
 
     @Override
@@ -298,6 +246,10 @@ public class CreateNewsActivity extends AppCompatActivity {
 
                     bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
 
+                    image.setVisibility(View.VISIBLE);
+
+                    image.setImageBitmap(bitmap);
+
                     Uri uri = getImageUri(this, bitmap);
                     String path = getRealPathFromURI(this, uri);
                     String filename = path.substring(path.lastIndexOf("/")+1);
@@ -311,7 +263,7 @@ public class CreateNewsActivity extends AppCompatActivity {
                     // set that the picture has been received
                     is_picture_set = true;
 
-                    helperFunctions.genericDialog("Picture has been added successfully");
+                    Toast.makeText(this, "Picture has been added successfully", Toast.LENGTH_LONG).show();
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -319,57 +271,34 @@ public class CreateNewsActivity extends AppCompatActivity {
             }
         }
 
-        // check if the user has selected a pdf
-        if (requestCode == PDF_REQUEST_CODE && data != null && data.getData() != null) {
+        // check if the user has selected an attachment
+        if (requestCode == ATTACHMENT_REQUEST_CODE && data != null && data.getData() != null) {
             filePath = data.getData();
-            is_pdf_set = true;
+            is_attachment_set = true;
 
-            helperFunctions.genericDialog("PDF document has been added successfully");
-            /*String path = getRealPathFromURI(this, filePath);
-            String filename = path.substring(path.lastIndexOf("/")+1);
+            helperFunctions.genericDialog("Document has been added successfully");
+
+            String path = getRealPathFromURI(this, filePath);
+            filename = path.substring(path.lastIndexOf("/")+1);
+
+            // for the file extension
+            int i = filename.lastIndexOf('.');
+            if (i > 0) {
+                fileExtension = filename.substring(i+1);
+            }
+
+            // for the file name
             if (filename.indexOf(".") > 0) {
                 filename = filename.substring(0, filename.lastIndexOf("."));
-            }*/
-        }
+            }
 
-        if (requestCode == WORD_REQUEST_CODE && data != null && data.getData() != null) {
-            filePath = data.getData();
-            is_word_set = true;
+            attachment_name.setVisibility(View.VISIBLE);
 
-            helperFunctions.genericDialog("Word document has been added successfully");
-            /*String path = getRealPathFromURI(this, filePath);
-            String filename = path.substring(path.lastIndexOf("/")+1);
-            if (filename.indexOf(".") > 0) {
-                filename = filename.substring(0, filename.lastIndexOf("."));
-            }*/
-        }
-
-        if (requestCode == EXCEL_REQUEST_CODE && data != null && data.getData() != null) {
-            filePath = data.getData();
-            is_excel_set = true;
-
-            helperFunctions.genericDialog("Excel document has been added successfully");
-            /*String path = getRealPathFromURI(this, filePath);
-            String filename = path.substring(path.lastIndexOf("/")+1);
-            if (filename.indexOf(".") > 0) {
-                filename = filename.substring(0, filename.lastIndexOf("."));
-            }*/
-        }
-
-        if (requestCode == POWERPOINT_REQUEST_CODE && data != null && data.getData() != null) {
-            filePath = data.getData();
-            is_powerpoint_set = true;
-
-            helperFunctions.genericDialog("Powerpoint document has been added successfully");
-            /*String path = getRealPathFromURI(this, filePath);
-            String filename = path.substring(path.lastIndexOf("/")+1);
-            if (filename.indexOf(".") > 0) {
-                filename = filename.substring(0, filename.lastIndexOf("."));
-            }*/
+            attachment_name.setText(filename);
         }
     }
 
-    public void uploadAttachment(String id, String type) {
+    public void uploadAttachment(String id) {
         //getting the actual path of the image
         String path = FilePath.getPath(this, filePath);
 
@@ -381,9 +310,9 @@ public class CreateNewsActivity extends AppCompatActivity {
 
             //Creating a multi part request
             new MultipartUploadRequest(this, uploadId, upload_URL)
-                    .addFileToUpload(path, "pdf") //Adding file
-                    .addParameter("id", id) //Adding text parameter to the request
-                    .addParameter("type", type)
+                    .addFileToUpload(path, "pdf")
+                    .addParameter("id", id)
+                    .addParameter("name", filename + "."  + fileExtension)
                     .setNotificationConfig(new UploadNotificationConfig())
                     .setMaxRetries(2)
                     .startUpload(); //Starting the upload
@@ -427,24 +356,9 @@ public class CreateNewsActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         rQueue.getCache().clear();
 
-                        if(is_pdf_set){
+                        if(is_attachment_set){
                             // upload pdf
-                            uploadAttachment(id, "pdf");
-                        }
-
-                        if(is_word_set){
-                            // upload pdf
-                            uploadAttachment(id, "word");
-                        }
-
-                        if(is_excel_set){
-                            // upload pdf
-                            uploadAttachment(id, "excel");
-                        }
-
-                        if(is_powerpoint_set){
-                            // upload pdf
-                            uploadAttachment(id, "powerpoint");
+                            uploadAttachment(id);
                         }
 
                         helperFunctions.stopProgressBar();

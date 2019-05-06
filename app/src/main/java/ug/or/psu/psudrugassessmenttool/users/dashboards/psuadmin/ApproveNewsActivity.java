@@ -109,6 +109,8 @@ public class ApproveNewsActivity extends AppCompatActivity implements ApproveNew
      */
     @Override
     public void onNewsItemSelected(ApproveNewsFeed news) {
+        finish();
+
         Intent intent = new Intent(this, ApproveNewsItemActivity.class);
         intent.putExtra("text", news.getText());
         intent.putExtra("title", news.getTitle());

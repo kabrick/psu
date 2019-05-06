@@ -71,7 +71,7 @@ public class FeedbackActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_cancel_create_news) {
+        if (id == R.id.action_post_create_news) {
             helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
         }
 

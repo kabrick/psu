@@ -82,6 +82,7 @@ public class JobsCompleteApplicationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 resume_name.setText("");
                 cv_details.setVisibility(View.GONE);
+                is_cv_attached = false;
                 Toast.makeText(JobsCompleteApplicationActivity.this, "CV has been removed", Toast.LENGTH_SHORT).show();
             }
         });

@@ -4,8 +4,6 @@
     tools:showIn="navigation_view">
 
     <group android:id="@+id/group_menu">
-        <item android:id="@+id/nda_admin_post_news"
-            android:title="Post News" />
         <item android:id="@+id/nda_admin_feedback"
             android:title="Post Feedback"/>
         <item android:id="@+id/nda_admin_edit_profile"
@@ -13,5 +11,14 @@
         <item android:id="@+id/nda_admin_log_out"
             android:title="Log Out" />
     </group>
+
+    <item android:title="News">
+        <menu>
+            <item android:id="@+id/nda_admin_post_news"
+                android:title="Post News" />
+            <item android:id="@+id/nda_admin_edit_news_posts"
+                android:title="Edit Your Posts" />
+        </menu>
+    </item>
 
 </menu>

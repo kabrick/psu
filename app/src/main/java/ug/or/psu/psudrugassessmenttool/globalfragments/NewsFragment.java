@@ -32,6 +32,7 @@ import java.util.Objects;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.adapters.NewsFeedAdapter;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.UserNewsActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -150,8 +151,8 @@ public class NewsFragment extends Fragment implements NewsFeedAdapter.NewsFeedAd
 
         switch (item.getItemId()){
             case R.id.action_view_own_news:
-                /*Intent intent_own_news = new Intent(getContext(), NewsViewPostedActivity.class);
-                Objects.requireNonNull(getContext()).startActivity(intent_own_news);*/
+                Intent intent_own_news = new Intent(getContext(), EditYourNewsActivity.class);
+                Objects.requireNonNull(getContext()).startActivity(intent_own_news);
                 break;
             default:
                 //

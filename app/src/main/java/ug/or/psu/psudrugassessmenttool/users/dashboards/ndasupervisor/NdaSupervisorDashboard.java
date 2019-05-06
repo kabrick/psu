@@ -25,6 +25,7 @@ import java.util.Objects;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.FeedbackActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.NewsFragment;
@@ -176,6 +177,10 @@ public class NdaSupervisorDashboard extends AppCompatActivity
             case R.id.nda_supervisor_feedback:
                 Intent give_feedback_intent = new Intent(this, FeedbackActivity.class);
                 startActivity(give_feedback_intent);
+                break;
+            case R.id.nda_supervisor_edit_news_posts:
+                Intent edit_news_intent = new Intent(this, EditYourNewsActivity.class);
+                startActivity(edit_news_intent);
                 break;
             default:
                 //

@@ -1,7 +1,6 @@
 package ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -34,11 +32,10 @@ public class ApproveNewsItemActivity extends AppCompatActivity {
     ImageView news_image;
     String title_string, text_string, author_string, timestamp_string, id;
 
-    FloatingActionButton approve_news_fab, reject_news_fab, download_news_attachment_fab;
+    FloatingActionButton approve_news_fab, reject_news_fab;
 
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
-    String pdf_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,20 +51,12 @@ public class ApproveNewsItemActivity extends AppCompatActivity {
         preferenceManager = new PreferenceManager(this);
 
         approve_news_fab = findViewById(R.id.approve_news_fab);
-        download_news_attachment_fab = findViewById(R.id.download_news_attachment_fab);
         reject_news_fab = findViewById(R.id.reject_news_fab);
 
         approve_news_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 approveNews();
-            }
-        });
-
-        download_news_attachment_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                downloadPdf();
             }
         });
 
@@ -124,8 +113,7 @@ public class ApproveNewsItemActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
-                        fetchPdfUrl();
+                        helperFunctions.stopProgressBar();
 
                         try {
                             // check if image is null
@@ -154,48 +142,6 @@ public class ApproveNewsItemActivity extends AppCompatActivity {
         VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
 
-    public void fetchPdfUrl(){
-        String network_address = helperFunctions.getIpAddress()
-                + "get_news_pdf.php?id=" + id;
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        helperFunctions.stopProgressBar();
-
-                        try {
-                            // check if image is null
-                            if(response.getString("pdf").equals("0")){
-                                //
-                            } else {
-                                pdf_url = helperFunctions.getIpAddress() + response.getString("pdf");
-
-                                download_news_attachment_fab.setVisibility(View.VISIBLE);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //
-            }
-        });
-
-        VolleySingleton.getInstance(this).addToRequestQueue(request);
-    }
-
-    public void downloadPdf(){
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.addCategory(Intent.CATEGORY_BROWSABLE);
-        intent.setData(Uri.parse(pdf_url));
-        startActivity(intent);
-    }
-
     public void approveNews(){
         //show progress dialog
         helperFunctions.genericProgressBar("Approving news article...");
@@ -209,6 +155,8 @@ public class ApproveNewsItemActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         //dismiss progress dialog
                         helperFunctions.stopProgressBar();
+
+                        finish();
 
                         Intent approve_news_intent = new Intent(ApproveNewsItemActivity.this, ApproveNewsActivity.class);
                         startActivity(approve_news_intent);
@@ -237,6 +185,7 @@ public class ApproveNewsItemActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         //dismiss progress dialog
                         helperFunctions.stopProgressBar();
+                        finish();
 
                         Intent approve_news_intent = new Intent(ApproveNewsItemActivity.this, ApproveNewsActivity.class);
                         startActivity(approve_news_intent);

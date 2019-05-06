@@ -7,7 +7,6 @@ public class UserNewsFeed {
     private String timestamp;
     private String title;
     private String image;
-    private String attachment;
 
     public String getId() {
         return id;
@@ -55,13 +54,5 @@ public class UserNewsFeed {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public String getAttachment() {
-        return attachment;
-    }
-
-    public void setAttachment(String attachment) {
-        this.attachment = attachment;
     }
 }
