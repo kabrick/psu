@@ -25,7 +25,7 @@
             android:layout_height="25dp"
             android:layout_weight="1"
             android:layout_marginEnd="5dp"
-            android:background="@color/green"
+            android:background="@color/colorPrimaryDark"
             android:textColor="@color/white"
             android:id="@+id/edit_your_pharmacies"
             android:text="Edit"/>
@@ -35,7 +35,7 @@
             android:layout_height="25dp"
             android:layout_weight="1"
             android:layout_marginStart="5dp"
-            android:background="@color/red"
+            android:background="@color/colorPrimaryDark"
             android:textColor="@color/white"
             android:id="@+id/remove_your_pharmacies"
             android:text="Remove"/>

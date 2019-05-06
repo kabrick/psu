@@ -1,7 +1,6 @@
 package ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +9,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -30,23 +28,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
-import ug.or.psu.psudrugassessmenttool.adapters.PharmaciesAdapter;
-import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
-import ug.or.psu.psudrugassessmenttool.models.Pharmacies;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.SupervisorPharmacy;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.SupervisorPharmacyAdapter;
 
-public class ChoosePharmacyActivity extends AppCompatActivity implements PharmaciesAdapter.PharmaciesAdapterListener {
+public class ChoosePharmacyActivity extends AppCompatActivity implements SupervisorPharmacyAdapter.SupervisorPharmacyAdapterListener {
 
     FloatingActionButton add_pharmacy_fab;
     EditText pharmacy_name, pharmacy_location;
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
-    private List<Pharmacies> pharmaciesList;
-    private PharmaciesAdapter mAdapter;
+    List<SupervisorPharmacy> pharmaciesList;
+    SupervisorPharmacyAdapter mAdapter;
     ProgressBar progressBar;
 
     @Override
@@ -103,7 +99,7 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
 
         RecyclerView recyclerView = findViewById(R.id.recycler_choose_pharmacy);
         pharmaciesList = new ArrayList<>();
-        mAdapter = new PharmaciesAdapter(pharmaciesList, this);
+        mAdapter = new SupervisorPharmacyAdapter(this, pharmaciesList, this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -154,22 +150,17 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
 
                         //check if location has been saved successfully
                         if(response.equals("1")){
-                            new SweetAlertDialog(ChoosePharmacyActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                                    .setTitleText("Success!")
-                                    .setContentText("Pharmacy saved successfully")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            onBackPressed();
-                                        }
-                                    })
-                                    .show();
+                            AlertDialog.Builder alert = new AlertDialog.Builder(ChoosePharmacyActivity.this);
+
+                            alert.setMessage("Pharmacy info saved successfully").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    onBackPressed();
+                                }
+                            }).show();
                         } else {
                             //did not save
-                            new SweetAlertDialog(ChoosePharmacyActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                    .setTitleText("Oops...")
-                                    .setContentText("Something went wrong! Please try again")
-                                    .show();
+                            helperFunctions.genericDialog("Something went wrong! Please try again");
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -177,10 +168,7 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
             public void onErrorResponse(VolleyError error) {
                 //stop progress bar
                 helperFunctions.stopProgressBar();
-                new SweetAlertDialog(ChoosePharmacyActivity.this, SweetAlertDialog.ERROR_TYPE)
-                        .setTitleText("Oops...")
-                        .setContentText("Something went wrong! Please try again")
-                        .show();
+                helperFunctions.genericDialog("Something went wrong! Please try again");
             }
         });
 
@@ -188,7 +176,7 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
     }
 
     private void fetchPharmacies() {
-        String url = helperFunctions.getIpAddress() + "get_unset_pharmacies.php";
+        String url = helperFunctions.getIpAddress() + "get_all_pharmacies.php";
 
         JsonArrayRequest request = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
@@ -202,7 +190,7 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
                             return;
                         }
 
-                        List<Pharmacies> items = new Gson().fromJson(response.toString(), new TypeToken<List<Pharmacies>>() {
+                        List<SupervisorPharmacy> items = new Gson().fromJson(response.toString(), new TypeToken<List<SupervisorPharmacy>>() {
                         }.getType());
 
                         pharmaciesList.clear();
@@ -223,29 +211,26 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
     }
 
     @Override
-    public void onPharmacySelected(Pharmacies pharmacy) {
+    public void onPharmacySelected(SupervisorPharmacy pharmacy) {
         final String pharmacy_id = pharmacy.getId();
+        final String pharmacy_name = pharmacy.getName();
+        final String location_set = pharmacy.getLocationSet();
 
-        String confirm_text = "Assign yourself to " + pharmacy.getName() + "?";
+        //check if location has already been set
+        if(location_set.equals("0")){
+            String confirm_text = "Are you sure you want to assign yourself to " + pharmacy_name + "?";
 
-        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Are you sure?")
-                .setContentText(confirm_text)
-                .setConfirmText("Yes")
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        updatePharmacyInfo(pharmacy_id, preferenceManager.getPsuId());
-                    }
-                })
-                .showCancelButton(true)
-                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        sDialog.cancel();
-                    }
-                })
-                .show();
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+            alert.setMessage(confirm_text).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    updatePharmacyInfo(pharmacy_id, preferenceManager.getPsuId());
+                }
+            }).show();
+        } else {
+            helperFunctions.genericDialog("A pharmacist has already been assigned to this pharmacy");
+        }
     }
 
     private void updatePharmacyInfo(String id, String pharmacist){
@@ -266,22 +251,16 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
 
                         //check if location has been saved successfully
                         if(response.equals("1")){
-                            new SweetAlertDialog(ChoosePharmacyActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                                    .setTitleText("Success!")
-                                    .setContentText("Pharmacy info saved successfully")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            onBackPressed();
-                                        }
-                                    })
-                                    .show();
+                            AlertDialog.Builder alert = new AlertDialog.Builder(ChoosePharmacyActivity.this);
+
+                            alert.setMessage("Pharmacy info saved successfully").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    onBackPressed();
+                                }
+                            }).show();
                         } else {
-                            //did not save
-                            new SweetAlertDialog(ChoosePharmacyActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                    .setTitleText("Oops...")
-                                    .setContentText("Something went wrong! Please try again")
-                                    .show();
+                            helperFunctions.genericDialog("Something went wrong! Please try again");
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -289,10 +268,7 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
             public void onErrorResponse(VolleyError error) {
                 //stop progress bar
                 helperFunctions.stopProgressBar();
-                new SweetAlertDialog(ChoosePharmacyActivity.this, SweetAlertDialog.ERROR_TYPE)
-                        .setTitleText("Oops...")
-                        .setContentText("Something went wrong! Please try again")
-                        .show();
+                helperFunctions.genericDialog("Something went wrong! Please try again");
             }
         });
 

@@ -40,7 +40,9 @@
         <activity android:name=".globalactivities.EditYourPharmacies" />
         <activity android:name=".globalactivities.ViewPharmacyLocationActivity" />
         <activity android:name=".users.dashboards.psuadmin.ViewGeneralAttendanceActivity" />
-        <activity android:name=".users.dashboards.psuadmin.ChoosePharmacyActivity" />
+        <activity
+            android:name=".users.dashboards.psuadmin.ChoosePharmacyActivity"
+            android:label="Choose pharmacy"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

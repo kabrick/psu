@@ -49,7 +49,7 @@ public class SupervisorPharmacyAdapter extends RecyclerView.Adapter<SupervisorPh
     }
 
 
-    SupervisorPharmacyAdapter(Context context, List<SupervisorPharmacy> pharmacyList, SupervisorPharmacyAdapterListener listener) {
+    public SupervisorPharmacyAdapter(Context context, List<SupervisorPharmacy> pharmacyList, SupervisorPharmacyAdapterListener listener) {
         this.context = context;
         this.listener = listener;
         this.pharmacyList = pharmacyList;
