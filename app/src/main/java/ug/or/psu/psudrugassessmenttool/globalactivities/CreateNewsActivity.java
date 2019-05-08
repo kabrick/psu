@@ -161,6 +161,16 @@ public class CreateNewsActivity extends AppCompatActivity {
             return;
         }
 
+        text = text.replace("&", "and");
+        text = text.replace("\"", "");
+        text = text.replace("\'", "");
+        text = text.replace("+", "plus");
+
+        title = text.replace("&", "and");
+        title = text.replace("\"", "");
+        title = text.replace("\'", "");
+        title = text.replace("+", "plus");
+
         //show progress dialog
         helperFunctions.genericProgressBar("Posting your news article...");
 
