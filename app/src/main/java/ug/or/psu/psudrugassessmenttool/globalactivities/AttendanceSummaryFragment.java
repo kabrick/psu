@@ -28,7 +28,7 @@ public class AttendanceSummaryFragment extends Fragment {
     View view;
     String pharmacy_id, pharmacist_id;
     TextView total_hours, monday_hours, tuesday_hours, wednesday_hours, thursday_hours,
-        friday_hours, saturday_hours, sunday_hours, name, phone, email, pharmacy;
+        friday_hours, saturday_hours, sunday_hours, name, phone, email, pharmacy, attendance_summary_search;
     HelperFunctions helperFunctions;
 
     public AttendanceSummaryFragment() {
@@ -58,8 +58,15 @@ public class AttendanceSummaryFragment extends Fragment {
         phone = view.findViewById(R.id.attendance_phone);
         email = view.findViewById(R.id.attendance_email);
         pharmacy = view.findViewById(R.id.attendance_pharmacy);
+        attendance_summary_search = view.findViewById(R.id.attendance_summary_search);
 
-        //call 911 for help
+        attendance_summary_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((PharmacistAttendanceActivity) Objects.requireNonNull(getActivity())).search_records();
+            }
+        });
+
         helperFunctions = new HelperFunctions(getContext());
 
         display_summary();

@@ -65,6 +65,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:id="@+id/news_feed_text_single"/>
 
                 <android.support.v7.widget.RecyclerView

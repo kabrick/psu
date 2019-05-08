@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -36,6 +37,7 @@ public class AttendanceSessionsFragment extends Fragment {
     private AttendanceSessionAdapter mAdapter;
     String pharmacy_id, pharmacist_id;
     HelperFunctions helperFunctions;
+    TextView attendance_sessions_search;
 
     public AttendanceSessionsFragment() {
         // Required empty public constructor
@@ -52,6 +54,15 @@ public class AttendanceSessionsFragment extends Fragment {
         mAdapter = new AttendanceSessionAdapter(attendanceList);
 
         helperFunctions = new HelperFunctions(getContext());
+
+        attendance_sessions_search = view.findViewById(R.id.attendance_sessions_search);
+
+        attendance_sessions_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((PharmacistAttendanceActivity) Objects.requireNonNull(getActivity())).search_records();
+            }
+        });
 
         //get pharmacist id from the activity
         pharmacy_id = ((PharmacistAttendanceActivity) Objects.requireNonNull(getActivity())).pharmacy_id;

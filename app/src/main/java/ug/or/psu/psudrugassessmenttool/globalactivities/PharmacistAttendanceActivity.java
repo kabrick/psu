@@ -105,91 +105,94 @@ public class PharmacistAttendanceActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_search_pharmacist_attendance) {
-            LayoutInflater inflater1 = LayoutInflater.from(this);
-            View view1 = inflater1.inflate(R.layout.layout_attendance_search, null);
-
-            start_date_edit = view1.findViewById(R.id.start_date);
-            end_date_edit = view1.findViewById(R.id.end_date);
-
-            final DatePickerDialog.OnDateSetListener date_start = new DatePickerDialog.OnDateSetListener() {
-                @SuppressLint("SetTextI18n")
-                @Override
-                public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                      int dayOfMonth) {
-                    myCalendar.set(Calendar.YEAR, year);
-                    myCalendar.set(Calendar.MONTH, monthOfYear);
-                    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                    String myFormat = "dd MMMM yyyy";
-                    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
-
-                    start_date_edit.setText(sdf.format(myCalendar.getTime()));
-                    start_date = myCalendar.getTimeInMillis();
-                }
-
-            };
-
-            start_date_edit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(PharmacistAttendanceActivity.this, date_start, myCalendar
-                            .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                            myCalendar.get(Calendar.DAY_OF_MONTH));
-                    datePickerDialog.show();
-                }
-            });
-
-            final DatePickerDialog.OnDateSetListener date_end = new DatePickerDialog.OnDateSetListener() {
-                @SuppressLint("SetTextI18n")
-                @Override
-                public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                      int dayOfMonth) {
-                    myCalendar.set(Calendar.YEAR, year);
-                    myCalendar.set(Calendar.MONTH, monthOfYear);
-                    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                    String myFormat = "dd MMMM yyyy";
-                    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
-
-                    end_date_edit.setText(sdf.format(myCalendar.getTime()));
-                    end_date = myCalendar.getTimeInMillis();
-                }
-
-            };
-
-            end_date_edit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(PharmacistAttendanceActivity.this, date_end, myCalendar
-                            .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                            myCalendar.get(Calendar.DAY_OF_MONTH));
-                    datePickerDialog.show();
-                }
-            });
-
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle("Search");
-            alertDialog.setView(view1);
-
-            alertDialog.setCancelable(false)
-                    .setPositiveButton("Search",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,int id) {
-                                    enableFragment(summary_fragment);
-                                }
-                            })
-                    .setNegativeButton("Cancel",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-
-            AlertDialog alertDialog1 = alertDialog.create();
-
-            alertDialog1.show();
+            search_records();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void search_records(){
+        LayoutInflater inflater1 = LayoutInflater.from(this);
+        View view1 = inflater1.inflate(R.layout.layout_attendance_search, null);
+
+        start_date_edit = view1.findViewById(R.id.start_date);
+        end_date_edit = view1.findViewById(R.id.end_date);
+
+        final DatePickerDialog.OnDateSetListener date_start = new DatePickerDialog.OnDateSetListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                String myFormat = "dd MMMM yyyy";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+
+                start_date_edit.setText(sdf.format(myCalendar.getTime()));
+                start_date = myCalendar.getTimeInMillis();
+            }
+
+        };
+
+        start_date_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(PharmacistAttendanceActivity.this, date_start, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.show();
+            }
+        });
+
+        final DatePickerDialog.OnDateSetListener date_end = new DatePickerDialog.OnDateSetListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                String myFormat = "dd MMMM yyyy";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+
+                end_date_edit.setText(sdf.format(myCalendar.getTime()));
+                end_date = myCalendar.getTimeInMillis();
+            }
+
+        };
+
+        end_date_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(PharmacistAttendanceActivity.this, date_end, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.show();
+            }
+        });
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setView(view1);
+
+        alertDialog.setCancelable(false)
+                .setPositiveButton("Search",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                enableFragment(summary_fragment);
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        AlertDialog alertDialog1 = alertDialog.create();
+
+        alertDialog1.show();
     }
 }
