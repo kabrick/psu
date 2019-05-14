@@ -1,10 +1,12 @@
 package ug.or.psu.psudrugassessmenttool.users.authentication;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +27,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -127,9 +128,7 @@ public class SignUpActivity extends AppCompatActivity {
                         break;
                     default:
                         helperFunctions.stopProgressBar();
-                        new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                .setContentText("Select membership status")
-                                .show();
+                        helperFunctions.genericDialog("Select membership status");
                         return;
                 }
 
@@ -145,56 +144,39 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 switch (response) {
                                     case "0": {
-                                        new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                                .setTitleText("Oops...")
-                                                .setContentText("Something went wrong! Please try again")
-                                                .show();
+                                        helperFunctions.genericDialog("Something went wrong. Please try again later");
                                         break;
                                     }
                                     case "1": {
                                         // user registered successfully
-                                        new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                                                .setTitleText("Success!")
-                                                .setContentText("Your profile has been created. Sign in to continue")
-                                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                                    @Override
-                                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                                        Intent sign_in_intent = new Intent(SignUpActivity.this, SignInActivity.class);
-                                                        startActivity(sign_in_intent);
-                                                    }
-                                                })
-                                                .show();
+                                        AlertDialog.Builder alert = new AlertDialog.Builder(SignUpActivity.this);
+
+                                        alert.setMessage("Your profile has been created. Sign in to continue").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                Intent sign_in_intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                                                startActivity(sign_in_intent);
+                                            }
+                                        }).show();
                                         break;
                                     }
                                     case "2": {
                                         // email already taken
-                                        new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                                .setTitleText("Oops...")
-                                                .setContentText("Email address has already been registered")
-                                                .show();
+                                        helperFunctions.genericDialog("Email address has already been registered");
                                         break;
                                     }
                                     case "3": {
                                         // username already taken
-                                        new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                                .setTitleText("Oops...")
-                                                .setContentText("User name has already been registered")
-                                                .show();
+                                        helperFunctions.genericDialog("User name has already been registered");
                                         break;
                                     }
                                     case "4": {
                                         // phone number already taken
-                                        new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                                .setTitleText("Oops...")
-                                                .setContentText("Phone number has already been registered")
-                                                .show();
+                                        helperFunctions.genericDialog("Phone number has already been registered");
                                         break;
                                     }
                                     default:
-                                        new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                                .setTitleText("Oops...")
-                                                .setContentText("Something went wrong! Please try again")
-                                                .show();
+                                        helperFunctions.genericDialog("Something went wrong. Please try again later");
                                         break;
                                 }
                             }
@@ -203,10 +185,7 @@ public class SignUpActivity extends AppCompatActivity {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 helperFunctions.stopProgressBar();
-                                new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                        .setTitleText("Oops...")
-                                        .setContentText("Something went wrong! Please try again")
-                                        .show();
+                                helperFunctions.genericDialog("Something went wrong. Please try again later");
                             }
                         }) {
                     @Override
@@ -240,10 +219,7 @@ public class SignUpActivity extends AppCompatActivity {
                 rQueue = Volley.newRequestQueue(this);
                 rQueue.add(volleyMultipartRequest);
             } else {
-                new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
-                        .setTitleText("Oops...")
-                        .setContentText("Internet connection has been lost!")
-                        .show();
+                helperFunctions.genericDialog("Internet connection has been lost!");
             }
         }
     }

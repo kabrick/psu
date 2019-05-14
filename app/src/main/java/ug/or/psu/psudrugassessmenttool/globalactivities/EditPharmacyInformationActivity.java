@@ -1,6 +1,8 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +19,6 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -110,22 +111,17 @@ public class EditPharmacyInformationActivity extends AppCompatActivity {
 
                         //check if location has been saved successfully
                         if(response.equals("1")){
-                            new SweetAlertDialog(EditPharmacyInformationActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                                    .setTitleText("Success!")
-                                    .setContentText("Pharmacy saved successfully")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
-                                        }
-                                    })
-                                    .show();
+                            AlertDialog.Builder alert = new AlertDialog.Builder(EditPharmacyInformationActivity.this);
+
+                            alert.setMessage("Pharmacy saved successfully").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                                }
+                            }).show();
                         } else {
                             //did not save
-                            new SweetAlertDialog(EditPharmacyInformationActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                    .setTitleText("Oops...")
-                                    .setContentText("Something went wrong! Please try again")
-                                    .show();
+                            helperFunctions.genericDialog("Something went wrong. Please try again later");
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -133,10 +129,7 @@ public class EditPharmacyInformationActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 //stop progress bar
                 helperFunctions.stopProgressBar();
-                new SweetAlertDialog(EditPharmacyInformationActivity.this, SweetAlertDialog.ERROR_TYPE)
-                        .setTitleText("Oops...")
-                        .setContentText("Something went wrong! Please try again")
-                        .show();
+                helperFunctions.genericDialog("Something went wrong. Please try again later");
             }
         });
 

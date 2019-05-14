@@ -30,13 +30,9 @@ import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
 public class CreateJobsActivity extends AppCompatActivity {
 
-    EditText jobs_title, jobs_description, jobs_phone, jobs_email, jobs_company;
-    String salary, contract, location = "N/A";
-    String deadline = String.valueOf(System.currentTimeMillis());
-    TextView jobs_deadline, jobs_location, jobs_contract, jobs_salary;
+    EditText jobs_title, jobs_description;
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
-    final Calendar myCalendar = Calendar.getInstance();
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -56,113 +52,7 @@ public class CreateJobsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         jobs_title = findViewById(R.id.jobs_title);
-        jobs_company = findViewById(R.id.jobs_company);
         jobs_description = findViewById(R.id.jobs_description);
-        jobs_phone = findViewById(R.id.jobs_phone);
-        jobs_email = findViewById(R.id.jobs_email);
-        jobs_salary = findViewById(R.id.jobs_salary);
-        jobs_contract = findViewById(R.id.jobs_contract);
-        jobs_location = findViewById(R.id.jobs_location);
-        jobs_deadline = findViewById(R.id.jobs_deadline);
-
-        jobs_salary.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String[] options = {"0 - 300,000", "300,001 - 700,000", "700,001 - 1,000,000", "1,000,001 - 3,000,000", "3,000,001+", "Confidential"};
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(CreateJobsActivity.this);
-                builder.setTitle("Choose salary range");
-
-                builder.setItems(options, new DialogInterface.OnClickListener() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        salary = options[i];
-                        jobs_salary.setText("Salary Range: " + options[i]);
-                    }
-                });
-
-                // create and show the alert dialog
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
-
-        jobs_contract.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String[] options = {"Internship", "Part time", "Full time"};
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(CreateJobsActivity.this);
-                builder.setTitle("Choose contract type");
-
-                builder.setItems(options, new DialogInterface.OnClickListener() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        contract = options[i];
-                        jobs_contract.setText("Contract type: " + options[i]);
-                    }
-                });
-
-                // create and show the alert dialog
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
-
-        jobs_location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String[] options = {"Kampala", "Mbale", "Jinja", "Gulu", "Mbarara", "Entebbe", "Lira", "Luwero", "Kabale", "Mukono", "Wakiso", "Rest of Uganda"};
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(CreateJobsActivity.this);
-                builder.setTitle("Choose location");
-
-                builder.setItems(options, new DialogInterface.OnClickListener() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        location = options[i];
-                        jobs_location.setText("Location: " + options[i]);
-                    }
-                });
-
-                // create and show the alert dialog
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
-
-        // set up onclick dialog
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                String myFormat = "dd MMMM yyyy";
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
-
-                jobs_deadline.setText("Deadline: " + sdf.format(myCalendar.getTime()));
-                deadline = String.valueOf(myCalendar.getTimeInMillis());
-            }
-
-        };
-
-        jobs_deadline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(CreateJobsActivity.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH));
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-                datePickerDialog.show();
-            }
-        });
 
         helperFunctions = new HelperFunctions(this);
         preferenceManager = new PreferenceManager(this);
@@ -210,15 +100,8 @@ public class CreateJobsActivity extends AppCompatActivity {
         String network_address = helperFunctions.getIpAddress()
                 + "post_jobs.php?title=" + title
                 + "&text=" + text
-                + "&contact=" + jobs_phone.getText().toString()
-                + "&email=" + jobs_email.getText().toString()
                 + "&author_id=" + preferenceManager.getPsuId()
-                + "&timestamp=" + timestamp_long.toString()
-                + "&company_name=" + jobs_company.getText().toString()
-                + "&salary_range=" + salary
-                + "&contract_type=" + contract
-                + "&location=" + location
-                + "&deadline=" + deadline;
+                + "&timestamp=" + timestamp_long.toString();
 
         // Request a string response from the provided URL.
         StringRequest request = new StringRequest(network_address,

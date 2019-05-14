@@ -107,7 +107,7 @@ public class PsuAdminDashboard extends AppCompatActivity
                 case 0:
                     return "News";
                 case 1:
-                    return "Job Adverts";
+                    return "Job||Careers";
                 case 2:
                     return "Attendance";
             }
@@ -173,10 +173,10 @@ public class PsuAdminDashboard extends AppCompatActivity
                 Intent eresources_intent = new Intent(this, EResourcesActivity.class);
                 startActivity(eresources_intent);
                 break;
-            case R.id.psu_admin_my_job_adverts:
+            /*case R.id.psu_admin_my_job_adverts:
                 Intent my_job_adverts_intent = new Intent(this, MyJobAdvertsActivity.class);
                 startActivity(my_job_adverts_intent);
-                break;
+                break;*/
             case R.id.psu_admin_edit_news_posts:
                 Intent edit_news_intent = new Intent(this, EditYourNewsActivity.class);
                 startActivity(edit_news_intent);

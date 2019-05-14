@@ -33,6 +33,7 @@ import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.adapters.NewsFeedAdapter;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourNewsActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.NewsViewActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.UserNewsActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -136,8 +137,12 @@ public class NewsFragment extends Fragment implements NewsFeedAdapter.NewsFeedAd
      */
     @Override
     public void onNewsItemSelected(NewsFeed news) {
-        Intent intent = new Intent(getContext(), UserNewsActivity.class);
-        intent.putExtra("user_id", news.getId());
+        Intent intent = new Intent(getContext(), NewsViewActivity.class);
+        intent.putExtra("text", news.getText());
+        intent.putExtra("title", news.getTitle());
+        intent.putExtra("author", news.getAuthor());
+        intent.putExtra("timestamp", news.getTimeStamp());
+        intent.putExtra("id", news.getId());
         startActivity(intent);
     }
 

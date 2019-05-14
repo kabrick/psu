@@ -60,60 +60,8 @@
                 android:textSize="17sp"
                 android:layout_marginBottom="10dp"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/jobs_feed_company_single"
-                android:layout_marginBottom="10dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/jobs_feed_phone_single"
-                android:layout_marginBottom="10dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/jobs_feed_email_single"
-                android:layout_marginBottom="10dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/jobs_feed_salary_single"
-                android:layout_marginBottom="10dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/jobs_feed_deadline_single"
-                android:layout_marginBottom="10dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/jobs_feed_location_single"
-                android:layout_marginBottom="10dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/jobs_feed_contract_single"
-                android:layout_marginBottom="10dp"/>
-
         </LinearLayout>
 
     </ScrollView>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:text="Apply"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@color/white"
-        android:onClick="apply"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/apply_button"/>
 
 </RelativeLayout>

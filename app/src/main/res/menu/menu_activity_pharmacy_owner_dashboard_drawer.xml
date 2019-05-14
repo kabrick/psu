@@ -23,14 +23,6 @@
         </menu>
     </item>
 
-    <item android:title="Jobs">
-        <menu>
-            <item
-                android:id="@+id/pharmacy_owner_my_job_adverts"
-                android:title="My Job Adverts" />
-        </menu>
-    </item>
-
     <item android:title="Other">
         <menu>
             <item android:id="@+id/pharmacy_owner_edit_profile"

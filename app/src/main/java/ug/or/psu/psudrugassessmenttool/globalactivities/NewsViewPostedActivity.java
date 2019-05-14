@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.adapters.NewsFeedAdapter;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
@@ -160,16 +159,14 @@ public class NewsViewPostedActivity extends AppCompatActivity implements NewsFee
                         helperFunctions.stopProgressBar();
 
                         if(response.equals("1")){
-                            new SweetAlertDialog(NewsViewPostedActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                                    .setTitleText("Success!")
-                                    .setContentText("News article deleted")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            fetchNews();
-                                        }
-                                    })
-                                    .show();
+                            AlertDialog.Builder alert = new AlertDialog.Builder(NewsViewPostedActivity.this);
+
+                            alert.setMessage("News article deleted").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    fetchNews();
+                                }
+                            }).show();
                         }
 
                     }

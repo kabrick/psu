@@ -24,7 +24,6 @@ import org.json.JSONException;
 
 import java.util.concurrent.TimeUnit;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 import ug.or.psu.psudrugassessmenttool.services.TrackPharmacistService;
 import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
@@ -190,16 +189,14 @@ public class HelperFunctions {
                         //check if location has been saved successfully
                         if(response.equals("1")){
                             //go back to user dashboard
-                            new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
-                                    .setTitleText("Success!")
-                                    .setContentText("Pharmacy location set")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            getDefaultDashboard(prefManager.getMemberCategory());
-                                        }
-                                    })
-                                    .show();
+                            AlertDialog.Builder alert = new AlertDialog.Builder(context);
+
+                            alert.setMessage("Pharmacy location set").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    getDefaultDashboard(prefManager.getMemberCategory());
+                                }
+                            }).show();
                         } else {
                             //did not save
                             genericDialog("Something went wrong! Please try again");
@@ -249,16 +246,14 @@ public class HelperFunctions {
                         //check if location has been saved successfully
                         if(response.equals("1")){
                             //go back to user dashboard
-                            new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
-                                    .setTitleText("Success!")
-                                    .setContentText("Pharmacy location edited")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            getDefaultDashboard(prefManager.getMemberCategory());
-                                        }
-                                    })
-                                    .show();
+                            AlertDialog.Builder alert = new AlertDialog.Builder(context);
+
+                            alert.setMessage("Pharmacy location edited").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    getDefaultDashboard(prefManager.getMemberCategory());
+                                }
+                            }).show();
                         } else {
                             //did not save
                             genericDialog("Something went wrong! Please try again");

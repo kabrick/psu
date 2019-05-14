@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -174,7 +175,7 @@ public class NewsViewActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.comments_recycler);
         newsCommentsList = new ArrayList<>();
-        mAdapter = new NewsCommentsAdapter(newsCommentsList);
+        mAdapter = new NewsCommentsAdapter(newsCommentsList, this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -284,6 +285,11 @@ public class NewsViewActivity extends AppCompatActivity {
 
                         List<NewsComments> items = new Gson().fromJson(response.toString(), new TypeToken<List<NewsComments>>() {
                         }.getType());
+
+                        if(items.size() > 0){
+                            findViewById(R.id.comments_title).setVisibility(View.VISIBLE);
+                            findViewById(R.id.comments_line).setVisibility(View.VISIBLE);
+                        }
 
                         newsCommentsList.clear();
                         newsCommentsList.addAll(items);

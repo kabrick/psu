@@ -12,16 +12,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Search attendance records"
-            android:gravity="center"
-            android:layout_marginTop="20dp"
-            android:id="@+id/attendance_summary_search"
-            android:textSize="18sp"
-            android:textColor="@color/colorPrimaryDark"/>
-
         <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_gravity="center"
@@ -120,6 +110,16 @@
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sort attendance records by date period"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:id="@+id/attendance_summary_search"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"

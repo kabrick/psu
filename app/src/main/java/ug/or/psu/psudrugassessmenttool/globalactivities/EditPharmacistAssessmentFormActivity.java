@@ -1,6 +1,8 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +15,6 @@ import com.android.volley.toolbox.StringRequest;
 
 import java.util.Objects;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -119,23 +120,19 @@ public class EditPharmacistAssessmentFormActivity extends AppCompatActivity {
                         //check if location has been saved successfully
                         if(response.equals("1")){
                             //go to views page for submitted pharmacists
-                            new SweetAlertDialog(EditPharmacistAssessmentFormActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                                    .setTitleText("Success!")
-                                    .setContentText("Assessment form edited")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            Intent intent = new Intent(EditPharmacistAssessmentFormActivity.this, PharmacistAssessmentFormFeedOwnerActivity.class);
-                                            startActivity(intent);
-                                        }
-                                    })
-                                    .show();
+
+                            AlertDialog.Builder alert = new AlertDialog.Builder(EditPharmacistAssessmentFormActivity.this);
+
+                            alert.setMessage("Assessment form edited").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Intent intent = new Intent(EditPharmacistAssessmentFormActivity.this, PharmacistAssessmentFormFeedOwnerActivity.class);
+                                    startActivity(intent);
+                                }
+                            }).show();
                         } else {
                             //did not save
-                            new SweetAlertDialog(EditPharmacistAssessmentFormActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                    .setTitleText("Oops...")
-                                    .setContentText("Something went wrong! Please try again")
-                                    .show();
+                            helperFunctions.genericDialog("Something went wrong. Please try again later");
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -143,10 +140,7 @@ public class EditPharmacistAssessmentFormActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 //stop progress bar
                 helperFunctions.stopProgressBar();
-                new SweetAlertDialog(EditPharmacistAssessmentFormActivity.this, SweetAlertDialog.ERROR_TYPE)
-                        .setTitleText("Oops...")
-                        .setContentText("Something went wrong! Please try again")
-                        .show();
+                helperFunctions.genericDialog("Something went wrong. Please try again later");
             }
         });
 

@@ -25,7 +25,6 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.Objects;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditPharmacyInformationActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourPharmacies;
@@ -132,13 +131,12 @@ public class EditYourPharmaciesAdapter extends RecyclerView.Adapter<EditYourPhar
 
                     final HelperFunctions helperFunctions = new HelperFunctions(context);
 
-                    new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
-                            .setTitleText("Are you sure?")
-                            .setContentText(confirm_text)
-                            .setConfirmText("Yes")
-                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    AlertDialog.Builder alert1 = new AlertDialog.Builder(context);
+
+                    alert1.setMessage("Are you sure?")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(SweetAlertDialog sDialog) {
+                                public void onClick(DialogInterface dialogInterface, int i) {
                                     helperFunctions.genericProgressBar("Removing pharmacy..");
                                     String network_address = helperFunctions.getIpAddress() + "remove_pharmacy.php?id=" + id;
 
@@ -150,17 +148,16 @@ public class EditYourPharmaciesAdapter extends RecyclerView.Adapter<EditYourPhar
                                                     helperFunctions.stopProgressBar();
 
                                                     if(response.equals("1")){
-                                                        new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
-                                                                .setTitleText("Success!")
-                                                                .setContentText("Pharmacy removed")
-                                                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                                                    @Override
-                                                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                                                        Intent delete_intent = new Intent(context, EditYourPharmacies.class);
-                                                                        context.startActivity(delete_intent);
-                                                                    }
-                                                                })
-                                                                .show();
+
+                                                        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+
+                                                        alert.setMessage("Pharmacy removed").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                                Intent delete_intent = new Intent(context, EditYourPharmacies.class);
+                                                                context.startActivity(delete_intent);
+                                                            }
+                                                        }).show();
                                                     }
 
                                                 }
@@ -173,13 +170,6 @@ public class EditYourPharmaciesAdapter extends RecyclerView.Adapter<EditYourPhar
 
                                     //add to request queue in singleton class
                                     VolleySingleton.getInstance(context).addToRequestQueue(request);
-                                }
-                            })
-                            .showCancelButton(true)
-                            .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sDialog) {
-                                    sDialog.cancel();
                                 }
                             })
                             .show();

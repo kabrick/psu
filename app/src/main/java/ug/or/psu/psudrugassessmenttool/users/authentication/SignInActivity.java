@@ -20,7 +20,6 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import java.util.Calendar;
 import java.util.Objects;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -164,9 +163,7 @@ public class SignInActivity extends AppCompatActivity {
                                     }
                                 } else {
                                     //user credentials are wrong
-                                    new SweetAlertDialog(SignInActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                            .setContentText("Username or password is incorrect")
-                                            .show();
+                                    helperFunctions.genericDialog("Username or password is incorrect");
                                 }
                             }
                         }, new Response.ErrorListener() {
@@ -174,20 +171,14 @@ public class SignInActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //dismiss progress dialog
                         helperFunctions.stopProgressBar();
-                        new SweetAlertDialog(SignInActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                .setTitleText("Oops...")
-                                .setContentText("Something went wrong! Please try again")
-                                .show();
+                        helperFunctions.genericDialog("Something went wrong. Please try again later");
                     }
                 });
 
                 //add to request queue in singleton class
                 VolleySingleton.getInstance(this).addToRequestQueue(request);
             } else {
-                new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
-                        .setTitleText("Oops...")
-                        .setContentText("Internet connection has been lost!")
-                        .show();
+                helperFunctions.genericDialog("Internet connection has been lost!");
             }
         }
     }

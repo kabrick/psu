@@ -1,5 +1,6 @@
 package ug.or.psu.psudrugassessmenttool.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -71,16 +72,19 @@ public class JobsFeedAdapter extends RecyclerView.Adapter<JobsFeedAdapter.MyView
         holder.author.setText(jobs.getAuthor());
 
         //covert timestamp to readable format
-        CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
+        /*CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
                 Long.parseLong(jobs.getTimestamp()),
-                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
+                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);*/
+
+        @SuppressLint("SimpleDateFormat")
+        String timeAgo = new java.text.SimpleDateFormat("dd MMMM yyyy").format(new java.util.Date (Long.parseLong(jobs.getTimestamp())));
 
         holder.timestamp.setText(timeAgo);
 
         String image_url = helperFunctions.getIpAddress() + jobs.getPhoto();
 
         Glide.with(context)
-                .load(image_url)
+                .load(R.drawable.psu_logo)
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.profile_picture);
     }

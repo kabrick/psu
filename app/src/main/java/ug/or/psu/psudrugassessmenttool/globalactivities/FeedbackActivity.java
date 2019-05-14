@@ -1,6 +1,8 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
+import android.content.DialogInterface;
 import android.os.Build;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -21,7 +23,6 @@ import com.android.volley.toolbox.StringRequest;
 
 import java.util.Objects;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -120,30 +121,22 @@ public class FeedbackActivity extends AppCompatActivity {
 
                         if(response.equals("1")){
                             //saved article successfully
-                            new SweetAlertDialog(FeedbackActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                                    .setTitleText("Success!")
-                                    .setContentText("Feedback has been posted")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
-                                        }
-                                    })
-                                    .show();
+                            AlertDialog.Builder alert = new AlertDialog.Builder(FeedbackActivity.this);
+
+                            alert.setMessage("Feedback has been posted").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                                }
+                            }).show();
                         } else {
-                            new SweetAlertDialog(FeedbackActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                    .setTitleText("Oops...")
-                                    .setContentText("Something went wrong! Please try again")
-                                    .show();
+                            helperFunctions.genericDialog("Something went wrong. Please try again later");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                new SweetAlertDialog(FeedbackActivity.this, SweetAlertDialog.ERROR_TYPE)
-                        .setTitleText("Oops...")
-                        .setContentText("Something went wrong! Please try again")
-                        .show();
+                helperFunctions.genericDialog("Something went wrong. Please try again later");
             }
         });
 

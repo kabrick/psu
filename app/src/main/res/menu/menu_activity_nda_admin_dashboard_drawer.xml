@@ -15,7 +15,7 @@
     <item android:title="News">
         <menu>
             <item android:id="@+id/nda_admin_post_news"
-                android:title="Post News" />
+                android:title="Submit News" />
             <item android:id="@+id/nda_admin_edit_news_posts"
                 android:title="Edit Your Posts" />
         </menu>

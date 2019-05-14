@@ -1,9 +1,11 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,7 +32,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -157,21 +158,16 @@ public class EditProfileActivity extends AppCompatActivity {
                         helperFunctions.stopProgressBar();
 
                         if(response.equals("1")){
-                            new SweetAlertDialog(EditProfileActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                                    .setTitleText("Success!")
-                                    .setContentText("Profile updated successfully!")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
-                                        }
-                                    })
-                                    .show();
+                            AlertDialog.Builder alert = new AlertDialog.Builder(EditProfileActivity.this);
+
+                            alert.setMessage("Profile updated successfully!").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                                }
+                            }).show();
                         } else {
-                            new SweetAlertDialog(EditProfileActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                    .setTitleText("Oops...")
-                                    .setContentText("Something went wrong! Please try again")
-                                    .show();
+                            helperFunctions.genericDialog("Something went wrong. Please try again later");
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -227,10 +223,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         rQueue.getCache().clear();
                         helperFunctions.stopProgressBar();
-                        new SweetAlertDialog(EditProfileActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                                .setTitleText("Success!")
-                                .setContentText("Profile picture updated successfully!")
-                                .show();
+                        helperFunctions.genericDialog("Profile picture updated successfully!");
                     }
                 },
                 new Response.ErrorListener() {

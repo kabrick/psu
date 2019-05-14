@@ -5,6 +5,7 @@ public class NewsComments {
     private String comment;
     private String author;
     private String timestamp;
+    private String photo;
 
     public String getComment() {
         return comment;
@@ -28,5 +29,13 @@ public class NewsComments {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

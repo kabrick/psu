@@ -178,7 +178,7 @@ public class PharmacistAttendanceActivity extends AppCompatActivity {
         alertDialog.setView(view1);
 
         alertDialog.setCancelable(false)
-                .setPositiveButton("Search",
+                .setPositiveButton("Okay",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 enableFragment(summary_fragment);

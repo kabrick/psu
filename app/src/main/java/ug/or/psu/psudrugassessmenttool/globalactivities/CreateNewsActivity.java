@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -54,7 +55,7 @@ import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
 public class CreateNewsActivity extends AppCompatActivity {
 
-    TextView news_title, news_text;
+    EditText news_title, news_text, news_source;
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
     private RequestQueue rQueue;
@@ -87,6 +88,7 @@ public class CreateNewsActivity extends AppCompatActivity {
         news_text = findViewById(R.id.news_text);
         news_title = findViewById(R.id.news_title);
         image = findViewById(R.id.create_news_image);
+        news_source = findViewById(R.id.news_source);
 
         attachment_name = findViewById(R.id.attachment_name);
 
@@ -155,9 +157,15 @@ public class CreateNewsActivity extends AppCompatActivity {
 
         String title = news_title.getText().toString();
         String text = news_text.getText().toString();
+        String source = news_source.getText().toString();
 
         if(TextUtils.isEmpty(title)) {
             news_title.setError("Please fill in the title");
+            return;
+        }
+
+        if(TextUtils.isEmpty(source)) {
+            news_source.setError("Please fill in the source");
             return;
         }
 
@@ -166,10 +174,15 @@ public class CreateNewsActivity extends AppCompatActivity {
         text = text.replace("\'", "");
         text = text.replace("+", "plus");
 
-        title = text.replace("&", "and");
-        title = text.replace("\"", "");
-        title = text.replace("\'", "");
-        title = text.replace("+", "plus");
+        title = title.replace("&", "and");
+        title = title.replace("\"", "");
+        title = title.replace("\'", "");
+        title = title.replace("+", "plus");
+
+        source = source.replace("&", "and");
+        source = source.replace("\"", "");
+        source = source.replace("\'", "");
+        source = source.replace("+", "plus");
 
         //show progress dialog
         helperFunctions.genericProgressBar("Posting your news article...");
@@ -180,6 +193,7 @@ public class CreateNewsActivity extends AppCompatActivity {
         String network_address = helperFunctions.getIpAddress()
                 + "post_news.php?title=" + title
                 + "&text=" + text
+                + "&source=" + source
                 + "&author_id=" + preferenceManager.getPsuId()
                 + "&timestamp=" + timestamp_long.toString();
 
@@ -205,7 +219,7 @@ public class CreateNewsActivity extends AppCompatActivity {
                                 helperFunctions.stopProgressBar();
                                 AlertDialog.Builder alert = new AlertDialog.Builder(CreateNewsActivity.this);
 
-                                alert.setMessage("Your news article has been posted. It will be reviewed later for approval").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                alert.setMessage("Your news submission has been made. It will be posted after approval").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());

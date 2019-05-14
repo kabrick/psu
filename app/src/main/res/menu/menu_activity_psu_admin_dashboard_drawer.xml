@@ -24,13 +24,6 @@
         </menu>
     </item>
 
-    <item android:title="Jobs">
-        <menu>
-            <item android:id="@+id/psu_admin_my_job_adverts"
-                android:title="My Job Adverts" />
-        </menu>
-    </item>
-
     <item android:title="Other">
         <menu>
             <item android:id="@+id/psu_admin_edit_profile"

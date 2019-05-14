@@ -26,10 +26,8 @@ import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
 public class JobsViewActivity extends AppCompatActivity {
 
-    TextView title, text, author, timestamp, phone, email,
-            salary, deadline, location, contract, company;
+    TextView title, text, author, timestamp;
     String jobs_id, psu_id;
-    long deadline_timestamp;
 
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
@@ -55,13 +53,6 @@ public class JobsViewActivity extends AppCompatActivity {
         text = findViewById(R.id.jobs_feed_text_single);
         author = findViewById(R.id.jobs_feed_author_single);
         timestamp = findViewById(R.id.jobs_feed_timestamp_single);
-        phone = findViewById(R.id.jobs_feed_phone_single);
-        email = findViewById(R.id.jobs_feed_email_single);
-        salary = findViewById(R.id.jobs_feed_salary_single);
-        deadline = findViewById(R.id.jobs_feed_deadline_single);
-        location = findViewById(R.id.jobs_feed_location_single);
-        contract = findViewById(R.id.jobs_feed_contract_single);
-        company = findViewById(R.id.jobs_feed_company_single);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -102,18 +93,6 @@ public class JobsViewActivity extends AppCompatActivity {
                             title.setText(response.getString("title"));
                             text.setText(response.getString("text"));
                             author.setText(response.getString("author"));
-                            email.setText("Email: " + response.getString("email"));
-                            phone.setText("Phone: " + response.getString("contact"));
-                            salary.setText("Salary range: " + response.getString("salary_range"));
-                            location.setText("Location: " + response.getString("location"));
-                            contract.setText("Contract type: " + response.getString("contract_type"));
-                            company.setText("Company name: " + response.getString("company_name"));
-
-                            deadline_timestamp = Long.parseLong(response.getString("deadline"));
-
-                            @SuppressLint("SimpleDateFormat")
-                            String date = new java.text.SimpleDateFormat("MM/dd/yyyy").format(new java.util.Date (deadline_timestamp));
-                            deadline.setText("Deadline: " + date);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -132,11 +111,6 @@ public class JobsViewActivity extends AppCompatActivity {
 
         if(psu_id.equals(preferenceManager.getPsuId())){
             helperFunctions.genericDialog("You can not apply to a job that you posted");
-            return;
-        }
-
-        if (System.currentTimeMillis() > deadline_timestamp){
-            helperFunctions.genericDialog("The application deadline has passed");
             return;
         }
 

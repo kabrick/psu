@@ -1,5 +1,6 @@
 package ug.or.psu.psudrugassessmenttool.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -31,13 +32,12 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyView
     private Context context;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView title, text, author, timestamp;
+        TextView title, author, timestamp;
         ImageView profile_picture;
 
         MyViewHolder(View view) {
             super(view);
             title = view.findViewById(R.id.news_feed_title_list);
-            text = view.findViewById(R.id.news_feed_text_list);
             author = view.findViewById(R.id.news_feed_author_list);
             timestamp = view.findViewById(R.id.news_feed_timestamp_list);
             profile_picture = view.findViewById(R.id.news_feed_profile_picture);
@@ -70,21 +70,23 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         final NewsFeed news = newsList.get(position);
-        holder.text.setText(news.getText());
         holder.title.setText(news.getTitle());
         holder.author.setText(news.getAuthor());
 
         //covert timestamp to readable format
-        CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
+        /*CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
                 Long.parseLong(news.getTimeStamp()),
-                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
+                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);*/
+
+        @SuppressLint("SimpleDateFormat")
+        String timeAgo = new java.text.SimpleDateFormat("dd MMMM yyyy").format(new java.util.Date (Long.parseLong(news.getTimeStamp())));
 
         holder.timestamp.setText(timeAgo);
 
         String image_url = helperFunctions.getIpAddress() + news.getImage();
 
         Glide.with(context)
-                .load(image_url)
+                .load(R.drawable.psu_logo)
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.profile_picture);
     }

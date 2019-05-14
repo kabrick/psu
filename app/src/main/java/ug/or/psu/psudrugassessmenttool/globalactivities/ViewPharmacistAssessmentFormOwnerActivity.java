@@ -1,7 +1,9 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +20,6 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -130,17 +131,15 @@ public class ViewPharmacistAssessmentFormOwnerActivity extends AppCompatActivity
                         helperFunctions.stopProgressBar();
 
                         if(response.equals("1")){
-                            new SweetAlertDialog(ViewPharmacistAssessmentFormOwnerActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                                    .setTitleText("Success!")
-                                    .setContentText("Assessment form deleted")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            Intent delete_intent = new Intent(ViewPharmacistAssessmentFormOwnerActivity.this, PharmacistAssessmentFormFeedOwnerActivity.class);
-                                            startActivity(delete_intent);
-                                        }
-                                    })
-                                    .show();
+                            AlertDialog.Builder alert = new AlertDialog.Builder(ViewPharmacistAssessmentFormOwnerActivity.this);
+
+                            alert.setMessage("Assessment form deleted").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Intent delete_intent = new Intent(ViewPharmacistAssessmentFormOwnerActivity.this, PharmacistAssessmentFormFeedOwnerActivity.class);
+                                    startActivity(delete_intent);
+                                }
+                            }).show();
                         }
 
                     }

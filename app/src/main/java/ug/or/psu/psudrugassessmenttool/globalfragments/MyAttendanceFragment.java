@@ -40,6 +40,7 @@ import java.util.Objects;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourPharmacies;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.ViewPharmacyCoordinatesActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.ViewYourPharmacyActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -203,7 +204,7 @@ public class MyAttendanceFragment extends Fragment {
     }
 
     public void viewPharmacyLocations(){
-        String[] mStringArray = {"Edit || Remove Pharmacies", "View Your Pharmacies Locations"};
+        String[] mStringArray = {"Edit || Remove Pharmacies", "View Your Pharmacies Locations", "View Your Pharmacy Coordinates"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
         builder.setTitle("Choose your action");
@@ -216,6 +217,9 @@ public class MyAttendanceFragment extends Fragment {
                     startActivity(intent);
                 } else if (i == 1){
                     Intent intent = new Intent(getContext(), ViewYourPharmacyActivity.class);
+                    startActivity(intent);
+                } else if (i == 2){
+                    Intent intent = new Intent(getContext(), ViewPharmacyCoordinatesActivity.class);
                     startActivity(intent);
                 }
             }
