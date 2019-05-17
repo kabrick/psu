@@ -84,7 +84,7 @@ public class JobsFeedAdapter extends RecyclerView.Adapter<JobsFeedAdapter.MyView
         String image_url = helperFunctions.getIpAddress() + jobs.getPhoto();
 
         Glide.with(context)
-                .load(R.drawable.psu_logo)
+                .load(image_url)
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.profile_picture);
     }

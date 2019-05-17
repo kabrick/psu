@@ -87,7 +87,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyView
         String image_url = helperFunctions.getIpAddress() + news.getImage();
 
         Glide.with(context)
-                .load(R.drawable.psu_logo)
+                .load(image_url)
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.profile_picture);
     }

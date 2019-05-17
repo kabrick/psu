@@ -15,33 +15,61 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <EditText
-            android:layout_weight="0.3"
-            android:inputType="text"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+        <android.support.design.widget.TextInputLayout
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/news_title_edit"
-            android:layout_height="0dp" />
+            android:layout_marginTop="20dp">
 
-        <EditText
-            android:layout_weight="2"
-            android:id="@+id/news_text_edit"
-            android:layout_width="match_parent"
-            android:inputType="textMultiLine"
-            android:gravity="top"
-            android:layout_height="0dp" />
+            <EditText
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/news_title_edit"
+                android:hint="Title"
+                android:layout_height="wrap_content" />
 
-        <Button
-            android:layout_marginTop="10dp"
-            android:layout_weight="0.3"
-            android:text="Edit News"
-            android:onClick="postNews"
-            android:background="@color/colorAccent"
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:textColor="@color/white"
-            android:layout_height="0dp" />
+            android:layout_marginTop="20dp">
+
+            <EditText
+                android:id="@+id/news_text_edit"
+                android:layout_width="match_parent"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:hint="Text"
+                android:layout_height="wrap_content" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp">
+
+            <EditText
+                android:id="@+id/news_source_edit"
+                android:layout_width="match_parent"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:hint="Source"
+                android:layout_height="wrap_content" />
+
+        </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:text="Edit News"
+        android:onClick="postNews"
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
