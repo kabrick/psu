@@ -6,6 +6,7 @@ public class ApproveNewsFeed {
     private String author;
     private String timestamp;
     private String title;
+    private String source;
 
     public String getId() {
         return id;
@@ -45,5 +46,13 @@ public class ApproveNewsFeed {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 }

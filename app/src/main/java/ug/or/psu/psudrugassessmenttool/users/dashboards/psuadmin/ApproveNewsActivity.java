@@ -116,6 +116,7 @@ public class ApproveNewsActivity extends AppCompatActivity implements ApproveNew
         intent.putExtra("title", news.getTitle());
         intent.putExtra("author", news.getAuthor());
         intent.putExtra("timestamp", news.getTimeStamp());
+        intent.putExtra("source", news.getSource());
         intent.putExtra("id", news.getId());
         startActivity(intent);
     }

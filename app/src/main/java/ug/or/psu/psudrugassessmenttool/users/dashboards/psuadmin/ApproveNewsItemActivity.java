@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,9 +29,9 @@ import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
 public class ApproveNewsItemActivity extends AppCompatActivity {
 
-    TextView title, text, author, timestamp;
+    TextView title, text, author, timestamp, source;
     ImageView news_image;
-    String title_string, text_string, author_string, timestamp_string, id;
+    String title_string, text_string, author_string, timestamp_string, id, source_string;
 
     FloatingActionButton approve_news_fab, reject_news_fab;
 
@@ -71,6 +72,7 @@ public class ApproveNewsItemActivity extends AppCompatActivity {
         text = findViewById(R.id.approve_news_feed_text_single);
         author = findViewById(R.id.approve_news_feed_author_single);
         timestamp = findViewById(R.id.approve_news_feed_timestamp_single);
+        source = findViewById(R.id.approve_news_source);
 
         news_image = findViewById(R.id.approve_news_image);
 
@@ -81,6 +83,7 @@ public class ApproveNewsItemActivity extends AppCompatActivity {
             text_string = extras.getString("text", "");
             author_string = extras.getString("author", "");
             timestamp_string = extras.getString("timestamp", "");
+            source_string = extras.getString("source", "");
             id = extras.getString("id", "");
         }
 
@@ -92,7 +95,8 @@ public class ApproveNewsItemActivity extends AppCompatActivity {
         timestamp.setText(timeAgo);
         title.setText(title_string);
         text.setText(text_string);
-        author.setText(author_string);
+        author.setText("Posted By: " + author_string);
+        source.setText("Source: " + source_string);
 
         fetchNewsImage();
     }
