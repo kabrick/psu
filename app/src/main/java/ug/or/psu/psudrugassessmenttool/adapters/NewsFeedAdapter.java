@@ -72,7 +72,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyView
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         final NewsFeed news = newsList.get(position);
         holder.title.setText(news.getTitle());
-        holder.author.setText("Source: " + news.getAuthor());
+        holder.author.setText("Source: " + news.getSource());
 
         //covert timestamp to readable format
         /*CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(

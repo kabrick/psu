@@ -15,11 +15,12 @@
         android:src="@drawable/psu_logo"
         android:layout_weight="0.5"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="2"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
@@ -30,29 +31,20 @@
             android:ellipsize="end"
             android:textSize="20sp"/>
 
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/news_feed_title_list"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            android:id="@+id/news_feed_author_list"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:id="@+id/news_feed_author_list"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/timestamp"
+            android:id="@+id/news_feed_timestamp_list"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:textColor="@color/timestamp"
-                android:id="@+id/news_feed_timestamp_list"/>
-
-        </LinearLayout>
-
-    </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

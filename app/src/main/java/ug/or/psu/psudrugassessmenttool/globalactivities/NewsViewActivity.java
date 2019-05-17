@@ -54,9 +54,9 @@ import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
 public class NewsViewActivity extends AppCompatActivity {
 
-    TextView title, text, author, timestamp;
+    TextView title, text, author, timestamp, source;
     ImageView news_image;
-    String title_string, text_string, author_string, timestamp_string, id, image_string;
+    String title_string, text_string, author_string, timestamp_string, id, image_string, source_string;
     HelperFunctions helperFunctions;
     CardView attachment_card;
     TextView attachment_name;
@@ -143,6 +143,7 @@ public class NewsViewActivity extends AppCompatActivity {
         text = findViewById(R.id.news_feed_text_single);
         author = findViewById(R.id.news_feed_author_single);
         timestamp = findViewById(R.id.news_feed_timestamp_single);
+        source = findViewById(R.id.news_view_source);
 
         news_image = findViewById(R.id.news_image);
 
@@ -154,6 +155,7 @@ public class NewsViewActivity extends AppCompatActivity {
             author_string = extras.getString("author", "");
             timestamp_string = extras.getString("timestamp", "");
             id = extras.getString("id", "");
+            source_string = extras.getString("source", "");
         }
 
         //covert timestamp to readable format
@@ -165,6 +167,7 @@ public class NewsViewActivity extends AppCompatActivity {
         title.setText(title_string);
         text.setText(text_string);
         author.setText(author_string);
+        source.setText("Source: " + source_string);
 
         //add id to read news
         try {

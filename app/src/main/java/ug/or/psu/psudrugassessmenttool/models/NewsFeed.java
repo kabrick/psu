@@ -7,6 +7,7 @@ public class NewsFeed {
     private String timestamp;
     private String title;
     private String photo;
+    private String source;
 
     public String getId() {
         return id;
@@ -54,5 +55,13 @@ public class NewsFeed {
 
     public void setImage(String photo) {
         this.photo = photo;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 }
