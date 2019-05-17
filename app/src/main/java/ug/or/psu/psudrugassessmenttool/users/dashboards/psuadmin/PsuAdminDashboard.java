@@ -26,6 +26,7 @@ import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.MyJobAdvertsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.SearchPharmacistAssessmentFormsActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.ViewAllPharmacyCoordinatesActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.MyAttendanceFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.NewsFragment;
@@ -160,6 +161,10 @@ public class PsuAdminDashboard extends AppCompatActivity
             case R.id.psu_admin_view_pharmacy_location:
                 Intent view_pharmacy_location = new Intent(this, ViewPharmacyActivity.class);
                 startActivity(view_pharmacy_location);
+                break;
+            case R.id.psu_admin_view_pharmacy_coordinates:
+                Intent view_pharmacy_coordinates = new Intent(this, ViewAllPharmacyCoordinatesActivity.class);
+                startActivity(view_pharmacy_coordinates);
                 break;
             case R.id.psu_admin_post_news:
                 Intent post_news_intent = new Intent(this, CreateNewsActivity.class);

@@ -86,7 +86,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:id="@+id/sign_up_profile_picture"
-                        android:src="@drawable/person"
+                        android:src="@drawable/psu_logo"
                         android:layout_marginTop="10dp"
                         android:onClick="changeProfilePicture"/>
 

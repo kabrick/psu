@@ -9,6 +9,8 @@
             android:title="Set Pharmacy Locations" />
         <item android:id="@+id/psu_admin_view_pharmacy_location"
             android:title="View Pharmacy Locations" />
+        <item android:id="@+id/psu_admin_view_pharmacy_coordinates"
+            android:title="View Pharmacy Coordinates" />
         <item android:id="@+id/psu_admin_eresources"
             android:title="E Resources" />
     </group>

@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/pharmacist_assessment_profile_picture"
-            android:src="@drawable/person"/>
+            android:src="@drawable/psu_logo"/>
 
         <LinearLayout
             android:layout_width="0dp"

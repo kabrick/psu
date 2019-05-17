@@ -14,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.volley.Request;
@@ -60,6 +61,7 @@ public class MyAttendanceFragment extends Fragment {
     ArrayList<String> pharmacy_id_admin;
     ArrayList<String> pharmacy_names_attendance;
     ArrayList<String> pharmacy_id_attendance;
+    LinearLayout layout3;
     RelativeLayout relative1, relative2, relative3, relative4, relative5, relative6, relative7;
 
     public MyAttendanceFragment() {
@@ -82,6 +84,7 @@ public class MyAttendanceFragment extends Fragment {
         relative5 = view.findViewById(R.id.relative5);
         relative6 = view.findViewById(R.id.relative6);
         relative7 = view.findViewById(R.id.relative7);
+        layout3 = view.findViewById(R.id.layout3);
 
         relative1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +165,10 @@ public class MyAttendanceFragment extends Fragment {
         pharmacy_id_admin = new ArrayList<>();
         pharmacy_names_attendance = new ArrayList<>();
         pharmacy_id_attendance = new ArrayList<>();
+
+        if(!preferenceManager.getMemberCategory().equals("2")){
+            layout3.setVisibility(View.GONE);
+        }
 
         return view;
     }

@@ -3,6 +3,7 @@ package ug.or.psu.psudrugassessmenttool.users.authentication;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -65,6 +66,11 @@ public class SignInActivity extends AppCompatActivity {
     public void signUp(View view){
         Intent sign_up_intent = new Intent(this, SignUpActivity.class);
         startActivity(sign_up_intent);
+    }
+
+    public void forgotPassword(View view){
+        Intent forgot_password_intent = new Intent(this, ForgotPasswordActivity.class);
+        startActivity(forgot_password_intent);
     }
 
     public void signIn(View view){

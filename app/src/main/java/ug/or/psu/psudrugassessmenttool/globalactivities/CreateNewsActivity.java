@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -155,9 +156,9 @@ public class CreateNewsActivity extends AppCompatActivity {
 
     public void postNews(){
 
-        String title = news_title.getText().toString();
-        String text = news_text.getText().toString();
-        String source = news_source.getText().toString();
+        final String title = news_title.getText().toString();
+        final String text = news_text.getText().toString();
+        final String source = news_source.getText().toString();
 
         if(TextUtils.isEmpty(title)) {
             news_title.setError("Please fill in the title");
@@ -169,74 +170,62 @@ public class CreateNewsActivity extends AppCompatActivity {
             return;
         }
 
-        text = text.replace("&", "and");
-        text = text.replace("\"", "");
-        text = text.replace("\'", "");
-        text = text.replace("+", "plus");
-
-        title = title.replace("&", "and");
-        title = title.replace("\"", "");
-        title = title.replace("\'", "");
-        title = title.replace("+", "plus");
-
-        source = source.replace("&", "and");
-        source = source.replace("\"", "");
-        source = source.replace("\'", "");
-        source = source.replace("+", "plus");
-
         //show progress dialog
         helperFunctions.genericProgressBar("Posting your news article...");
 
         //get the current timestamp
-        Long timestamp_long = System.currentTimeMillis();
+        final Long timestamp_long = System.currentTimeMillis();
 
-        String network_address = helperFunctions.getIpAddress()
-                + "post_news.php?title=" + title
-                + "&text=" + text
-                + "&source=" + source
-                + "&author_id=" + preferenceManager.getPsuId()
-                + "&timestamp=" + timestamp_long.toString();
+        String url = helperFunctions.getIpAddress() + "post_news.php";
 
-        // Request a string response from the provided URL.
-        StringRequest request = new StringRequest(network_address,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-                        if(response.equals("0")){
-                            helperFunctions.genericSnackbar("Posting news article failed!", activityView);
-                            helperFunctions.stopProgressBar();
-                        } else {
-                            // check if image is selected
-                            if(is_picture_set){
-                                // upload picture
-                                uploadProfilePicture(bitmap, response);
-                            } else {
-                                if(is_attachment_set){
-                                    // upload pdf
-                                    uploadAttachment(response);
-                                }
-                                helperFunctions.stopProgressBar();
-                                AlertDialog.Builder alert = new AlertDialog.Builder(CreateNewsActivity.this);
-
-                                alert.setMessage("Your news submission has been made. It will be posted after approval").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
-                                    }
-                                }).show();
-                            }
+        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(response.equals("0")){
+                    helperFunctions.genericSnackbar("Posting news article failed!", activityView);
+                    helperFunctions.stopProgressBar();
+                } else {
+                    // check if image is selected
+                    if(is_picture_set){
+                        // upload picture
+                        uploadProfilePicture(bitmap, response);
+                    } else {
+                        if(is_attachment_set){
+                            uploadAttachment(response);
                         }
+                        helperFunctions.stopProgressBar();
+                        AlertDialog.Builder alert = new AlertDialog.Builder(CreateNewsActivity.this);
+
+                        alert.setMessage("Your news submission has been made. It will be posted after approval").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                            }
+                        }).show();
                     }
-                }, new Response.ErrorListener() {
+                }
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                helperFunctions.stopProgressBar();
                 helperFunctions.genericDialog("Something went wrong. Please try again later");
             }
-        });
+        }) {
+            protected Map<String, String> getParams() {
+                Map<String, String> data = new HashMap<>();
+                data.put("title", title);
+                data.put("text", text);
+                data.put("source", source);
+                data.put("author_id", preferenceManager.getPsuId());
+                data.put("timestamp", timestamp_long.toString());
+                return data;
+            }
+        };
 
-        //add to request queue in singleton class
-        VolleySingleton.getInstance(this).addToRequestQueue(request);
+        requestQueue.add(MyStringRequest);
     }
 
     public void addPicture(){
@@ -300,7 +289,7 @@ public class CreateNewsActivity extends AppCompatActivity {
             filePath = data.getData();
             is_attachment_set = true;
 
-            helperFunctions.genericDialog("Document has been added successfully");
+            Toast.makeText(this, "Document has been added successfully", Toast.LENGTH_LONG).show();
 
             String path = getRealPathFromURI(this, filePath);
             filename = path.substring(path.lastIndexOf("/")+1);

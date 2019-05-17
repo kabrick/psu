@@ -54,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
         prefManager = new PreferenceManager(this);
         helperFunctions = new HelperFunctions(this);
 
-        bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.person);
+        bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.psu_logo);
 
         profile_picture = findViewById(R.id.sign_up_profile_picture);
 

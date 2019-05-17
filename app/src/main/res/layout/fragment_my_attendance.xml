@@ -177,6 +177,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/layout2"
+        android:id="@+id/layout3"
         android:layout_marginTop="30dp"
         android:orientation="horizontal">
 

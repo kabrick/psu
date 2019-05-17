@@ -16,7 +16,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/job_application_photo"
-            android:src="@drawable/person"
+            android:src="@drawable/psu_logo"
             android:layout_weight="0.5"/>
 
         <LinearLayout

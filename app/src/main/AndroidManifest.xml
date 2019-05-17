@@ -20,7 +20,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon">
-        <activity android:name=".globalactivities.ViewPharmacyCoordinatesActivity"></activity>
+        <activity android:name=".globalactivities.ViewAllPharmacyCoordinatesActivity"></activity>
+        <activity android:name=".users.authentication.ForgotPasswordActivity" />
+        <activity android:name=".globalactivities.ViewPharmacyCoordinatesActivity" />
         <activity
             android:name=".globalactivities.EditYourNewsActivity"
             android:label="View Your News" />
