@@ -2,7 +2,7 @@ package ug.or.psu.psudrugassessmenttool.models;
 
 public class JobsFeed {
     private String id;
-    private String text;
+    private String source;
     private String author;
     private String timestamp;
     private String title;
@@ -25,11 +25,11 @@ public class JobsFeed {
     }
 
     public String getText() {
-        return text;
+        return source;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setText(String source) {
+        this.source = source;
     }
 
     public String getAuthor() {

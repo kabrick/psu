@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,13 +27,12 @@ public class JobsFeedAdapter extends RecyclerView.Adapter<JobsFeedAdapter.MyView
     private Context context;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView title, text, author, timestamp;
+        TextView title, author, timestamp;
         ImageView profile_picture;
 
         MyViewHolder(View view) {
             super(view);
             title = view.findViewById(R.id.jobs_feed_title_list);
-            text = view.findViewById(R.id.jobs_feed_text_list);
             author = view.findViewById(R.id.jobs_feed_author_list);
             timestamp = view.findViewById(R.id.jobs_feed_timestamp_list);
             profile_picture = view.findViewById(R.id.jobs_feed_profile_picture);
@@ -67,9 +65,8 @@ public class JobsFeedAdapter extends RecyclerView.Adapter<JobsFeedAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         final JobsFeed jobs = jobsList.get(position);
-        holder.text.setText(jobs.getText());
         holder.title.setText(jobs.getTitle());
-        holder.author.setText(jobs.getAuthor());
+        holder.author.setText("Source: " + jobs.getText());
 
         //covert timestamp to readable format
         /*CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
