@@ -58,14 +58,6 @@ public class AttendanceSummaryFragment extends Fragment {
         phone = view.findViewById(R.id.attendance_phone);
         email = view.findViewById(R.id.attendance_email);
         pharmacy = view.findViewById(R.id.attendance_pharmacy);
-        attendance_summary_search = view.findViewById(R.id.attendance_summary_search);
-
-        attendance_summary_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((PharmacistAttendanceActivity) Objects.requireNonNull(getActivity())).search_records();
-            }
-        });
 
         helperFunctions = new HelperFunctions(getContext());
 

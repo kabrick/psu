@@ -34,6 +34,7 @@ public class PharmacistAttendanceActivity extends AppCompatActivity {
     String pharmacy_id;
     String pharmacist_id;
     Fragment summary_fragment = new AttendanceSummaryFragment();
+    Fragment sessions_fragment = new AttendanceSessionsFragment();
     long start_date, end_date;
     TextView start_date_edit, end_date_edit;
     final Calendar myCalendar = Calendar.getInstance();
@@ -56,7 +57,7 @@ public class PharmacistAttendanceActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // implement switch
-        ((SwitchMultiButton) findViewById(R.id.switch_pharmacist_attendance)).setText("Summary", "Sessions").setOnSwitchListener
+        ((SwitchMultiButton) findViewById(R.id.switch_pharmacist_attendance)).setText("Sessions", "Summary").setOnSwitchListener
                 (onSwitchListener);
 
         Calendar cal = Calendar.getInstance();
@@ -65,7 +66,9 @@ public class PharmacistAttendanceActivity extends AppCompatActivity {
         cal.add(Calendar.YEAR, -1);
         start_date = cal.getTimeInMillis();
 
-        enableFragment(summary_fragment);
+        enableFragment(sessions_fragment);
+
+        search_records();
     }
 
     @Override
@@ -78,10 +81,9 @@ public class PharmacistAttendanceActivity extends AppCompatActivity {
         @Override
         public void onSwitch(int position, String tabText) {
             if(position == 0){
-                enableFragment(summary_fragment);
-            } else if(position == 1){
-                Fragment sessions_fragment = new AttendanceSessionsFragment();
                 enableFragment(sessions_fragment);
+            } else if(position == 1){
+                enableFragment(summary_fragment);
             }
         }
     };
@@ -109,6 +111,13 @@ public class PharmacistAttendanceActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        start_date = intent.getLongExtra("start_date", 0);
+        end_date = intent.getLongExtra("end_date", 0);
     }
 
     public void search_records(){
@@ -181,7 +190,7 @@ public class PharmacistAttendanceActivity extends AppCompatActivity {
                 .setPositiveButton("Okay",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
-                                enableFragment(summary_fragment);
+                                enableFragment(sessions_fragment);
                             }
                         })
                 .setNegativeButton("Cancel",

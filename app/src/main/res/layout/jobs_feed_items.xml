@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:maxLines="5"
             android:textSize="15sp"
+            android:textStyle="bold"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
             android:id="@+id/jobs_feed_title_list"/>
 

@@ -7,20 +7,9 @@
     android:background="@color/background"
     tools:context=".globalactivities.AttendanceSessionsFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sort attendance records by date period"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:id="@+id/attendance_sessions_search"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimaryDark"/>
-
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/attendance_sessions_search"
         android:id="@+id/attendance_sessions_recycler"
         android:layout_marginTop="20dp"
         android:scrollbars="vertical"/>

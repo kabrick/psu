@@ -28,6 +28,7 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
             android:id="@+id/news_feed_title_list"
             android:maxLines="5"
+            android:textStyle="bold"
             android:ellipsize="end"
             android:textSize="15sp"/>
 
