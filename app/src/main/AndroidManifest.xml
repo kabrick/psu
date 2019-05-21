@@ -20,7 +20,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon">
-        <activity android:name=".globalactivities.ViewAllPharmacyCoordinatesActivity"></activity>
+        <activity android:name=".globalactivities.ViewAllPharmacyCoordinatesActivity" />
         <activity android:name=".users.authentication.ForgotPasswordActivity" />
         <activity android:name=".globalactivities.ViewPharmacyCoordinatesActivity" />
         <activity
@@ -71,7 +71,9 @@
         <activity
             android:name=".globalactivities.CreateNewsActivity"
             android:label="Submit News" />
-        <activity android:name=".globalactivities.PharmacistAttendanceActivity" />
+        <activity
+            android:name=".globalactivities.PharmacistAttendanceActivity"
+            android:label="View Attendance"/>
         <activity android:name=".globalactivities.PharmaciesMapActivity" />
         <activity
             android:name=".users.dashboards.ndaadmin.NdaAdminDashboard"

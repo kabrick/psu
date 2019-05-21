@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".globalactivities.PharmacistAttendanceActivity">
 
-    <lib.kingja.switchbutton.SwitchMultiButton
-        android:id="@+id/switch_pharmacist_attendance"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="14dp"
-        android:paddingBottom="4dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:paddingTop="4dp"
-        android:background="@drawable/switch_background"
-        app:selectedColor="@color/colorAccent"
-        app:selectedTab="0"
-        app:strokeRadius="5dp"
-        app:strokeWidth="1px"
-        app:textSize="14sp"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/frame_view_patients"
-        android:layout_below="@id/switch_pharmacist_attendance"
-        android:layout_marginTop="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Click to view attendance summary"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:id="@+id/view_attendance_summary"
+            android:padding="10dp"/>
 
-</RelativeLayout>
+        <include layout="@layout/layout_attendance_summary"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/attendance_sessions_recycler"
+            android:layout_marginTop="20dp"
+            android:scrollbars="vertical"/>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
