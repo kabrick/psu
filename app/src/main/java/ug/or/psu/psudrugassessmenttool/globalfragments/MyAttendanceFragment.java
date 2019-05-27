@@ -191,7 +191,7 @@ public class MyAttendanceFragment extends Fragment {
 
                         if(response.equals("0")){
                             // not allowed
-                            helperFunctions.genericDialog("You can not add another pharmacy");
+                            helperFunctions.genericDialog("Your pharmacy limit is exceeded");
                         } else if (response.equals("1")){
                             // allowed
                             Intent choose_pharmacy_intent = new Intent(getContext(), ChoosePharmacyActivity.class);
