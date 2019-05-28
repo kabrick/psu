@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -57,6 +60,18 @@ public class SignInActivity extends AppCompatActivity {
         username = findViewById(R.id.signin_username);
         password = findViewById(R.id.signin_password);
 
+        password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i == EditorInfo.IME_ACTION_DONE){
+                    signInLogic();
+                    return false;
+                } else {
+                    return false;
+                }
+            }
+        });
+
         //add validation for the fields
         mAwesomeValidation = new AwesomeValidation(BASIC);
         mAwesomeValidation.addValidation(this, R.id.signin_username, "[a-zA-Z0-9\\s]+", R.string.missing_username);
@@ -74,6 +89,10 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void signIn(View view){
+        signInLogic();
+    }
+
+    public void signInLogic(){
         if (mAwesomeValidation.validate()){
             if(helperFunctions.getConnectionStatus()){
 
