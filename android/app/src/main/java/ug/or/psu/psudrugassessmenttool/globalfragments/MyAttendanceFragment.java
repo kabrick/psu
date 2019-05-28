@@ -105,11 +105,11 @@ public class MyAttendanceFragment extends Fragment {
             public void onClick(View view) {
                 if(!preferenceManager.isPharmacyLocationSet()){
                     //start dialog
-                    helperFunctions.genericProgressBar("Getting your allocated pharmacies...");
+                    helperFunctions.genericProgressBar("Getting your allocated centres...");
                     //not so start procedure to set it
                     getPharmacies();
                 } else {
-                    helperFunctions.genericDialog("You are already logged in at a pharmacy.");
+                    helperFunctions.genericDialog("You are already logged in at a practice centre.");
                 }
             }
         });
@@ -117,7 +117,7 @@ public class MyAttendanceFragment extends Fragment {
         relative6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+                AlertDialog.Builder alert = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
 
                 alert.setMessage("Are you sure you want to log out").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
@@ -125,7 +125,7 @@ public class MyAttendanceFragment extends Fragment {
                         if(preferenceManager.isPharmacyLocationSet()){
                             helperFunctions.signPharmacistOut();
                         } else {
-                            helperFunctions.genericDialog("You are not logged in to any pharmacy");
+                            helperFunctions.genericDialog("You are not logged in to any practice centre");
                         }
                     }
                 }).show();
@@ -191,7 +191,7 @@ public class MyAttendanceFragment extends Fragment {
 
                         if(response.equals("0")){
                             // not allowed
-                            helperFunctions.genericDialog("Your pharmacy limit is exceeded");
+                            helperFunctions.genericDialog("Your practice centre limit is exceeded");
                         } else if (response.equals("1")){
                             // allowed
                             Intent choose_pharmacy_intent = new Intent(getContext(), ChoosePharmacyActivity.class);
@@ -211,7 +211,7 @@ public class MyAttendanceFragment extends Fragment {
     }
 
     public void viewPharmacyLocations(){
-        String[] mStringArray = {"Edit || Remove Pharmacies", "View Your Pharmacies Locations", "View Your Pharmacy Coordinates"};
+        String[] mStringArray = {"Edit || Remove Practice Centres", "View Your Practice Centre Locations", "View Your Practice Centre Coordinates"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
         builder.setTitle("Choose your action");
@@ -287,12 +287,12 @@ public class MyAttendanceFragment extends Fragment {
 
         // confirm that pharmacies exist
         if(mStringArray.length < 1){
-            helperFunctions.genericDialog("Please register your pharmacies and set their locations to continue");
+            helperFunctions.genericDialog("Please register your practice centres and set their locations to continue");
             return;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
-        builder.setTitle("Choose your pharmacy");
+        builder.setTitle("Choose your practice centre");
 
         builder.setItems(mStringArray, new DialogInterface.OnClickListener() {
             @Override
@@ -408,7 +408,7 @@ public class MyAttendanceFragment extends Fragment {
     }
 
     public void getUnsetPharmacies(){
-        helperFunctions.genericProgressBar("Retrieving pharmacies");
+        helperFunctions.genericProgressBar("Retrieving practice centres");
 
         String network_address = helperFunctions.getIpAddress() + "get_unlocated_pharmacies.php?id=" + preferenceManager.getPsuId();
 
@@ -458,12 +458,12 @@ public class MyAttendanceFragment extends Fragment {
 
         // confirm that pharmacies exist
         if(mStringArray.length < 1){
-            helperFunctions.genericDialog("Please register or add your pharmacies to continue");
+            helperFunctions.genericDialog("Please register or add your practice centres to continue");
             return;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
-        builder.setTitle("Choose your pharmacy");
+        builder.setTitle("Choose your practice centre");
 
         builder.setItems(mStringArray, new DialogInterface.OnClickListener() {
             @Override
@@ -482,7 +482,7 @@ public class MyAttendanceFragment extends Fragment {
     }
 
     public void viewAttendance(){
-        helperFunctions.genericProgressBar("Retrieving pharmacies");
+        helperFunctions.genericProgressBar("Retrieving practice centres");
 
         String network_address = helperFunctions.getIpAddress() + "get_pharmacist_pharmacies.php?id=" + preferenceManager.getPsuId();
 
@@ -532,12 +532,12 @@ public class MyAttendanceFragment extends Fragment {
 
         // confirm that pharmacies exist
         if(mStringArray.length < 1){
-            helperFunctions.genericDialog("Please register your pharmacies and set their locations to continue");
+            helperFunctions.genericDialog("Please register your practice centres and set their locations to continue");
             return;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
-        builder.setTitle("Choose your pharmacy");
+        builder.setTitle("Choose your practice centre");
 
         builder.setItems(mStringArray, new DialogInterface.OnClickListener() {
             @Override
