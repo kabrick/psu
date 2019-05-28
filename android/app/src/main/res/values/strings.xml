@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">PSU</string>
+
+    <string-array name="sex_array">
+        <item>Choose your gender</item>
+        <item>Female</item>
+        <item>Male</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="membership_array">
+        <item>Choose your membership type</item>
+        <item>Pharmacist</item>
+        <item>Pharmacy Owner</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="search_choices_pharmacists">
+        <item>Search By</item>
+        <item>Date</item>
+        <item>Date Range</item>
+    </string-array>
+
+    <string name="missing_email">Please enter valid email</string>
+    <string name="missing_username">Please enter valid username</string>
+    <string name="missing_fullname">Please enter valid full name</string>
+    <string name="missing_password">Please enter a valid password</string>
+    <string name="missing_nationality">Please enter a valid nationality</string>
+    <string name="missing_telephone">Please enter a valid telephone number</string>
+    <string name="missing_sex">Please select a gender</string>
+    <string name="missing_mem_type">Please select a membership type</string>
+    <string name="wrong_credentials">Username or password is wrong. Please try again or contact systems administrator</string>
+    <string name="title_activity_pharmacist_dashboard">PharmacistDashboard</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_pharma_owner">PharmaOwnerActivity</string>
+    <string name="title_activity_admin_dashboard">AdminDashboard</string>
+
+    <string name="title_activity_nda_supervisor_dashboard">NdaSupervisorDashboard</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+</resources>
