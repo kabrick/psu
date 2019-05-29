@@ -27,6 +27,7 @@ import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.MyJobAdvertsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.SearchPharmacistAssessmentFormsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.ViewAllPharmacyCoordinatesActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.WholesaleInspectionActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.MyAttendanceFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.NewsFragment;
@@ -141,7 +142,6 @@ public class PsuAdminDashboard extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -185,6 +185,10 @@ public class PsuAdminDashboard extends AppCompatActivity
             case R.id.psu_admin_edit_news_posts:
                 Intent edit_news_intent = new Intent(this, EditYourNewsActivity.class);
                 startActivity(edit_news_intent);
+                break;
+            case R.id.psu_admin_support_supervision_checklist:
+                Intent support_supervision_checklist_intent = new Intent(this, WholesaleInspectionActivity.class);
+                startActivity(support_supervision_checklist_intent);
                 break;
             case R.id.psu_admin_log_out:
                 helperFunctions.signAdminUsersOut();
