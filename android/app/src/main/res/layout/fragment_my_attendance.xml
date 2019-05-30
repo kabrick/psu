@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_below="@id/image2"
-                android:text="Set Practice Location"/>
+                android:text="Set Practice Centre Location"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_below="@id/image3"
-                android:text="Login Practice"/>
+                android:text="Login Attendance"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_below="@id/image6"
-                android:text="Logout Practice"/>
+                android:text="Logout Attendance"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -168,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_below="@id/image4"
-                android:text="View Practice"/>
+                android:text="View Attendance"/>
         </RelativeLayout>
 
     </LinearLayout>
@@ -202,7 +202,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_below="@id/image7"
-                android:text="View General Practice"/>
+                android:text="View General Attendance"/>
         </RelativeLayout>
 
         <View

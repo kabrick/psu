@@ -26,7 +26,6 @@ import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EResourcesActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourNewsActivity;
-import ug.or.psu.psudrugassessmenttool.globalactivities.MyJobAdvertsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.SearchPharmacistAssessmentFormsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.ViewAllPharmacyCoordinatesActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.WholesaleInspectionActivity;
@@ -93,8 +92,6 @@ public class PsuAdminDashboard extends AppCompatActivity
                     return new NewsFragment();
                 case 1:
                     return new JobFragment();
-                /*case 2:
-                    return new ViewPharmacistAttendanceFragment();*/
                 case 2:
                     return new MyAttendanceFragment();
             }
@@ -112,7 +109,7 @@ public class PsuAdminDashboard extends AppCompatActivity
                 case 0:
                     return "News";
                 case 1:
-                    return "Job||Careers";
+                    return "Job-Careers";
                 case 2:
                     return "Attendance";
             }

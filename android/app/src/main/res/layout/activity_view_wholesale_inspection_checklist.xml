@@ -25,8 +25,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:text="SUPPORT SUPERVISION CHECKLIST FOR PHARMACIES HUMAN AND VETERINARY)"
-            style="@style/Base.TextAppearance.AppCompat.Title"
-            android:gravity="center"/>
+            style="@style/Base.TextAppearance.AppCompat.Title"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -186,8 +185,8 @@
             android:layout_height="wrap_content"
             android:text="Regulatory Compliance"
             android:textStyle="bold"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"/>
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -199,6 +198,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:textColor="@color/colorAccent"
             android:id="@+id/section_a_1"/>
 
         <TextView
@@ -211,6 +211,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:textColor="@color/colorAccent"
             android:id="@+id/section_a_2"/>
 
         <TextView
@@ -223,6 +224,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:textColor="@color/colorAccent"
             android:id="@+id/section_a_3"/>
 
         <TextView
@@ -235,6 +237,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:textColor="@color/colorAccent"
             android:id="@+id/section_a_4"/>
 
         <TextView
@@ -247,7 +250,50 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:textColor="@color/colorAccent"
             android:id="@+id/section_a_5"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Total Score"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/section_a_total_score"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Percentage Score"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/section_a_percentage"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
 
         <View
             android:background="@color/colorPrimaryDark"
@@ -261,7 +307,7 @@
             android:text="Personnel"
             android:textStyle="bold"
             android:layout_marginBottom="10dp"
-            android:gravity="center"/>
+            android:textColor="@color/colorPrimaryDark"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -273,6 +319,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:textColor="@color/colorAccent"
             android:id="@+id/section_b_1"/>
 
         <TextView
@@ -285,6 +332,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:textColor="@color/colorAccent"
             android:id="@+id/section_b_2"/>
 
         <TextView
@@ -297,6 +345,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:textColor="@color/colorAccent"
             android:id="@+id/section_b_3"/>
 
         <TextView
@@ -309,6 +358,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:textColor="@color/colorAccent"
             android:id="@+id/section_b_4"/>
 
         <TextView
@@ -321,7 +371,50 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:textColor="@color/colorAccent"
             android:id="@+id/section_b_5"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Total Score"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/section_b_total_score"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Percentage Score"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/section_b_percentage"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
 
         <!--<View
             android:background="@color/colorPrimaryDark"
@@ -1653,6 +1746,54 @@
                 android:layout_weight="1"/>
 
         </LinearLayout>-->
+
+        <View
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Overall Total Score"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/overall_total_score"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="Overall Percentage Score"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/overall_percentage_score"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
 
         <View
             android:background="@color/colorPrimaryDark"

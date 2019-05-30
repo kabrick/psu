@@ -10,11 +10,11 @@
         <item android:id="@+id/psu_admin_view_support_supervision_checklist"
             android:title="View Support Supervision Checklists" />
         <item android:id="@+id/psu_admin_set_pharmacy_locations"
-            android:title="Set Pharmacy Locations" />
+            android:title="Set Practice Centre Locations" />
         <item android:id="@+id/psu_admin_view_pharmacy_location"
-            android:title="View Pharmacy Locations" />
+            android:title="View Practice Centre Locations" />
         <item android:id="@+id/psu_admin_view_pharmacy_coordinates"
-            android:title="View Pharmacy Coordinates" />
+            android:title="View Practice Centre Coordinates" />
         <item android:id="@+id/psu_admin_eresources"
             android:title="E Resources" />
     </group>

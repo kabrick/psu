@@ -132,7 +132,7 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
                 case 0:
                     return "News";
                 case 1:
-                    return "Job||Careers";
+                    return "Job-Careers";
                 case 2:
                     return "Attendance";
             }
@@ -195,10 +195,6 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
             case R.id.pharmacy_owner_eresources:
                 Intent eresources_intent = new Intent(this, EResourcesActivity.class);
                 startActivity(eresources_intent);
-                break;
-            case R.id.pharmacy_owner_support_supervision_checklist:
-                Intent support_supervision_checklist_intent = new Intent(this, WholesaleInspectionActivity.class);
-                startActivity(support_supervision_checklist_intent);
                 break;
             /*case R.id.pharmacy_owner_my_job_adverts:
                 Intent my_job_adverts_intent = new Intent(this, MyJobAdvertsActivity.class);

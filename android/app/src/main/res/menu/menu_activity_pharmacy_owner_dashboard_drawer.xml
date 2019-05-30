@@ -10,8 +10,6 @@
             android:title="View Pharmacist Attendance"/>
         <item android:id="@+id/pharmacy_owner_pharmacist_assessment_form"
             android:title="Pharmacist Assessment Form" />
-        <item android:id="@+id/pharmacy_owner_support_supervision_checklist"
-            android:title="Support Supervision Checklist" />
         <item android:id="@+id/pharmacy_owner_eresources"
             android:title="E Resources" />
     </group>

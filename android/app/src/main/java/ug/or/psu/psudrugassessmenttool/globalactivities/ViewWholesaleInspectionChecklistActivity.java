@@ -1,5 +1,6 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,7 +29,8 @@ public class ViewWholesaleInspectionChecklistActivity extends AppCompatActivity 
     TextView additional_notes,pharmacy_name, contact_name,support_supervision_date,
             section_a_1, section_a_2, section_a_3, section_a_4, section_a_5,
             section_b_1, section_b_2, section_b_3, section_b_4, section_b_5,
-            contact,supervising_pharmacist,reg_number,location;
+            contact,supervising_pharmacist,reg_number,location, overall_percentage_score, overall_total_score,
+            section_b_total_score, section_a_total_score, section_b_percentage, section_a_percentage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,12 @@ public class ViewWholesaleInspectionChecklistActivity extends AppCompatActivity 
         section_b_3 = findViewById(R.id.section_b_3);
         section_b_4 = findViewById(R.id.section_b_4);
         section_b_5 = findViewById(R.id.section_b_5);
+        overall_percentage_score = findViewById(R.id.overall_percentage_score);
+        overall_total_score = findViewById(R.id.overall_total_score);
+        section_b_total_score = findViewById(R.id.section_b_total_score);
+        section_a_total_score = findViewById(R.id.section_a_total_score);
+        section_b_percentage = findViewById(R.id.section_b_percentage);
+        section_a_percentage = findViewById(R.id.section_a_percentage);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -91,6 +99,7 @@ public class ViewWholesaleInspectionChecklistActivity extends AppCompatActivity 
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
                 new Response.Listener<JSONObject>() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -105,6 +114,37 @@ public class ViewWholesaleInspectionChecklistActivity extends AppCompatActivity 
 
                             String[] section_a_checklist = response.getString("section_a_checklist").split(",");
                             String[] section_b_checklist = response.getString("section_b_checklist").split(",");
+
+                            /*overall_percentage_score = findViewById(R.id.overall_percentage_score);
+                            overall_total_score = findViewById(R.id.overall_total_score);
+                            section_b_total_score = findViewById(R.id.section_b_total_score);
+                            section_a_total_score = findViewById(R.id.section_a_total_score);
+                            section_b_percentage = findViewById(R.id.section_b_percentage);
+                            section_a_percentage = findViewById(R.id.section_a_percentage);*/
+
+                            int section_a_total = Integer.parseInt(section_a_checklist[0]) + Integer.parseInt(section_a_checklist[1]) +
+                                    Integer.parseInt(section_a_checklist[2]) + Integer.parseInt(section_a_checklist[3]) + Integer.parseInt(section_a_checklist[4]);
+
+                            double percentage_a = ((double) section_a_total / 5) * 100;
+
+                            section_a_percentage.setText(percentage_a + " %");
+                            section_a_total_score.setText(String.valueOf(section_a_total));
+
+                            // calculate the average score
+                            int section_b_total = Integer.parseInt(section_b_checklist[0]) + Integer.parseInt(section_b_checklist[1]) +
+                                    Integer.parseInt(section_b_checklist[2]) + Integer.parseInt(section_b_checklist[3]) + Integer.parseInt(section_b_checklist[4]);
+
+                            double percentage_b = ((double) section_b_total / 5) * 100;
+
+                            section_b_percentage.setText(percentage_b + " %");
+                            section_b_total_score.setText(String.valueOf(section_b_total));
+
+                            int overall_total = section_a_total + section_b_total;
+
+                            double overall_percentage = ((double) overall_total / 10) * 100;
+
+                            overall_percentage_score.setText(overall_percentage + " %");
+                            overall_total_score.setText(String.valueOf(overall_total));
 
                             if(section_a_checklist[0].equals("1")){
                                 section_a_1.setText("Yes");
@@ -136,7 +176,7 @@ public class ViewWholesaleInspectionChecklistActivity extends AppCompatActivity 
                                 section_a_5.setText("No");
                             }
 
-                            if(section_a_checklist[0].equals("1")){
+                            if(section_b_checklist[0].equals("1")){
                                 section_b_1.setText("Yes");
                             } else {
                                 section_b_1.setText("No");
