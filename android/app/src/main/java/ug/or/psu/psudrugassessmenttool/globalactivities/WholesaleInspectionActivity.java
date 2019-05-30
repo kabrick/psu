@@ -2,6 +2,7 @@ package ug.or.psu.psudrugassessmenttool.globalactivities;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -33,12 +34,13 @@ public class WholesaleInspectionActivity extends AppCompatActivity {
     EditText additional_notes, pharmacy_name, contact_name, contact,
             supervising_pharmacist, reg_number, support_supervision_date, location;
     TextView section_a_total_score, section_a_percentage, section_b_total_score, section_b_percentage,
-            overall_total_score, overall_percentage_score, pharmacy_category;
+            overall_total_score, overall_percentage_score, pharmacy_category, main_title;
     RadioGroup section_a_1, section_a_2, section_a_3, section_a_4, section_a_5,
             section_b_1, section_b_2, section_b_3, section_b_4, section_b_5;
     int section_a_1_int, section_a_2_int, section_a_3_int, section_a_4_int, section_a_5_int,
             section_b_1_int, section_b_2_int, section_b_3_int, section_b_4_int, section_b_5_int, section_a_total, section_b_total = 0;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,15 @@ public class WholesaleInspectionActivity extends AppCompatActivity {
 
         helperFunctions = new HelperFunctions(this);
         preferenceManager = new PreferenceManager(this);
+
+        main_title = findViewById(R.id.main_title);
+
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            main_title.setText("SUPPORT SUPERVISION CHECKLIST FOR PHARMACIES " + extras.getString("text", "Wholesale Pharmacies") + " -HUMAN AND VETERINARY");
+            main_title.setAllCaps(true);
+        }
 
         overall_total_score = findViewById(R.id.overall_total_score);
         overall_percentage_score = findViewById(R.id.overall_percentage_score);

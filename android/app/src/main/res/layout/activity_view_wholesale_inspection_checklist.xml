@@ -24,7 +24,7 @@
             android:layout_marginBottom="15dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:text="SUPPORT SUPERVISION CHECKLIST FOR PHARMACIES WHOLESALE PHARMACY-HUMAN AND VETERINARY)"
+            android:text="SUPPORT SUPERVISION CHECKLIST FOR PHARMACIES HUMAN AND VETERINARY)"
             style="@style/Base.TextAppearance.AppCompat.Title"
             android:gravity="center"/>
 
