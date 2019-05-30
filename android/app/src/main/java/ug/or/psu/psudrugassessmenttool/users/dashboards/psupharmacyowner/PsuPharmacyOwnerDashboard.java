@@ -196,6 +196,10 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
                 Intent eresources_intent = new Intent(this, EResourcesActivity.class);
                 startActivity(eresources_intent);
                 break;
+            case R.id.pharmacy_owner_support_supervision_checklist:
+                Intent support_supervision_checklist_intent = new Intent(this, WholesaleInspectionActivity.class);
+                startActivity(support_supervision_checklist_intent);
+                break;
             /*case R.id.pharmacy_owner_my_job_adverts:
                 Intent my_job_adverts_intent = new Intent(this, MyJobAdvertsActivity.class);
                 startActivity(my_job_adverts_intent);

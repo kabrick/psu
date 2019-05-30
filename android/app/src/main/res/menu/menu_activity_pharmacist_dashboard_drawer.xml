@@ -8,6 +8,8 @@
             android:title="Post Feedback"/>
         <item android:id="@+id/pharmacist_admin_eresources"
             android:title="E Resources" />
+        <item android:id="@+id/pharmacist_support_supervision_checklist"
+            android:title="Support Supervision Checklist" />
     </group>
 
     <item android:title="News">

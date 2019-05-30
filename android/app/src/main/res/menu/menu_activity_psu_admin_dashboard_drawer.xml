@@ -7,6 +7,8 @@
             android:title="Pharmacists Assessments" />
         <item android:id="@+id/psu_admin_support_supervision_checklist"
             android:title="Support Supervision Checklist" />
+        <item android:id="@+id/psu_admin_view_support_supervision_checklist"
+            android:title="View Support Supervision Checklists" />
         <item android:id="@+id/psu_admin_set_pharmacy_locations"
             android:title="Set Pharmacy Locations" />
         <item android:id="@+id/psu_admin_view_pharmacy_location"
