@@ -997,13 +997,13 @@
 
         </LinearLayout>
 
-        <!--<View
+        <View
             android:background="@color/colorPrimaryDark"
             android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
-            android:layout_height="0.3dp"/>-->
+            android:layout_height="0.3dp"/>
 
-        <!--<TextView
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Storage and Procurement Practices"
@@ -1021,14 +1021,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:id="@+id/section_a_5"
+            android:id="@+id/section_d_1"
             android:orientation="horizontal">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/yes"
-                android:id="@+id/section_b_5_yes"
+                android:id="@+id/section_d_1_yes"
                 android:layout_marginEnd="20dp"
                 android:checked="false" />
 
@@ -1036,7 +1036,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no"
-                android:id="@+id/section_b_5_no"
+                android:id="@+id/section_d_1_no"
                 android:checked="false" />
 
         </RadioGroup>
@@ -1051,14 +1051,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:id="@+id/section_a_5"
+            android:id="@+id/section_d_2"
             android:orientation="horizontal">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/yes"
-                android:id="@+id/section_b_5_yes"
+                android:id="@+id/section_d_2_yes"
                 android:layout_marginEnd="20dp"
                 android:checked="false" />
 
@@ -1066,7 +1066,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no"
-                android:id="@+id/section_b_5_no"
+                android:id="@+id/section_d_2_no"
                 android:checked="false" />
 
         </RadioGroup>
@@ -1081,14 +1081,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:id="@+id/section_a_5"
+            android:id="@+id/section_d_3"
             android:orientation="horizontal">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/yes"
-                android:id="@+id/section_b_5_yes"
+                android:id="@+id/section_d_3_yes"
                 android:layout_marginEnd="20dp"
                 android:checked="false" />
 
@@ -1096,7 +1096,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no"
-                android:id="@+id/section_b_5_no"
+                android:id="@+id/section_d_3_no"
                 android:checked="false" />
 
         </RadioGroup>
@@ -1111,14 +1111,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:id="@+id/section_a_5"
+            android:id="@+id/section_d_4"
             android:orientation="horizontal">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/yes"
-                android:id="@+id/section_b_5_yes"
+                android:id="@+id/section_d_4_yes"
                 android:layout_marginEnd="20dp"
                 android:checked="false" />
 
@@ -1126,7 +1126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no"
-                android:id="@+id/section_b_5_no"
+                android:id="@+id/section_d_4_no"
                 android:checked="false" />
 
         </RadioGroup>
@@ -1141,14 +1141,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:id="@+id/section_a_5"
+            android:id="@+id/section_d_5"
             android:orientation="horizontal">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/yes"
-                android:id="@+id/section_b_5_yes"
+                android:id="@+id/section_d_5_yes"
                 android:layout_marginEnd="20dp"
                 android:checked="false" />
 
@@ -1156,7 +1156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no"
-                android:id="@+id/section_b_5_no"
+                android:id="@+id/section_d_5_no"
                 android:checked="false" />
 
         </RadioGroup>
@@ -1171,14 +1171,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:id="@+id/section_a_5"
+            android:id="@+id/section_d_6"
             android:orientation="horizontal">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/yes"
-                android:id="@+id/section_b_5_yes"
+                android:id="@+id/section_d_6_yes"
                 android:layout_marginEnd="20dp"
                 android:checked="false" />
 
@@ -1186,7 +1186,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no"
-                android:id="@+id/section_b_5_no"
+                android:id="@+id/section_d_6_no"
                 android:checked="false" />
 
         </RadioGroup>
@@ -1201,14 +1201,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:id="@+id/section_a_5"
+            android:id="@+id/section_d_7"
             android:orientation="horizontal">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/yes"
-                android:id="@+id/section_b_5_yes"
+                android:id="@+id/section_d_7_yes"
                 android:layout_marginEnd="20dp"
                 android:checked="false" />
 
@@ -1216,7 +1216,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no"
-                android:id="@+id/section_b_5_no"
+                android:id="@+id/section_d_7_no"
                 android:checked="false" />
 
         </RadioGroup>
@@ -1231,14 +1231,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:id="@+id/section_a_5"
+            android:id="@+id/section_d_8"
             android:orientation="horizontal">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/yes"
-                android:id="@+id/section_b_5_yes"
+                android:id="@+id/section_d_8_yes"
                 android:layout_marginEnd="20dp"
                 android:checked="false" />
 
@@ -1246,7 +1246,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no"
-                android:id="@+id/section_b_5_no"
+                android:id="@+id/section_d_8_no"
                 android:checked="false" />
 
         </RadioGroup>
@@ -1261,14 +1261,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:id="@+id/section_a_5"
+            android:id="@+id/section_d_9"
             android:orientation="horizontal">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/yes"
-                android:id="@+id/section_b_5_yes"
+                android:id="@+id/section_d_9_yes"
                 android:layout_marginEnd="20dp"
                 android:checked="false" />
 
@@ -1276,7 +1276,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no"
-                android:id="@+id/section_b_5_no"
+                android:id="@+id/section_d_9_no"
                 android:checked="false" />
 
         </RadioGroup>
@@ -1291,14 +1291,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:id="@+id/section_a_5"
+            android:id="@+id/section_d_10"
             android:orientation="horizontal">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/yes"
-                android:id="@+id/section_b_5_yes"
+                android:id="@+id/section_d_10_yes"
                 android:layout_marginEnd="20dp"
                 android:checked="false" />
 
@@ -1306,7 +1306,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no"
-                android:id="@+id/section_b_5_no"
+                android:id="@+id/section_d_10_no"
                 android:checked="false" />
 
         </RadioGroup>
@@ -1321,14 +1321,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:id="@+id/section_a_5"
+            android:id="@+id/section_d_11"
             android:orientation="horizontal">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/yes"
-                android:id="@+id/section_b_5_yes"
+                android:id="@+id/section_d_11_yes"
                 android:layout_marginEnd="20dp"
                 android:checked="false" />
 
@@ -1336,7 +1336,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no"
-                android:id="@+id/section_b_5_no"
+                android:id="@+id/section_d_11_no"
                 android:checked="false" />
 
         </RadioGroup>
@@ -1357,7 +1357,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/section_b_total_score"
+                android:id="@+id/section_d_total_score"
                 android:layout_weight="1"/>
 
         </LinearLayout>
@@ -1378,12 +1378,12 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/section_a_percentage"
+                android:id="@+id/section_d_percentage"
                 android:layout_weight="1"/>
 
         </LinearLayout>
 
-        <View
+        <!--<View
             android:background="@color/colorPrimaryDark"
             android:layout_marginBottom="20dp"
             android:layout_width="match_parent"

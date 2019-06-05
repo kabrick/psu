@@ -38,15 +38,19 @@ public class WholesaleInspectionActivity extends AppCompatActivity {
             supervising_pharmacist, reg_number, support_supervision_date, location;
     TextView section_a_total_score, section_a_percentage, section_b_total_score, section_b_percentage,
             overall_total_score, overall_percentage_score, pharmacy_category, main_title,
-            section_c_total_score, section_c_percentage;
+            section_c_total_score, section_c_percentage, section_d_total_score, section_d_percentage;
     RadioGroup section_a_1, section_a_2, section_a_3, section_a_4, section_a_5,
             section_b_1, section_b_2, section_b_3, section_b_4, section_b_5,
             section_c_1, section_c_2, section_c_3, section_c_4, section_c_5,
-            section_c_6, section_c_7, section_c_8, section_c_9, section_c_10;
+            section_c_6, section_c_7, section_c_8, section_c_9, section_c_10,
+            section_d_1, section_d_2, section_d_3, section_d_4, section_d_5,
+            section_d_6, section_d_7, section_d_8, section_d_9, section_d_10, section_d_11;
     int section_a_1_int, section_a_2_int, section_a_3_int, section_a_4_int, section_a_5_int,
             section_c_1_int, section_c_2_int, section_c_3_int, section_c_4_int, section_c_5_int,
             section_c_6_int, section_c_7_int, section_c_8_int, section_c_9_int, section_c_10_int,
-            section_b_1_int, section_b_2_int, section_b_3_int, section_b_4_int, section_b_5_int, section_a_total, section_b_total, section_c_total = 0;
+            section_d_1_int, section_d_2_int, section_d_3_int, section_d_4_int, section_d_5_int,
+            section_d_6_int, section_d_7_int, section_d_8_int, section_d_9_int, section_d_10_int, section_d_11_int,
+            section_b_1_int, section_b_2_int, section_b_3_int, section_b_4_int, section_b_5_int, section_a_total, section_b_total, section_c_total, section_d_total, section_e_total, section_f_total = 0;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -82,6 +86,8 @@ public class WholesaleInspectionActivity extends AppCompatActivity {
         section_b_percentage = findViewById(R.id.section_b_percentage);
         section_c_total_score = findViewById(R.id.section_c_total_score);
         section_c_percentage = findViewById(R.id.section_c_percentage);
+        section_d_total_score = findViewById(R.id.section_d_total_score);
+        section_d_percentage = findViewById(R.id.section_d_percentage);
         additional_notes = findViewById(R.id.additional_notes);
         pharmacy_name = findViewById(R.id.pharmacy_name);
         contact_name = findViewById(R.id.contact_name);
@@ -110,6 +116,17 @@ public class WholesaleInspectionActivity extends AppCompatActivity {
         section_c_8 = findViewById(R.id.section_c_8);
         section_c_9 = findViewById(R.id.section_c_9);
         section_c_10 = findViewById(R.id.section_c_10);
+        section_d_1 = findViewById(R.id.section_d_1);
+        section_d_2 = findViewById(R.id.section_d_2);
+        section_d_3 = findViewById(R.id.section_d_3);
+        section_d_4 = findViewById(R.id.section_d_4);
+        section_d_5 = findViewById(R.id.section_d_5);
+        section_d_6 = findViewById(R.id.section_d_6);
+        section_d_7 = findViewById(R.id.section_d_7);
+        section_d_8 = findViewById(R.id.section_d_8);
+        section_d_9 = findViewById(R.id.section_d_9);
+        section_d_10 = findViewById(R.id.section_d_10);
+        section_d_11 = findViewById(R.id.section_d_11);
 
         section_a_1.setOnCheckedChangeListener((radioGroup, checked_id) -> {
             if(checked_id == R.id.section_a_1_no){
@@ -310,6 +327,116 @@ public class WholesaleInspectionActivity extends AppCompatActivity {
 
             calculateSectionC();
         });
+
+        section_d_1.setOnCheckedChangeListener((radioGroup, checked_id) -> {
+            if(checked_id == R.id.section_d_1_no){
+                section_d_1_int = 0;
+            } else if(checked_id == R.id.section_d_1_yes){
+                section_d_1_int = 1;
+            }
+
+            calculateSectionD();
+        });
+
+        section_d_2.setOnCheckedChangeListener((radioGroup, checked_id) -> {
+            if(checked_id == R.id.section_d_2_no){
+                section_d_2_int = 0;
+            } else if(checked_id == R.id.section_d_2_yes){
+                section_d_2_int = 1;
+            }
+
+            calculateSectionD();
+        });
+
+        section_d_3.setOnCheckedChangeListener((radioGroup, checked_id) -> {
+            if(checked_id == R.id.section_d_3_no){
+                section_d_3_int = 0;
+            } else if(checked_id == R.id.section_d_3_yes){
+                section_d_3_int = 1;
+            }
+
+            calculateSectionD();
+        });
+
+        section_d_4.setOnCheckedChangeListener((radioGroup, checked_id) -> {
+            if(checked_id == R.id.section_d_4_no){
+                section_d_4_int = 0;
+            } else if(checked_id == R.id.section_d_4_yes){
+                section_d_4_int = 1;
+            }
+
+            calculateSectionD();
+        });
+
+        section_d_5.setOnCheckedChangeListener((radioGroup, checked_id) -> {
+            if(checked_id == R.id.section_d_5_no){
+                section_d_5_int = 0;
+            } else if(checked_id == R.id.section_d_5_yes){
+                section_d_5_int = 1;
+            }
+
+            calculateSectionD();
+        });
+
+        section_d_6.setOnCheckedChangeListener((radioGroup, checked_id) -> {
+            if(checked_id == R.id.section_d_6_no){
+                section_d_6_int = 0;
+            } else if(checked_id == R.id.section_d_6_yes){
+                section_d_6_int = 1;
+            }
+
+            calculateSectionD();
+        });
+
+        section_d_7.setOnCheckedChangeListener((radioGroup, checked_id) -> {
+            if(checked_id == R.id.section_d_7_no){
+                section_d_7_int = 0;
+            } else if(checked_id == R.id.section_d_7_yes){
+                section_d_7_int = 1;
+            }
+
+            calculateSectionD();
+        });
+
+        section_d_8.setOnCheckedChangeListener((radioGroup, checked_id) -> {
+            if(checked_id == R.id.section_d_8_no){
+                section_d_8_int = 0;
+            } else if(checked_id == R.id.section_d_8_yes){
+                section_d_8_int = 1;
+            }
+
+            calculateSectionD();
+        });
+
+        section_d_9.setOnCheckedChangeListener((radioGroup, checked_id) -> {
+            if(checked_id == R.id.section_d_9_no){
+                section_d_9_int = 0;
+            } else if(checked_id == R.id.section_d_9_yes){
+                section_d_9_int = 1;
+            }
+
+            calculateSectionD();
+        });
+
+        section_d_10.setOnCheckedChangeListener((radioGroup, checked_id) -> {
+            if(checked_id == R.id.section_d_10_no){
+                section_d_10_int = 0;
+            } else if(checked_id == R.id.section_d_10_yes){
+                section_d_10_int = 1;
+            }
+
+            calculateSectionD();
+        });
+
+        section_d_11.setOnCheckedChangeListener((radioGroup, checked_id) -> {
+            if(checked_id == R.id.section_d_11_no){
+                section_d_11_int = 0;
+            } else if(checked_id == R.id.section_d_11_yes){
+                section_d_11_int = 1;
+            }
+
+            calculateSectionD();
+        });
     }
 
     @SuppressLint("SetTextI18n")
@@ -357,10 +484,26 @@ public class WholesaleInspectionActivity extends AppCompatActivity {
     }
 
     @SuppressLint("SetTextI18n")
-    public void calculateTotals(){
-        int overall_total = section_a_total + section_b_total + section_c_total;
+    public void calculateSectionD(){
+        // calculate the average score
+        section_d_total = section_d_1_int + section_d_2_int +
+                section_d_3_int + section_d_4_int + section_d_5_int +
+                section_d_6_int + section_d_7_int + section_d_8_int +
+                section_d_9_int + section_d_10_int + section_d_11_int;
 
-        double overall_percentage = ((double) overall_total / 20) * 100;
+        double percentage = ((double) section_d_total / 11) * 100;
+
+        section_d_percentage.setText(percentage + " %");
+        section_d_total_score.setText(String.valueOf(section_d_total));
+
+        calculateTotals();
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void calculateTotals(){
+        int overall_total = section_a_total + section_b_total + section_c_total + section_d_total;
+
+        double overall_percentage = ((double) overall_total / 31) * 100;
 
         overall_percentage_score.setText(overall_percentage + " %");
         overall_total_score.setText(String.valueOf(overall_total));
