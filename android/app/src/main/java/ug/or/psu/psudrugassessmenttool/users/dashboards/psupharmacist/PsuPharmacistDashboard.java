@@ -124,7 +124,7 @@ public class PsuPharmacistDashboard extends AppCompatActivity
                 case 1:
                     return "Job-Careers";
                 case 2:
-                    return "Attendance";
+                    return "Practice";
             }
             return super.getPageTitle(position);
         }

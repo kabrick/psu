@@ -21,6 +21,10 @@ $responce['support_supervision_date'] = $result_assoc['support_supervision_date'
 $responce['location'] = $result_assoc['location'];
 $responce['section_a_checklist'] = $result_assoc['section_a_checklist'];
 $responce['section_b_checklist'] = $result_assoc['section_b_checklist'];
+$responce['section_c_checklist'] = $result_assoc['section_c_checklist'];
+$responce['section_d_checklist'] = $result_assoc['section_d_checklist'];
+$responce['section_e_checklist'] = $result_assoc['section_e_checklist'];
+$responce['section_f_checklist'] = $result_assoc['section_f_checklist'];
 
 echo json_encode($responce);
 

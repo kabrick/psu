@@ -416,7 +416,7 @@
 
         </LinearLayout>
 
-        <!--<View
+        <View
             android:background="@color/colorPrimaryDark"
             android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
@@ -428,7 +428,7 @@
             android:text="Premises"
             android:textStyle="bold"
             android:layout_marginBottom="10dp"
-            android:gravity="center"/>
+            android:textColor="@color/colorPrimaryDark"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -436,26 +436,12 @@
             android:text="Does the size of the Pharmacy comply to NDA requirements"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_c_1"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -463,26 +449,12 @@
             android:text="Does the Pharmacy have a sitting area for the Pharmacist"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_c_2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -490,26 +462,12 @@
             android:text="Are the premises regularly cleaned? Check the cleaning records"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_c_3"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -517,26 +475,12 @@
             android:text="Are there demarcations for waiting , dispensing , stores and consultation area"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_c_4"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -544,26 +488,12 @@
             android:text="Is there a designated area for storage of expired/rejected medicines"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_c_5"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -571,26 +501,12 @@
             android:text="Does the premise have security and restricted access to controlled medicines"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_c_6"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -598,53 +514,12 @@
             android:text="Are the floors, ceilings and walls free of cracks and leakages ?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Are both documents prominently displayed on the Premises?"
-            android:textStyle="bold"/>
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_c_7"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -652,26 +527,12 @@
             android:text="Are the floors made of impervious materials e.g tiles,terrazo?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_c_8"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -679,26 +540,12 @@
             android:text="Is the storage area adequately labeled and dedicated for only medicines?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_c_9"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -706,26 +553,12 @@
             android:text="Does the Pharmacy have appropriate distribution vehicles/containers for medicines for delivery to drug outlets (if applicable)?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_c_10"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -743,6 +576,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:id="@+id/section_c_total_score"
                 android:layout_weight="1"/>
 
         </LinearLayout>
@@ -763,7 +597,8 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:id="@+id/section_c_percentage"/>
 
         </LinearLayout>
 
@@ -771,15 +606,15 @@
             android:background="@color/colorPrimaryDark"
             android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
-            android:layout_height="0.3dp"/>-->
+            android:layout_height="0.3dp"/>
 
-        <!--<TextView
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Storage and Procurement Practices"
             android:textStyle="bold"
             android:layout_marginBottom="10dp"
-            android:gravity="center"/>
+            android:textColor="@color/colorPrimaryDark"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -787,26 +622,12 @@
             android:text="Are medicines stored as per their storage requirements?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_d_1"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -814,26 +635,12 @@
             android:text="Is there a temperature monitoring device for recording the temperatures within the pharmacy including the fridge? Are upto date records available"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_d_2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -841,26 +648,12 @@
             android:text="Are the medicines stored above the floor and below the ceiling?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_d_3"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -868,26 +661,12 @@
             android:text="Is there adequate ventilation for the storage area?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_d_4"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -895,26 +674,12 @@
             android:text="Are the storage areas cleaned frequently and records are maintained?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_d_5"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -922,26 +687,12 @@
             android:text="Are Procurements made from licensed facilities?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_d_6"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -949,26 +700,12 @@
             android:text="Are records of purchases maintained from the various suppliers?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_d_7"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -976,26 +713,12 @@
             android:text="Does the Pharmacist approve all purchases of medicines?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_d_8"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1003,26 +726,12 @@
             android:text="Does the Pharmacy have a list of suppliers and their contacts?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_d_9"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1030,26 +739,12 @@
             android:text="Are batch numbers and expiry dates captured in receipts for supply of medicines to clients?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_d_10"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1057,26 +752,12 @@
             android:text="Back up system for temperature maintenance during power failure available e.g ice packs"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_d_11"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -1094,6 +775,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:id="@+id/section_d_total_score"
                 android:layout_weight="1"/>
 
         </LinearLayout>
@@ -1114,7 +796,8 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:id="@+id/section_d_percentage"/>
 
         </LinearLayout>
 
@@ -1130,7 +813,7 @@
             android:text="Documentation"
             android:textStyle="bold"
             android:layout_marginBottom="10dp"
-            android:gravity="center"/>
+            android:textColor="@color/colorPrimaryDark"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1138,26 +821,12 @@
             android:text="Does the Pharmacy have a Quality Policy?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_e_1"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1165,26 +834,12 @@
             android:text="Does each of the technical staff possess an upto date training file"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_e_2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1200,26 +855,12 @@
             android:text="Storage of medicines?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_e_3"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1227,26 +868,12 @@
             android:text="Procurement of medicines?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_e_4"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1254,26 +881,12 @@
             android:text="Housekeeping and Personal hygiene?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_e_5"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1281,26 +894,12 @@
             android:text="Quality Inspection of medicines?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_e_6"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1308,26 +907,12 @@
             android:text="Quality assurance of Pharmaceutical services and products"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_e_7"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1335,26 +920,12 @@
             android:text="Complaint handling system"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_e_8"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1362,26 +933,12 @@
             android:text="Are upto date reference books available e.g BNF, UCG, Medical dictionary"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_e_9"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1389,26 +946,12 @@
             android:text="Recall of supplied medicines"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_e_10"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1416,26 +959,12 @@
             android:text="Cleaning procedure for vehicles/containers used in distribution including records (if applicable)?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_e_11"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1443,26 +972,12 @@
             android:text="Is there a procedure for repackaging of medicines/vaccines into appropriate containers e.g. light sensitive, closures, labeling?Is it followed?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_e_12"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -1480,6 +995,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:id="@+id/section_e_total_score"
                 android:layout_weight="1"/>
 
         </LinearLayout>
@@ -1500,7 +1016,8 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:id="@+id/section_e_percentage"/>
 
         </LinearLayout>
 
@@ -1516,7 +1033,7 @@
             android:text="Professional services"
             android:textStyle="bold"
             android:layout_marginBottom="10dp"
-            android:gravity="center"/>
+            android:textColor="@color/colorPrimaryDark"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1524,26 +1041,12 @@
             android:text="Are adverse events detected and reported?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_f_1"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1551,26 +1054,12 @@
             android:text="Are product complaints detected, logged and reported?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_f_2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1578,26 +1067,12 @@
             android:text="Are the Pharmacy staff dressed in clean white coats or gowns?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_f_3"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1605,26 +1080,12 @@
             android:text="Are the clients sensitized on drug residues and withdrawal periods before slaughter?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_f_4"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1632,26 +1093,12 @@
             android:text="Is there a mechanism for tracking resistance of veterinary medicines"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_f_5"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1659,26 +1106,12 @@
             android:text="Is there any dilution of medicines done before supply? If yes, is there a procedure, is it followed and is it acceptable?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_f_6"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -1686,26 +1119,12 @@
             android:text="Are the clients sensitized on drug residues and withdrawal periods before slaughter?"
             android:textStyle="bold"/>
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:layout_marginEnd="20dp"
-                android:checked="false" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:checked="false" />
-
-        </RadioGroup>
+            android:textColor="@color/colorAccent"
+            android:id="@+id/section_f_7"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -1723,6 +1142,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:id="@+id/section_f_total_score"
                 android:layout_weight="1"/>
 
         </LinearLayout>
@@ -1743,9 +1163,10 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:id="@+id/section_f_percentage"/>
 
-        </LinearLayout>-->
+        </LinearLayout>
 
         <View
             android:background="@color/colorPrimaryDark"
