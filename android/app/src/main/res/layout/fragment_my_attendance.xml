@@ -205,15 +205,53 @@
                 android:text="View General Attendance"/>
         </RelativeLayout>
 
-        <View
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:id="@+id/relative8"
+            android:padding="5dp">
 
-        <View
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:alpha="1"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:id="@+id/image8"
+                android:src="@drawable/attendance_blue"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_below="@id/image8"
+                android:text="Support Supervision Checklist"/>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:id="@+id/relative9"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:alpha="1"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:id="@+id/image9"
+                android:src="@drawable/attendance_blue"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_below="@id/image9"
+                android:text="ADR Form"/>
+        </RelativeLayout>
 
     </LinearLayout>
 

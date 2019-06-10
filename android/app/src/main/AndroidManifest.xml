@@ -20,7 +20,10 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon">
-        <activity android:name=".globalactivities.ViewWholesaleInspectionChecklistActivity"></activity>
+        <activity android:name=".globalactivities.AdrReportFormDetailsActivity"></activity>
+        <activity android:name=".globalactivities.AdrReportFormFeedActivity" />
+        <activity android:name=".globalactivities.AdrReportFormActivity" />
+        <activity android:name=".globalactivities.ViewWholesaleInspectionChecklistActivity" />
         <activity android:name=".globalactivities.WholesaleInspectionFeedActivity" />
         <activity android:name=".globalactivities.ViewAllPharmacyCoordinatesActivity" />
         <activity android:name=".users.authentication.ForgotPasswordActivity" />

@@ -39,16 +39,19 @@ import java.util.Date;
 import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
+import ug.or.psu.psudrugassessmenttool.globalactivities.AdrReportFormActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourPharmacies;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.ViewPharmacyCoordinatesActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.ViewYourPharmacyActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.WholesaleInspectionActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 import ug.or.psu.psudrugassessmenttool.services.TrackPharmacistService;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorGetLocationActivity;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.ChoosePharmacyActivity;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.PsuAdminDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.ViewGeneralAttendanceActivity;
 
 public class MyAttendanceFragment extends Fragment {
@@ -62,7 +65,7 @@ public class MyAttendanceFragment extends Fragment {
     ArrayList<String> pharmacy_names_attendance;
     ArrayList<String> pharmacy_id_attendance;
     LinearLayout layout3;
-    RelativeLayout relative1, relative2, relative3, relative4, relative5, relative6, relative7;
+    RelativeLayout relative1, relative2, relative3, relative4, relative5, relative6, relative7, relative8, relative9, relative10;
 
     public MyAttendanceFragment() {
         // Required empty public constructor
@@ -84,78 +87,79 @@ public class MyAttendanceFragment extends Fragment {
         relative5 = view.findViewById(R.id.relative5);
         relative6 = view.findViewById(R.id.relative6);
         relative7 = view.findViewById(R.id.relative7);
+        relative8 = view.findViewById(R.id.relative8);
+        relative9 = view.findViewById(R.id.relative9);
         layout3 = view.findViewById(R.id.layout3);
 
-        relative1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isUserValid();
+        relative1.setOnClickListener(view17 -> isUserValid());
+
+        relative2.setOnClickListener(view16 -> getUnsetPharmacies());
+
+        relative3.setOnClickListener(view15 -> {
+            if(!preferenceManager.isPharmacyLocationSet()){
+                //start dialog
+                helperFunctions.genericProgressBar("Getting your allocated centres...");
+                //not so start procedure to set it
+                getPharmacies();
+            } else {
+                helperFunctions.genericDialog("You are already logged in at a practice centre.");
             }
         });
 
-        relative2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getUnsetPharmacies();
-            }
-        });
+        relative6.setOnClickListener(view14 -> {
+            AlertDialog.Builder alert = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
 
-        relative3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!preferenceManager.isPharmacyLocationSet()){
-                    //start dialog
-                    helperFunctions.genericProgressBar("Getting your allocated centres...");
-                    //not so start procedure to set it
-                    getPharmacies();
-                } else {
-                    helperFunctions.genericDialog("You are already logged in at a practice centre.");
-                }
-            }
-        });
-
-        relative6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
-
-                alert.setMessage("Are you sure you want to log out").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if(preferenceManager.isPharmacyLocationSet()){
-                            helperFunctions.signPharmacistOut();
-                        } else {
-                            helperFunctions.genericDialog("You are not logged in to any practice centre");
-                        }
+            alert.setMessage("Are you sure you want to log out").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if(preferenceManager.isPharmacyLocationSet()){
+                        helperFunctions.signPharmacistOut();
+                    } else {
+                        helperFunctions.genericDialog("You are not logged in to any practice centre");
                     }
-                }).show();
-            }
-        });
-
-        relative4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewAttendance();
-            }
-        });
-
-        relative5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewPharmacyLocations();
-            }
-        });
-
-        relative7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(preferenceManager.getMemberCategory().equals("2")){
-                    Intent intent = new Intent(getContext(), ViewGeneralAttendanceActivity.class);
-                    startActivity(intent);
-                } else {
-                    helperFunctions.genericDialog("You are not allowed to view general attendance");
                 }
+            }).show();
+        });
+
+        relative4.setOnClickListener(view13 -> viewAttendance());
+
+        relative5.setOnClickListener(view12 -> viewPharmacyLocations());
+
+        relative7.setOnClickListener(view1 -> {
+            if(preferenceManager.getMemberCategory().equals("2")){
+                Intent intent = new Intent(getContext(), ViewGeneralAttendanceActivity.class);
+                startActivity(intent);
+            } else {
+                helperFunctions.genericDialog("You are not allowed to view general attendance");
             }
+        });
+
+        relative8.setOnClickListener(view18 -> {
+            String[] mStringArray = {"Wholesale Pharmacies", "Retail Pharmacies"};
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+            builder.setTitle("Choose pharmacy type");
+
+            builder.setItems(mStringArray, (dialogInterface, i) -> {
+                if (i == 0){
+                    Intent support_supervision_checklist_intent = new Intent(getContext(), WholesaleInspectionActivity.class);
+                    support_supervision_checklist_intent.putExtra("text", "Wholesale Pharmacies");
+                    startActivity(support_supervision_checklist_intent);
+                } else if (i == 1){
+                    Intent support_supervision_checklist_intent = new Intent(getContext(), WholesaleInspectionActivity.class);
+                    support_supervision_checklist_intent.putExtra("text", "Retail Pharmacies");
+                    startActivity(support_supervision_checklist_intent);
+                }
+            });
+
+            // create and show the alert dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
+
+        relative9.setOnClickListener(view19 -> {
+            Intent adr_intent = new Intent(getContext(), AdrReportFormActivity.class);
+            startActivity(adr_intent);
         });
 
         //create array list objects
@@ -167,7 +171,7 @@ public class MyAttendanceFragment extends Fragment {
         pharmacy_id_attendance = new ArrayList<>();
 
         if(!preferenceManager.getMemberCategory().equals("2")){
-            layout3.setVisibility(View.GONE);
+            relative7.setVisibility(View.GONE);
         }
 
         return view;
@@ -183,20 +187,17 @@ public class MyAttendanceFragment extends Fragment {
 
         // Request a string response from the provided URL.
         StringRequest request = new StringRequest(network_address,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //dismiss progress dialog
-                        helperFunctions.stopProgressBar();
+                response -> {
+                    //dismiss progress dialog
+                    helperFunctions.stopProgressBar();
 
-                        if(response.equals("0")){
-                            // not allowed
-                            helperFunctions.genericDialog("Your practice centre limit is exceeded");
-                        } else if (response.equals("1")){
-                            // allowed
-                            Intent choose_pharmacy_intent = new Intent(getContext(), ChoosePharmacyActivity.class);
-                            startActivity(choose_pharmacy_intent);
-                        }
+                    if(response.equals("0")){
+                        // not allowed
+                        helperFunctions.genericDialog("Your practice centre limit is exceeded");
+                    } else if (response.equals("1")){
+                        // allowed
+                        Intent choose_pharmacy_intent = new Intent(getContext(), ChoosePharmacyActivity.class);
+                        startActivity(choose_pharmacy_intent);
                     }
                 }, new Response.ErrorListener() {
             @Override

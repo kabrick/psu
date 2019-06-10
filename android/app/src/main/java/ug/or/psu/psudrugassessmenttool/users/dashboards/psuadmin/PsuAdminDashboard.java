@@ -22,6 +22,8 @@ import android.view.MenuItem;
 import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
+import ug.or.psu.psudrugassessmenttool.globalactivities.AdrReportFormActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.AdrReportFormFeedActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EResourcesActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
@@ -170,6 +172,10 @@ public class PsuAdminDashboard extends AppCompatActivity
                 Intent post_news_intent = new Intent(this, CreateNewsActivity.class);
                 startActivity(post_news_intent);
                 break;
+            case R.id.psu_admin_view_adr_form:
+                Intent view_adr_intent = new Intent(this, AdrReportFormFeedActivity.class);
+                startActivity(view_adr_intent);
+                break;
             case R.id.psu_admin_edit_profile:
                 Intent edit_profile = new Intent(this, EditProfileActivity.class);
                 startActivity(edit_profile);
@@ -185,35 +191,6 @@ public class PsuAdminDashboard extends AppCompatActivity
             case R.id.psu_admin_edit_news_posts:
                 Intent edit_news_intent = new Intent(this, EditYourNewsActivity.class);
                 startActivity(edit_news_intent);
-                break;
-            case R.id.psu_admin_support_supervision_checklist:
-                String[] mStringArray = {"Wholesale Pharmacies", "Retail Pharmacies", "Wholesale and Retail Pharmacies"};
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Choose your action");
-
-                builder.setItems(mStringArray, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (i == 0){
-                            Intent support_supervision_checklist_intent = new Intent(PsuAdminDashboard.this, WholesaleInspectionActivity.class);
-                            support_supervision_checklist_intent.putExtra("text", "Wholesale Pharmacies");
-                            startActivity(support_supervision_checklist_intent);
-                        } else if (i == 1){
-                            Intent support_supervision_checklist_intent = new Intent(PsuAdminDashboard.this, WholesaleInspectionActivity.class);
-                            support_supervision_checklist_intent.putExtra("text", "Retail Pharmacies");
-                            startActivity(support_supervision_checklist_intent);
-                        } else if (i == 2){
-                            Intent support_supervision_checklist_intent = new Intent(PsuAdminDashboard.this, WholesaleInspectionActivity.class);
-                            support_supervision_checklist_intent.putExtra("text", "Wholesale and Retail Pharmacies");
-                            startActivity(support_supervision_checklist_intent);
-                        }
-                    }
-                });
-
-                // create and show the alert dialog
-                AlertDialog dialog = builder.create();
-                dialog.show();
                 break;
             case R.id.psu_admin_view_support_supervision_checklist:
                 Intent view_support_supervision_checklist_intent = new Intent(this, WholesaleInspectionFeedActivity.class);

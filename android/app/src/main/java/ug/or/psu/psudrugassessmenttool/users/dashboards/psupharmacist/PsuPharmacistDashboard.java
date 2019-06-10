@@ -174,35 +174,6 @@ public class PsuPharmacistDashboard extends AppCompatActivity
                 Intent give_feedback_intent = new Intent(this, FeedbackActivity.class);
                 startActivity(give_feedback_intent);
                 break;
-            case R.id.pharmacist_support_supervision_checklist:
-                String[] mStringArray = {"Wholesale Pharmacies", "Retail Pharmacies", "Wholesale and Retail Pharmacies"};
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Choose your action");
-
-                builder.setItems(mStringArray, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (i == 0){
-                            Intent support_supervision_checklist_intent = new Intent(PsuPharmacistDashboard.this, WholesaleInspectionActivity.class);
-                            support_supervision_checklist_intent.putExtra("text", "Wholesale Pharmacies");
-                            startActivity(support_supervision_checklist_intent);
-                        } else if (i == 1){
-                            Intent support_supervision_checklist_intent = new Intent(PsuPharmacistDashboard.this, WholesaleInspectionActivity.class);
-                            support_supervision_checklist_intent.putExtra("text", "Retail Pharmacies");
-                            startActivity(support_supervision_checklist_intent);
-                        } else if (i == 2){
-                            Intent support_supervision_checklist_intent = new Intent(PsuPharmacistDashboard.this, WholesaleInspectionActivity.class);
-                            support_supervision_checklist_intent.putExtra("text", "Wholesale and Retail Pharmacies");
-                            startActivity(support_supervision_checklist_intent);
-                        }
-                    }
-                });
-
-                // create and show the alert dialog
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                break;
             case R.id.pharmacist_admin_eresources:
                 Intent eresources_intent = new Intent(this, EResourcesActivity.class);
                 startActivity(eresources_intent);

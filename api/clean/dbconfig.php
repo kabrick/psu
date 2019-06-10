@@ -8,5 +8,7 @@ $database_connection = "id9172434_psucop_psu";
 $username_connection = "id9172434_root";
 $password_connection = "root@1";
 
+// $conn->error
+
 $conn = new mysqli("$hostname_connection", "$username_connection", "$password_connection", "$database_connection");
 ?>
