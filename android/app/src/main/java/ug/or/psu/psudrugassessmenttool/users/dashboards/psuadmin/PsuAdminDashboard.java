@@ -27,6 +27,7 @@ import ug.or.psu.psudrugassessmenttool.globalactivities.AdrReportFormActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.AdrReportFormFeedActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EResourcesActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.EcpdCreateActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.SearchPharmacistAssessmentFormsActivity;
@@ -200,7 +201,8 @@ public class PsuAdminDashboard extends AppCompatActivity
                 startActivity(view_submitted_intent);
                 break;
             case R.id.psu_admin_submit_cpd:
-                Toast.makeText(this, "Feature not ready", Toast.LENGTH_SHORT).show();
+                Intent submit_ecpd_intent = new Intent(this, EcpdCreateActivity.class);
+                startActivity(submit_ecpd_intent);
                 break;
             case R.id.psu_admin_view_cpd_results:
                 Intent view_cpd_results_intent = new Intent(this, ViewEcpdResultsActivity.class);

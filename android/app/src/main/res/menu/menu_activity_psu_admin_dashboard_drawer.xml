@@ -37,7 +37,7 @@
             <item android:id="@+id/psu_admin_view_submitted_cpd"
                 android:title="View Submitted CPD" />
             <item android:id="@+id/psu_admin_submit_cpd"
-                android:title="Submit CPD" />
+                android:title="Submit E-CPD" />
         </menu>
     </item>
 
