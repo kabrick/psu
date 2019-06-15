@@ -20,10 +20,13 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon">
+        <activity android:name=".globalactivities.EcpdViewActivity"></activity>
         <activity
             android:name=".globalactivities.EcpdCreateActivity"
-            android:label="Submit E-CPD"/>
-        <activity android:name=".globalactivities.ViewSubmittedCpdActivity" />
+            android:label="Submit E-CPD" />
+        <activity
+            android:name=".globalactivities.ViewSubmittedCpdActivity"
+            android:label="Submitted E-CPDs" />
         <activity android:name=".globalactivities.ViewEcpdResultsActivity" />
         <activity android:name=".globalactivities.EcpdViewQuestionsActivity" />
         <activity android:name=".globalactivities.EcpdFeedActivity" />

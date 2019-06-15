@@ -1,63 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/background"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     tools:context=".globalactivities.ViewSubmittedCpdActivity">
 
-    <SearchView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:elevation="2dp"
-        android:background="#fff"
-        android:id="@+id/search_pharmacist_assessment"
-        android:queryHint="Search..."
-        android:layout_margin="10dp"
-        android:layout_height="wrap_content"/>
+        android:orientation="vertical"
+        android:layout_height="match_parent">
 
-    <android.support.v7.widget.CardView
-        android:layout_margin="20dp"
-        card_view:contentPadding="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/card_view"
-        card_view:cardCornerRadius="4dp">
+        <SearchView
+            android:layout_width="match_parent"
+            android:elevation="2dp"
+            android:background="#fff"
+            android:id="@+id/search_view_submitted_cpd"
+            android:queryHint="Search..."
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content"/>
 
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_submitted_cpd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:scrollbars="vertical" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="OTTO PSU Online CPD (BAD)"/>
+    </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="Description for this online cpd"/>
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/progressBarViewSubmittedCpd" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="Submitted on 01 October 2018"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="Submitted by PSU Admin"/>
-
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
-
-</LinearLayout>
+</RelativeLayout>
