@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -30,6 +31,8 @@ import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.SearchPharmacistAssessmentFormsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.ViewAllPharmacyCoordinatesActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.ViewEcpdResultsActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.ViewSubmittedCpdActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.WholesaleInspectionActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.WholesaleInspectionFeedActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
@@ -172,10 +175,6 @@ public class PsuAdminDashboard extends AppCompatActivity
                 Intent post_news_intent = new Intent(this, CreateNewsActivity.class);
                 startActivity(post_news_intent);
                 break;
-            case R.id.psu_admin_view_adr_form:
-                Intent view_adr_intent = new Intent(this, AdrReportFormFeedActivity.class);
-                startActivity(view_adr_intent);
-                break;
             case R.id.psu_admin_edit_profile:
                 Intent edit_profile = new Intent(this, EditProfileActivity.class);
                 startActivity(edit_profile);
@@ -195,6 +194,17 @@ public class PsuAdminDashboard extends AppCompatActivity
             case R.id.psu_admin_view_support_supervision_checklist:
                 Intent view_support_supervision_checklist_intent = new Intent(this, WholesaleInspectionFeedActivity.class);
                 startActivity(view_support_supervision_checklist_intent);
+                break;
+            case R.id.psu_admin_view_submitted_cpd:
+                Intent view_submitted_intent = new Intent(this, ViewSubmittedCpdActivity.class);
+                startActivity(view_submitted_intent);
+                break;
+            case R.id.psu_admin_submit_cpd:
+                Toast.makeText(this, "Feature not ready", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.psu_admin_view_cpd_results:
+                Intent view_cpd_results_intent = new Intent(this, ViewEcpdResultsActivity.class);
+                startActivity(view_cpd_results_intent);
                 break;
             case R.id.psu_admin_log_out:
                 helperFunctions.signAdminUsersOut();

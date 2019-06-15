@@ -40,6 +40,8 @@ import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.AdrReportFormActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.AdrReportFormFeedActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.EcpdFeedActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourPharmacies;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.ViewPharmacyCoordinatesActivity;
@@ -89,7 +91,29 @@ public class MyAttendanceFragment extends Fragment {
         relative7 = view.findViewById(R.id.relative7);
         relative8 = view.findViewById(R.id.relative8);
         relative9 = view.findViewById(R.id.relative9);
+        relative10 = view.findViewById(R.id.relative10);
         layout3 = view.findViewById(R.id.layout3);
+
+        relative10.setOnClickListener(view1 -> {
+
+            String[] mStringArray = {"View E-CPD Resources", "View Your Test Scores"};
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+            builder.setTitle("Choose your action");
+
+            builder.setItems(mStringArray, (dialogInterface, i) -> {
+                if (i == 0){
+                    Intent intent = new Intent(getContext(), EcpdFeedActivity.class);
+                    startActivity(intent);
+                } else if (i == 1){
+                    //
+                }
+            });
+
+            // create and show the alert dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
 
         relative1.setOnClickListener(view17 -> isUserValid());
 
@@ -158,8 +182,27 @@ public class MyAttendanceFragment extends Fragment {
         });
 
         relative9.setOnClickListener(view19 -> {
-            Intent adr_intent = new Intent(getContext(), AdrReportFormActivity.class);
-            startActivity(adr_intent);
+
+            String[] mStringArray = {"Fill ADR Form", "Withdraw || Edit Filled Form", "View Submitted ADR Forms"};
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+            builder.setTitle("Choose your action");
+
+            builder.setItems(mStringArray, (dialogInterface, i) -> {
+                if (i == 0){
+                    Intent adr_intent = new Intent(getContext(), AdrReportFormActivity.class);
+                    startActivity(adr_intent);
+                } else if (i == 1){
+                    //
+                } else if (i == 2){
+                    Intent view_adr_intent = new Intent(getContext(), AdrReportFormFeedActivity.class);
+                    startActivity(view_adr_intent);
+                }
+            });
+
+            // create and show the alert dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
 
         //create array list objects

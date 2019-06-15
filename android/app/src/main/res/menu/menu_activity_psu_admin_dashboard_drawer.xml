@@ -30,6 +30,17 @@
         </menu>
     </item>
 
+    <item android:title="E-CPD">
+        <menu>
+            <item android:id="@+id/psu_admin_view_cpd_results"
+                android:title="View Pharmacist Results" />
+            <item android:id="@+id/psu_admin_view_submitted_cpd"
+                android:title="View Submitted CPD" />
+            <item android:id="@+id/psu_admin_submit_cpd"
+                android:title="Submit CPD" />
+        </menu>
+    </item>
+
     <item android:title="Other">
         <menu>
             <item android:id="@+id/psu_admin_edit_profile"
