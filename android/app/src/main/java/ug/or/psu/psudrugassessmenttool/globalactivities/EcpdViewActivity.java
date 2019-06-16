@@ -2,6 +2,7 @@ package ug.or.psu.psudrugassessmenttool.globalactivities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateUtils;
@@ -92,7 +93,24 @@ public class EcpdViewActivity extends AppCompatActivity {
     }
 
     public void editForm(View view){
-        Toast.makeText(this, "Feature not ready", Toast.LENGTH_SHORT).show();
+        String[] mStringArray = {"View || Edit Questions", "Edit E-CPD"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(EcpdViewActivity.this);
+        builder.setTitle("Choose your action");
+
+        builder.setItems(mStringArray, (dialogInterface, i) -> {
+            if (i == 0){
+                Intent intent = new Intent(EcpdViewActivity.this, EcpdAddQuestionsActivity.class);
+                intent.putExtra("id", ecpd_id);
+                startActivity(intent);
+            } else if (i == 1){
+                Toast.makeText(this, "Feature not ready", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public void deleteForm(View view){
