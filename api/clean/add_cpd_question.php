@@ -16,5 +16,7 @@ $conn->query("INSERT INTO psu_ecpd_answers (question_id, answer, status) VALUES 
 $conn->query("INSERT INTO psu_ecpd_answers (question_id, answer, status) VALUES ('$question_id','$incorrect_two',0)");
 $conn->query("INSERT INTO psu_ecpd_answers (question_id, answer, status) VALUES ('$question_id','$incorrect_three',0)");
 
+$conn->query("UPDATE psu_ecpd SET has_test=1 WHERE id = '$ecpd_id'");
+
 echo "1";
 ?>

@@ -81,7 +81,9 @@ public class EcpdMainViewActivity extends AppCompatActivity {
 
         btn_take_test.setOnClickListener(view -> {
             if (has_test.equals("1")){
-                //
+                Intent intent = new Intent(this, EcpdTakeExamActivity.class);
+                intent.putExtra("id", ecpd_id);
+                startActivity(intent);
             } else {
                 Toast.makeText(this, "No test available yet", Toast.LENGTH_SHORT).show();
             }
