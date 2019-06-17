@@ -20,7 +20,10 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon">
-        <activity android:name=".globalactivities.EcpdTakeExamActivity"></activity>
+        <activity android:name=".globalactivities.EResourcesViewActivity"></activity>
+        <activity
+            android:name=".globalactivities.EcpdTakeExamActivity"
+            android:label="Take Test" />
         <activity android:name=".globalactivities.EcpdMainViewActivity" />
         <activity
             android:name=".globalactivities.EcpdAddQuestionsActivity"
@@ -40,7 +43,9 @@
         <activity android:name=".globalactivities.ViewWholesaleInspectionChecklistActivity" />
         <activity android:name=".globalactivities.WholesaleInspectionFeedActivity" />
         <activity android:name=".globalactivities.ViewAllPharmacyCoordinatesActivity" />
-        <activity android:name=".users.authentication.ForgotPasswordActivity" />
+        <activity
+            android:name=".users.authentication.ForgotPasswordActivity"
+            android:label="Password Reset" />
         <activity android:name=".globalactivities.ViewPharmacyCoordinatesActivity" />
         <activity
             android:name=".globalactivities.EditYourNewsActivity"
@@ -57,7 +62,9 @@
         <activity
             android:name=".globalactivities.JobsCompleteApplicationActivity"
             android:label="Job Application" />
-        <activity android:name=".globalactivities.EResourcesActivity" />
+        <activity
+            android:name=".globalactivities.EResourcesActivity"
+            android:label="E-Resources" />
         <activity android:name=".globalactivities.ViewYourPharmacyActivity" />
         <activity android:name=".globalactivities.EditPharmacyInformationActivity" />
         <activity android:name=".globalactivities.EditYourPharmacies" />

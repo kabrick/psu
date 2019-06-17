@@ -1,9 +1,13 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -40,6 +44,56 @@ public class EResourcesActivity extends AppCompatActivity {
 
         // Assign adapter to ListView
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener((adapterView, view, position, l) -> {
+
+            switch (position){
+                case 0:
+                    Intent intent = new Intent(EResourcesActivity.this, EResourcesViewActivity.class);
+                    intent.putExtra("category", 0);
+                    startActivity(intent);
+                    break;
+                case 1:
+                    Intent intent1 = new Intent(EResourcesActivity.this, EResourcesViewActivity.class);
+                    intent1.putExtra("category", 1);
+                    startActivity(intent1);
+                    break;
+                case 2:
+                    Intent intent2 = new Intent(EResourcesActivity.this, EResourcesViewActivity.class);
+                    intent2.putExtra("category", 2);
+                    startActivity(intent2);
+                    break;
+                case 3:
+                    Intent intent3 = new Intent(EResourcesActivity.this, EResourcesViewActivity.class);
+                    intent3.putExtra("category", 3);
+                    startActivity(intent3);
+                    break;
+                case 4:
+                    Intent intent4 = new Intent(EResourcesActivity.this, EResourcesViewActivity.class);
+                    intent4.putExtra("category", 4);
+                    startActivity(intent4);
+                    break;
+                case 5:
+                    Intent intent5 = new Intent(EResourcesActivity.this, EResourcesViewActivity.class);
+                    intent5.putExtra("category", 5);
+                    startActivity(intent5);
+                    break;
+                case 6:
+                    Intent intent6 = new Intent(EResourcesActivity.this, EResourcesViewActivity.class);
+                    intent6.putExtra("category", 6);
+                    startActivity(intent6);
+                    break;
+                case 7:
+                    Intent intent7 = new Intent(EResourcesActivity.this, EResourcesViewActivity.class);
+                    intent7.putExtra("category", 7);
+                    startActivity(intent7);
+                    break;
+                default:
+                    //
+                    break;
+            }
+
+        });
     }
 
     @Override
