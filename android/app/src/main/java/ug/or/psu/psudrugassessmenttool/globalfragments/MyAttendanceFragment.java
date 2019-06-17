@@ -41,10 +41,12 @@ import java.util.Objects;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.AdrReportFormActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.AdrReportFormFeedActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.EcpdCreateActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EcpdFeedActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourPharmacies;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.ViewPharmacyCoordinatesActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.ViewSubmittedCpdActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.ViewYourPharmacyActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.WholesaleInspectionActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
@@ -96,23 +98,32 @@ public class MyAttendanceFragment extends Fragment {
 
         relative10.setOnClickListener(view1 -> {
 
-            String[] mStringArray = {"View E-CPD Resources", "View Your Test Scores"};
+            if(preferenceManager.getMemberCategory().equals("2")){
+                String[] mStringArray = {"Add E-CPD", "View Submitted E-CPD","View E-CPD Resources"};
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
-            builder.setTitle("Choose your action");
+                AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+                builder.setTitle("Choose your action");
 
-            builder.setItems(mStringArray, (dialogInterface, i) -> {
-                if (i == 0){
-                    Intent intent = new Intent(getContext(), EcpdFeedActivity.class);
-                    startActivity(intent);
-                } else if (i == 1){
-                    //
-                }
-            });
+                builder.setItems(mStringArray, (dialogInterface, i) -> {
+                    if (i == 0){
+                        Intent submit_ecpd_intent = new Intent(getContext(), EcpdCreateActivity.class);
+                        startActivity(submit_ecpd_intent);
+                    } else if (i == 1){
+                        Intent view_submitted_intent = new Intent(getContext(), ViewSubmittedCpdActivity.class);
+                        startActivity(view_submitted_intent);
+                    } else if (i == 2){
+                        Intent intent = new Intent(getContext(), EcpdFeedActivity.class);
+                        startActivity(intent);
+                    }
+                });
 
-            // create and show the alert dialog
-            AlertDialog dialog = builder.create();
-            dialog.show();
+                // create and show the alert dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            } else {
+                Intent intent = new Intent(getContext(), EcpdFeedActivity.class);
+                startActivity(intent);
+            }
         });
 
         relative1.setOnClickListener(view17 -> isUserValid());
