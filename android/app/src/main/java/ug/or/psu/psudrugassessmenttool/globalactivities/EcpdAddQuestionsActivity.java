@@ -2,6 +2,8 @@ package ug.or.psu.psudrugassessmenttool.globalactivities;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,9 +16,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -209,9 +214,28 @@ public class EcpdAddQuestionsActivity extends AppCompatActivity implements Singl
     @Override
     public void onItemSelected(SingleTextCard item) {
 
+        String[] mStringArray = {"View || Edit Question", "Delete Question"};
+
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(EcpdAddQuestionsActivity.this);
+        builder.setTitle("Choose your action");
+
+        builder.setItems(mStringArray, (dialogInterface, i) -> {
+            if (i == 0){
+                editQuestion(item.getId());
+            } else if (i == 1){
+                deleteQuestion(item.getId());
+            }
+        });
+
+        // create and show the alert dialog
+        android.support.v7.app.AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void editQuestion(String id){
         helperFunctions.genericProgressBar("Fetching question details...");
 
-        String network_address = helperFunctions.getIpAddress() + "get_cpd_question.php?id=" + item.getId();
+        String network_address = helperFunctions.getIpAddress() + "get_cpd_question.php?id=" + id;
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
                 response -> {
@@ -240,7 +264,7 @@ public class EcpdAddQuestionsActivity extends AppCompatActivity implements Singl
 
                         builder.setCancelable(false)
                                 .setPositiveButton("Save", null)
-                                .setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
+                                .setNegativeButton("Cancel", (dialog, ids) -> dialog.cancel());
 
                         final AlertDialog dialog = builder.create();
 
@@ -303,7 +327,7 @@ public class EcpdAddQuestionsActivity extends AppCompatActivity implements Singl
                                         data.put("incorrect_one", cpd_incorrect1_string);
                                         data.put("incorrect_two", cpd_incorrect2_string);
                                         data.put("incorrect_three", cpd_incorrect3_string);
-                                        data.put("question_id", item.getId());
+                                        data.put("question_id", id);
                                         return data;
                                     }
                                 };
@@ -321,6 +345,34 @@ public class EcpdAddQuestionsActivity extends AppCompatActivity implements Singl
             helperFunctions.genericDialog("Failed to get question");
         });
 
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
+    }
+
+    public void deleteQuestion(String id){
+        helperFunctions.genericProgressBar("Deleting question...");
+        String network_address = helperFunctions.getIpAddress() + "delete_cpd_question.php?id=" + id;
+
+        // Request a string response from the provided URL
+        StringRequest request = new StringRequest(network_address,
+                response -> {
+                    //dismiss progress dialog
+                    helperFunctions.stopProgressBar();
+
+                    if(response.equals("1")){
+                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(EcpdAddQuestionsActivity.this);
+
+                        alert.setMessage("Question deleted").setPositiveButton("Okay", (dialogInterface, i) -> {
+                            progressBar.setVisibility(View.VISIBLE);
+                            fetchQuestions();
+                        }).show();
+                    }
+
+                }, error -> {
+            helperFunctions.stopProgressBar();
+            helperFunctions.genericDialog("Something went wrong. Please try again later");
+                });
+
+        //add to request queue in singleton class
         VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
 

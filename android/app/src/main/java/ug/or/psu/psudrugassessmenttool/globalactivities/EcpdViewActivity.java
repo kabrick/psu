@@ -14,6 +14,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -114,7 +115,31 @@ public class EcpdViewActivity extends AppCompatActivity {
     }
 
     public void deleteForm(View view){
-        Toast.makeText(this, "Feature not ready", Toast.LENGTH_SHORT).show();
+        helperFunctions.genericProgressBar("Deleting e-cpd...");
+        String network_address = helperFunctions.getIpAddress() + "delete_cpd.php?id=" + ecpd_id;
+
+        // Request a string response from the provided URL
+        StringRequest request = new StringRequest(network_address,
+                response -> {
+                    //dismiss progress dialog
+                    helperFunctions.stopProgressBar();
+
+                    if(response.equals("1")){
+                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(EcpdViewActivity.this);
+
+                        alert.setMessage("E-cpd deleted").setPositiveButton("Okay", (dialogInterface, i) -> {
+                           finish();
+                           onBackPressed();
+                        }).show();
+                    }
+
+                }, error -> {
+            helperFunctions.stopProgressBar();
+            helperFunctions.genericDialog("Something went wrong. Please try again later");
+        });
+
+        //add to request queue in singleton class
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
 
     @Override

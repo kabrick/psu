@@ -11,10 +11,10 @@ $incorrect_three = mysqli_real_escape_string($conn, $_POST['incorrect_three']);
 $conn->query("INSERT INTO psu_ecpd_questions (ecpd_id, question) VALUES ('$ecpd_id','$question')");
 $question_id = $conn->insert_id;
 
-$conn->query("INSERT INTO psu_ecpd_answers (question_id, answer, status) VALUES ('$question_id','$answer',1)");
-$conn->query("INSERT INTO psu_ecpd_answers (question_id, answer, status) VALUES ('$question_id','$incorrect_one',0)");
-$conn->query("INSERT INTO psu_ecpd_answers (question_id, answer, status) VALUES ('$question_id','$incorrect_two',0)");
-$conn->query("INSERT INTO psu_ecpd_answers (question_id, answer, status) VALUES ('$question_id','$incorrect_three',0)");
+$conn->query("INSERT INTO psu_ecpd_answers (ecpd_id, question_id, answer, status) VALUES ('$ecpd_id','$question_id','$answer',1)");
+$conn->query("INSERT INTO psu_ecpd_answers (ecpd_id, question_id, answer, status) VALUES ('$ecpd_id','$question_id','$incorrect_one',0)");
+$conn->query("INSERT INTO psu_ecpd_answers (ecpd_id, question_id, answer, status) VALUES ('$ecpd_id','$question_id','$incorrect_two',0)");
+$conn->query("INSERT INTO psu_ecpd_answers (ecpd_id, question_id, answer, status) VALUES ('$ecpd_id','$question_id','$incorrect_three',0)");
 
 $conn->query("UPDATE psu_ecpd SET has_test=1 WHERE id = '$ecpd_id'");
 
