@@ -103,6 +103,7 @@ public class EcpdTakeExamActivity extends AppCompatActivity {
                 String network_address = helperFunctions.getIpAddress()
                         + "update_user_tests.php?cpd_id=" + ecpd_id
                         + "&user_id=" + preferenceManager.getPsuId()
+                        + "&timestamp=" + System.currentTimeMillis()
                         + "&score=" + percentage_score;
 
                 // Request a string response from the provided URL.
@@ -178,7 +179,7 @@ public class EcpdTakeExamActivity extends AppCompatActivity {
     }
 
     public void nextQuestion(){
-        helperFunctions.genericProgressBar("Fetching question...");
+        helperFunctions.genericProgressBar("Fetching next question...");
 
         radio_group.clearCheck();
 
