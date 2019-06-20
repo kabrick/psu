@@ -113,7 +113,16 @@ public class EcpdTakeExamActivity extends AppCompatActivity {
                             helperFunctions.stopProgressBar();
                             android.support.v7.app.AlertDialog.Builder alert = new AlertDialog.Builder(EcpdTakeExamActivity.this);
 
-                            alert.setMessage("You got a score of " + percentage_score + "%").setPositiveButton("Okay", (dialogInterface, i) -> helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory())).show();
+                            String message = "";
+
+                            if (preferenceManager.getPassmark() > percentage_score){
+                                // failed
+                                message = "Congratulations, you got a score of " + percentage_score + "% and passed";
+                            } else {
+                                // passed
+                                message = "You got a score of " + percentage_score + "%. Better luck next time";
+                            }
+                            alert.setMessage(message).setPositiveButton("Okay", (dialogInterface, i) -> helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory())).show();
                         }, error -> {
                             //dismiss progress dialog
                             helperFunctions.stopProgressBar();
