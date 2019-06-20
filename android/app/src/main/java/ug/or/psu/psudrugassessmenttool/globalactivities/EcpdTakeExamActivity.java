@@ -1,55 +1,30 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
-import ug.or.psu.psudrugassessmenttool.models.SingleTextCard;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
-import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.ndaadmin.NdaAdminDashboard;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorDashboard;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.PsuAdminDashboard;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.psupharmacist.PsuPharmacistDashboard;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.psupharmacyowner.PsuPharmacyOwnerDashboard;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.sysadmin.SystemsAdministratorDashboard;
 
 public class EcpdTakeExamActivity extends AppCompatActivity {
 
@@ -113,14 +88,14 @@ public class EcpdTakeExamActivity extends AppCompatActivity {
                             helperFunctions.stopProgressBar();
                             android.support.v7.app.AlertDialog.Builder alert = new AlertDialog.Builder(EcpdTakeExamActivity.this);
 
-                            String message = "";
+                            String message;
 
                             if (preferenceManager.getPassmark() > percentage_score){
                                 // failed
-                                message = "Congratulations, you got a score of " + percentage_score + "% and passed";
+                                message = "You got a score of " + percentage_score + "%. Better luck next time";
                             } else {
                                 // passed
-                                message = "You got a score of " + percentage_score + "%. Better luck next time";
+                                message = "Congratulations, you got a score of " + percentage_score + "% and passed";
                             }
                             alert.setMessage(message).setPositiveButton("Okay", (dialogInterface, i) -> helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory())).show();
                         }, error -> {
