@@ -12,6 +12,7 @@ public class PreferenceManager {
     private static final String PREF_NAME = "psu_preferences";
     private static final String IS_SIGNED_IN = "logged_in";
     private static final String MEMBER_CATEGORY = "member_category";
+    private static final String PSU_PASSMARK = "psu_passmark";
     private static final String PSU_ID = "psu_id";
     private static final String PSU_NAME = "psu_name";
     private static final String NEWS_READ = "news_read";
@@ -60,6 +61,25 @@ public class PreferenceManager {
      */
     public void setSignedIn(boolean isSignedIn){
         this.editor.putBoolean(IS_SIGNED_IN, isSignedIn);
+        this.editor.commit();
+    }
+
+    /**
+     * check user sign in status
+     *
+     * @return int state of user sign in
+     */
+    public int getPassmark(){
+        return this.pref.getInt(PSU_PASSMARK, 60);
+    }
+
+    /**
+     * set user sign in status
+     *
+     * @param passmark int state of user sign in
+     */
+    public void setPassmark(int passmark){
+        this.editor.putInt(PSU_PASSMARK, passmark);
         this.editor.commit();
     }
 

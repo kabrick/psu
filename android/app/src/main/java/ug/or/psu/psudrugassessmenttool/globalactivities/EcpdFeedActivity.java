@@ -10,9 +10,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 
+import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +25,7 @@ import java.util.Objects;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.adapters.EcpdFeedAdapter;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
+import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.models.EcpdFeed;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
@@ -76,6 +81,7 @@ public class EcpdFeedActivity extends AppCompatActivity implements EcpdFeedAdapt
         });
 
         fetchForms();
+        fetchPassmark();
     }
 
     private void fetchForms() {
@@ -103,6 +109,24 @@ public class EcpdFeedActivity extends AppCompatActivity implements EcpdFeedAdapt
                 }, error -> {
             // error in getting json, so recursive call till successful
             fetchForms();
+        });
+
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
+    }
+
+    public void fetchPassmark(){
+        String network_address = helperFunctions.getIpAddress() + "get_settings.php";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
+                response -> {
+
+                    try {
+                        new PreferenceManager(EcpdFeedActivity.this).setPassmark(Integer.parseInt(response.getString("passmark")));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }, error -> {
+            //
         });
 
         VolleySingleton.getInstance(this).addToRequestQueue(request);
