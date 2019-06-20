@@ -75,10 +75,23 @@ public class EcpdTakeExamActivity extends AppCompatActivity {
 
                 double percentage_score = Math.round(((double) current_score / questions_number) * 100);
 
+                String message, pass_status;
+
+                if (preferenceManager.getPassmark() > percentage_score){
+                    // failed
+                    pass_status = "0";
+                    message = "You got a score of " + percentage_score + "%. Better luck next time";
+                } else {
+                    // passed
+                    pass_status = "1";
+                    message = "Congratulations, you got a score of " + percentage_score + "% and passed";
+                }
+
                 String network_address = helperFunctions.getIpAddress()
                         + "update_user_tests.php?cpd_id=" + ecpd_id
                         + "&user_id=" + preferenceManager.getPsuId()
                         + "&timestamp=" + System.currentTimeMillis()
+                        + "&passed=" + pass_status
                         + "&score=" + percentage_score;
 
                 // Request a string response from the provided URL.
@@ -88,15 +101,6 @@ public class EcpdTakeExamActivity extends AppCompatActivity {
                             helperFunctions.stopProgressBar();
                             android.support.v7.app.AlertDialog.Builder alert = new AlertDialog.Builder(EcpdTakeExamActivity.this);
 
-                            String message;
-
-                            if (preferenceManager.getPassmark() > percentage_score){
-                                // failed
-                                message = "You got a score of " + percentage_score + "%. Better luck next time";
-                            } else {
-                                // passed
-                                message = "Congratulations, you got a score of " + percentage_score + "% and passed";
-                            }
                             alert.setMessage(message).setPositiveButton("Okay", (dialogInterface, i) -> helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory())).show();
                         }, error -> {
                             //dismiss progress dialog
