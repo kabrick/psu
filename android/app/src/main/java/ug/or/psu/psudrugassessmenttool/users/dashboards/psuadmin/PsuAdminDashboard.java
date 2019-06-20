@@ -1,5 +1,7 @@
 package ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -12,14 +14,28 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
@@ -40,6 +56,7 @@ import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.MyAttendanceFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.NewsFragment;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
+import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
 public class PsuAdminDashboard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -207,6 +224,83 @@ public class PsuAdminDashboard extends AppCompatActivity
             case R.id.psu_admin_view_cpd_results:
                 Intent view_cpd_results_intent = new Intent(this, ViewEcpdResultsActivity.class);
                 startActivity(view_cpd_results_intent);
+                break;
+            case R.id.psu_admin_edit_cpd_passmark:
+                helperFunctions.genericProgressBar("Fetching passmark details...");
+
+                String network_address = helperFunctions.getIpAddress() + "get_settings.php";
+
+                JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
+                        response -> {
+                            helperFunctions.stopProgressBar();
+
+                            try {
+                                LayoutInflater inflater = getLayoutInflater();
+                                @SuppressLint("InflateParams")
+                                View view = inflater.inflate(R.layout.layout_add_eresource, null);
+
+                                final EditText passmark = view.findViewById(R.id.title);
+
+                                passmark.setText(response.getString("passmark"));
+                                passmark.setHint("Passmark");
+
+                                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+                                builder.setView(view);
+                                builder.setTitle("Edit Passmark");
+
+                                builder.setCancelable(false)
+                                        .setPositiveButton("Save", null)
+                                        .setNegativeButton("Cancel", (dialog, ids) -> dialog.cancel());
+
+                                final android.app.AlertDialog dialog = builder.create();
+
+                                dialog.setOnShowListener(dialogInterface -> {
+
+                                    Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                                    button.setOnClickListener(view1 -> {
+                                        String passmark_string = passmark.getText().toString();
+
+                                        if(TextUtils.isEmpty(passmark_string)) {
+                                            helperFunctions.genericDialog("Please fill in the passmark");
+                                            return;
+                                        }
+
+                                        //show progress dialog
+                                        helperFunctions.genericProgressBar("Editing passmark...");
+
+                                        String url = helperFunctions.getIpAddress() + "update_passmark.php";
+
+                                        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+                                        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, response1 -> {
+                                            helperFunctions.stopProgressBar();
+                                            helperFunctions.genericDialog("Passmark has been updated");
+                                            dialog.dismiss();
+                                        }, error -> {
+                                            helperFunctions.stopProgressBar();
+                                            helperFunctions.genericDialog("Something went wrong. Please try again later");
+                                        }) {
+                                            protected Map<String, String> getParams() {
+                                                Map<String, String> data = new HashMap<>();
+                                                data.put("mark", passmark_string);
+                                                return data;
+                                            }
+                                        };
+
+                                        requestQueue.add(MyStringRequest);
+                                    });
+                                });
+
+                                dialog.show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }, error -> {
+                    helperFunctions.stopProgressBar();
+                    helperFunctions.genericDialog("Failed to get passmark");
+                });
+
+                VolleySingleton.getInstance(this).addToRequestQueue(request);
                 break;
             case R.id.psu_admin_log_out:
                 helperFunctions.signAdminUsersOut();

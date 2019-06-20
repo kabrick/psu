@@ -38,6 +38,8 @@
                 android:title="View Submitted CPD" />
             <item android:id="@+id/psu_admin_submit_cpd"
                 android:title="Submit E-CPD" />
+            <item android:id="@+id/psu_admin_edit_cpd_passmark"
+                android:title="Edit E-CPD Passmark" />
         </menu>
     </item>
 
