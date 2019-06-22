@@ -1,7 +1,6 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -111,26 +110,9 @@ public class ViewSubmittedCpdActivity extends AppCompatActivity implements EcpdF
 
     @Override
     public void onFormSelected(EcpdFeed form) {
-        String id = form.getId();
-
-        String[] mStringArray = {"Edit || Delete E-CPD", "View E-CPD Test Results"};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(ViewSubmittedCpdActivity.this);
-        builder.setTitle("Choose your action");
-
-        builder.setItems(mStringArray, (dialogInterface, i) -> {
-            if (i == 0){
-                Intent intent = new Intent(ViewSubmittedCpdActivity.this, EcpdViewActivity.class);
-                intent.putExtra("id", id);
-                startActivity(intent);
-            } else if (i == 1){
-                //
-            }
-        });
-
-        // create and show the alert dialog
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        Intent intent = new Intent(ViewSubmittedCpdActivity.this, EcpdViewActivity.class);
+        intent.putExtra("id", form.getId());
+        startActivity(intent);
     }
 
     @Override

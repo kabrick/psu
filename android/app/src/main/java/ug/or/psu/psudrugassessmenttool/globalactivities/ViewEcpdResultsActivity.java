@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.google.gson.Gson;
@@ -27,6 +28,8 @@ public class ViewEcpdResultsActivity extends AppCompatActivity implements EcpdRe
 
     private List<EcpdResults> formList;
     private EcpdResultsAdapter mAdapter;
+    RecyclerView recyclerView;
+    TextView no_tests_found;
     HelperFunctions helperFunctions;
     ProgressBar progressBar;
 
@@ -41,7 +44,8 @@ public class ViewEcpdResultsActivity extends AppCompatActivity implements EcpdRe
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_ecpd_results);
+        recyclerView = findViewById(R.id.recycler_ecpd_results);
+        no_tests_found = findViewById(R.id.no_tests_found);
         formList = new ArrayList<>();
         mAdapter = new EcpdResultsAdapter(formList, this);
 
@@ -86,8 +90,9 @@ public class ViewEcpdResultsActivity extends AppCompatActivity implements EcpdRe
                     //hide the progress bar
                     progressBar.setVisibility(View.GONE);
 
-                    if (response == null) {
-                        helperFunctions.genericDialog("No Results were found");
+                    if (response.length() < 1) {
+                        no_tests_found.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
                         return;
                     }
 

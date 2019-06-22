@@ -28,7 +28,9 @@
         <activity
             android:name=".globalactivities.EcpdAddQuestionsActivity"
             android:label="E-CPD Questions" />
-        <activity android:name=".globalactivities.EcpdViewActivity" />
+        <activity
+            android:name=".globalactivities.EcpdViewActivity"
+            android:label="View E-CPD"/>
         <activity
             android:name=".globalactivities.EcpdCreateActivity"
             android:label="Submit E-CPD" />

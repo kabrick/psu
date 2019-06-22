@@ -5,7 +5,11 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,20 +17,27 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
+import ug.or.psu.psudrugassessmenttool.adapters.EcpdResultsAdapter;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
+import ug.or.psu.psudrugassessmenttool.models.EcpdResults;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
-public class EcpdViewActivity extends AppCompatActivity {
+public class EcpdViewActivity extends AppCompatActivity implements EcpdResultsAdapter.EcpdResultsAdapterListener {
 
     String ecpd_id;
     HelperFunctions helperFunctions;
@@ -58,6 +69,7 @@ public class EcpdViewActivity extends AppCompatActivity {
         }
 
         getDetails();
+        fetchForms();
     }
 
     public void getDetails(){
@@ -140,6 +152,52 @@ public class EcpdViewActivity extends AppCompatActivity {
 
         //add to request queue in singleton class
         VolleySingleton.getInstance(this).addToRequestQueue(request);
+    }
+
+    private void fetchForms() {
+        String url = helperFunctions.getIpAddress() + "get_cpd_tests.php";
+
+        List<EcpdResults> formList;
+        EcpdResultsAdapter mAdapter;
+        TextView no_tests_found = findViewById(R.id.no_tests_found);
+
+        RecyclerView recyclerView = findViewById(R.id.recycler_ecpd_results);
+        formList = new ArrayList<>();
+        mAdapter = new EcpdResultsAdapter(formList, this);
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(mAdapter);
+
+        JsonArrayRequest request = new JsonArrayRequest(url,
+                response -> {
+
+                    if (response.length() < 1) {
+                        no_tests_found.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                        return;
+                    }
+
+                    List<EcpdResults> items = new Gson().fromJson(response.toString(), new TypeToken<List<EcpdResults>>() {
+                    }.getType());
+
+                    formList.clear();
+                    formList.addAll(items);
+
+                    // refreshing recycler view
+                    mAdapter.notifyDataSetChanged();
+                }, error -> {
+            // error in getting json, so recursive call till successful
+            fetchForms();
+        });
+
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
+    }
+
+    @Override
+    public void onFormSelected(EcpdResults form) {
+        //
     }
 
     @Override
