@@ -65,9 +65,9 @@ public class PreferenceManager {
     }
 
     /**
-     * check user sign in status
+     * get the passmark for the students
      *
-     * @return int state of user sign in
+     * @return int passmark for the cpd tests
      */
     public int getPassmark(){
         return this.pref.getInt(PSU_PASSMARK, 60);

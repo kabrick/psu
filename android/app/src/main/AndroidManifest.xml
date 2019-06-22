@@ -35,7 +35,9 @@
         <activity
             android:name=".globalactivities.ViewSubmittedCpdActivity"
             android:label="Submitted E-CPDs" />
-        <activity android:name=".globalactivities.ViewEcpdResultsActivity" />
+        <activity
+            android:name=".globalactivities.ViewEcpdResultsActivity"
+            android:label="E-CPD Results"/>
         <activity android:name=".globalactivities.EcpdFeedActivity" />
         <activity android:name=".globalactivities.AdrReportFormDetailsActivity" />
         <activity android:name=".globalactivities.AdrReportFormFeedActivity" />
