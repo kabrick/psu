@@ -30,6 +30,7 @@ import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.FeedbackActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.MyJobAdvertsActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.PrivacyPolicyActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.WholesaleInspectionActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.MyAttendanceFragment;
@@ -185,6 +186,10 @@ public class PsuPharmacistDashboard extends AppCompatActivity
             case R.id.pharmacist_edit_news_posts:
                 Intent edit_news_intent = new Intent(this, EditYourNewsActivity.class);
                 startActivity(edit_news_intent);
+                break;
+            case R.id.pharmacist_privacy_policy:
+                Intent privacy_policy_intent = new Intent(this, PrivacyPolicyActivity.class);
+                startActivity(privacy_policy_intent);
                 break;
             default:
                 //

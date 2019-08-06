@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
      * user authentication method for sign in or sign up depending on user status
      */
     public void userAuthentication(){
+        // check if there is an update for the app check_app_update.php
         if(prefManager.isSignedIn()){
             // user is signed in so check member category and go to respective dashboard
             helperFunctions.getDefaultDashboard(prefManager.getMemberCategory());

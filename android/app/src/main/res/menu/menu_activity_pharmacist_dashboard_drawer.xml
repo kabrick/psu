@@ -25,6 +25,8 @@
                 android:title="Edit Profile" />
             <item android:id="@+id/pharmacist_log_out"
                 android:title="Log Out" />
+            <item android:id="@+id/pharmacist_privacy_policy"
+                android:title="Privacy Policy" />
         </menu>
     </item>
 

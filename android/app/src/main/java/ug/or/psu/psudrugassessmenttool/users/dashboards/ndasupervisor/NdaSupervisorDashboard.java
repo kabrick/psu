@@ -27,6 +27,7 @@ import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.FeedbackActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.PrivacyPolicyActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.NewsFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.ViewPharmaciesLocationFragment;
@@ -181,6 +182,10 @@ public class NdaSupervisorDashboard extends AppCompatActivity
             case R.id.nda_supervisor_edit_news_posts:
                 Intent edit_news_intent = new Intent(this, EditYourNewsActivity.class);
                 startActivity(edit_news_intent);
+                break;
+            case R.id.nda_supervisor_privacy_policy:
+                Intent privacy_policy_intent = new Intent(this, PrivacyPolicyActivity.class);
+                startActivity(privacy_policy_intent);
                 break;
             default:
                 //

@@ -46,6 +46,7 @@ import ug.or.psu.psudrugassessmenttool.globalactivities.EResourcesActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EcpdCreateActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourNewsActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.PrivacyPolicyActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.SearchPharmacistAssessmentFormsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.ViewAllPharmacyCoordinatesActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.ViewEcpdResultsActivity;
@@ -304,6 +305,10 @@ public class PsuAdminDashboard extends AppCompatActivity
                 break;
             case R.id.psu_admin_log_out:
                 helperFunctions.signAdminUsersOut();
+                break;
+            case R.id.psu_admin_privacy_policy:
+                Intent privacy_policy_intent = new Intent(this, PrivacyPolicyActivity.class);
+                startActivity(privacy_policy_intent);
                 break;
             default:
                 //

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="ug.or.psu.psudrugassessmenttool">
 
@@ -20,7 +21,11 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon">
-        <activity android:name=".globalactivities.EResourcesViewActivity"></activity>
+        <activity
+            android:name=".globalactivities.PrivacyPolicyActivity"
+            android:label="Privacy Policy"/>
+        <activity
+            android:name=".globalactivities.EResourcesViewActivity" />
         <activity
             android:name=".globalactivities.EcpdTakeExamActivity"
             android:label="Take Test" />
@@ -30,7 +35,7 @@
             android:label="E-CPD Questions" />
         <activity
             android:name=".globalactivities.EcpdViewActivity"
-            android:label="View E-CPD"/>
+            android:label="View E-CPD" />
         <activity
             android:name=".globalactivities.EcpdCreateActivity"
             android:label="Submit E-CPD" />
@@ -39,7 +44,7 @@
             android:label="Submitted E-CPDs" />
         <activity
             android:name=".globalactivities.ViewEcpdResultsActivity"
-            android:label="E-CPD Results"/>
+            android:label="E-CPD Results" />
         <activity android:name=".globalactivities.EcpdFeedActivity" />
         <activity android:name=".globalactivities.AdrReportFormDetailsActivity" />
         <activity android:name=".globalactivities.AdrReportFormFeedActivity" />
@@ -77,11 +82,6 @@
         <activity
             android:name=".users.dashboards.psuadmin.ChoosePharmacyActivity"
             android:label="Choose || Add pharmacy" />
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBd46NlOmxCgW6mbzbpAViSjfxV8FbGgY0" />
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -157,6 +157,10 @@
         <activity
             android:name=".users.authentication.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBd46NlOmxCgW6mbzbpAViSjfxV8FbGgY0" />
     </application>
 
 </manifest>

@@ -24,6 +24,7 @@ import java.util.Objects;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.PrivacyPolicyActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.FeedbackFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.NewsFragment;
@@ -162,6 +163,10 @@ public class SystemsAdministratorDashboard extends AppCompatActivity
                 break;
             case R.id.sys_admin_log_out:
                 helperFunctions.signAdminUsersOut();
+                break;
+            case R.id.sys_admin_privacy_policy:
+                Intent privacy_policy_intent = new Intent(this, PrivacyPolicyActivity.class);
+                startActivity(privacy_policy_intent);
                 break;
             default:
                 //
