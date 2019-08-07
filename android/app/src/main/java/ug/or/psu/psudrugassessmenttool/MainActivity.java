@@ -3,6 +3,7 @@ package ug.or.psu.psudrugassessmenttool;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
@@ -14,11 +15,20 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
 
 import java.util.Objects;
 
+import ug.or.psu.psudrugassessmenttool.globalactivities.EcpdFeedActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
+import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -58,15 +68,62 @@ public class MainActivity extends AppCompatActivity {
      * user authentication method for sign in or sign up depending on user status
      */
     public void userAuthentication(){
-        // check if there is an update for the app check_app_update.php
-        if(prefManager.isSignedIn()){
-            // user is signed in so check member category and go to respective dashboard
-            helperFunctions.getDefaultDashboard(prefManager.getMemberCategory());
-        } else {
-            // user is not signed in so go to sign in page
-            Intent intent_sign_in = new Intent(MainActivity.this, SignInActivity.class);
-            startActivity(intent_sign_in);
-        }
+        // check if there is an update for the app
+        helperFunctions.genericProgressBar("Checking for app updates...");
+        String network_address = helperFunctions.getIpAddress() + "get_settings.php";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
+                response -> {
+                    helperFunctions.stopProgressBar();
+
+                    try {
+                        PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                        if (Integer.parseInt(response.getString("current_version")) > packageInfo.versionCode){
+                            // force user to update the app
+                            AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+
+                            alert.setMessage("This version of the application is out of date. Please go to the app store and update to continue using the application").setPositiveButton("Go to app store", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    helperFunctions.openAppStore(MainActivity.this);
+                                }
+                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    finish();
+                                }
+                            }).show();
+                        } else {
+                            // all good, continue with authentication
+                            if(prefManager.isSignedIn()){
+                                // user is signed in so check member category and go to respective dashboard
+                                helperFunctions.getDefaultDashboard(prefManager.getMemberCategory());
+                            } else {
+                                // user is not signed in so go to sign in page
+                                Intent intent_sign_in = new Intent(MainActivity.this, SignInActivity.class);
+                                startActivity(intent_sign_in);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (PackageManager.NameNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }, error -> {
+            helperFunctions.stopProgressBar();
+            Toast.makeText(this, "Unable to check for updates!", Toast.LENGTH_LONG).show();
+
+            if(prefManager.isSignedIn()){
+                // user is signed in so check member category and go to respective dashboard
+                helperFunctions.getDefaultDashboard(prefManager.getMemberCategory());
+            } else {
+                // user is not signed in so go to sign in page
+                Intent intent_sign_in = new Intent(MainActivity.this, SignInActivity.class);
+                startActivity(intent_sign_in);
+            }
+        });
+
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
 
     /**

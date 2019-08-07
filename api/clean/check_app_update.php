@@ -1,7 +1,7 @@
 <?php
 include 'dbconfig.php';
 
-$sql = "SELECT * FROM psu_app_update WHERE id = 1";
+$sql = "SELECT * FROM psu_settings WHERE id = 1";
 
 $result = $conn->query($sql);
 

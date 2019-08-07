@@ -4,9 +4,9 @@
 
 //error_reporting(0);
 $hostname_connection = "localhost";
-$database_connection = "id9172434_psucop_psu";
-$username_connection = "id9172434_root";
-$password_connection = "root@1";
+$database_connection = "psucop_app";
+$username_connection = "psucop_cop";
+$password_connection = "psucop_@2018";
 
 // $conn->error
 

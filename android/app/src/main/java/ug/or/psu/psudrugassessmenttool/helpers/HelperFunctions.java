@@ -2,12 +2,16 @@ package ug.or.psu.psudrugassessmenttool.helpers;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.ResolveInfo;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -22,6 +26,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
@@ -58,7 +63,8 @@ public class HelperFunctions {
     public String getIpAddress() {
         //return "https://phasouganda.000webhostapp.com/";
         //return "http://psucop.com/psu_assessment_tool/";
-        return "https://psucop.000webhostapp.com/";
+        //return "https://psucop.000webhostapp.com/";
+        return "https://psucop.com/psu_assessment_tool/";
     }
 
     /**
@@ -425,6 +431,51 @@ public class HelperFunctions {
         });
 
         VolleySingleton.getInstance(context).addToRequestQueue(request);
+    }
+
+    public void openAppStore(Context context) {
+        // you can also use BuildConfig.APPLICATION_ID
+        String appId = context.getPackageName();
+        Intent rateIntent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("market://details?id=" + appId));
+        boolean marketFound = false;
+
+        // find all applications able to handle our rateIntent
+        final List<ResolveInfo> otherApps = context.getPackageManager()
+                .queryIntentActivities(rateIntent, 0);
+        for (ResolveInfo otherApp: otherApps) {
+            // look for Google Play application
+            if (otherApp.activityInfo.applicationInfo.packageName
+                    .equals("com.android.vending")) {
+
+                ActivityInfo otherAppActivity = otherApp.activityInfo;
+                ComponentName componentName = new ComponentName(
+                        otherAppActivity.applicationInfo.packageName,
+                        otherAppActivity.name
+                );
+                // make sure it does NOT open in the stack of your activity
+                rateIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                // task re-parenting if needed
+                rateIntent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                // if the Google Play was already open in a search result
+                //  this make sure it still go to the app page you requested
+                rateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                // this make sure only the Google Play app is allowed to
+                // intercept the intent
+                rateIntent.setComponent(componentName);
+                context.startActivity(rateIntent);
+                marketFound = true;
+                break;
+
+            }
+        }
+
+        // if GP not present on device, open web browser
+        if (!marketFound) {
+            Intent webIntent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id="+appId));
+            context.startActivity(webIntent);
+        }
     }
 
 }
