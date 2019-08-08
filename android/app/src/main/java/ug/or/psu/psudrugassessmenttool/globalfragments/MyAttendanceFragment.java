@@ -41,6 +41,7 @@ import java.util.Objects;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.AdrReportFormActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.AdrReportFormFeedActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.CustomAdrReportsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EcpdCreateActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EcpdFeedActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourPharmacies;
@@ -194,7 +195,7 @@ public class MyAttendanceFragment extends Fragment {
 
         relative9.setOnClickListener(view19 -> {
 
-            String[] mStringArray = {"Fill ADR Form", "Withdraw || Edit Filled Form", "View Submitted ADR Forms"};
+            String[] mStringArray = {"Fill ADR Form", "Withdraw || Edit Filled Form", "View Submitted ADR Forms", "ADR Reports"};
 
             AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
             builder.setTitle("Choose your action");
@@ -208,6 +209,8 @@ public class MyAttendanceFragment extends Fragment {
                 } else if (i == 2){
                     Intent view_adr_intent = new Intent(getContext(), AdrReportFormFeedActivity.class);
                     startActivity(view_adr_intent);
+                } else if (i == 3){
+                    startActivity(new Intent(getContext(), CustomAdrReportsActivity.class));
                 }
             });
 
