@@ -30,16 +30,16 @@
         </menu>
     </item>
 
-    <item android:title="E-CPD">
+    <item android:title="e-CPD">
         <menu>
             <item android:id="@+id/psu_admin_view_cpd_results"
                 android:title="View Pharmacist Results" />
             <item android:id="@+id/psu_admin_view_submitted_cpd"
                 android:title="View Submitted CPD" />
             <item android:id="@+id/psu_admin_submit_cpd"
-                android:title="Submit E-CPD" />
+                android:title="Submit e-CPD" />
             <item android:id="@+id/psu_admin_edit_cpd_passmark"
-                android:title="Edit E-CPD Passmark" />
+                android:title="Edit e-CPD Passmark" />
         </menu>
     </item>
 

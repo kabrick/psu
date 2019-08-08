@@ -207,7 +207,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_below="@id/image10"
-                    android:text="E-CPD"/>
+                    android:text="e-CPD"/>
             </RelativeLayout>
 
             <RelativeLayout

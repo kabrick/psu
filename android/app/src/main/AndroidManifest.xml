@@ -32,19 +32,19 @@
         <activity android:name=".globalactivities.EcpdMainViewActivity" />
         <activity
             android:name=".globalactivities.EcpdAddQuestionsActivity"
-            android:label="E-CPD Questions" />
+            android:label="e-CPD Questions" />
         <activity
             android:name=".globalactivities.EcpdViewActivity"
-            android:label="View E-CPD" />
+            android:label="View e-CPD" />
         <activity
             android:name=".globalactivities.EcpdCreateActivity"
-            android:label="Submit E-CPD" />
+            android:label="Submit e-CPD" />
         <activity
             android:name=".globalactivities.ViewSubmittedCpdActivity"
-            android:label="Submitted E-CPDs" />
+            android:label="Submitted e-CPDs" />
         <activity
             android:name=".globalactivities.ViewEcpdResultsActivity"
-            android:label="E-CPD Results" />
+            android:label="e-CPD Results" />
         <activity android:name=".globalactivities.EcpdFeedActivity" />
         <activity android:name=".globalactivities.AdrReportFormDetailsActivity" />
         <activity android:name=".globalactivities.AdrReportFormFeedActivity" />

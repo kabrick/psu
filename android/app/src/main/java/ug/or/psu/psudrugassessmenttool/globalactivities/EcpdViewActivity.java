@@ -74,7 +74,7 @@ public class EcpdViewActivity extends AppCompatActivity implements EcpdResultsAd
 
     public void getDetails(){
 
-        helperFunctions.genericProgressBar("Fetching E-CPD...");
+        helperFunctions.genericProgressBar("Fetching e-CPD...");
 
         String network_address = helperFunctions.getIpAddress() + "get_cpd_form.php?id=" + ecpd_id;
 
@@ -99,14 +99,14 @@ public class EcpdViewActivity extends AppCompatActivity implements EcpdResultsAd
                     }
                 }, error -> {
             helperFunctions.stopProgressBar();
-            helperFunctions.genericDialog("Failed to get E-CPD form");
+            helperFunctions.genericDialog("Failed to get e-CPD form");
         });
 
         VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
 
     public void editForm(View view){
-        String[] mStringArray = {"View || Edit Questions", "Edit E-CPD"};
+        String[] mStringArray = {"View || Edit Questions", "Edit e-CPD"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(EcpdViewActivity.this);
         builder.setTitle("Choose your action");
@@ -139,7 +139,7 @@ public class EcpdViewActivity extends AppCompatActivity implements EcpdResultsAd
                     if(response.equals("1")){
                         android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(EcpdViewActivity.this);
 
-                        alert.setMessage("E-cpd deleted").setPositiveButton("Okay", (dialogInterface, i) -> {
+                        alert.setMessage("e-cpd deleted").setPositiveButton("Okay", (dialogInterface, i) -> {
                            finish();
                            onBackPressed();
                         }).show();

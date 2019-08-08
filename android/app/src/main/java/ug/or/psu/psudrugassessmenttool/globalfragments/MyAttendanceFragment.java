@@ -99,7 +99,7 @@ public class MyAttendanceFragment extends Fragment {
         relative10.setOnClickListener(view1 -> {
 
             if(preferenceManager.getMemberCategory().equals("2")){
-                String[] mStringArray = {"Add E-CPD", "View Submitted E-CPD","View E-CPD Resources"};
+                String[] mStringArray = {"Add e-CPD", "View Submitted e-CPD","View e-CPD Resources"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
                 builder.setTitle("Choose your action");

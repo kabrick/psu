@@ -3,7 +3,7 @@ include 'dbconfig.php';
 
 $sql = "SELECT * FROM psu_news WHERE approved = '1' ORDER BY id DESC";
 
-$arr = [];
+$arr = array();
 $counter = 0;
 
 $result = $conn->query($sql);

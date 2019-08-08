@@ -100,7 +100,7 @@ public class EcpdMainViewActivity extends AppCompatActivity {
 
     public void getDetails(){
 
-        helperFunctions.genericProgressBar("Fetching E-CPD...");
+        helperFunctions.genericProgressBar("Fetching e-CPD...");
 
         String network_address = helperFunctions.getIpAddress() + "get_cpd_form.php?id=" + ecpd_id;
 
@@ -129,7 +129,7 @@ public class EcpdMainViewActivity extends AppCompatActivity {
                     }
                 }, error -> {
             helperFunctions.stopProgressBar();
-            helperFunctions.genericDialog("Failed to get E-CPD form");
+            helperFunctions.genericDialog("Failed to get e-CPD form");
         });
 
         VolleySingleton.getInstance(this).addToRequestQueue(request);
