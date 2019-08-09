@@ -135,7 +135,6 @@ public class MyAttendanceFragment extends Fragment {
             if(!preferenceManager.isPharmacyLocationSet()){
                 //start dialog
                 helperFunctions.genericProgressBar("Getting your allocated centres...");
-                //not so start procedure to set it
                 getPharmacies();
             } else {
                 helperFunctions.genericDialog("You are already logged in at a practice centre.");
@@ -256,13 +255,10 @@ public class MyAttendanceFragment extends Fragment {
                         Intent choose_pharmacy_intent = new Intent(getContext(), ChoosePharmacyActivity.class);
                         startActivity(choose_pharmacy_intent);
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                helperFunctions.stopProgressBar();
-                helperFunctions.genericDialog("Something went wrong! Please try again");
-            }
-        });
+                }, error -> {
+                    helperFunctions.stopProgressBar();
+                    helperFunctions.genericDialog("Something went wrong! Please try again");
+                });
 
         //add to request queue in singleton class
         VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
@@ -274,19 +270,16 @@ public class MyAttendanceFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
         builder.setTitle("Choose your action");
 
-        builder.setItems(mStringArray, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (i == 0){
-                    Intent intent = new Intent(getContext(), EditYourPharmacies.class);
-                    startActivity(intent);
-                } else if (i == 1){
-                    Intent intent = new Intent(getContext(), ViewYourPharmacyActivity.class);
-                    startActivity(intent);
-                } else if (i == 2){
-                    Intent intent = new Intent(getContext(), ViewPharmacyCoordinatesActivity.class);
-                    startActivity(intent);
-                }
+        builder.setItems(mStringArray, (dialogInterface, i) -> {
+            if (i == 0){
+                Intent intent = new Intent(getContext(), EditYourPharmacies.class);
+                startActivity(intent);
+            } else if (i == 1){
+                Intent intent = new Intent(getContext(), ViewYourPharmacyActivity.class);
+                startActivity(intent);
+            } else if (i == 2){
+                Intent intent = new Intent(getContext(), ViewPharmacyCoordinatesActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -299,40 +292,34 @@ public class MyAttendanceFragment extends Fragment {
         String network_address = helperFunctions.getIpAddress() + "get_pharmacist_pharmacies.php?id=" + preferenceManager.getPsuId();
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, network_address, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        //close the generic progressbar
-                        helperFunctions.stopProgressBar();
+                response -> {
+                    //close the generic progressbar
+                    helperFunctions.stopProgressBar();
 
-                        JSONObject obj;
+                    JSONObject obj;
 
-                        // reset values
-                        pharmacy_id.clear();
-                        pharmacy_names.clear();
+                    // reset values
+                    pharmacy_id.clear();
+                    pharmacy_names.clear();
 
-                        for (int i = 0; i < response.length(); i++){
+                    for (int i = 0; i < response.length(); i++){
 
-                            try {
-                                obj = response.getJSONObject(i);
+                        try {
+                            obj = response.getJSONObject(i);
 
-                                pharmacy_names.add(obj.getString("pharmacy_name"));
-                                pharmacy_id.add(obj.getString("pharmacy_id"));
+                            pharmacy_names.add(obj.getString("pharmacy_name"));
+                            pharmacy_id.add(obj.getString("pharmacy_id"));
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-
-                        //continue to display
-                        choosePharmacy();
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //
-            }
-        });
+
+                    //continue to display
+                    choosePharmacy();
+                }, error -> {
+                    //
+                });
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
     }
@@ -352,112 +339,97 @@ public class MyAttendanceFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
         builder.setTitle("Choose your practice centre");
 
-        builder.setItems(mStringArray, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //open working on something dialog
-                helperFunctions.genericProgressBar("Logging you in...");
+        builder.setItems(mStringArray, (dialogInterface, i) -> {
+            //open working on something dialog
+            helperFunctions.genericProgressBar("Logging you in...");
 
-                //set the selected pharmacy in prefs
-                preferenceManager.setPharmacyId(pharmacy_id.get(i));
-                preferenceManager.setPharmacyName(pharmacy_names.get(i));
+            //set the selected pharmacy in prefs
+            preferenceManager.setPharmacyId(pharmacy_id.get(i));
+            preferenceManager.setPharmacyName(pharmacy_names.get(i));
 
-                //fetch the coordinates for the pharmacy
-                String network_address = helperFunctions.getIpAddress()
-                        + "get_pharmacy_coordinates.php?id=" + pharmacy_id.get(i);
+            //fetch the coordinates for the pharmacy
+            String network_address = helperFunctions.getIpAddress()
+                    + "get_pharmacy_coordinates.php?id=" + pharmacy_id.get(i);
 
-                JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    preferenceManager.setPharmacyLatitude(Double.parseDouble(response.getString("latitude")));
-                                    preferenceManager.setPharmacyLongitude(Double.parseDouble(response.getString("longitude")));
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
+                    response -> {
+                        try {
+                            preferenceManager.setPharmacyLatitude(Double.parseDouble(response.getString("latitude")));
+                            preferenceManager.setPharmacyLongitude(Double.parseDouble(response.getString("longitude")));
 
-                                    // check for the location
+                            // check for the location
 
-                                    FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getContext()));
+                            FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getContext()));
 
-                                    if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                                        return;
-                                    }
-                                    mFusedLocationClient.getLastLocation()
-                                            .addOnSuccessListener(new OnSuccessListener<Location>() {
-                                                @Override
-                                                public void onSuccess(Location location) {
-                                                    // Got last known location. In some rare situations this can be null.
-                                                    if (location != null) {
-                                                        double current_latitude = location.getLatitude();
-                                                        double current_longitude = location.getLongitude();
-
-                                                        double pharmacy_latitude = preferenceManager.getPharmacyLatitude();
-                                                        double pharmacy_longitude = preferenceManager.getPharmacyLongitude();
-
-                                                        //calculate distance here
-                                                        float distance = helperFunctions.getDistance(current_latitude, current_longitude ,pharmacy_latitude, pharmacy_longitude);
-
-                                                        //check if distance is more than 100m and add to counter
-                                                        if(distance > 100){
-                                                            helperFunctions.genericDialog("You are out of bounds. Please make sure you are at the pharmacy premises before you log in");
-
-                                                            //dismiss dialog and snack success
-                                                            helperFunctions.stopProgressBar();
-                                                        } else {
-                                                            //user in range
-                                                            //set pharmacy location
-                                                            preferenceManager.setIsPharmacyLocationSet(true);
-
-                                                            //create instance of calender
-                                                            Calendar calendar = Calendar.getInstance();
-
-                                                            //get time_in timestamp
-                                                            preferenceManager.setTimeIn(System.currentTimeMillis());
-
-                                                            //get current location in, latitude and longitude
-                                                            helperFunctions.setCurrentLocation();
-
-                                                            //get day
-                                                            preferenceManager.setDayIn(calendar.get(Calendar.DAY_OF_WEEK));
-
-                                                            //start service
-                                                            Intent intent = new Intent(getContext(), TrackPharmacistService.class);
-                                                            intent.setAction("start");
-                                                            Objects.requireNonNull(getActivity()).startService(intent);
-
-                                                            //dismiss dialog and snack success
-                                                            helperFunctions.stopProgressBar();
-
-                                                            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-                                                            String currentTime = sdf.format(new Date());
-
-                                                            helperFunctions.genericDialog("You have been logged in at " + currentTime);
-                                                        }
-                                                    }
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    helperFunctions.genericDialog("Something went wrong. Please try again");
-
-                                                    //dismiss dialog and snack success
-                                                    helperFunctions.stopProgressBar();
-                                                }
-                                            });
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                            if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                return;
                             }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //
-                    }
-                });
+                            mFusedLocationClient.getLastLocation()
+                                    .addOnSuccessListener(location -> {
+                                        // Got last known location. In some rare situations this can be null.
+                                        if (location != null) {
+                                            double current_latitude = location.getLatitude();
+                                            double current_longitude = location.getLongitude();
 
-                VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
-            }
+                                            double pharmacy_latitude = preferenceManager.getPharmacyLatitude();
+                                            double pharmacy_longitude = preferenceManager.getPharmacyLongitude();
+
+                                            //calculate distance here
+                                            float distance = helperFunctions.getDistance(current_latitude, current_longitude ,pharmacy_latitude, pharmacy_longitude);
+
+                                            //check if distance is more than 50m and add to counter
+                                            if(distance > 50){
+                                                helperFunctions.genericDialog("You are out of bounds. Please make sure you are at the pharmacy premises before you log in");
+
+                                                //dismiss dialog and snack success
+                                                helperFunctions.stopProgressBar();
+                                            } else {
+                                                //user in range
+                                                //set pharmacy location
+                                                preferenceManager.setIsPharmacyLocationSet(true);
+
+                                                //create instance of calender
+                                                Calendar calendar = Calendar.getInstance();
+
+                                                //get time_in timestamp
+                                                preferenceManager.setTimeIn(System.currentTimeMillis());
+
+                                                //get current location in, latitude and longitude
+                                                helperFunctions.setCurrentLocation();
+
+                                                //get day
+                                                preferenceManager.setDayIn(calendar.get(Calendar.DAY_OF_WEEK));
+
+                                                //start service
+                                                Intent intent = new Intent(getContext(), TrackPharmacistService.class);
+                                                intent.setAction("start");
+                                                Objects.requireNonNull(getActivity()).startService(intent);
+
+                                                //dismiss dialog and snack success
+                                                helperFunctions.stopProgressBar();
+
+                                                @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+                                                String currentTime = sdf.format(new Date());
+
+                                                helperFunctions.genericDialog("You have been logged in at " + currentTime);
+                                            }
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        helperFunctions.genericDialog("Something went wrong. Please try again");
+
+                                        //dismiss dialog and snack success
+                                        helperFunctions.stopProgressBar();
+                                    });
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }, error -> {
+                        //
+                    });
+
+            VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
         });
 
         // create and show the alert dialog
@@ -471,40 +443,34 @@ public class MyAttendanceFragment extends Fragment {
         String network_address = helperFunctions.getIpAddress() + "get_unlocated_pharmacies.php?id=" + preferenceManager.getPsuId();
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, network_address, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        //close the generic progressbar
-                        helperFunctions.stopProgressBar();
+                response -> {
+                    //close the generic progressbar
+                    helperFunctions.stopProgressBar();
 
-                        JSONObject obj;
+                    JSONObject obj;
 
-                        // reset values
-                        pharmacy_id_admin.clear();
-                        pharmacy_names_admin.clear();
+                    // reset values
+                    pharmacy_id_admin.clear();
+                    pharmacy_names_admin.clear();
 
-                        for (int i = 0; i < response.length(); i++){
+                    for (int i = 0; i < response.length(); i++){
 
-                            try {
-                                obj = response.getJSONObject(i);
+                        try {
+                            obj = response.getJSONObject(i);
 
-                                pharmacy_names_admin.add(obj.getString("pharmacy_name"));
-                                pharmacy_id_admin.add(obj.getString("pharmacy_id"));
+                            pharmacy_names_admin.add(obj.getString("pharmacy_name"));
+                            pharmacy_id_admin.add(obj.getString("pharmacy_id"));
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-
-                        //continue to display
-                        choosePharmacyAdmin();
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //
-            }
-        });
+
+                    //continue to display
+                    choosePharmacyAdmin();
+                }, error -> {
+                    //
+                });
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
     }
@@ -523,15 +489,12 @@ public class MyAttendanceFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
         builder.setTitle("Choose your practice centre");
 
-        builder.setItems(mStringArray, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(getContext(), NdaSupervisorGetLocationActivity.class);
-                intent.putExtra("pharmacy_name", pharmacy_names_admin.get(i));
-                intent.putExtra("pharmacy_id", pharmacy_id_admin.get(i));
-                intent.putExtra("status", "0");
-                startActivity(intent);
-            }
+        builder.setItems(mStringArray, (dialogInterface, i) -> {
+            Intent intent = new Intent(getContext(), NdaSupervisorGetLocationActivity.class);
+            intent.putExtra("pharmacy_name", pharmacy_names_admin.get(i));
+            intent.putExtra("pharmacy_id", pharmacy_id_admin.get(i));
+            intent.putExtra("status", "0");
+            startActivity(intent);
         });
 
         // create and show the alert dialog
@@ -545,39 +508,33 @@ public class MyAttendanceFragment extends Fragment {
         String network_address = helperFunctions.getIpAddress() + "get_pharmacist_pharmacies.php?id=" + preferenceManager.getPsuId();
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, network_address, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        //close the generic progressbar
-                        helperFunctions.stopProgressBar();
+                response -> {
+                    //close the generic progressbar
+                    helperFunctions.stopProgressBar();
 
-                        JSONObject obj;
+                    JSONObject obj;
 
-                        pharmacy_id_attendance.clear();
-                        pharmacy_names_attendance.clear();
+                    pharmacy_id_attendance.clear();
+                    pharmacy_names_attendance.clear();
 
-                        for (int i = 0; i < response.length(); i++){
+                    for (int i = 0; i < response.length(); i++){
 
-                            try {
-                                obj = response.getJSONObject(i);
+                        try {
+                            obj = response.getJSONObject(i);
 
-                                pharmacy_names_attendance.add(obj.getString("pharmacy_name"));
-                                pharmacy_id_attendance.add(obj.getString("pharmacy_id"));
+                            pharmacy_names_attendance.add(obj.getString("pharmacy_name"));
+                            pharmacy_id_attendance.add(obj.getString("pharmacy_id"));
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-
-                        //continue to display
-                        viewAttendanceAdmin();
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //
-            }
-        });
+
+                    //continue to display
+                    viewAttendanceAdmin();
+                }, error -> {
+                    //
+                });
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
     }
@@ -597,14 +554,11 @@ public class MyAttendanceFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
         builder.setTitle("Choose your practice centre");
 
-        builder.setItems(mStringArray, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(getContext(), PharmacistAttendanceActivity.class);
-                intent.putExtra("pharmacy_id", pharmacy_id_attendance.get(i));
-                intent.putExtra("pharmacist_id", preferenceManager.getPsuId());
-                startActivity(intent);
-            }
+        builder.setItems(mStringArray, (dialogInterface, i) -> {
+            Intent intent = new Intent(getContext(), PharmacistAttendanceActivity.class);
+            intent.putExtra("pharmacy_id", pharmacy_id_attendance.get(i));
+            intent.putExtra("pharmacist_id", preferenceManager.getPsuId());
+            startActivity(intent);
         });
 
         // create and show the alert dialog

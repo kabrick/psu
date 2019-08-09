@@ -66,8 +66,8 @@ public class TrackPharmacistService extends Service {
                 //calculate distance here
                 float distance = getDistance(latitude, longitude ,pharmacy_latitude, pharmacy_longitude);
 
-                //check if distance is more than 100m and add to counter
-                if(distance > 100){
+                //check if distance is more than 50m and add to counter
+                if(distance > 50){
                     //user out of range, increment by 1
                     check_out_of_range++;
                 } else {
@@ -75,10 +75,8 @@ public class TrackPharmacistService extends Service {
                     check_out_of_range = 0;
                 }
 
-                //if counter is more than 4 then log the user out
+                //if counter is more than 2 then log the user out
                 if(check_out_of_range > 2){
-                    //notify the user here
-
                     //log the user out
                     helperFunctions.signPharmacistOut();
                 }
@@ -105,7 +103,7 @@ public class TrackPharmacistService extends Service {
                 0, notificationIntent, 0);
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("PSU Practice App")
+                .setContentTitle("PSU App")
                 .setContentText("You are currently logged in")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pendingIntent)
