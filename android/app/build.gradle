@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 28
@@ -8,8 +9,8 @@ android {
         applicationId "ug.or.psu.psudrugassessmenttool"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 3
-        versionName "3"
+        versionCode 6
+        versionName "3.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -54,6 +55,7 @@ dependencies {
     implementation 'com.github.clans:fab:1.6.4'
     implementation 'com.google.firebase:firebase-core:16.0.4'
     implementation 'com.google.firebase:firebase-perf:17.0.0'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
