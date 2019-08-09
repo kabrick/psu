@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "690371155514-ak3hu56hd9iqfrnljetqdgug0n41q436.apps.googleusercontent.com",
+          "client_id": "690371155514-02887egqtfd3olfaj2c2jmc8n60ek4le.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "ug.or.psu.psudrugassessmenttool",
-            "certificate_hash": "9ea5dcefe252fedfae27058712dfef2296803351"
+            "certificate_hash": "1c85435b44006aab1ac6ba301bccac4581fe43a9"
           }
         },
         {
