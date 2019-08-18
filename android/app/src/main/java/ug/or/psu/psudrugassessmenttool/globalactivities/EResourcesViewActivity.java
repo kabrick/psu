@@ -2,9 +2,9 @@ package ug.or.psu.psudrugassessmenttool.globalactivities;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,33 +17,32 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import net.gotev.uploadservice.MultipartUploadRequest;
-import net.gotev.uploadservice.UploadNotificationConfig;
-
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.adapters.SingleTextCardAdapter;
-import ug.or.psu.psudrugassessmenttool.helpers.FilePath;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.models.SingleTextCard;
+import ug.or.psu.psudrugassessmenttool.network.VolleyMultipartRequest;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
 public class EResourcesViewActivity extends AppCompatActivity implements SingleTextCardAdapter.SingleTextCardAdapterListener {
@@ -51,6 +50,7 @@ public class EResourcesViewActivity extends AppCompatActivity implements SingleT
     String category, title_string;
     private List<SingleTextCard> list;
     private SingleTextCardAdapter mAdapter;
+    private RequestQueue rQueue;
 
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
@@ -172,31 +172,62 @@ public class EResourcesViewActivity extends AppCompatActivity implements SingleT
 
         if (requestCode == 1 && data != null && data.getData() != null) {
 
-            String path = FilePath.getPath(this, data.getData());
+            helperFunctions.genericProgressBar("Uploading resource...");
 
-            helperFunctions.genericDialog("Your resource is being uploaded and will be added to the list soon.");
+            String upload_URL = helperFunctions.getIpAddress() + "add_resource.php";
 
-            //Uploading code
-            try {
-                String uploadId = UUID.randomUUID().toString();
+            VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, upload_URL,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            rQueue.getCache().clear();
 
-                String upload_URL = helperFunctions.getIpAddress() + "add_resource.php";
+                            helperFunctions.stopProgressBar();
 
-                //Creating a multi part request
-                new MultipartUploadRequest(this, uploadId, upload_URL)
-                        .addFileToUpload(path, "pdf")
-                        .addParameter("name", title_string.toLowerCase().replace(" ", "_"))
-                        .addParameter("title", title_string)
-                        .addParameter("author", preferenceManager.getPsuId())
-                        .addParameter("category", category)
-                        .addParameter("timestamp", String.valueOf(System.currentTimeMillis()))
-                        .setNotificationConfig(new UploadNotificationConfig())
-                        .setMaxRetries(2)
-                        .startUpload();
+                            AlertDialog.Builder alert = new AlertDialog.Builder(EResourcesViewActivity.this);
 
-            } catch (Exception exc) {
-                // Toast.makeText(this, exc.getMessage(), Toast.LENGTH_LONG).show();
-            }
+                            alert.setMessage("Your resource has been uploaded successfully").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    fetchResources();
+                                }
+                            }).show();
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            //
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams(){
+                    Map<String, String> params = new HashMap<>();
+                    params.put("name", title_string.toLowerCase().replace(" ", "_"));
+                    params.put("title", title_string);
+                    params.put("author", preferenceManager.getPsuId());
+                    params.put("category", category);
+                    params.put("timestamp", String.valueOf(System.currentTimeMillis()));
+                    return params;
+                }
+
+                /*
+                 *pass files using below method
+                 * */
+                @Override
+                protected Map<String, DataPart> getByteData() throws IOException {
+                    Map<String, DataPart> params = new HashMap<>();
+                    params.put("filename", new DataPart(title_string.toLowerCase().replace(" ", "_"), getBytesFromFile(data.getData())));
+                    return params;
+                }
+            };
+
+            volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    0,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            rQueue = Volley.newRequestQueue(EResourcesViewActivity.this);
+            rQueue.add(volleyMultipartRequest);
         }
     }
 
@@ -207,6 +238,25 @@ public class EResourcesViewActivity extends AppCompatActivity implements SingleT
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
         intent.setData(Uri.parse(helperFunctions.getIpAddress() + item.getId()));
         startActivity(intent);
+    }
+
+    public byte[] getBytesFromFile(Uri uri) throws IOException {
+        try (InputStream iStream = getContentResolver().openInputStream(uri)) {
+            assert iStream != null;
+
+            byte[] bytesResult;
+            try (ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream()) {
+                int bufferSize = 1024;
+                byte[] buffer = new byte[bufferSize];
+                int len;
+                while ((len = iStream.read(buffer)) != -1) {
+                    byteBuffer.write(buffer, 0, len);
+                }
+                bytesResult = byteBuffer.toByteArray();
+            }
+
+            return bytesResult;
+        }
     }
 
     @Override

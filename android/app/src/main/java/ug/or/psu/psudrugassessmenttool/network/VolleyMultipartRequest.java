@@ -76,7 +76,7 @@ public class VolleyMultipartRequest extends Request<String> {
      *
      * @return Map data part label with data byte
      */
-    protected Map<String, DataPart> getByteData(){
+    protected Map<String, DataPart> getByteData() throws IOException {
         return null;
     }
 

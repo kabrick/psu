@@ -1,10 +1,12 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,14 +20,22 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.UploadNotificationConfig;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -35,6 +45,7 @@ import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.FilePath;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
+import ug.or.psu.psudrugassessmenttool.network.VolleyMultipartRequest;
 
 public class EcpdCreateActivity extends AppCompatActivity {
 
@@ -50,6 +61,7 @@ public class EcpdCreateActivity extends AppCompatActivity {
     private Uri filePath;
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
+    private RequestQueue rQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -207,45 +219,104 @@ public class EcpdCreateActivity extends AppCompatActivity {
         }
     }
 
-    private String getRealPathFromURI(Context context, Uri contentUri) {
-        Cursor cursor = null;
+    private String getRealPathFromURI(Context context, Uri uri) {
+        Cursor returnCursor = context.getContentResolver().query(uri, null, null, null, null);
+        /*
+         * Get the column indexes of the data in the Cursor,
+         *     * move to the first row in the Cursor, get the data,
+         *     * and display it.
+         * */
+        assert returnCursor != null;
+        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+        int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
+        returnCursor.moveToFirst();
+        String name = (returnCursor.getString(nameIndex));
+        String size = (Long.toString(returnCursor.getLong(sizeIndex)));
+        File file = new File(context.getFilesDir(), name);
         try {
-            String[] proj = { MediaStore.Images.Media.DATA };
-            cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
-            assert cursor != null;
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        } catch (Exception e) {
-            return "";
-        } finally {
-            if (cursor != null) {
-                cursor.close();
+            InputStream inputStream = context.getContentResolver().openInputStream(uri);
+            FileOutputStream outputStream = new FileOutputStream(file);
+            int read = 0;
+            int maxBufferSize = 1 * 1024 * 1024;
+            assert inputStream != null;
+            int bytesAvailable = inputStream.available();
+
+            //int bufferSize = 1024;
+            int bufferSize = Math.min(bytesAvailable, maxBufferSize);
+
+            final byte[] buffers = new byte[bufferSize];
+            while ((read = inputStream.read(buffers)) != -1) {
+                outputStream.write(buffers, 0, read);
             }
+            inputStream.close();
+            outputStream.close();
+
+        } catch (Exception e) {
+            //
         }
+        return file.getPath();
     }
 
     public void uploadAttachment(String id) {
-        //getting the actual path of the image
-        String path = FilePath.getPath(this, filePath);
 
-        //Uploading code
-        try {
-            String uploadId = UUID.randomUUID().toString();
+        String upload_URL = helperFunctions.getIpAddress() + "upload_cpd_attachment.php";
 
-            String upload_URL = helperFunctions.getIpAddress() + "upload_cpd_attachment.php";
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, upload_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        rQueue.getCache().clear();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<>();
+                params.put("id", id);
+                params.put("name", filename + "."  + fileExtension);
+                return params;
+            }
 
-            //Creating a multi part request
-            new MultipartUploadRequest(this, uploadId, upload_URL)
-                    .addFileToUpload(path, "pdf")
-                    .addParameter("id", id)
-                    .addParameter("name", filename + "."  + fileExtension)
-                    .setNotificationConfig(new UploadNotificationConfig())
-                    .setMaxRetries(2)
-                    .startUpload(); //Starting the upload
+            /*
+             *pass files using below method
+             * */
+            @Override
+            protected Map<String, DataPart> getByteData() throws IOException {
+                Map<String, DataPart> params = new HashMap<>();
+                params.put("filename", new DataPart(filename + "."  + fileExtension, getBytesFromFile(filePath)));
+                return params;
+            }
+        };
 
-        } catch (Exception exc) {
-            // Toast.makeText(this, exc.getMessage(), Toast.LENGTH_LONG).show();
+        volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        rQueue = Volley.newRequestQueue(EcpdCreateActivity.this);
+        rQueue.add(volleyMultipartRequest);
+    }
+
+    public byte[] getBytesFromFile(Uri uri) throws IOException {
+        try (InputStream iStream = getContentResolver().openInputStream(uri)) {
+            assert iStream != null;
+
+            byte[] bytesResult;
+            try (ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream()) {
+                int bufferSize = 1024;
+                byte[] buffer = new byte[bufferSize];
+                int len;
+                while ((len = iStream.read(buffer)) != -1) {
+                    byteBuffer.write(buffer, 0, len);
+                }
+                bytesResult = byteBuffer.toByteArray();
+            }
+
+            return bytesResult;
         }
     }
 
