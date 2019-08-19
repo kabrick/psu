@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -18,17 +17,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -54,10 +48,9 @@ import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 import ug.or.psu.psudrugassessmenttool.services.TrackPharmacistService;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorGetLocationActivity;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.ChoosePharmacyActivity;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.PsuAdminDashboard;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.ViewGeneralAttendanceActivity;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.admin.GetLocationActivity;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.admin.ChoosePharmacyActivity;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.admin.ViewGeneralAttendanceActivity;
 
 public class MyAttendanceFragment extends Fragment {
 
@@ -490,7 +483,7 @@ public class MyAttendanceFragment extends Fragment {
         builder.setTitle("Choose your practice centre");
 
         builder.setItems(mStringArray, (dialogInterface, i) -> {
-            Intent intent = new Intent(getContext(), NdaSupervisorGetLocationActivity.class);
+            Intent intent = new Intent(getContext(), GetLocationActivity.class);
             intent.putExtra("pharmacy_name", pharmacy_names_admin.get(i));
             intent.putExtra("pharmacy_id", pharmacy_id_admin.get(i));
             intent.putExtra("status", "0");

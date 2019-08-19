@@ -16,18 +16,12 @@ if ($result->num_rows > 0){
 	$name = $result_assoc['name'];
 	$type = $result_assoc['type'];
 
-	if($type == 'sys_admin'){
+	if ($type == 'admin'){
 		$type_value = '1';
-	} else if ($type == 'admin'){
-		$type_value = '2';
 	} else if ($type == 'pharmacists'){
-		$type_value = '3';
+		$type_value = '2';
 	} else if ($type == 'pharmdirector'){
-		$type_value = '4';
-	} else if ($type == 'nda_admin'){
-		$type_value = '5';
-	} else if ($type == 'nda_supervisor'){
-		$type_value = '6';
+		$type_value = '3';
 	} else {
 		$type_value = '0';
 	}

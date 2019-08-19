@@ -64,7 +64,7 @@ public class SignUpActivity extends AppCompatActivity {
         sign_up_full_name = findViewById(R.id.sign_up_full_name);
         sign_up_mem_status = findViewById(R.id.sign_up_mem_status);
 
-        sign_up_mem_status.setItems("Pharmacist", "Pharmacy Owner","Other");
+        sign_up_mem_status.setItems("Pharmacist", "Pharmacy Owner");
 
         //add validation for the fields
         mAwesomeValidation = new AwesomeValidation(BASIC);
@@ -121,9 +121,6 @@ public class SignUpActivity extends AppCompatActivity {
                         break;
                     case "Pharmacy Owner":
                         mem_status = "pharmdirector";
-                        break;
-                    case "Other":
-                        mem_status = "other";
                         break;
                     default:
                         helperFunctions.stopProgressBar();

@@ -1,4 +1,4 @@
-package ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin;
+package ug.or.psu.psudrugassessmenttool.users.dashboards.admin;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

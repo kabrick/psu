@@ -1,4 +1,4 @@
-package ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin;
+package ug.or.psu.psudrugassessmenttool.users.dashboards.admin;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,12 +7,12 @@ import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
 
-public class ViewPharmacyActivity extends AppCompatActivity {
+public class ViewGeneralAttendanceActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_pharmacy);
+        setContentView(R.layout.activity_view_general_attendance);
 
         // add icon to the action bar
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);

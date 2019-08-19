@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".users.dashboards.psupharmacyowner.PsuPharmacyOwnerDashboard">
+    tools:context=".users.dashboards.pharmacyowner.PsuPharmacyOwnerDashboard">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

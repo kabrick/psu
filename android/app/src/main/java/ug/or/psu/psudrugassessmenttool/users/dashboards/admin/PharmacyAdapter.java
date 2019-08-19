@@ -1,4 +1,4 @@
-package ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor;
+package ug.or.psu.psudrugassessmenttool.users.dashboards.admin;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -20,12 +20,12 @@ import java.util.List;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 
-public class SupervisorPharmacyAdapter extends RecyclerView.Adapter<SupervisorPharmacyAdapter.MyViewHolder>
+public class PharmacyAdapter extends RecyclerView.Adapter<PharmacyAdapter.MyViewHolder>
         implements Filterable {
 
     private Context context;
-    private List<SupervisorPharmacy> pharmacyList;
-    private List<SupervisorPharmacy> pharmacyListFiltered;
+    private List<Pharmacy> pharmacyList;
+    private List<Pharmacy> pharmacyListFiltered;
     private SupervisorPharmacyAdapterListener listener;
     private HelperFunctions helperFunctions;
 
@@ -39,17 +39,12 @@ public class SupervisorPharmacyAdapter extends RecyclerView.Adapter<SupervisorPh
             location = view.findViewById(R.id.pharmacy_location);
             thumbnail = view.findViewById(R.id.thumbnail);
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onPharmacySelected(pharmacyListFiltered.get(getAdapterPosition()));
-                }
-            });
+            view.setOnClickListener(view1 -> listener.onPharmacySelected(pharmacyListFiltered.get(getAdapterPosition())));
         }
     }
 
 
-    public SupervisorPharmacyAdapter(Context context, List<SupervisorPharmacy> pharmacyList, SupervisorPharmacyAdapterListener listener) {
+    public PharmacyAdapter(Context context, List<Pharmacy> pharmacyList, SupervisorPharmacyAdapterListener listener) {
         this.context = context;
         this.listener = listener;
         this.pharmacyList = pharmacyList;
@@ -68,7 +63,7 @@ public class SupervisorPharmacyAdapter extends RecyclerView.Adapter<SupervisorPh
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        final SupervisorPharmacy pharmacy = pharmacyListFiltered.get(position);
+        final Pharmacy pharmacy = pharmacyListFiltered.get(position);
         holder.name.setText(pharmacy.getName());
         holder.location.setText(pharmacy.getLocation());
 
@@ -94,8 +89,8 @@ public class SupervisorPharmacyAdapter extends RecyclerView.Adapter<SupervisorPh
                 if (charString.isEmpty()) {
                     pharmacyListFiltered = pharmacyList;
                 } else {
-                    List<SupervisorPharmacy> filteredList = new ArrayList<>();
-                    for (SupervisorPharmacy row : pharmacyList) {
+                    List<Pharmacy> filteredList = new ArrayList<>();
+                    for (Pharmacy row : pharmacyList) {
                         if (row.getName().toLowerCase().contains(charString.toLowerCase()) || row.getLocation().contains(charSequence)) {
                             filteredList.add(row);
                         }
@@ -111,13 +106,13 @@ public class SupervisorPharmacyAdapter extends RecyclerView.Adapter<SupervisorPh
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                pharmacyListFiltered = (ArrayList<SupervisorPharmacy>) filterResults.values;
+                pharmacyListFiltered = (ArrayList<Pharmacy>) filterResults.values;
                 notifyDataSetChanged();
             }
         };
     }
 
     public interface SupervisorPharmacyAdapterListener {
-        void onPharmacySelected(SupervisorPharmacy pharmacy);
+        void onPharmacySelected(Pharmacy pharmacy);
     }
 }

@@ -1,4 +1,4 @@
-package ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor;
+package ug.or.psu.psudrugassessmenttool.users.dashboards.admin;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,28 +32,28 @@ import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
-public class NdaSuperSetLocationsFragment extends Fragment implements SupervisorPharmacyAdapter.SupervisorPharmacyAdapterListener {
+public class SetLocationsFragment extends Fragment implements PharmacyAdapter.SupervisorPharmacyAdapterListener {
 
     View view;
-    private List<SupervisorPharmacy> pharmacyList;
-    private SupervisorPharmacyAdapter mAdapter;
+    private List<Pharmacy> pharmacyList;
+    private PharmacyAdapter mAdapter;
 
     HelperFunctions helperFunctions;
 
     ProgressBar progressBar;
 
-    public NdaSuperSetLocationsFragment() {
+    public SetLocationsFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_nda_super_set_locations, container, false);
+        view = inflater.inflate(R.layout.fragment_set_locations, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_nda_supervisor_pharmacies);
         pharmacyList = new ArrayList<>();
-        mAdapter = new SupervisorPharmacyAdapter(getContext(), pharmacyList, this);
+        mAdapter = new PharmacyAdapter(getContext(), pharmacyList, this);
 
         helperFunctions = new HelperFunctions(getContext());
 
@@ -109,7 +109,7 @@ public class NdaSuperSetLocationsFragment extends Fragment implements Supervisor
                             return;
                         }
 
-                        List<SupervisorPharmacy> items = new Gson().fromJson(response.toString(), new TypeToken<List<SupervisorPharmacy>>() {
+                        List<Pharmacy> items = new Gson().fromJson(response.toString(), new TypeToken<List<Pharmacy>>() {
                         }.getType());
 
                         pharmacyList.clear();
@@ -130,7 +130,7 @@ public class NdaSuperSetLocationsFragment extends Fragment implements Supervisor
     }
 
     @Override
-    public void onPharmacySelected(SupervisorPharmacy pharmacy) {
+    public void onPharmacySelected(Pharmacy pharmacy) {
 
         final String pharmacy_name = pharmacy.getName();
         final String pharmacy_id = pharmacy.getId();
@@ -160,7 +160,7 @@ public class NdaSuperSetLocationsFragment extends Fragment implements Supervisor
     }
 
     public void continueToSetLocation(String name, String id, String status){
-        Intent intent = new Intent(getContext(), NdaSupervisorGetLocationActivity.class);
+        Intent intent = new Intent(getContext(), GetLocationActivity.class);
         intent.putExtra("pharmacy_name", name);
         intent.putExtra("pharmacy_id", id);
         intent.putExtra("status", status);

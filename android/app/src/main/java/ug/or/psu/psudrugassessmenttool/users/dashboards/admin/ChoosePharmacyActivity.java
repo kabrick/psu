@@ -1,4 +1,4 @@
-package ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin;
+package ug.or.psu.psudrugassessmenttool.users.dashboards.admin;
 
 import android.content.DialogInterface;
 import android.support.design.widget.FloatingActionButton;
@@ -32,17 +32,15 @@ import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.SupervisorPharmacy;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.SupervisorPharmacyAdapter;
 
-public class ChoosePharmacyActivity extends AppCompatActivity implements SupervisorPharmacyAdapter.SupervisorPharmacyAdapterListener {
+public class ChoosePharmacyActivity extends AppCompatActivity implements PharmacyAdapter.SupervisorPharmacyAdapterListener {
 
     FloatingActionButton add_pharmacy_fab;
     EditText pharmacy_name, pharmacy_location;
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
-    List<SupervisorPharmacy> pharmaciesList;
-    SupervisorPharmacyAdapter mAdapter;
+    List<Pharmacy> pharmaciesList;
+    PharmacyAdapter mAdapter;
     ProgressBar progressBar;
 
     @Override
@@ -99,7 +97,7 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Supervi
 
         RecyclerView recyclerView = findViewById(R.id.recycler_choose_pharmacy);
         pharmaciesList = new ArrayList<>();
-        mAdapter = new SupervisorPharmacyAdapter(this, pharmaciesList, this);
+        mAdapter = new PharmacyAdapter(this, pharmaciesList, this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -190,7 +188,7 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Supervi
                             return;
                         }
 
-                        List<SupervisorPharmacy> items = new Gson().fromJson(response.toString(), new TypeToken<List<SupervisorPharmacy>>() {
+                        List<Pharmacy> items = new Gson().fromJson(response.toString(), new TypeToken<List<Pharmacy>>() {
                         }.getType());
 
                         pharmaciesList.clear();
@@ -211,7 +209,7 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Supervi
     }
 
     @Override
-    public void onPharmacySelected(SupervisorPharmacy pharmacy) {
+    public void onPharmacySelected(Pharmacy pharmacy) {
         final String pharmacy_id = pharmacy.getId();
         final String pharmacy_name = pharmacy.getName();
         final String location_set = pharmacy.getLocationSet();

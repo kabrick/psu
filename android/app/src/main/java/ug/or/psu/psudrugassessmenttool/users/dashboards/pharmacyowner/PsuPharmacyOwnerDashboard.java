@@ -1,41 +1,51 @@
-package ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor;
+package ug.or.psu.psudrugassessmenttool.users.dashboards.pharmacyowner;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.EResourcesActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.FeedbackActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAssessmentFormFeedOwnerActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PrivacyPolicyActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
+import ug.or.psu.psudrugassessmenttool.globalfragments.MyAttendanceFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.NewsFragment;
-import ug.or.psu.psudrugassessmenttool.globalfragments.ViewPharmaciesLocationFragment;
-import ug.or.psu.psudrugassessmenttool.globalfragments.ViewPharmacistAttendanceFragment;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
+import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
-public class NdaSupervisorDashboard extends AppCompatActivity
+public class PsuPharmacyOwnerDashboard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     HelperFunctions helperFunctions;
@@ -45,19 +55,19 @@ public class NdaSupervisorDashboard extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nda_supervisor_dashboard);
+        setContentView(R.layout.activity_psu_pharmacy_owner_dashboard);
 
         helperFunctions = new HelperFunctions(this);
         preferenceManager = new PreferenceManager(this);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_nda_supervisor);
+        Toolbar toolbar = findViewById(R.id.toolbar_pharmacy_owner);
         setSupportActionBar(toolbar);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
-        drawer = findViewById(R.id.nda_supervisor_drawer_layout);
+        drawer = findViewById(R.id.psu_pharmacy_owner_drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -70,7 +80,7 @@ public class NdaSupervisorDashboard extends AppCompatActivity
         View header_view = navigationView.getHeaderView(0);
 
         //add user name to drawer
-        TextView user_name = header_view.findViewById(R.id.supervisor_name);
+        TextView user_name = header_view.findViewById(R.id.pharmacy_owner_name);
         user_name.setText(preferenceManager.getPsuName());
 
         // Create the adapter that will return a fragment for each of the three
@@ -78,14 +88,15 @@ public class NdaSupervisorDashboard extends AppCompatActivity
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        ViewPager mViewPager = findViewById(R.id.container_nda_supervisor);
+        ViewPager mViewPager = findViewById(R.id.container_pharmacy_owner);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         //set fixed cache so that tabs are not reloaded
-        mViewPager.setOffscreenPageLimit(4);
+        mViewPager.setOffscreenPageLimit(2);
 
-        TabLayout mTabLayout = findViewById(R.id.tab_nda_supervisor);
+        TabLayout mTabLayout = findViewById(R.id.tab_pharmacy_owner);
         mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -102,18 +113,14 @@ public class NdaSupervisorDashboard extends AppCompatActivity
                 case 1:
                     return new JobFragment();
                 case 2:
-                    return new NdaSuperSetLocationsFragment();
-                case 3:
-                    return new ViewPharmaciesLocationFragment();
-                case 4:
-                    return new ViewPharmacistAttendanceFragment();
+                    return new MyAttendanceFragment();
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 5;
+            return 3;
         }
 
         @Override
@@ -122,13 +129,9 @@ public class NdaSupervisorDashboard extends AppCompatActivity
                 case 0:
                     return "News";
                 case 1:
-                    return "Job Adverts";
+                    return "Job-Careers";
                 case 2:
-                    return "Set Locations";
-                case 3:
-                    return "View Locations";
-                case 4:
-                    return "View Attendance";
+                    return "Practice";
             }
             return super.getPageTitle(position);
         }
@@ -144,7 +147,7 @@ public class NdaSupervisorDashboard extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_activity_nda_supervisor_dashboard, menu);
+        getMenuInflater().inflate(R.menu.menu_activity_pharmacy_owner_dashboard, menu);
         return true;
     }
 
@@ -152,7 +155,7 @@ public class NdaSupervisorDashboard extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_log_out_supervisor_dashboard) {
+        if (id == R.id.action_log_out_pharmacy_owner_dashboard) {
             helperFunctions.signAdminUsersOut();
         }
 
@@ -164,26 +167,41 @@ public class NdaSupervisorDashboard extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.nda_supervisor_post_news:
+            case R.id.pharmacy_owner_post_news:
                 Intent post_news_intent = new Intent(this, CreateNewsActivity.class);
                 startActivity(post_news_intent);
                 break;
-            case R.id.nda_supervisor_log_out:
-                helperFunctions.signAdminUsersOut();
-                break;
-            case R.id.nda_supervisor_edit_profile:
-                Intent edit_profile = new Intent(this, EditProfileActivity.class);
-                startActivity(edit_profile);
-                break;
-            case R.id.nda_supervisor_feedback:
+            case R.id.pharmacy_owner_feedback:
                 Intent give_feedback_intent = new Intent(this, FeedbackActivity.class);
                 startActivity(give_feedback_intent);
                 break;
-            case R.id.nda_supervisor_edit_news_posts:
+            case R.id.pharmacy_owner_attendance:
+                viewPharmacistAttendance();
+                break;
+            case R.id.pharmacy_owner_edit_profile:
+                Intent edit_profile = new Intent(this, EditProfileActivity.class);
+                startActivity(edit_profile);
+                break;
+            case R.id.pharmacy_owner_pharmacist_assessment_form:
+                Intent owner_pharmacist_assessment_form_intent = new Intent(this, PharmacistAssessmentFormFeedOwnerActivity.class);
+                startActivity(owner_pharmacist_assessment_form_intent);
+                break;
+            case R.id.pharmacy_owner_log_out:
+                helperFunctions.signAdminUsersOut();
+                break;
+            case R.id.pharmacy_owner_eresources:
+                Intent eresources_intent = new Intent(this, EResourcesActivity.class);
+                startActivity(eresources_intent);
+                break;
+            /*case R.id.pharmacy_owner_my_job_adverts:
+                Intent my_job_adverts_intent = new Intent(this, MyJobAdvertsActivity.class);
+                startActivity(my_job_adverts_intent);
+                break;*/
+            case R.id.pharmacy_owner_edit_news_posts:
                 Intent edit_news_intent = new Intent(this, EditYourNewsActivity.class);
                 startActivity(edit_news_intent);
                 break;
-            case R.id.nda_supervisor_privacy_policy:
+            case R.id.pharmacy_owner_privacy_policy:
                 Intent privacy_policy_intent = new Intent(this, PrivacyPolicyActivity.class);
                 startActivity(privacy_policy_intent);
                 break;
@@ -194,5 +212,39 @@ public class NdaSupervisorDashboard extends AppCompatActivity
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void viewPharmacistAttendance(){
+
+        helperFunctions.genericProgressBar("Retrieving pharmacy records...");
+
+        String network_address = helperFunctions.getIpAddress()
+                + "get_pharmacy_owner_details.php?id=" + preferenceManager.getPsuId();
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            helperFunctions.stopProgressBar();
+
+                            Intent intent = new Intent(PsuPharmacyOwnerDashboard.this, PharmacistAttendanceActivity.class);
+                            intent.putExtra("pharmacy_id", response.getString("pharmacy_id"));
+                            intent.putExtra("pharmacist_id", response.getString("pharmacist_id"));
+                            startActivity(intent);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                helperFunctions.stopProgressBar();
+
+                helperFunctions.genericDialog("Something went wrong. Please try again");
+            }
+        });
+
+        VolleySingleton.getInstance(PsuPharmacyOwnerDashboard.this).addToRequestQueue(request);
     }
 }

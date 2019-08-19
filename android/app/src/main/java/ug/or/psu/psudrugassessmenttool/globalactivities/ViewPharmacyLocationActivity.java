@@ -20,7 +20,7 @@ import java.util.Objects;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorGetLocationActivity;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.admin.GetLocationActivity;
 
 public class ViewPharmacyLocationActivity extends AppCompatActivity implements GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
@@ -94,7 +94,7 @@ public class ViewPharmacyLocationActivity extends AppCompatActivity implements G
     }
 
     public void editLocation(View view){
-        Intent intent = new Intent(this, NdaSupervisorGetLocationActivity.class);
+        Intent intent = new Intent(this, GetLocationActivity.class);
         intent.putExtra("pharmacy_name", pharmacy_name);
         intent.putExtra("pharmacy_id", pharmacy_id);
         intent.putExtra("status", "1");

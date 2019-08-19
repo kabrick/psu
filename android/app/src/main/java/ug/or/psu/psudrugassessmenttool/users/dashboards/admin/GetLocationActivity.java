@@ -1,4 +1,4 @@
-package ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor;
+package ug.or.psu.psudrugassessmenttool.users.dashboards.admin;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -34,7 +34,7 @@ import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 
-public class NdaSupervisorGetLocationActivity extends AppCompatActivity implements GoogleMap.OnMyLocationButtonClickListener,
+public class GetLocationActivity extends AppCompatActivity implements GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
         OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
@@ -57,7 +57,7 @@ public class NdaSupervisorGetLocationActivity extends AppCompatActivity implemen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nda_supervisor_get_location);
+        setContentView(R.layout.activity_get_location);
 
         // add icon to the action bar
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
@@ -147,35 +147,32 @@ public class NdaSupervisorGetLocationActivity extends AppCompatActivity implemen
 
         result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
 
-        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
-            @Override
-            public void onResult(@NonNull LocationSettingsResult result) {
-                final Status status = result.getStatus();
-                switch (status.getStatusCode()) {
-                    case LocationSettingsStatusCodes.SUCCESS:
-                        // All location settings are satisfied. The client can initialize location
-                        // requests here.
-                        //...
-                        break;
-                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                        // Location settings are not satisfied. But could be fixed by showing the user
-                        // a dialog.
-                        try {
-                            // Show the dialog by calling startResolutionForResult(),
-                            // and check the result in onActivityResult().
-                            status.startResolutionForResult(
-                                    NdaSupervisorGetLocationActivity.this,
-                                    REQUEST_LOCATION);
-                        } catch (IntentSender.SendIntentException e) {
-                            // Ignore the error.
-                        }
-                        break;
-                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                        // Location settings are not satisfied. However, we have no way to fix the
-                        // settings so we won't show the dialog.
-                        //...
-                        break;
-                }
+        result.setResultCallback(result -> {
+            final Status status = result.getStatus();
+            switch (status.getStatusCode()) {
+                case LocationSettingsStatusCodes.SUCCESS:
+                    // All location settings are satisfied. The client can initialize location
+                    // requests here.
+                    //...
+                    break;
+                case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                    // Location settings are not satisfied. But could be fixed by showing the user
+                    // a dialog.
+                    try {
+                        // Show the dialog by calling startResolutionForResult(),
+                        // and check the result in onActivityResult().
+                        status.startResolutionForResult(
+                                GetLocationActivity.this,
+                                REQUEST_LOCATION);
+                    } catch (IntentSender.SendIntentException e) {
+                        // Ignore the error.
+                    }
+                    break;
+                case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                    // Location settings are not satisfied. However, we have no way to fix the
+                    // settings so we won't show the dialog.
+                    //...
+                    break;
             }
         });
 
@@ -184,22 +181,20 @@ public class NdaSupervisorGetLocationActivity extends AppCompatActivity implemen
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //final LocationSettingsStates states = LocationSettingsStates.fromIntent(data);
-        switch (requestCode) {
-            case REQUEST_LOCATION:
-                switch (resultCode) {
-                    case Activity.RESULT_OK: {
-                        // All required changes were successfully made
-                        break;
-                    }
-                    case Activity.RESULT_CANCELED: {
-                        // The user was asked to change settings, but chose not to
-                        break;
-                    }
-                    default: {
-                        break;
-                    }
+        if (requestCode == REQUEST_LOCATION) {
+            switch (resultCode) {
+                case Activity.RESULT_OK: {
+                    // All required changes were successfully made
+                    break;
                 }
-                break;
+                case Activity.RESULT_CANCELED: {
+                    // The user was asked to change settings, but chose not to
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
         }
     }
 

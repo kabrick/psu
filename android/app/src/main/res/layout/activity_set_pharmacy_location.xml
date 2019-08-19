@@ -5,11 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".users.dashboards.psuadmin.SetPharmacyLocationActivity">
+    tools:context=".users.dashboards.admin.SetPharmacyLocationActivity">
 
     <fragment
         android:id="@+id/fragment"
-        android:name="ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSuperSetLocationsFragment"
+        android:name="ug.or.psu.psudrugassessmenttool.users.dashboards.admin.SetLocationsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

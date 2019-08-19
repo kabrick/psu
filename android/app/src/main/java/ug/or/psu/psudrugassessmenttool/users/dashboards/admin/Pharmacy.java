@@ -1,13 +1,13 @@
-package ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor;
+package ug.or.psu.psudrugassessmenttool.users.dashboards.admin;
 
-public class SupervisorPharmacy {
+public class Pharmacy {
     private String name;
     private String location;
     private String status_image;
     private String id;
     private String location_set;
 
-    public SupervisorPharmacy() {}
+    public Pharmacy() {}
 
     public String getName() {
         return name;

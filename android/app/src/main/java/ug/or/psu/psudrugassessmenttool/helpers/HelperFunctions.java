@@ -31,12 +31,9 @@ import java.util.concurrent.TimeUnit;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 import ug.or.psu.psudrugassessmenttool.services.TrackPharmacistService;
 import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.ndaadmin.NdaAdminDashboard;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.ndasupervisor.NdaSupervisorDashboard;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.psuadmin.PsuAdminDashboard;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.psupharmacist.PsuPharmacistDashboard;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.psupharmacyowner.PsuPharmacyOwnerDashboard;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.sysadmin.SystemsAdministratorDashboard;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.admin.PsuAdminDashboard;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.pharmacist.PsuPharmacistDashboard;
+import ug.or.psu.psudrugassessmenttool.users.dashboards.pharmacyowner.PsuPharmacyOwnerDashboard;
 
 public class HelperFunctions {
 
@@ -264,39 +261,21 @@ public class HelperFunctions {
     public void getDefaultDashboard(String member_category){
         switch (member_category) {
             case "1": {
-                // go to systems administrator dashboard
-                Intent intent_sys_admin = new Intent(context, SystemsAdministratorDashboard.class);
-                context.startActivity(intent_sys_admin);
+                // go to psu administrator dashboard
+                Intent intent_admin = new Intent(context, PsuAdminDashboard.class);
+                context.startActivity(intent_admin);
                 break;
             }
             case "2": {
-                // go to psu administrator dashboard
-                Intent intent_nda_admin = new Intent(context, PsuAdminDashboard.class);
-                context.startActivity(intent_nda_admin);
+                // go to pharmacist dashboard
+                Intent intent_pharmacist = new Intent(context, PsuPharmacistDashboard.class);
+                context.startActivity(intent_pharmacist);
                 break;
             }
             case "3": {
-                // go to pharmacist dashboard
-                Intent intent_psu_pharmacist = new Intent(context, PsuPharmacistDashboard.class);
-                context.startActivity(intent_psu_pharmacist);
-                break;
-            }
-            case "4": {
                 // go to pharmacy owner dashboard
                 Intent intent_pharmacy_owner = new Intent(context, PsuPharmacyOwnerDashboard.class);
                 context.startActivity(intent_pharmacy_owner);
-                break;
-            }
-            case "5": {
-                // go to nda administrator
-                Intent intent_nda_admin = new Intent(context, NdaAdminDashboard.class);
-                context.startActivity(intent_nda_admin);
-                break;
-            }
-            case "6": {
-                //go to nda supervisor
-                Intent intent_nda_supervisor = new Intent(context, NdaSupervisorDashboard.class);
-                context.startActivity(intent_nda_supervisor);
                 break;
             }
             default: {
