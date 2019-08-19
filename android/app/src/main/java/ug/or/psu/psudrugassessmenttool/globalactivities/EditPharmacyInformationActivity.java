@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -129,7 +131,12 @@ public class EditPharmacyInformationActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 //stop progress bar
                 helperFunctions.stopProgressBar();
-                helperFunctions.genericDialog("Something went wrong. Please try again later");
+
+                if (error instanceof TimeoutError || error instanceof NetworkError) {
+                    helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+                } else {
+                    helperFunctions.genericDialog("Something went wrong. Please try again later");
+                }
             }
         });
 

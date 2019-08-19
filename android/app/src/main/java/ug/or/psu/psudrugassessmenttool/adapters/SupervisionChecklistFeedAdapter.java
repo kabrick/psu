@@ -24,12 +24,7 @@ public class SupervisionChecklistFeedAdapter extends RecyclerView.Adapter<Superv
             super(view);
             supervisor_checklist_feed_text = view.findViewById(R.id.supervisor_checklist_feed_text);
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onFormSelected(formList.get(getAdapterPosition()));
-                }
-            });
+            view.setOnClickListener(view1 -> listener.onFormSelected(formList.get(getAdapterPosition())));
         }
     }
 

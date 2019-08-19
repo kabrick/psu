@@ -6,15 +6,16 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -23,7 +24,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
-import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditPharmacyInformationActivity;
@@ -52,128 +52,112 @@ public class EditYourPharmaciesAdapter extends RecyclerView.Adapter<EditYourPhar
             edit_your_pharmacies = view.findViewById(R.id.edit_your_pharmacies);
             remove_your_pharmacies = view.findViewById(R.id.remove_your_pharmacies);
 
-            edit_your_pharmacies.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // get the patient id
-                    int position = getAdapterPosition();
-                    Pharmacies pharmacy = pharmaciesList.get(position);
-                    final String id = pharmacy.getId();
-                    final String name = pharmacy.getName();
+            edit_your_pharmacies.setOnClickListener(view1 -> {
+                // get the patient id
+                int position = getAdapterPosition();
+                Pharmacies pharmacy = pharmaciesList.get(position);
+                final String id = pharmacy.getId();
+                final String name = pharmacy.getName();
 
-                    final HelperFunctions helperFunctions = new HelperFunctions(context);
+                final HelperFunctions helperFunctions = new HelperFunctions(context);
 
-                    String[] mStringArray = {"Edit pharmacy information", "Edit pharmacy location"};
+                String[] mStringArray = {"Edit pharmacy information", "Edit pharmacy location"};
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("Choose your action");
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Choose your action");
 
-                    builder.setItems(mStringArray, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            if (i == 0){
-                                Intent intent = new Intent(context, EditPharmacyInformationActivity.class);
-                                intent.putExtra("id", id);
-                                context.startActivity(intent);
-                            } else if (i == 1){
-                                helperFunctions.genericProgressBar("Retrieving details...");
-                                //fetch the coordinates for the pharmacy
-                                String network_address = helperFunctions.getIpAddress()
-                                        + "get_pharmacy_coordinates.php?id=" + id;
+                builder.setItems(mStringArray, (dialogInterface, i) -> {
+                    if (i == 0){
+                        Intent intent = new Intent(context, EditPharmacyInformationActivity.class);
+                        intent.putExtra("id", id);
+                        context.startActivity(intent);
+                    } else if (i == 1){
+                        helperFunctions.genericProgressBar("Retrieving details...");
+                        //fetch the coordinates for the pharmacy
+                        String network_address = helperFunctions.getIpAddress()
+                                + "get_pharmacy_coordinates.php?id=" + id;
 
-                                JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
-                                        new Response.Listener<JSONObject>() {
-                                            @Override
-                                            public void onResponse(JSONObject response) {
-                                                try {
-                                                    //dismiss dialog
-                                                    helperFunctions.stopProgressBar();
+                        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
+                                response -> {
+                                    try {
+                                        //dismiss dialog
+                                        helperFunctions.stopProgressBar();
 
-                                                    Intent intent = new Intent(context, ViewPharmacyLocationActivity.class);
-                                                    intent.putExtra("pharmacy_id", id);
-                                                    intent.putExtra("pharmacy_name", name);
-                                                    intent.putExtra("latitude", Double.parseDouble(response.getString("latitude")));
-                                                    intent.putExtra("longitude", Double.parseDouble(response.getString("longitude")));
-                                                    context.startActivity(intent);
+                                        Intent intent = new Intent(context, ViewPharmacyLocationActivity.class);
+                                        intent.putExtra("pharmacy_id", id);
+                                        intent.putExtra("pharmacy_name", name);
+                                        intent.putExtra("latitude", Double.parseDouble(response.getString("latitude")));
+                                        intent.putExtra("longitude", Double.parseDouble(response.getString("longitude")));
+                                        context.startActivity(intent);
 
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        }, new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        //
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }, error -> {
+                                    if (error instanceof TimeoutError || error instanceof NetworkError) {
+                                        helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+                                    } else {
+                                        helperFunctions.genericDialog("Something went wrong. Please try again later");
                                     }
                                 });
 
-                                VolleySingleton.getInstance(context).addToRequestQueue(request);
-                            }
-                        }
-                    });
+                        VolleySingleton.getInstance(context).addToRequestQueue(request);
+                    }
+                });
 
-                    // create and show the alert dialog
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
+                // create and show the alert dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
             });
 
-            remove_your_pharmacies.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
+            remove_your_pharmacies.setOnClickListener(view12 -> {
+                int position = getAdapterPosition();
 
-                    Pharmacies pharmacy = pharmaciesList.get(position);
+                Pharmacies pharmacy = pharmaciesList.get(position);
 
-                    final String id = pharmacy.getId();
+                final String id = pharmacy.getId();
 
-                    final String confirm_text = "Remove " + pharmacy.getName() + " from your pharmacies?";
+                final String confirm_text = "Remove " + pharmacy.getName() + " from your pharmacies?";
 
-                    final HelperFunctions helperFunctions = new HelperFunctions(context);
+                final HelperFunctions helperFunctions = new HelperFunctions(context);
 
-                    AlertDialog.Builder alert1 = new AlertDialog.Builder(context);
+                AlertDialog.Builder alert1 = new AlertDialog.Builder(context);
 
-                    alert1.setMessage("Are you sure?")
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    helperFunctions.genericProgressBar("Removing pharmacy..");
-                                    String network_address = helperFunctions.getIpAddress() + "remove_pharmacy.php?id=" + id;
+                alert1.setMessage("Are you sure?")
+                        .setPositiveButton("Yes", (dialogInterface, i) -> {
+                            helperFunctions.genericProgressBar("Removing pharmacy..");
+                            String network_address = helperFunctions.getIpAddress() + "remove_pharmacy.php?id=" + id;
 
-                                    // Request a string response from the provided URL
-                                    StringRequest request = new StringRequest(network_address,
-                                            new Response.Listener<String>() {
+                            // Request a string response from the provided URL
+                            StringRequest request = new StringRequest(network_address,
+                                    response -> {
+                                        helperFunctions.stopProgressBar();
+
+                                        if(response.equals("1")){
+
+                                            AlertDialog.Builder alert = new AlertDialog.Builder(context);
+
+                                            alert.setMessage("Pharmacy removed").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                                                 @Override
-                                                public void onResponse(String response) {
-                                                    helperFunctions.stopProgressBar();
-
-                                                    if(response.equals("1")){
-
-                                                        AlertDialog.Builder alert = new AlertDialog.Builder(context);
-
-                                                        alert.setMessage("Pharmacy removed").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                                Intent delete_intent = new Intent(context, EditYourPharmacies.class);
-                                                                context.startActivity(delete_intent);
-                                                            }
-                                                        }).show();
-                                                    }
-
+                                                public void onClick(DialogInterface dialogInterface1, int i1) {
+                                                    Intent delete_intent = new Intent(context, EditYourPharmacies.class);
+                                                    context.startActivity(delete_intent);
                                                 }
-                                            }, new Response.ErrorListener() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
-                                            //
+                                            }).show();
+                                        }
+
+                                    }, error -> {
+                                        if (error instanceof TimeoutError || error instanceof NetworkError) {
+                                            helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+                                        } else {
+                                            helperFunctions.genericDialog("Something went wrong. Please try again later");
                                         }
                                     });
 
-                                    //add to request queue in singleton class
-                                    VolleySingleton.getInstance(context).addToRequestQueue(request);
-                                }
-                            })
-                            .show();
-                }
+                            //add to request queue in singleton class
+                            VolleySingleton.getInstance(context).addToRequestQueue(request);
+                        })
+                        .show();
             });
         }
     }

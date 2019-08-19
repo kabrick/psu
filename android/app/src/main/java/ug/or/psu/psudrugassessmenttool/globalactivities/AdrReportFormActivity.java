@@ -8,8 +8,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
+import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -186,7 +188,12 @@ public class AdrReportFormActivity extends AppCompatActivity {
             }
         }, error -> {
             helperFunctions.stopProgressBar();
-            helperFunctions.genericDialog("Something went wrong. Please try again later");
+
+            if (error instanceof TimeoutError || error instanceof NetworkError) {
+                helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+            } else {
+                helperFunctions.genericDialog("Something went wrong. Please try again later");
+            }
         }) {
             protected Map<String, String> getParams() {
                 Map<String, String> data = new HashMap<>();

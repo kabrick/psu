@@ -17,8 +17,10 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -218,8 +220,13 @@ public class PharmacistAttendanceActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // error in getting json, so recursive call till successful
                 helperFunctions.stopProgressBar();
+
+                if (error instanceof TimeoutError || error instanceof NetworkError) {
+                    helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+                } else {
+                    helperFunctions.genericDialog("Something went wrong. Please try again later");
+                }
             }
         });
 

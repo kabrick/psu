@@ -12,7 +12,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.android.volley.NetworkError;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -167,7 +169,12 @@ public class EditYourNewsActivity extends AppCompatActivity implements UserNewsF
                                         @Override
                                         public void onErrorResponse(VolleyError error) {
                                             helperFunctions.stopProgressBar();
-                                            helperFunctions.genericDialog("Something went wrong. Please try again later");
+
+                                            if (error instanceof TimeoutError || error instanceof NetworkError) {
+                                                helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+                                            } else {
+                                                helperFunctions.genericDialog("Something went wrong. Please try again later");
+                                            }
                                         }
                                     });
 

@@ -70,7 +70,7 @@ public class AttendanceSessionAdapter extends RecyclerView.Adapter<AttendanceSes
         int minutes = (int) ((milliseconds / (1000*60)) % 60);
         int hours   = (int) ((milliseconds / (1000*60*60)) % 24);
 
-        String duration = String.valueOf(hours) + " hours and " + String.valueOf(minutes) + " minutes";
+        String duration = hours + " hours and " + minutes + " minutes";
         holder.session_duration.setText(duration);
     }
 

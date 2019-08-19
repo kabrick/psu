@@ -13,8 +13,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -159,7 +161,11 @@ public class EditJobAdvertActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                helperFunctions.genericDialog("Something went wrong! Please try again");
+                if (error instanceof TimeoutError || error instanceof NetworkError) {
+                    helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+                } else {
+                    helperFunctions.genericDialog("Something went wrong. Please try again later");
+                }
             }
         });
 

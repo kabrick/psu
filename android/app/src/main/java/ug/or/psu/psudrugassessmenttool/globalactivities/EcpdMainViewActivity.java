@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkError;
 import com.android.volley.Request;
+import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
@@ -129,7 +131,12 @@ public class EcpdMainViewActivity extends AppCompatActivity {
                     }
                 }, error -> {
             helperFunctions.stopProgressBar();
-            helperFunctions.genericDialog("Failed to get e-CPD form");
+
+            if (error instanceof TimeoutError || error instanceof NetworkError) {
+                helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+            } else {
+                helperFunctions.genericDialog("Something went wrong. Please try again later");
+            }
         });
 
         VolleySingleton.getInstance(this).addToRequestQueue(request);

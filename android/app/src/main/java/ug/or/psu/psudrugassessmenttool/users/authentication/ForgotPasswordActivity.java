@@ -1,16 +1,14 @@
 package ug.or.psu.psudrugassessmenttool.users.authentication;
 
-import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
+import com.android.volley.NetworkError;
+import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.StringRequest;
 
 import java.util.Objects;
@@ -59,43 +57,36 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         // Request a string response from the provided URL.
         StringRequest request = new StringRequest(network_address,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //dismiss progress dialog
-                        helperFunctions.stopProgressBar();
+                response -> {
+                    //dismiss progress dialog
+                    helperFunctions.stopProgressBar();
 
-                        if(response.equals("0")){
-                            //saved article successfully
-                            AlertDialog.Builder alert = new AlertDialog.Builder(ForgotPasswordActivity.this);
+                    if(response.equals("0")){
+                        //saved article successfully
+                        AlertDialog.Builder alert = new AlertDialog.Builder(ForgotPasswordActivity.this);
 
-                            alert.setMessage("Email does not exist in the system").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    //
-                                }
-                            }).show();
-                        } else if(response.equals("1")){
-                            //saved article successfully
-                            AlertDialog.Builder alert = new AlertDialog.Builder(ForgotPasswordActivity.this);
+                        alert.setMessage("Email does not exist in the system").setPositiveButton("Okay", (dialogInterface, i) -> {
+                            //
+                        }).show();
+                    } else if(response.equals("1")){
+                        //saved article successfully
+                        AlertDialog.Builder alert = new AlertDialog.Builder(ForgotPasswordActivity.this);
 
-                            alert.setMessage("A new password has been sent to your email").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    finish();
-                                    onBackPressed();
-                                }
-                            }).show();
-                        } else {
-                            helperFunctions.genericDialog("Something went wrong! Please try again");
-                        }
+                        alert.setMessage("A new password has been sent to your email").setPositiveButton("Okay", (dialogInterface, i) -> {
+                            finish();
+                            onBackPressed();
+                        }).show();
+                    } else {
+                        helperFunctions.genericDialog("Something went wrong! Please try again");
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                helperFunctions.genericDialog("Something went wrong! Please try again");
-            }
-        });
+                }, error -> {
+
+                    if (error instanceof TimeoutError || error instanceof NetworkError) {
+                        helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+                    } else {
+                        helperFunctions.genericDialog("Something went wrong. Please try again later");
+                    }
+                });
 
         //add to request queue in singleton class
         VolleySingleton.getInstance(this).addToRequestQueue(request);

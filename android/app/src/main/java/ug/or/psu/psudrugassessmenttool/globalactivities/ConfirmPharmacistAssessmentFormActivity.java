@@ -11,7 +11,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.NetworkError;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
@@ -100,43 +102,42 @@ public class ConfirmPharmacistAssessmentFormActivity extends AppCompatActivity {
                 + "&score_three=" + score_three
                 + "&score_four=" + score_four
                 + "&score_five=" + score_five
-                + "&average_score=" + String.valueOf(average_score_number)
+                + "&average_score=" + average_score_number
                 + "&remarks=" + pharmacist_assessment_remarks.getText().toString()
-                + "&timestamp=" + String.valueOf(timestamp);
+                + "&timestamp=" + timestamp;
 
         // Request a string response from the provided URL.
         StringRequest request = new StringRequest(network_address,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //stop progress bar
-                        helperFunctions.stopProgressBar();
+                response -> {
+                    //stop progress bar
+                    helperFunctions.stopProgressBar();
 
-                        if(response.equals("1")){
-                            //go to views page for submitted pharmacists
+                    if(response.equals("1")){
+                        //go to views page for submitted pharmacists
 
-                            AlertDialog.Builder alert = new AlertDialog.Builder(ConfirmPharmacistAssessmentFormActivity.this);
+                        AlertDialog.Builder alert = new AlertDialog.Builder(ConfirmPharmacistAssessmentFormActivity.this);
 
-                            alert.setMessage("Assessment form submitted").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    Intent intent = new Intent(ConfirmPharmacistAssessmentFormActivity.this, PharmacistAssessmentFormFeedOwnerActivity.class);
-                                    startActivity(intent);
-                                }
-                            }).show();
-                        } else {
-                            //did not save
-                            helperFunctions.genericDialog("Something went wrong. Please try again later");
-                        }
+                        alert.setMessage("Assessment form submitted").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(ConfirmPharmacistAssessmentFormActivity.this, PharmacistAssessmentFormFeedOwnerActivity.class);
+                                startActivity(intent);
+                            }
+                        }).show();
+                    } else {
+                        //did not save
+                        helperFunctions.genericDialog("Something went wrong. Please try again later");
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //stop progress bar
-                helperFunctions.stopProgressBar();
-                helperFunctions.genericDialog("Something went wrong. Please try again later");
-            }
-        });
+                }, error -> {
+                    //stop progress bar
+                    helperFunctions.stopProgressBar();
+
+                    if (error instanceof TimeoutError || error instanceof NetworkError) {
+                        helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+                    } else {
+                        helperFunctions.genericDialog("Something went wrong. Please try again later");
+                    }
+                });
 
         VolleySingleton.getInstance(this).addToRequestQueue(request);
     }

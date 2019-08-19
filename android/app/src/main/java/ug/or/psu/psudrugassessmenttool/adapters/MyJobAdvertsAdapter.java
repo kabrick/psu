@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.NetworkError;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
@@ -44,85 +46,69 @@ public class MyJobAdvertsAdapter extends RecyclerView.Adapter<MyJobAdvertsAdapte
             view_applications = view.findViewById(R.id.view_applications);
             delete = view.findViewById(R.id.delete_job);
 
-            edit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    final MyJobAdverts advert = advertsList.get(position);
+            edit.setOnClickListener(view1 -> {
+                int position = getAdapterPosition();
+                final MyJobAdverts advert = advertsList.get(position);
 
-                    Intent intent = new Intent(context, EditJobAdvertActivity.class);
-                    intent.putExtra("id", advert.getId());
-                    context.startActivity(intent);
-                }
+                Intent intent = new Intent(context, EditJobAdvertActivity.class);
+                intent.putExtra("id", advert.getId());
+                context.startActivity(intent);
             });
 
-            view_applications.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    final MyJobAdverts advert = advertsList.get(position);
+            view_applications.setOnClickListener(view12 -> {
+                int position = getAdapterPosition();
+                final MyJobAdverts advert = advertsList.get(position);
 
-                    Intent intent = new Intent(context, JobApplicationsActivity.class);
-                    intent.putExtra("id", advert.getId());
-                    context.startActivity(intent);
-                }
+                Intent intent = new Intent(context, JobApplicationsActivity.class);
+                intent.putExtra("id", advert.getId());
+                context.startActivity(intent);
             });
 
-            delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
+            delete.setOnClickListener(view13 -> {
+                int position = getAdapterPosition();
 
-                    final MyJobAdverts advert = advertsList.get(position);
+                final MyJobAdverts advert = advertsList.get(position);
 
-                    final HelperFunctions helperFunctions = new HelperFunctions(context);
+                final HelperFunctions helperFunctions = new HelperFunctions(context);
 
-                    new AlertDialog.Builder(context)
-                            .setMessage("Are you sure you want to delete this advert")
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    //
-                                }
-                            })
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    helperFunctions.genericProgressBar("Removing job advert..");
-                                    String network_address = helperFunctions.getIpAddress() + "delete_job_advert.php?id=" + advert.getId();
+                new AlertDialog.Builder(context)
+                        .setMessage("Are you sure you want to delete this advert")
+                        .setNegativeButton("No", (dialogInterface, i) -> {
+                            //
+                        })
+                        .setPositiveButton("Yes", (dialogInterface, i) -> {
+                            helperFunctions.genericProgressBar("Removing job advert..");
+                            String network_address = helperFunctions.getIpAddress() + "delete_job_advert.php?id=" + advert.getId();
 
-                                    // Request a string response from the provided URL
-                                    StringRequest request = new StringRequest(network_address,
-                                            new Response.Listener<String>() {
-                                                @Override
-                                                public void onResponse(String response) {
-                                                    helperFunctions.stopProgressBar();
+                            // Request a string response from the provided URL
+                            StringRequest request = new StringRequest(network_address,
+                                    response -> {
+                                        helperFunctions.stopProgressBar();
 
-                                                    if(response.equals("1")){
-                                                        new AlertDialog.Builder(context)
-                                                                .setMessage("Advert deleted successfully")
-                                                                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                                                                    @Override
-                                                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                                                        ((MyJobAdvertsActivity)context).getAdverts();
-                                                                    }
-                                                                }).show();
-                                                    }
+                                        if(response.equals("1")){
+                                            new AlertDialog.Builder(context)
+                                                    .setMessage("Advert deleted successfully")
+                                                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialogInterface1, int i1) {
+                                                            ((MyJobAdvertsActivity)context).getAdverts();
+                                                        }
+                                                    }).show();
+                                        }
 
-                                                }
-                                            }, new Response.ErrorListener() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
-                                            helperFunctions.stopProgressBar();
+                                    }, error -> {
+                                        helperFunctions.stopProgressBar();
+
+                                        if (error instanceof TimeoutError || error instanceof NetworkError) {
+                                            helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+                                        } else {
                                             helperFunctions.genericDialog("Something went wrong. Please try again later");
                                         }
                                     });
 
-                                    //add to request queue in singleton class
-                                    VolleySingleton.getInstance(context).addToRequestQueue(request);
-                                }
-                            }).show();
-                }
+                            //add to request queue in singleton class
+                            VolleySingleton.getInstance(context).addToRequestQueue(request);
+                        }).show();
             });
         }
     }

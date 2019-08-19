@@ -1,6 +1,5 @@
 package ug.or.psu.psudrugassessmenttool.users.authentication;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,10 +13,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
+import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.jaredrummler.materialspinner.MaterialSpinner;
@@ -136,55 +135,51 @@ public class SignUpActivity extends AppCompatActivity {
 
                 final String finalMem_status = mem_status;
                 VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, upload_URL,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                rQueue.getCache().clear();
-                                helperFunctions.stopProgressBar();
+                        response -> {
+                            rQueue.getCache().clear();
+                            helperFunctions.stopProgressBar();
 
-                                switch (response) {
-                                    case "0": {
-                                        helperFunctions.genericDialog("Something went wrong. Please try again later");
-                                        break;
-                                    }
-                                    case "1": {
-                                        // user registered successfully
-                                        AlertDialog.Builder alert = new AlertDialog.Builder(SignUpActivity.this);
-
-                                        alert.setMessage("Your profile has been created. Sign in to continue").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                Intent sign_in_intent = new Intent(SignUpActivity.this, SignInActivity.class);
-                                                startActivity(sign_in_intent);
-                                            }
-                                        }).show();
-                                        break;
-                                    }
-                                    case "2": {
-                                        // email already taken
-                                        helperFunctions.genericDialog("Email address has already been registered");
-                                        break;
-                                    }
-                                    case "3": {
-                                        // username already taken
-                                        helperFunctions.genericDialog("User name has already been registered");
-                                        break;
-                                    }
-                                    case "4": {
-                                        // phone number already taken
-                                        helperFunctions.genericDialog("Phone number has already been registered");
-                                        break;
-                                    }
-                                    default:
-                                        helperFunctions.genericDialog("Something went wrong. Please try again later");
-                                        break;
+                            switch (response) {
+                                case "0": {
+                                    helperFunctions.genericDialog("Something went wrong. Please try again later");
+                                    break;
                                 }
+                                case "1": {
+                                    // user registered successfully
+                                    AlertDialog.Builder alert = new AlertDialog.Builder(SignUpActivity.this);
+
+                                    alert.setMessage("Your profile has been created. Sign in to continue").setPositiveButton("Okay", (dialogInterface, i) -> {
+                                        Intent sign_in_intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                                        startActivity(sign_in_intent);
+                                    }).show();
+                                    break;
+                                }
+                                case "2": {
+                                    // email already taken
+                                    helperFunctions.genericDialog("Email address has already been registered");
+                                    break;
+                                }
+                                case "3": {
+                                    // username already taken
+                                    helperFunctions.genericDialog("User name has already been registered");
+                                    break;
+                                }
+                                case "4": {
+                                    // phone number already taken
+                                    helperFunctions.genericDialog("Phone number has already been registered");
+                                    break;
+                                }
+                                default:
+                                    helperFunctions.genericDialog("Something went wrong. Please try again later");
+                                    break;
                             }
                         },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                helperFunctions.stopProgressBar();
+                        error -> {
+                            helperFunctions.stopProgressBar();
+
+                            if (error instanceof TimeoutError || error instanceof NetworkError) {
+                                helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+                            } else {
                                 helperFunctions.genericDialog("Something went wrong. Please try again later");
                             }
                         }) {

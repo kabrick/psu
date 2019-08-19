@@ -42,12 +42,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyView
             timestamp = view.findViewById(R.id.news_feed_timestamp_list);
             profile_picture = view.findViewById(R.id.news_feed_profile_picture);
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onNewsItemSelected(newsList.get(getAdapterPosition()));
-                }
-            });
+            view.setOnClickListener(view1 -> listener.onNewsItemSelected(newsList.get(getAdapterPosition())));
         }
     }
 

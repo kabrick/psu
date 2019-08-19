@@ -99,30 +99,21 @@ public class CreateNewsActivity extends AppCompatActivity {
         remove_attachments_fab = findViewById(R.id.remove_attachments_fab);
         fam = findViewById(R.id.news_fam);
 
-        add_picture_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addPicture();
-                fam.close(true);
-            }
+        add_picture_fab.setOnClickListener(view -> {
+            addPicture();
+            fam.close(true);
         });
 
-        add_attachments_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addAttachment();
-                fam.close(true);
-            }
+        add_attachments_fab.setOnClickListener(view -> {
+            addAttachment();
+            fam.close(true);
         });
 
-        remove_attachments_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attachment_name.setText("");
-                attachment_name.setVisibility(View.GONE);
-                is_attachment_set = false;
-                Toast.makeText(CreateNewsActivity.this, "Attachment has been removed", Toast.LENGTH_LONG).show();
-            }
+        remove_attachments_fab.setOnClickListener(view -> {
+            attachment_name.setText("");
+            attachment_name.setVisibility(View.GONE);
+            is_attachment_set = false;
+            Toast.makeText(CreateNewsActivity.this, "Attachment has been removed", Toast.LENGTH_LONG).show();
         });
 
         helperFunctions = new HelperFunctions(this);
@@ -213,7 +204,12 @@ public class CreateNewsActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 helperFunctions.stopProgressBar();
-                helperFunctions.genericDialog("Something went wrong. Please try again later");
+
+                if (error instanceof TimeoutError || error instanceof NetworkError) {
+                    helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+                } else {
+                    helperFunctions.genericDialog("Something went wrong. Please try again later");
+                }
             }
         }) {
             protected Map<String, String> getParams() {

@@ -21,9 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -38,10 +40,8 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 
 import ug.or.psu.psudrugassessmenttool.R;
-import ug.or.psu.psudrugassessmenttool.helpers.FilePath;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.network.VolleyMultipartRequest;
@@ -89,30 +89,21 @@ public class CreateJobsActivity extends AppCompatActivity {
         remove_attachments_fab = findViewById(R.id.remove_attachments_fab);
         fam = findViewById(R.id.jobs_fam);
 
-        add_picture_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addPicture();
-                fam.close(true);
-            }
+        add_picture_fab.setOnClickListener(view -> {
+            addPicture();
+            fam.close(true);
         });
 
-        add_attachments_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addAttachment();
-                fam.close(true);
-            }
+        add_attachments_fab.setOnClickListener(view -> {
+            addAttachment();
+            fam.close(true);
         });
 
-        remove_attachments_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attachment_name.setText("");
-                attachment_name.setVisibility(View.GONE);
-                is_attachment_set = false;
-                Toast.makeText(CreateJobsActivity.this, "Attachment has been removed", Toast.LENGTH_LONG).show();
-            }
+        remove_attachments_fab.setOnClickListener(view -> {
+            attachment_name.setText("");
+            attachment_name.setVisibility(View.GONE);
+            is_attachment_set = false;
+            Toast.makeText(CreateJobsActivity.this, "Attachment has been removed", Toast.LENGTH_LONG).show();
         });
 
         helperFunctions = new HelperFunctions(this);
@@ -174,37 +165,36 @@ public class CreateJobsActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if(response.equals("0")){
-                    helperFunctions.stopProgressBar();
-                    helperFunctions.genericDialog("Posting job advert failed!");
+        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, response -> {
+            if(response.equals("0")){
+                helperFunctions.stopProgressBar();
+                helperFunctions.genericDialog("Posting job advert failed!");
+            } else {
+                // check if image is selected
+                if(is_picture_set){
+                    // upload picture
+                    uploadProfilePicture(bitmap, response);
                 } else {
-                    // check if image is selected
-                    if(is_picture_set){
-                        // upload picture
-                        uploadProfilePicture(bitmap, response);
-                    } else {
-                        if(is_attachment_set){
-                            uploadAttachment(response);
-                        }
-                        helperFunctions.stopProgressBar();
-                        AlertDialog.Builder alert = new AlertDialog.Builder(CreateJobsActivity.this);
-
-                        alert.setMessage("Job has been posted successfully").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
-                            }
-                        }).show();
+                    if(is_attachment_set){
+                        uploadAttachment(response);
                     }
+                    helperFunctions.stopProgressBar();
+                    AlertDialog.Builder alert = new AlertDialog.Builder(CreateJobsActivity.this);
+
+                    alert.setMessage("Job has been posted successfully").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                        }
+                    }).show();
                 }
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                helperFunctions.stopProgressBar();
+        }, error -> {
+            helperFunctions.stopProgressBar();
+
+            if (error instanceof TimeoutError || error instanceof NetworkError) {
+                helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+            } else {
                 helperFunctions.genericDialog("Something went wrong. Please try again later");
             }
         }) {
@@ -310,17 +300,9 @@ public class CreateJobsActivity extends AppCompatActivity {
         String upload_URL = helperFunctions.getIpAddress() + "upload_jobs_attachment.php";
 
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, upload_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        rQueue.getCache().clear();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //
-                    }
+                response -> rQueue.getCache().clear(),
+                error -> {
+                    //
                 }) {
             @Override
             protected Map<String, String> getParams(){
@@ -399,32 +381,26 @@ public class CreateJobsActivity extends AppCompatActivity {
         String upload_URL = helperFunctions.getIpAddress() + "upload_jobs_picture.php";
 
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, upload_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        rQueue.getCache().clear();
+                response -> {
+                    rQueue.getCache().clear();
 
-                        if(is_attachment_set){
-                            // upload pdf
-                            uploadAttachment(id);
+                    if(is_attachment_set){
+                        // upload pdf
+                        uploadAttachment(id);
+                    }
+
+                    helperFunctions.stopProgressBar();
+                    AlertDialog.Builder alert = new AlertDialog.Builder(CreateJobsActivity.this);
+
+                    alert.setMessage("Job has been posted successfully").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
                         }
-
-                        helperFunctions.stopProgressBar();
-                        AlertDialog.Builder alert = new AlertDialog.Builder(CreateJobsActivity.this);
-
-                        alert.setMessage("Job has been posted successfully").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
-                            }
-                        }).show();
-                    }
+                    }).show();
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //
-                    }
+                error -> {
+                    //
                 }) {
             @Override
             protected Map<String, String> getParams(){

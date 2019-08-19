@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.android.volley.NetworkError;
 import com.android.volley.Request;
+import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
@@ -154,7 +156,12 @@ public class AdrReportFormDetailsActivity extends AppCompatActivity {
                     }
                 }, error -> {
             helperFunctions.stopProgressBar();
-            helperFunctions.genericDialog("Something went wrong. Please try again");
+
+            if (error instanceof TimeoutError || error instanceof NetworkError) {
+                helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+            } else {
+                helperFunctions.genericDialog("Something went wrong. Please try again later");
+            }
             onBackPressed();
         });
 

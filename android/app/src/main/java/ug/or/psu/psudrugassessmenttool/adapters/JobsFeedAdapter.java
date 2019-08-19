@@ -37,12 +37,7 @@ public class JobsFeedAdapter extends RecyclerView.Adapter<JobsFeedAdapter.MyView
             timestamp = view.findViewById(R.id.jobs_feed_timestamp_list);
             profile_picture = view.findViewById(R.id.jobs_feed_profile_picture);
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onJobsItemSelected(jobsList.get(getAdapterPosition()));
-                }
-            });
+            view.setOnClickListener(view1 -> listener.onJobsItemSelected(jobsList.get(getAdapterPosition())));
         }
     }
 
@@ -62,6 +57,7 @@ public class JobsFeedAdapter extends RecyclerView.Adapter<JobsFeedAdapter.MyView
         return new MyViewHolder(itemView);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         final JobsFeed jobs = jobsList.get(position);

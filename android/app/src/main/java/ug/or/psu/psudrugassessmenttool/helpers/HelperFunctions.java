@@ -16,12 +16,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
+import com.android.volley.NetworkError;
+import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -75,11 +74,8 @@ public class HelperFunctions {
     public void genericDialog(String message) {
         AlertDialog.Builder alert = new AlertDialog.Builder(context);
 
-        alert.setMessage(message).setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //
-            }
+        alert.setMessage(message).setPositiveButton("Okay", (dialogInterface, i) -> {
+            //
         }).show();
     }
 
@@ -129,12 +125,7 @@ public class HelperFunctions {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                VolleySingleton.getInstance(context).cancelPendingRequests();
-            }
-        });
+        progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", (dialogInterface, i) -> VolleySingleton.getInstance(context).cancelPendingRequests());
         progressDialog.show();
     }
 
@@ -178,44 +169,38 @@ public class HelperFunctions {
         genericProgressBar("Saving pharmacy location...");
 
         String network_address = getIpAddress()
-                + "set_new_location.php?latitude=" + String.valueOf(latitude)
-                + "&longitude=" + String.valueOf(longitude)
-                + "&altitude=" + String.valueOf(altitude)
+                + "set_new_location.php?latitude=" + latitude
+                + "&longitude=" + longitude
+                + "&altitude=" + altitude
                 + "&pharmacy=" + pharmacy_id
                 + "&id=" + prefManager.getPsuId();
 
         // Request a string response from the provided URL.
         StringRequest request = new StringRequest(network_address,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //stop progress bar
-                        stopProgressBar();
+                response -> {
+                    //stop progress bar
+                    stopProgressBar();
 
-                        //check if location has been saved successfully
-                        if(response.equals("1")){
-                            //go back to user dashboard
-                            AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                    //check if location has been saved successfully
+                    if(response.equals("1")){
+                        //go back to user dashboard
+                        AlertDialog.Builder alert = new AlertDialog.Builder(context);
 
-                            alert.setMessage("Pharmacy location set").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    getDefaultDashboard(prefManager.getMemberCategory());
-                                }
-                            }).show();
-                        } else {
-                            //did not save
-                            genericDialog("Something went wrong! Please try again");
-                        }
+                        alert.setMessage("Pharmacy location set").setPositiveButton("Okay", (dialogInterface, i) -> getDefaultDashboard(prefManager.getMemberCategory())).show();
+                    } else {
+                        //did not save
+                        genericDialog("Something went wrong! Please try again");
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //stop progress bar
-                stopProgressBar();
-                genericDialog("Something went wrong! Please try again");
-            }
-        });
+                }, error -> {
+                    //stop progress bar
+                    stopProgressBar();
+
+                    if (error instanceof TimeoutError || error instanceof NetworkError) {
+                        genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+                    } else {
+                        genericDialog("Something went wrong. Please try again later");
+                    }
+                });
 
         VolleySingleton.getInstance(context).addToRequestQueue(request);
     }
@@ -235,44 +220,38 @@ public class HelperFunctions {
         genericProgressBar("Updating pharmacy location...");
 
         String network_address = getIpAddress()
-                + "edit_location.php?latitude=" + String.valueOf(latitude)
-                + "&longitude=" + String.valueOf(longitude)
-                + "&altitude=" + String.valueOf(altitude)
+                + "edit_location.php?latitude=" + latitude
+                + "&longitude=" + longitude
+                + "&altitude=" + altitude
                 + "&pharmacy=" + pharmacy_id
                 + "&id=" + prefManager.getPsuId();
 
         // Request a string response from the provided URL.
         StringRequest request = new StringRequest(network_address,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //stop progress bar
-                        stopProgressBar();
+                response -> {
+                    //stop progress bar
+                    stopProgressBar();
 
-                        //check if location has been saved successfully
-                        if(response.equals("1")){
-                            //go back to user dashboard
-                            AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                    //check if location has been saved successfully
+                    if(response.equals("1")){
+                        //go back to user dashboard
+                        AlertDialog.Builder alert = new AlertDialog.Builder(context);
 
-                            alert.setMessage("Pharmacy location edited").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    getDefaultDashboard(prefManager.getMemberCategory());
-                                }
-                            }).show();
-                        } else {
-                            //did not save
-                            genericDialog("Something went wrong! Please try again");
-                        }
+                        alert.setMessage("Pharmacy location edited").setPositiveButton("Okay", (dialogInterface, i) -> getDefaultDashboard(prefManager.getMemberCategory())).show();
+                    } else {
+                        //did not save
+                        genericDialog("Something went wrong! Please try again");
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //stop progress bar
-                stopProgressBar();
-                genericDialog("Something went wrong! Please try again");
-            }
-        });
+                }, error -> {
+                    //stop progress bar
+                    stopProgressBar();
+
+                    if (error instanceof TimeoutError || error instanceof NetworkError) {
+                        genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+                    } else {
+                        genericDialog("Something went wrong. Please try again later");
+                    }
+                });
 
         VolleySingleton.getInstance(context).addToRequestQueue(request);
     }
@@ -357,14 +336,11 @@ public class HelperFunctions {
         FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
 
         mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            prefManager.setCurrentLatitude(location.getLatitude());
-                            prefManager.setCurrentLongitude(location.getLongitude());
-                        }
+                .addOnSuccessListener(location -> {
+                    // Got last known location. In some rare situations this can be null.
+                    if (location != null) {
+                        prefManager.setCurrentLatitude(location.getLatitude());
+                        prefManager.setCurrentLongitude(location.getLongitude());
                     }
                 });
     }
@@ -382,53 +358,52 @@ public class HelperFunctions {
         Long working_hours = TimeUnit.MILLISECONDS.toHours(time_diff);
         Long working_minutes = TimeUnit.MILLISECONDS.toMinutes(time_diff) % 60;
 
-        final String content_text = "You have been logged out after a duration of " + String.valueOf(working_hours) + " hour(s) and " + String.valueOf(working_minutes) + " minute(s)";
+        final String content_text = "You have been logged out after a duration of " + working_hours + " hour(s) and " + working_minutes + " minute(s)";
 
         String network_address = getIpAddress()
                 + "set_new_attendance.php?psu_id=" + prefManager.getPsuId()
-                + "&time_in=" + String.valueOf(time_in)
-                + "&time_out=" + String.valueOf(time_out)
-                + "&latitude_in=" + String.valueOf(prefManager.getCurrentLatitude())
-                + "&longitude_in=" + String.valueOf(prefManager.getCurrentLongitude())
-                + "&latitude_out=" + String.valueOf(prefManager.getLastLatitude())
-                + "&longitude_out=" + String.valueOf(prefManager.getLastLongitude())
-                + "&working_hours=" + String.valueOf(working_hours)
+                + "&time_in=" + time_in
+                + "&time_out=" + time_out
+                + "&latitude_in=" + prefManager.getCurrentLatitude()
+                + "&longitude_in=" + prefManager.getCurrentLongitude()
+                + "&latitude_out=" + prefManager.getLastLatitude()
+                + "&longitude_out=" + prefManager.getLastLongitude()
+                + "&working_hours=" + working_hours
                 + "&pharmacy_id=" + prefManager.getPharmacyId()
-                + "&day_id=" + String.valueOf(prefManager.getDayIn());
+                + "&day_id=" + prefManager.getDayIn();
 
         // Request a string response from the provided URL.
         StringRequest request = new StringRequest(network_address,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //stop progress bar
-                        stopProgressBar();
+                response -> {
+                    //stop progress bar
+                    stopProgressBar();
 
-                        //check if location has been saved successfully
-                        if(response.equals("1")){
+                    //check if location has been saved successfully
+                    if(response.equals("1")){
 
-                            //set location set to false
-                            prefManager.setIsPharmacyLocationSet(false);
+                        //set location set to false
+                        prefManager.setIsPharmacyLocationSet(false);
 
-                            //clear the service
-                            Intent intent = new Intent(context, TrackPharmacistService.class);
-                            intent.setAction("stop");
-                            context.startService(intent);
+                        //clear the service
+                        Intent intent = new Intent(context, TrackPharmacistService.class);
+                        intent.setAction("stop");
+                        context.startService(intent);
 
-                            genericDialog(content_text);
-                        } else {
-                            //did not save
-                            genericDialog("Something went wrong! Please try again");
-                        }
+                        genericDialog(content_text);
+                    } else {
+                        //did not save
+                        genericDialog("Something went wrong! Please try again");
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //stop progress bar
-                stopProgressBar();
-                genericDialog("Something went wrong! Please try again");
-            }
-        });
+                }, error -> {
+                    //stop progress bar
+                    stopProgressBar();
+
+                    if (error instanceof TimeoutError || error instanceof NetworkError) {
+                        genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+                    } else {
+                        genericDialog("Something went wrong. Please try again later");
+                    }
+                });
 
         VolleySingleton.getInstance(context).addToRequestQueue(request);
     }

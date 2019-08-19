@@ -29,12 +29,7 @@ public class PharmacistAssessmentSearchAdapter extends RecyclerView.Adapter<Phar
             super(view);
             name = view.findViewById(R.id.pharmacist_assessment_search_name);
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onPharmacistSelected(pharmacistListFiltered.get(getAdapterPosition()));
-                }
-            });
+            view.setOnClickListener(view1 -> listener.onPharmacistSelected(pharmacistListFiltered.get(getAdapterPosition())));
         }
     }
 

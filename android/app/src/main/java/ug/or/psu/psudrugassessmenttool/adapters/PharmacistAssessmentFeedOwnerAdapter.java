@@ -28,12 +28,7 @@ public class PharmacistAssessmentFeedOwnerAdapter extends RecyclerView.Adapter<P
             score = view.findViewById(R.id.pharmacist_assessment_feed_owner_score);
             timestamp = view.findViewById(R.id.pharmacist_assessment_feed_owner_timestamp);
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onFormSelected(formList.get(getAdapterPosition()));
-                }
-            });
+            view.setOnClickListener(view1 -> listener.onFormSelected(formList.get(getAdapterPosition())));
         }
     }
 

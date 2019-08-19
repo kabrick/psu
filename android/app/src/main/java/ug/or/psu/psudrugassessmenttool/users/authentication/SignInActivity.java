@@ -196,7 +196,12 @@ public class SignInActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //dismiss progress dialog
                         helperFunctions.stopProgressBar();
-                        helperFunctions.genericDialog("Something went wrong. Please try again later");
+
+                        if (error instanceof TimeoutError || error instanceof NetworkError) {
+                            helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+                        } else {
+                            helperFunctions.genericDialog("Something went wrong. Please try again later");
+                        }
                     }
                 });
 
