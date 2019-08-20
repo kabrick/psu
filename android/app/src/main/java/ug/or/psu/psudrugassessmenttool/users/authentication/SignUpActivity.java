@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -68,8 +69,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         //add validation for the fields
         mAwesomeValidation = new AwesomeValidation(BASIC);
-        mAwesomeValidation.addValidation(this, R.id.sign_up_password, "[a-zA-Z0-9\\s]+", R.string.missing_password);
-        mAwesomeValidation.addValidation(this, R.id.sign_up_username,"[a-zA-Z0-9\\s]+", R.string.missing_username);
+        //mAwesomeValidation.addValidation(this, R.id.sign_up_password, "[a-zA-Z0-9\\s]+", R.string.missing_password);
+        //mAwesomeValidation.addValidation(this, R.id.sign_up_username,"[a-zA-Z0-9\\s]+", R.string.missing_username);
         mAwesomeValidation.addValidation(this, R.id.sign_up_phone, "[a-zA-Z0-9\\s]+", R.string.missing_telephone);
         mAwesomeValidation.addValidation(this, R.id.sign_up_full_name, "[a-zA-Z0-9\\s]+", R.string.missing_fullname);
         // missing_mem_type
@@ -109,6 +110,19 @@ public class SignUpActivity extends AppCompatActivity {
     public void signUp(View view){
         if (mAwesomeValidation.validate()){
             if(helperFunctions.getConnectionStatus()){
+
+                final String username = sign_up_username.getText().toString();
+                final String password = sign_up_password.getText().toString();
+
+                if(TextUtils.isEmpty(username)) {
+                    sign_up_username.setError("Please fill in the username");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(password)) {
+                    sign_up_password.setError("Please fill in the password");
+                    return;
+                }
 
                 //show progress dialog
                 helperFunctions.genericProgressBar("Signing you up...");

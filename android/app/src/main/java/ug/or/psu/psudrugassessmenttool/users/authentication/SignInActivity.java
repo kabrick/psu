@@ -3,6 +3,7 @@ package ug.or.psu.psudrugassessmenttool.users.authentication;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -56,8 +57,8 @@ public class SignInActivity extends AppCompatActivity {
 
         //add validation for the fields
         mAwesomeValidation = new AwesomeValidation(BASIC);
-        mAwesomeValidation.addValidation(this, R.id.signin_username, "[a-zA-Z0-9\\s]+", R.string.missing_username);
-        mAwesomeValidation.addValidation(this, R.id.signin_password,"[a-zA-Z0-9\\s]+", R.string.missing_password);
+        //mAwesomeValidation.addValidation(this, R.id.signin_username, "[a-zA-Z0-9\\s]+", R.string.missing_username);
+        //mAwesomeValidation.addValidation(this, R.id.signin_password,"[a-zA-Z0-9\\s]+", R.string.missing_password);
     }
 
     public void signUp(View view){
@@ -77,6 +78,19 @@ public class SignInActivity extends AppCompatActivity {
     public void signInLogic(){
         if (mAwesomeValidation.validate()){
             if(helperFunctions.getConnectionStatus()){
+
+                final String username_string = username.getText().toString();
+                final String password_string = password.getText().toString();
+
+                if(TextUtils.isEmpty(username_string)) {
+                    username.setError("Please fill in the username");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(password_string)) {
+                    password.setError("Please fill in the password");
+                    return;
+                }
 
                 //show progress dialog
                 helperFunctions.genericProgressBar("Signing you in...");

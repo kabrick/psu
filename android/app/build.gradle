@@ -9,8 +9,8 @@ android {
         applicationId "ug.or.psu.psudrugassessmenttool"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 8
-        versionName "3.0.5"
+        versionCode 9
+        versionName "3.0.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
