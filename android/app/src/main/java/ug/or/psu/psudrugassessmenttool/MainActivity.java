@@ -2,28 +2,27 @@ package ug.or.psu.psudrugassessmenttool;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.toolbox.JsonObjectRequest;
-
-import org.json.JSONException;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.tasks.Task;
 
 import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
-import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -63,62 +62,52 @@ public class MainActivity extends AppCompatActivity {
      * user authentication method for sign in or sign up depending on user status
      */
     public void userAuthentication(){
-        // check if there is an update for the app
-        helperFunctions.genericProgressBar("Checking for app updates...");
-        String network_address = helperFunctions.getIpAddress() + "get_settings.php";
+        // allow play store to handle app update
+        AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(this);
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
-                response -> {
-                    helperFunctions.stopProgressBar();
+        // Returns an intent object that you use to check for an update.
+        Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
 
-                    try {
-                        PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-                        if (Integer.parseInt(response.getString("current_version")) > packageInfo.versionCode){
-                            // force user to update the app
-                            AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-
-                            alert.setMessage("This version of the application is out of date. Please go to the app store and update to continue using the application").setPositiveButton("Go to app store", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    helperFunctions.openAppStore(MainActivity.this);
-                                }
-                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    finish();
-                                }
-                            }).show();
-                        } else {
-                            // all good, continue with authentication
-                            if(prefManager.isSignedIn()){
-                                // user is signed in so check member category and go to respective dashboard
-                                helperFunctions.getDefaultDashboard(prefManager.getMemberCategory());
-                            } else {
-                                // user is not signed in so go to sign in page
-                                Intent intent_sign_in = new Intent(MainActivity.this, SignInActivity.class);
-                                startActivity(intent_sign_in);
-                            }
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (PackageManager.NameNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }, error -> {
-            helperFunctions.stopProgressBar();
-            Toast.makeText(this, "Unable to check for updates!", Toast.LENGTH_LONG).show();
-
-            if(prefManager.isSignedIn()){
-                // user is signed in so check member category and go to respective dashboard
-                helperFunctions.getDefaultDashboard(prefManager.getMemberCategory());
+        // Checks that the platform will allow the specified type of update.
+        appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                    // For a flexible update, use AppUpdateType.FLEXIBLE
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+                // Request the update.
+                try {
+                    appUpdateManager.startUpdateFlowForResult(
+                            // Pass the intent that is returned by 'getAppUpdateInfo()'.
+                            appUpdateInfo,
+                            // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
+                            AppUpdateType.IMMEDIATE,
+                            // The current activity making the update request.
+                            this,
+                            // Include a request code to later monitor this update request.
+                            1);
+                } catch (IntentSender.SendIntentException e) {
+                    e.printStackTrace();
+                }
             } else {
-                // user is not signed in so go to sign in page
-                Intent intent_sign_in = new Intent(MainActivity.this, SignInActivity.class);
-                startActivity(intent_sign_in);
+                if(prefManager.isSignedIn()){
+                    // user is signed in so check member category and go to respective dashboard
+                    helperFunctions.getDefaultDashboard(prefManager.getMemberCategory());
+                } else {
+                    // user is not signed in so go to sign in page
+                    Intent intent_sign_in = new Intent(MainActivity.this, SignInActivity.class);
+                    startActivity(intent_sign_in);
+                }
             }
         });
+    }
 
-        VolleySingleton.getInstance(this).addToRequestQueue(request);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode != RESULT_OK) {
+                // close the app if update is not applied
+                finish();
+            }
+        }
     }
 
     /**
@@ -148,41 +137,29 @@ public class MainActivity extends AppCompatActivity {
      * @param grantResults permissions acceptance status
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSION_REQUEST_CODE:
-                if (grantResults.length > 0) {
-                    boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    boolean storageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0) {
+                boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                boolean storageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
-                    if (!locationAccepted && !storageAccepted){
-                        // location permission has not been granted so request for it
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION)) {
-                                userPromptPermissions(
-                                        new DialogInterface.OnClickListener() {
-                                            @RequiresApi(api = Build.VERSION_CODES.M)
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                requestPermissions(new String[]{ACCESS_FINE_LOCATION, WRITE_EXTERNAL_STORAGE},
-                                                        PERMISSION_REQUEST_CODE);
-                                            }
-                                        }, new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                // close the app if user has not accepted permissions
-                                                finish();
-                                            }
-                                        });
-                                return;
-                            }
+                if (!locationAccepted && !storageAccepted) {
+                    // location permission has not been granted so request for it
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION)) {
+                            userPromptPermissions(
+                                    (dialog, which) -> requestPermissions(new String[]{ACCESS_FINE_LOCATION, WRITE_EXTERNAL_STORAGE},
+                                            PERMISSION_REQUEST_CODE), (dialog, which) -> {
+                                        // close the app if user has not accepted permissions
+                                        finish();
+                                    });
                         }
-                    } else {
-                        //location permission has been granted so continue to authentication
-                        userAuthentication();
                     }
+                } else {
+                    //location permission has been granted so continue to authentication
+                    userAuthentication();
                 }
-                break;
+            }
         }
     }
 
