@@ -2,12 +2,16 @@ package ug.or.psu.psudrugassessmenttool.services;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -23,21 +27,16 @@ import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 
-import static ug.or.psu.psudrugassessmenttool.services.App.CHANNEL_ID;
-
 public class TrackPharmacistService extends Service {
 
+    public static final String CHANNEL_ID = "trackPharmacistChannel";
     private LocationRequest mLocationRequest;
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationCallback mLocationCallback;
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
     int check_out_of_range = 0;
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
+    int minutes_taken = 0;
 
     @Override
     public void onCreate() {
@@ -75,8 +74,11 @@ public class TrackPharmacistService extends Service {
                     check_out_of_range = 0;
                 }
 
-                //if counter is more than 2 then log the user out
-                if(check_out_of_range > 2){
+                // increment the minutes passed
+                minutes_taken += 10;
+
+                //if counter is more than 2 or 6 hours have passed then log the user out
+                if(check_out_of_range > 2 || minutes_taken > 360){
                     //log the user out
                     helperFunctions.signPharmacistOut();
                 }
@@ -98,6 +100,7 @@ public class TrackPharmacistService extends Service {
             stopSelf();
         }
 
+        createNotificationChannel();
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 0, notificationIntent, 0);
@@ -105,7 +108,7 @@ public class TrackPharmacistService extends Service {
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("PSU App")
                 .setContentText("You are currently logged in")
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.logo)
                 .setContentIntent(pendingIntent)
                 .build();
 
@@ -114,11 +117,35 @@ public class TrackPharmacistService extends Service {
         return START_STICKY;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel serviceChannel = new NotificationChannel(
+                    CHANNEL_ID,
+                    "Track Pharmacist Channel",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(serviceChannel);
+        }
+    }
+
     @SuppressLint("RestrictedApi")
     private void createLocationRequest() {
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(300000);
-        mLocationRequest.setFastestInterval(150000);
+        mLocationRequest.setInterval(600000); // 10 minutes
+        mLocationRequest.setFastestInterval(300000); // 5 minutes
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 

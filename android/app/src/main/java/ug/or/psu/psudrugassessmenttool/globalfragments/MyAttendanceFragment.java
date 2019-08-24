@@ -359,7 +359,7 @@ public class MyAttendanceFragment extends Fragment {
                             }
                             mFusedLocationClient.getLastLocation()
                                     .addOnSuccessListener(location -> {
-                                        // Got last known location. In some rare situations this can be null.
+                                        // Get last known location. In some rare situations this can be null.
                                         if (location != null) {
                                             double current_latitude = location.getLatitude();
                                             double current_longitude = location.getLongitude();

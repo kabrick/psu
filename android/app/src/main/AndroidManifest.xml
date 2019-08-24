@@ -112,7 +112,10 @@
             android:name=".users.dashboards.pharmacist.PsuPharmacistDashboard"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <service android:name=".services.TrackPharmacistService" />
+        <service
+            android:name=".services.TrackPharmacistService"
+            android:enabled="true"
+            android:exported="false"/>
 
         <activity android:name=".globalactivities.FeedbackActivity" />
         <activity
