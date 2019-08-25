@@ -11,13 +11,17 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Objects;
 
@@ -47,6 +51,19 @@ public class MainActivity extends AppCompatActivity {
 
         prefManager = new PreferenceManager(this);
         helperFunctions = new HelperFunctions(this);
+
+        // check if it is the first time app is being opened and set the FCM topic to all
+        if (prefManager.isFirstLaunch()){
+            FirebaseMessaging.getInstance().subscribeToTopic("all")
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
+                            //
+                        }
+                    });
+
+            prefManager.setFirstLaunch(false);
+        }
 
         // check if permission has been accepted
         if(checkPermission()){
