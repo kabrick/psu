@@ -157,7 +157,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 }
                                 case "1": {
                                     // user registered successfully
-                                    AlertDialog.Builder alert = new AlertDialog.Builder(SignUpActivity.this);
+                                    AlertDialog.Builder alert = new AlertDialog.Builder(getApplicationContext());
 
                                     alert.setMessage("Your profile has been created. Sign in to continue").setPositiveButton("Okay", (dialogInterface, i) -> {
                                         Intent sign_in_intent = new Intent(SignUpActivity.this, SignInActivity.class);
