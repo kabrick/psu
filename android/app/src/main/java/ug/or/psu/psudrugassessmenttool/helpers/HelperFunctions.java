@@ -387,6 +387,52 @@ public class HelperFunctions {
         VolleySingleton.getInstance(context).addToRequestQueue(request);
     }
 
+    // sign out pharmacists using the service
+    public void signPharmacistOutService(){
+        //get the timestamp out
+        Long time_out = System.currentTimeMillis();
+        Long time_in = prefManager.getTimeIn();
+        Long time_diff = time_out - time_in;
+
+        //get working hours
+        Long working_hours = TimeUnit.MILLISECONDS.toHours(time_diff);
+        Long working_minutes = TimeUnit.MILLISECONDS.toMinutes(time_diff) % 60;
+
+        String network_address = getIpAddress()
+                + "set_new_attendance.php?psu_id=" + prefManager.getPsuId()
+                + "&time_in=" + time_in
+                + "&time_out=" + time_out
+                + "&latitude_in=" + prefManager.getCurrentLatitude()
+                + "&longitude_in=" + prefManager.getCurrentLongitude()
+                + "&latitude_out=" + prefManager.getLastLatitude()
+                + "&longitude_out=" + prefManager.getLastLongitude()
+                + "&working_hours=" + working_hours
+                + "&pharmacy_id=" + prefManager.getPharmacyId()
+                + "&day_id=" + prefManager.getDayIn();
+
+        // Request a string response from the provided URL.
+        StringRequest request = new StringRequest(network_address,
+                response -> {
+                    //check if location has been saved successfully
+                    if(response.equals("1")){
+
+                        //set location set to false
+                        prefManager.setIsPharmacyLocationSet(false);
+
+                        //clear the service
+                        Intent intent = new Intent(context, TrackPharmacistService.class);
+                        intent.setAction("stop");
+                        context.startService(intent);
+                    } else {
+                        //did not save
+                    }
+                }, error -> {
+            //stop progress bar
+        });
+
+        VolleySingleton.getInstance(context).addToRequestQueue(request);
+    }
+
     public void openAppStore(Context context) {
         // you can also use BuildConfig.APPLICATION_ID
         String appId = context.getPackageName();

@@ -80,7 +80,7 @@ public class TrackPharmacistService extends Service {
                 //if counter is more than 2 or 6 hours have passed then log the user out
                 if(check_out_of_range > 2 || minutes_taken > 360){
                     //log the user out
-                    helperFunctions.signPharmacistOut();
+                    helperFunctions.signPharmacistOutService();
                 }
             }
         };
