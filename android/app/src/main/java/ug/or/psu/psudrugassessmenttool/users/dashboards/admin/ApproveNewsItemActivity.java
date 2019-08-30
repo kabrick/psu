@@ -1,5 +1,6 @@
 package ug.or.psu.psudrugassessmenttool.users.dashboards.admin;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +38,7 @@ public class ApproveNewsItemActivity extends AppCompatActivity {
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,19 +55,9 @@ public class ApproveNewsItemActivity extends AppCompatActivity {
         approve_news_fab = findViewById(R.id.approve_news_fab);
         reject_news_fab = findViewById(R.id.reject_news_fab);
 
-        approve_news_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                approveNews();
-            }
-        });
+        approve_news_fab.setOnClickListener(view -> approveNews());
 
-        reject_news_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rejectNews();
-            }
-        });
+        reject_news_fab.setOnClickListener(view -> rejectNews());
 
         title = findViewById(R.id.approve_news_feed_title_single);
         text = findViewById(R.id.approve_news_feed_text_single);
@@ -113,34 +105,28 @@ public class ApproveNewsItemActivity extends AppCompatActivity {
                 + "get_news_picture.php?id=" + id;
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, network_address, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        helperFunctions.stopProgressBar();
+                response -> {
+                    helperFunctions.stopProgressBar();
 
-                        try {
-                            // check if image is null
-                            if(response.getString("photo").equals("0")){
-                                //
-                            } else {
-                                String picture = helperFunctions.getIpAddress() + response.getString("photo");
+                    try {
+                        // check if image is null
+                        if(response.getString("photo").equals("0")){
+                            //
+                        } else {
+                            String picture = helperFunctions.getIpAddress() + response.getString("photo");
 
-                                Glide.with(ApproveNewsItemActivity.this)
-                                        .load(picture)
-                                        .into(news_image);
+                            Glide.with(ApproveNewsItemActivity.this)
+                                    .load(picture)
+                                    .into(news_image);
 
-                                news_image.setVisibility(View.VISIBLE);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            news_image.setVisibility(View.VISIBLE);
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //
-            }
-        });
+                }, error -> {
+                    //
+                });
 
         VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
@@ -153,23 +139,17 @@ public class ApproveNewsItemActivity extends AppCompatActivity {
 
         // Request a string response from the provided URL.
         StringRequest request = new StringRequest(network_address,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //dismiss progress dialog
-                        helperFunctions.stopProgressBar();
+                response -> {
+                    //dismiss progress dialog
+                    helperFunctions.stopProgressBar();
 
-                        finish();
+                    finish();
 
-                        Intent approve_news_intent = new Intent(ApproveNewsItemActivity.this, ApproveNewsActivity.class);
-                        startActivity(approve_news_intent);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //
-            }
-        });
+                    Intent approve_news_intent = new Intent(ApproveNewsItemActivity.this, ApproveNewsActivity.class);
+                    startActivity(approve_news_intent);
+                }, error -> {
+                    //
+                });
 
         //add to request queue in singleton class
         VolleySingleton.getInstance(this).addToRequestQueue(request);
@@ -183,22 +163,16 @@ public class ApproveNewsItemActivity extends AppCompatActivity {
 
         // Request a string response from the provided URL.
         StringRequest request = new StringRequest(network_address,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //dismiss progress dialog
-                        helperFunctions.stopProgressBar();
-                        finish();
+                response -> {
+                    //dismiss progress dialog
+                    helperFunctions.stopProgressBar();
+                    finish();
 
-                        Intent approve_news_intent = new Intent(ApproveNewsItemActivity.this, ApproveNewsActivity.class);
-                        startActivity(approve_news_intent);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //
-            }
-        });
+                    Intent approve_news_intent = new Intent(ApproveNewsItemActivity.this, ApproveNewsActivity.class);
+                    startActivity(approve_news_intent);
+                }, error -> {
+                    //
+                });
 
         //add to request queue in singleton class
         VolleySingleton.getInstance(this).addToRequestQueue(request);

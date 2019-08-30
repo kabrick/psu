@@ -181,21 +181,8 @@ public class GetLocationActivity extends AppCompatActivity implements GoogleMap.
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //final LocationSettingsStates states = LocationSettingsStates.fromIntent(data);
-        if (requestCode == REQUEST_LOCATION) {
-            switch (resultCode) {
-                case Activity.RESULT_OK: {
-                    // All required changes were successfully made
-                    break;
-                }
-                case Activity.RESULT_CANCELED: {
-                    // The user was asked to change settings, but chose not to
-                    break;
-                }
-                default: {
-                    break;
-                }
-            }
-        }
+        // All required changes were successfully made
+        // The user was asked to change settings, but chose not to
     }
 
     @Override

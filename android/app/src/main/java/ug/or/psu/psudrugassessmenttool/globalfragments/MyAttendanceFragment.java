@@ -147,7 +147,7 @@ public class MyAttendanceFragment extends Fragment {
 
         view_individual_attendance.setOnClickListener(view13 -> viewIndividualAttendance());
 
-        attendance_login.setOnClickListener(view12 -> viewPharmacyLocations());
+        view_your_practice_centers.setOnClickListener(view12 -> viewPharmacyLocations());
 
         view_general_attendance.setOnClickListener(view1 -> {
             if(preferenceManager.getMemberCategory().equals("1")){

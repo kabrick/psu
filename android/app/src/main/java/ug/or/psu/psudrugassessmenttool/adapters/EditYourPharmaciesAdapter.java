@@ -123,7 +123,7 @@ public class EditYourPharmaciesAdapter extends RecyclerView.Adapter<EditYourPhar
 
                 AlertDialog.Builder alert1 = new AlertDialog.Builder(context);
 
-                alert1.setMessage("Are you sure?")
+                alert1.setMessage(confirm_text)
                         .setPositiveButton("Yes", (dialogInterface, i) -> {
                             helperFunctions.genericProgressBar("Removing pharmacy..");
                             String network_address = helperFunctions.getIpAddress() + "remove_pharmacy.php?id=" + id;
