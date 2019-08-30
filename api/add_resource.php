@@ -1,6 +1,7 @@
 <?php
 
 include 'dbconfig.php';
+include 'functions.php';
 
 $originalImgName = $_FILES['filename']['name'];
 $tempName = $_FILES['filename']['tmp_name'];
@@ -17,6 +18,7 @@ if(move_uploaded_file($tempName,$folder.$originalImgName)){
     $query = "INSERT INTO psu_eresources (title, url, category, author, timestamp) VALUES ('$title','$url','$category','$author','$timestamp')";
 
     if($conn->query($query) === TRUE){
+	send_push_notification("PSU Notification - New Resource", $title);
         echo "";
     }else{
         echo "";

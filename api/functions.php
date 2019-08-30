@@ -40,12 +40,6 @@ function send_push_notification($title, $message) {
 
 	// Close connection
 	curl_close($ch);
-
-	/*echo '<h2>Result</h2><hr/><h3>Request </h3><p><pre>';
-	echo json_encode($fields,JSON_PRETTY_PRINT);
-	echo '</pre></p><h3>Response </h3><p><pre>';
-	echo $result;
-	echo '</pre></p>';*/
 }
 
 ?>

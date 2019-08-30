@@ -142,11 +142,7 @@ public class ApproveNewsItemActivity extends AppCompatActivity {
                 response -> {
                     //dismiss progress dialog
                     helperFunctions.stopProgressBar();
-
-                    finish();
-
-                    Intent approve_news_intent = new Intent(ApproveNewsItemActivity.this, ApproveNewsActivity.class);
-                    startActivity(approve_news_intent);
+                    helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
                 }, error -> {
                     //
                 });
