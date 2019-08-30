@@ -61,38 +61,27 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
 
         add_pharmacy_fab = findViewById(R.id.add_pharmacy_fab);
 
-        add_pharmacy_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LayoutInflater inflater1 = LayoutInflater.from(ChoosePharmacyActivity.this);
+        add_pharmacy_fab.setOnClickListener(view -> {
+            LayoutInflater inflater1 = LayoutInflater.from(ChoosePharmacyActivity.this);
 
-                View view1 = inflater1.inflate(R.layout.new_pharmacy_view, null);
+            View view1 = inflater1.inflate(R.layout.new_pharmacy_view, null);
 
-                pharmacy_name = view1.findViewById(R.id.pharmacy_name);
-                pharmacy_location = view1.findViewById(R.id.pharmacy_location);
+            pharmacy_name = view1.findViewById(R.id.pharmacy_name);
+            pharmacy_location = view1.findViewById(R.id.pharmacy_location);
 
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChoosePharmacyActivity.this);
-                alertDialog.setTitle("New Pharmacy Dialog");
-                alertDialog.setView(view1);
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChoosePharmacyActivity.this);
+            alertDialog.setTitle("New Pharmacy Dialog");
+            alertDialog.setView(view1);
 
-                alertDialog.setCancelable(false)
-                        .setPositiveButton("Okay",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
-                                        createNewPharmacy(pharmacy_name.getText().toString(), pharmacy_location.getText().toString());
-                                    }
-                                })
-                        .setNegativeButton("Cancel",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
+            alertDialog.setCancelable(false)
+                    .setPositiveButton("Okay",
+                            (dialog, id) -> createNewPharmacy(pharmacy_name.getText().toString(), pharmacy_location.getText().toString()))
+                    .setNegativeButton("Cancel",
+                            (dialog, id) -> dialog.cancel());
 
-                AlertDialog alertDialog1 = alertDialog.create();
+            AlertDialog alertDialog1 = alertDialog.create();
 
-                alertDialog1.show();
-            }
+            alertDialog1.show();
         });
 
         RecyclerView recyclerView = findViewById(R.id.recycler_choose_pharmacy);
@@ -140,35 +129,24 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
 
         // Request a string response from the provided URL.
         StringRequest request = new StringRequest(network_address,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //stop progress bar
-                        helperFunctions.stopProgressBar();
+                response -> {
+                    //stop progress bar
+                    helperFunctions.stopProgressBar();
 
-                        //check if location has been saved successfully
-                        if(response.equals("1")){
-                            AlertDialog.Builder alert = new AlertDialog.Builder(ChoosePharmacyActivity.this);
+                    //check if location has been saved successfully
+                    if(response.equals("1")){
+                        AlertDialog.Builder alert = new AlertDialog.Builder(ChoosePharmacyActivity.this);
 
-                            alert.setMessage("Pharmacy info saved successfully").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    onBackPressed();
-                                }
-                            }).show();
-                        } else {
-                            //did not save
-                            helperFunctions.genericDialog("Something went wrong! Please try again");
-                        }
+                        alert.setMessage("Pharmacy info saved successfully").setPositiveButton("Okay", (dialogInterface, i) -> onBackPressed()).show();
+                    } else {
+                        //did not save
+                        helperFunctions.genericDialog("Something went wrong! Please try again");
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //stop progress bar
-                helperFunctions.stopProgressBar();
-                helperFunctions.genericDialog("Something went wrong! Please try again");
-            }
-        });
+                }, error -> {
+                    //stop progress bar
+                    helperFunctions.stopProgressBar();
+                    helperFunctions.genericDialog("Something went wrong! Please try again");
+                });
 
         VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
@@ -177,33 +155,27 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
         String url = helperFunctions.getIpAddress() + "get_all_pharmacies.php";
 
         JsonArrayRequest request = new JsonArrayRequest(url,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
+                response -> {
 
-                        //hide the progress bar
-                        progressBar.setVisibility(View.GONE);
+                    //hide the progress bar
+                    progressBar.setVisibility(View.GONE);
 
-                        if (response == null) {
-                            return;
-                        }
-
-                        List<Pharmacy> items = new Gson().fromJson(response.toString(), new TypeToken<List<Pharmacy>>() {
-                        }.getType());
-
-                        pharmaciesList.clear();
-                        pharmaciesList.addAll(items);
-
-                        // refreshing recycler view
-                        mAdapter.notifyDataSetChanged();
+                    if (response == null) {
+                        return;
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // error in getting json, so recursive call till successful
-                fetchPharmacies();
-            }
-        });
+
+                    List<Pharmacy> items = new Gson().fromJson(response.toString(), new TypeToken<List<Pharmacy>>() {
+                    }.getType());
+
+                    pharmaciesList.clear();
+                    pharmaciesList.addAll(items);
+
+                    // refreshing recycler view
+                    mAdapter.notifyDataSetChanged();
+                }, error -> {
+                    // error in getting json, so recursive call till successful
+                    fetchPharmacies();
+                });
 
         VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
@@ -220,12 +192,7 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
 
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-            alert.setMessage(confirm_text).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    updatePharmacyInfo(pharmacy_id, preferenceManager.getPsuId());
-                }
-            }).show();
+            alert.setMessage(confirm_text).setPositiveButton("Yes", (dialogInterface, i) -> updatePharmacyInfo(pharmacy_id, preferenceManager.getPsuId())).show();
         } else {
             helperFunctions.genericDialog("A pharmacist has already been assigned to this pharmacy");
         }
@@ -241,34 +208,23 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
 
         // Request a string response from the provided URL.
         StringRequest request = new StringRequest(network_address,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //stop progress bar
-                        helperFunctions.stopProgressBar();
+                response -> {
+                    //stop progress bar
+                    helperFunctions.stopProgressBar();
 
-                        //check if location has been saved successfully
-                        if(response.equals("1")){
-                            AlertDialog.Builder alert = new AlertDialog.Builder(ChoosePharmacyActivity.this);
+                    //check if location has been saved successfully
+                    if(response.equals("1")){
+                        AlertDialog.Builder alert = new AlertDialog.Builder(ChoosePharmacyActivity.this);
 
-                            alert.setMessage("Pharmacy info saved successfully").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    onBackPressed();
-                                }
-                            }).show();
-                        } else {
-                            helperFunctions.genericDialog("Something went wrong! Please try again");
-                        }
+                        alert.setMessage("Pharmacy info saved successfully").setPositiveButton("Okay", (dialogInterface, i) -> onBackPressed()).show();
+                    } else {
+                        helperFunctions.genericDialog("Something went wrong! Please try again");
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //stop progress bar
-                helperFunctions.stopProgressBar();
-                helperFunctions.genericDialog("Something went wrong! Please try again");
-            }
-        });
+                }, error -> {
+                    //stop progress bar
+                    helperFunctions.stopProgressBar();
+                    helperFunctions.genericDialog("Something went wrong! Please try again");
+                });
 
         VolleySingleton.getInstance(this).addToRequestQueue(request);
     }

@@ -24,7 +24,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/relative1"
+                android:id="@+id/add_practice_center"
                 android:padding="5dp">
 
                 <ImageView
@@ -48,7 +48,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/relative2"
+                android:id="@+id/set_practice_center_location"
                 android:padding="5dp">
 
                 <ImageView
@@ -72,7 +72,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/relative5"
+                android:id="@+id/view_your_practice_centers"
                 android:padding="5dp">
 
                 <ImageView
@@ -107,7 +107,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/relative3"
+                android:id="@+id/attendance_login"
                 android:padding="5dp">
 
                 <ImageView
@@ -131,7 +131,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/relative6"
+                android:id="@+id/attendance_logout"
                 android:padding="5dp">
 
                 <ImageView
@@ -156,7 +156,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/relative4"
+                android:id="@+id/view_individual_attendance"
                 android:padding="5dp">
 
                 <ImageView
@@ -190,7 +190,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/relative10"
+                android:id="@+id/ecpd"
                 android:padding="5dp">
 
                 <ImageView
@@ -214,7 +214,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/relative8"
+                android:id="@+id/support_supervision_checklist"
                 android:padding="5dp">
 
                 <ImageView
@@ -238,7 +238,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/relative9"
+                android:id="@+id/adr_forms"
                 android:padding="5dp">
 
                 <ImageView
@@ -272,7 +272,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/relative7"
+                android:id="@+id/view_general_attendance"
                 android:padding="5dp">
 
                 <ImageView

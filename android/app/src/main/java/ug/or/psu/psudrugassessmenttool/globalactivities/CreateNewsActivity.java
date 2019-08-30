@@ -304,28 +304,22 @@ public class CreateNewsActivity extends AppCompatActivity {
         String upload_URL = helperFunctions.getIpAddress() + "upload_news_attachment.php";
 
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, upload_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        rQueue.getCache().clear();
+                response -> {
+                    rQueue.getCache().clear();
 
-                        helperFunctions.stopProgressBar();
+                    helperFunctions.stopProgressBar();
 
-                        AlertDialog.Builder alert = new AlertDialog.Builder(CreateNewsActivity.this);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(CreateNewsActivity.this);
 
-                        alert.setMessage("Your news article has been posted. It will be reviewed later for approval").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
-                            }
-                        }).show();
-                    }
+                    alert.setMessage("Your news article has been posted. It will be reviewed later for approval").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
+                        }
+                    }).show();
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //
-                    }
+                error -> {
+                    //
                 }) {
             @Override
             protected Map<String, String> getParams(){
@@ -362,22 +356,6 @@ public class CreateNewsActivity extends AppCompatActivity {
     }
 
     private String getRealPathFromURI(Context context, Uri uri) {
-        /*Cursor cursor = null;
-        try {
-            String[] proj = { MediaStore.Images.Media.DATA };
-            cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
-            assert cursor != null;
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        } catch (Exception e) {
-            return "";
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }*/
-
         Cursor returnCursor = context.getContentResolver().query(uri, null, null, null, null);
         /*
          * Get the column indexes of the data in the Cursor,

@@ -2,7 +2,6 @@ package ug.or.psu.psudrugassessmenttool.globalfragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -63,7 +62,7 @@ public class MyAttendanceFragment extends Fragment {
     ArrayList<String> pharmacy_names_attendance;
     ArrayList<String> pharmacy_id_attendance;
     LinearLayout layout3;
-    RelativeLayout relative1, relative2, relative3, relative4, relative5, relative6, relative7, relative8, relative9, relative10;
+    RelativeLayout add_practice_center, set_practice_center_location, attendance_login, view_individual_attendance, view_your_practice_centers, attendance_logout, view_general_attendance, support_supervision_checklist, adr_forms, ecpd;
 
     public MyAttendanceFragment() {
         // Required empty public constructor
@@ -78,19 +77,19 @@ public class MyAttendanceFragment extends Fragment {
         helperFunctions = new HelperFunctions(getContext());
         preferenceManager = new PreferenceManager(Objects.requireNonNull(getContext()));
 
-        relative1 = view.findViewById(R.id.relative1);
-        relative2 = view.findViewById(R.id.relative2);
-        relative3 = view.findViewById(R.id.relative3);
-        relative4 = view.findViewById(R.id.relative4);
-        relative5 = view.findViewById(R.id.relative5);
-        relative6 = view.findViewById(R.id.relative6);
-        relative7 = view.findViewById(R.id.relative7);
-        relative8 = view.findViewById(R.id.relative8);
-        relative9 = view.findViewById(R.id.relative9);
-        relative10 = view.findViewById(R.id.relative10);
+        add_practice_center = view.findViewById(R.id.add_practice_center);
+        set_practice_center_location = view.findViewById(R.id.set_practice_center_location);
+        attendance_login = view.findViewById(R.id.attendance_login);
+        view_individual_attendance = view.findViewById(R.id.view_individual_attendance);
+        view_your_practice_centers = view.findViewById(R.id.view_your_practice_centers);
+        attendance_logout = view.findViewById(R.id.attendance_logout);
+        view_general_attendance = view.findViewById(R.id.view_general_attendance);
+        support_supervision_checklist = view.findViewById(R.id.support_supervision_checklist);
+        adr_forms = view.findViewById(R.id.adr_forms);
+        ecpd = view.findViewById(R.id.ecpd);
         layout3 = view.findViewById(R.id.layout3);
 
-        relative10.setOnClickListener(view1 -> {
+        ecpd.setOnClickListener(view1 -> {
 
             if(preferenceManager.getMemberCategory().equals("2")){
                 String[] mStringArray = {"Add e-CPD", "View Submitted e-CPD","View e-CPD Resources"};
@@ -120,11 +119,11 @@ public class MyAttendanceFragment extends Fragment {
             }
         });
 
-        relative1.setOnClickListener(view17 -> isUserValid());
+        add_practice_center.setOnClickListener(view17 -> isUserValid());
 
-        relative2.setOnClickListener(view16 -> getUnsetPharmacies());
+        set_practice_center_location.setOnClickListener(view16 -> getUnsetPharmacies());
 
-        relative3.setOnClickListener(view15 -> {
+        attendance_login.setOnClickListener(view15 -> {
             if(!preferenceManager.isPharmacyLocationSet()){
                 //start dialog
                 helperFunctions.genericProgressBar("Getting your allocated centres...");
@@ -134,27 +133,24 @@ public class MyAttendanceFragment extends Fragment {
             }
         });
 
-        relative6.setOnClickListener(view14 -> {
+        attendance_logout.setOnClickListener(view14 -> {
             AlertDialog.Builder alert = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
 
-            alert.setMessage("Are you sure you want to log out").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    if(preferenceManager.isPharmacyLocationSet()){
-                        helperFunctions.signPharmacistOut();
-                    } else {
-                        helperFunctions.genericDialog("You are not logged in to any practice centre");
-                    }
+            alert.setMessage("Are you sure you want to log out").setPositiveButton("Yes", (dialogInterface, i) -> {
+                if(preferenceManager.isPharmacyLocationSet()){
+                    helperFunctions.signPharmacistOut();
+                } else {
+                    helperFunctions.genericDialog("You are not logged in to any practice centre");
                 }
             }).show();
         });
 
-        relative4.setOnClickListener(view13 -> viewAttendance());
+        view_individual_attendance.setOnClickListener(view13 -> viewIndividualAttendance());
 
-        relative5.setOnClickListener(view12 -> viewPharmacyLocations());
+        attendance_login.setOnClickListener(view12 -> viewPharmacyLocations());
 
-        relative7.setOnClickListener(view1 -> {
-            if(preferenceManager.getMemberCategory().equals("2")){
+        view_general_attendance.setOnClickListener(view1 -> {
+            if(preferenceManager.getMemberCategory().equals("1")){
                 Intent intent = new Intent(getContext(), ViewGeneralAttendanceActivity.class);
                 startActivity(intent);
             } else {
@@ -162,7 +158,7 @@ public class MyAttendanceFragment extends Fragment {
             }
         });
 
-        relative8.setOnClickListener(view18 -> {
+        support_supervision_checklist.setOnClickListener(view18 -> {
             String[] mStringArray = {"Wholesale Pharmacies", "Retail Pharmacies"};
 
             AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
@@ -185,7 +181,7 @@ public class MyAttendanceFragment extends Fragment {
             dialog.show();
         });
 
-        relative9.setOnClickListener(view19 -> {
+        adr_forms.setOnClickListener(view19 -> {
 
             String[] mStringArray = {"Fill ADR Form", "Withdraw || Edit Filled Form", "View Submitted ADR Forms", "ADR Reports"};
 
@@ -219,8 +215,8 @@ public class MyAttendanceFragment extends Fragment {
         pharmacy_names_attendance = new ArrayList<>();
         pharmacy_id_attendance = new ArrayList<>();
 
-        if(!preferenceManager.getMemberCategory().equals("2")){
-            relative7.setVisibility(View.GONE);
+        if(!preferenceManager.getMemberCategory().equals("1")){
+            view_general_attendance.setVisibility(View.GONE);
         }
 
         return view;
@@ -495,7 +491,7 @@ public class MyAttendanceFragment extends Fragment {
         dialog.show();
     }
 
-    public void viewAttendance(){
+    public void viewIndividualAttendance(){
         helperFunctions.genericProgressBar("Retrieving practice centres");
 
         String network_address = helperFunctions.getIpAddress() + "get_pharmacist_pharmacies.php?id=" + preferenceManager.getPsuId();

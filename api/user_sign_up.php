@@ -43,7 +43,7 @@ if($result_p->num_rows > 0){
 if(move_uploaded_file($tempName,$folder.$originalImgName)){
 
 	//get the last id
-	$sql_id = "SELECT psu_id FROM psu_admin ORDER BY psu_id DESC LIMIT 1";
+	$sql_id = "SELECT psu_id FROM psu_admin ORDER BY admin_id DESC LIMIT 1";
 
 	$result_id = $conn->query($sql_id);
 	$result_assoc_id = $result_id->fetch_assoc();
