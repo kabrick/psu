@@ -52,18 +52,10 @@ public class MainActivity extends AppCompatActivity {
         prefManager = new PreferenceManager(this);
         helperFunctions = new HelperFunctions(this);
 
-        // check if it is the first time app is being opened and set the FCM topic to all
-        if (prefManager.isFirstLaunch()){
-            FirebaseMessaging.getInstance().subscribeToTopic("all")
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
-                            //
-                        }
-                    });
-
-            prefManager.setFirstLaunch(false);
-        }
+        FirebaseMessaging.getInstance().subscribeToTopic("test")
+                .addOnCompleteListener(task -> {
+                    //
+                });
 
         // check if permission has been accepted
         if(checkPermission()){

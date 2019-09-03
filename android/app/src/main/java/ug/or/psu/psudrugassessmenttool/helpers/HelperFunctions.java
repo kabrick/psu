@@ -57,9 +57,6 @@ public class HelperFunctions {
      * @return ip address string
      */
     public String getIpAddress() {
-        //return "https://phasouganda.000webhostapp.com/";
-        //return "http://psucop.com/psu_assessment_tool/";
-        //return "https://psucop.000webhostapp.com/";
         return "https://psucop.com/psu_assessment_tool/";
     }
 

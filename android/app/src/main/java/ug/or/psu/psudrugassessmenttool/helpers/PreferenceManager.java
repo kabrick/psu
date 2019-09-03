@@ -10,7 +10,6 @@ import org.json.JSONException;
 public class PreferenceManager {
 
     private static final String PREF_NAME = "psu_preferences";
-    private static final String FIRST_APP_LAUNCH = "first_app_launch";
     private static final String IS_SIGNED_IN = "logged_in";
     private static final String MEMBER_CATEGORY = "member_category";
     private static final String PSU_PASSMARK = "psu_passmark";
@@ -44,15 +43,6 @@ public class PreferenceManager {
         int PRIVATE_MODE = 0;
         this.pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         this.editor = this.pref.edit();
-    }
-
-    public boolean isFirstLaunch(){
-        return this.pref.getBoolean(FIRST_APP_LAUNCH, true);
-    }
-
-    public void setFirstLaunch(boolean firstLaunch){
-        this.editor.putBoolean(FIRST_APP_LAUNCH, firstLaunch);
-        this.editor.commit();
     }
 
     /**

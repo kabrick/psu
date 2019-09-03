@@ -108,7 +108,7 @@ public class TrackPharmacistService extends Service {
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("PSU App")
                 .setContentText("You are currently logged in")
-                .setSmallIcon(R.drawable.notification_icon)
+                .setSmallIcon(R.drawable.logo)
                 .setColor(getResources().getColor(R.color.colorAccent))
                 .setContentIntent(pendingIntent)
                 .build();
