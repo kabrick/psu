@@ -3,14 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ug.or.psu.psudrugassessmenttool">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,11 +13,18 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon">
         <activity
+            android:name=".globalactivities.ForumPostActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
             android:name=".globalactivities.CustomAdrReportsActivity"
-            android:label="ADR Reports"/>
+            android:label="ADR Reports" />
+
         <activity
             android:name=".globalactivities.PrivacyPolicyActivity"
             android:label="Privacy Policy" />
+
         <activity android:name=".globalactivities.EResourcesViewActivity" />
         <activity
             android:name=".globalactivities.EcpdTakeExamActivity"
@@ -112,12 +111,8 @@
             android:name=".users.dashboards.pharmacist.PsuPharmacistDashboard"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <service
-            android:name=".services.TrackPharmacistService"
-            android:enabled="true"
-            android:exported="false"/>
-
         <activity android:name=".globalactivities.FeedbackActivity" />
+
         <activity
             android:name=".globalactivities.CreateJobsActivity"
             android:label="Add Job Advert" />
@@ -151,7 +146,6 @@
         <activity
             android:name=".users.authentication.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBd46NlOmxCgW6mbzbpAViSjfxV8FbGgY0" />
@@ -159,10 +153,21 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/notification_icon" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
+        <service
+            android:name=".services.TrackPharmacistService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

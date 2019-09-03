@@ -30,6 +30,13 @@
         </menu>
     </item>
 
+    <item android:title="Discussion Forum">
+        <menu>
+            <item android:id="@+id/psu_admin_post_forum"
+                android:title="Post News" />
+        </menu>
+    </item>
+
     <item android:title="e-CPD">
         <menu>
             <item android:id="@+id/psu_admin_view_cpd_results"
