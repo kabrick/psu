@@ -19,6 +19,13 @@
         </menu>
     </item>
 
+    <item android:title="Discussion Forum">
+        <menu>
+            <item android:id="@+id/pharmacist_post_forum"
+                android:title="Post Discussion" />
+        </menu>
+    </item>
+
     <item android:title="Other">
         <menu>
             <item android:id="@+id/pharmacist_edit_profile"

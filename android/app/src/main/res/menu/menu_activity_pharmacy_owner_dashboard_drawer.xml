@@ -23,6 +23,13 @@
         </menu>
     </item>
 
+    <item android:title="Discussion Forum">
+        <menu>
+            <item android:id="@+id/pharmacy_owner_post_forum"
+                android:title="Post Discussion" />
+        </menu>
+    </item>
+
     <item android:title="Other">
         <menu>
             <item android:id="@+id/pharmacy_owner_edit_profile"

@@ -35,6 +35,7 @@ import ug.or.psu.psudrugassessmenttool.globalactivities.EResourcesActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.FeedbackActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.ForumPostActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAssessmentFormFeedOwnerActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PrivacyPolicyActivity;
@@ -162,7 +163,6 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -204,6 +204,10 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
             case R.id.pharmacy_owner_privacy_policy:
                 Intent privacy_policy_intent = new Intent(this, PrivacyPolicyActivity.class);
                 startActivity(privacy_policy_intent);
+                break;
+            case R.id.pharmacy_owner_post_forum:
+                Intent forum_intent = new Intent(this, ForumPostActivity.class);
+                startActivity(forum_intent);
                 break;
             default:
                 //
