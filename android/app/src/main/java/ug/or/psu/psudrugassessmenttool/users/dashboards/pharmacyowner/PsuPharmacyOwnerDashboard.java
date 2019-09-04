@@ -36,6 +36,7 @@ import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.FeedbackActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.ForumPostActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.ForumTopicsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAssessmentFormFeedOwnerActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PrivacyPolicyActivity;
@@ -209,6 +210,8 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
                 Intent forum_intent = new Intent(this, ForumPostActivity.class);
                 startActivity(forum_intent);
                 break;
+            case R.id.pharmacy_owner_view_forum_topic:
+                startActivity(new Intent(this, ForumTopicsActivity.class));
             default:
                 //
                 break;

@@ -13,8 +13,11 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon">
         <activity
-            android:name=".users.dashboards.admin.ApproveForumTopicActivity"
+            android:name=".globalactivities.ForumTopicsActivity"
             android:label="Forum Topics"/>
+        <activity
+            android:name=".users.dashboards.admin.ApproveForumTopicActivity"
+            android:label="Forum Topics" />
         <activity
             android:name=".globalactivities.ForumPostActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -168,13 +171,13 @@
             </intent-filter>
         </service>
     </application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

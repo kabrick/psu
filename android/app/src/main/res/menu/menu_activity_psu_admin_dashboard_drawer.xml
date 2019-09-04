@@ -36,6 +36,8 @@
                 android:title="Post Discussion Topic" />
             <item android:id="@+id/psu_admin_review_forum_topic"
                 android:title="Review Forum Topics" />
+            <item android:id="@+id/psu_admin_view_forum_topic"
+                android:title="View Forum Topics" />
         </menu>
     </item>
 

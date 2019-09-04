@@ -43,6 +43,7 @@ import ug.or.psu.psudrugassessmenttool.globalactivities.EcpdCreateActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditProfileActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.ForumPostActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.ForumTopicsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PrivacyPolicyActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.SearchPharmacistAssessmentFormsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.ViewAllPharmacyCoordinatesActivity;
@@ -312,6 +313,8 @@ public class PsuAdminDashboard extends AppCompatActivity
                 break;
             case R.id.psu_admin_review_forum_topic:
                 startActivity(new Intent(this, ApproveForumTopicActivity.class));
+            case R.id.psu_admin_view_forum_topic:
+                startActivity(new Intent(this, ForumTopicsActivity.class));
             default:
                 //
                 break;
