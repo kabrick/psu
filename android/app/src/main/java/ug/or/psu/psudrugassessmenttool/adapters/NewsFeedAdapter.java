@@ -69,11 +69,6 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.MyView
         holder.title.setText(news.getTitle());
         holder.author.setText("Source: " + news.getSource());
 
-        //covert timestamp to readable format
-        /*CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
-                Long.parseLong(news.getTimeStamp()),
-                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);*/
-
         @SuppressLint("SimpleDateFormat")
         String timeAgo = new java.text.SimpleDateFormat("dd MMMM yyyy").format(new java.util.Date (Long.parseLong(news.getTimeStamp())));
 

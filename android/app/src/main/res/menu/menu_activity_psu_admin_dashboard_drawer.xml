@@ -33,7 +33,9 @@
     <item android:title="Discussion Forum">
         <menu>
             <item android:id="@+id/psu_admin_post_forum"
-                android:title="Post Discussion" />
+                android:title="Post Discussion Topic" />
+            <item android:id="@+id/psu_admin_review_forum_topic"
+                android:title="Review Forum Topics" />
         </menu>
     </item>
 

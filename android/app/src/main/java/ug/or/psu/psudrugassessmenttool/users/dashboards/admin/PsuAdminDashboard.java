@@ -310,6 +310,8 @@ public class PsuAdminDashboard extends AppCompatActivity
                 Intent forum_intent = new Intent(this, ForumPostActivity.class);
                 startActivity(forum_intent);
                 break;
+            case R.id.psu_admin_review_forum_topic:
+                startActivity(new Intent(this, ApproveForumTopicActivity.class));
             default:
                 //
                 break;

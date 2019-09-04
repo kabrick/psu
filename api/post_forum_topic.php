@@ -15,13 +15,13 @@ $author_id = $_POST['author_id'];
 $timestamp = $_POST['timestamp'];
 
 if(!move_uploaded_file($picturesTempName,$picturesFolder.$picturesOriginalImgName)){
-    $picturesUrl = NULL;
-    $picturesOriginalImgName = NULL;
+    $picturesUrl = 0;
+    $picturesOriginalImgName = 0;
 }
 
 if(!move_uploaded_file($documentsTempName,$documentsFolder.$documentsOriginalImgName)){
-    $documentsUrl = NULL;
-    $documentsOriginalImgName = NULL;
+    $documentsUrl = 0;
+    $documentsOriginalImgName = 0;
 }
 
 $sql = "INSERT INTO psu_forums (title, picture_url, picture_name, document_url, document_name, author, created_at) VALUES ('$title','$picturesUrl','$picturesOriginalImgName','$documentsUrl','$documentsOriginalImgName','$author_id','$timestamp')";

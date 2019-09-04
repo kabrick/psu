@@ -26,7 +26,7 @@
     <item android:title="Discussion Forum">
         <menu>
             <item android:id="@+id/pharmacy_owner_post_forum"
-                android:title="Post Discussion" />
+                android:title="Post Discussion Topic" />
         </menu>
     </item>
 

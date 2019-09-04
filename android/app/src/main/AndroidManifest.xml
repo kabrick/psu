@@ -12,20 +12,19 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon">
-
+        <activity
+            android:name=".users.dashboards.admin.ApproveForumTopicActivity"
+            android:label="Forum Topics"/>
         <activity
             android:name=".globalactivities.ForumPostActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize"/>
-
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".globalactivities.CustomAdrReportsActivity"
             android:label="ADR Reports" />
-
         <activity
             android:name=".globalactivities.PrivacyPolicyActivity"
             android:label="Privacy Policy" />
-
         <activity android:name=".globalactivities.EResourcesViewActivity" />
         <activity
             android:name=".globalactivities.EcpdTakeExamActivity"
@@ -111,9 +110,7 @@
         <activity
             android:name=".users.dashboards.pharmacist.PsuPharmacistDashboard"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity android:name=".globalactivities.FeedbackActivity" />
-
         <activity
             android:name=".globalactivities.CreateJobsActivity"
             android:label="Add Job Advert" />
@@ -147,14 +144,13 @@
         <activity
             android:name=".users.authentication.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBd46NlOmxCgW6mbzbpAViSjfxV8FbGgY0" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/logo" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
@@ -163,24 +159,22 @@
             android:name=".services.TrackPharmacistService"
             android:enabled="true"
             android:exported="false" />
-
         <service
             android:name=".services.MyFirebaseMessagingService"
-            android:exported="false">
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
     </application>
-
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
 </manifest>
