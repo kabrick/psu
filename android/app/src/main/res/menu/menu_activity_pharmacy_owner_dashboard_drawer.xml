@@ -12,6 +12,8 @@
             android:title="Pharmacist Assessment Form" />
         <item android:id="@+id/pharmacy_owner_eresources"
             android:title="E Resources" />
+        <item android:id="@+id/pharmacy_owner_link_pharmacy"
+            android:title="Link to Pharmacy" />
     </group>
 
     <item android:title="News">

@@ -212,6 +212,8 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
                 break;
             case R.id.pharmacy_owner_view_forum_topic:
                 startActivity(new Intent(this, ForumTopicsActivity.class));
+            case R.id.pharmacy_owner_link_pharmacy:
+                startActivity(new Intent(this, LinkPharmacyOwnerActivity.class));
             default:
                 //
                 break;
