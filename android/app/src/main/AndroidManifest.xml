@@ -89,7 +89,9 @@
         <activity
             android:name=".users.dashboards.admin.ChoosePharmacyActivity"
             android:label="Choose || Add pharmacy" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

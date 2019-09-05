@@ -44,15 +44,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // add icon to the action bar
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-
         prefManager = new PreferenceManager(this);
         helperFunctions = new HelperFunctions(this);
 
-        FirebaseMessaging.getInstance().subscribeToTopic("test")
+        FirebaseMessaging.getInstance().subscribeToTopic("all")
                 .addOnCompleteListener(task -> {
                     //
                 });
