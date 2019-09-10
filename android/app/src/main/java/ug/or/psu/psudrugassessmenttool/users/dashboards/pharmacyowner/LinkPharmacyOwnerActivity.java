@@ -199,8 +199,10 @@ public class LinkPharmacyOwnerActivity extends AppCompatActivity implements Phar
                         AlertDialog.Builder alert = new AlertDialog.Builder(LinkPharmacyOwnerActivity.this);
 
                         alert.setMessage("Pharmacy info saved successfully").setPositiveButton("Okay", (dialogInterface, i) -> onBackPressed()).show();
-                    } else {
-                        helperFunctions.genericDialog("Something went wrong! Please try again");
+                    } else if(!response.equals("0")) {
+                        helperFunctions.genericDialog(response);
+                    }else {
+                        helperFunctions.genericDialog("S0omething went wrong! Please try again");
                     }
                 }, error -> {
             //stop progress bar
