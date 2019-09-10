@@ -34,6 +34,7 @@ import java.util.Objects;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.globalactivities.AdrReportFormActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.AdrReportFormFeedActivity;
+import ug.or.psu.psudrugassessmenttool.globalactivities.CommonwealthWebsiteActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.CustomAdrReportsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EcpdCreateActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EcpdFeedActivity;
@@ -62,7 +63,11 @@ public class MyAttendanceFragment extends Fragment {
     ArrayList<String> pharmacy_names_attendance;
     ArrayList<String> pharmacy_id_attendance;
     LinearLayout layout3;
-    RelativeLayout add_practice_center, set_practice_center_location, attendance_login, view_individual_attendance, view_your_practice_centers, attendance_logout, view_general_attendance, support_supervision_checklist, adr_forms, ecpd;
+    RelativeLayout add_practice_center, set_practice_center_location, attendance_login,
+            view_individual_attendance, view_your_practice_centers, attendance_logout,
+            view_general_attendance, support_supervision_checklist, adr_forms, ecpd,
+            view_commonwealth_website;
+    View balance_view;
 
     public MyAttendanceFragment() {
         // Required empty public constructor
@@ -88,6 +93,8 @@ public class MyAttendanceFragment extends Fragment {
         adr_forms = view.findViewById(R.id.adr_forms);
         ecpd = view.findViewById(R.id.ecpd);
         layout3 = view.findViewById(R.id.layout3);
+        balance_view = view.findViewById(R.id.balance_view);
+        view_commonwealth_website = view.findViewById(R.id.view_commonwealth_website);
 
         ecpd.setOnClickListener(view1 -> {
 
@@ -217,7 +224,10 @@ public class MyAttendanceFragment extends Fragment {
 
         if(!preferenceManager.getMemberCategory().equals("1")){
             view_general_attendance.setVisibility(View.GONE);
+            balance_view.setVisibility(View.VISIBLE);
         }
+
+        view_commonwealth_website.setOnClickListener(v -> startActivity(new Intent(getContext(), CommonwealthWebsiteActivity.class)));
 
         return view;
     }
