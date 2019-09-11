@@ -1,8 +1,8 @@
 package ug.or.psu.psudrugassessmenttool.models;
 
 public class ForumTopic {
-    private String id, title, picture_url, document_url,
-            document_name, timestamp, name, photo;
+    private String id, title, picture_url, document_url, moderator,
+            document_name, timestamp, name, photo, target_audience;
 
     public String getId() {
         return id;
@@ -66,5 +66,21 @@ public class ForumTopic {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public String getModerator() {
+        return moderator;
+    }
+
+    public void setModerator(String moderator) {
+        this.moderator = moderator;
+    }
+
+    public String getTargetAudience() {
+        return target_audience;
+    }
+
+    public void setTargetAudience(String target_audience) {
+        this.target_audience = target_audience;
     }
 }

@@ -32,8 +32,8 @@ public class ForumTopicApprovalAdapter extends RecyclerView.Adapter<ForumTopicAp
     private HelperFunctions helperFunctions;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView forum_topic_title, forum_topic_document_link, forum_topic_posted_by, forum_topic_timestamp,
-                forum_topic_approve, forum_topic_reject;
+        TextView forum_topic_title, forum_topic_document_link, forum_topic_info,
+                forum_topic_approve, forum_topic_reject, forum_topic_moderator, forum_topic_target_audience;
         ImageView forum_topic_profile_picture, forum_topic_picture;
 
         MyViewHolder(View view) {
@@ -41,12 +41,13 @@ public class ForumTopicApprovalAdapter extends RecyclerView.Adapter<ForumTopicAp
 
             forum_topic_title = view.findViewById(R.id.forum_topic_title);
             forum_topic_document_link = view.findViewById(R.id.forum_topic_document_link);
-            forum_topic_posted_by = view.findViewById(R.id.forum_topic_posted_by);
-            forum_topic_timestamp = view.findViewById(R.id.forum_topic_timestamp);
+            forum_topic_info = view.findViewById(R.id.forum_topic_info);
             forum_topic_profile_picture = view.findViewById(R.id.forum_topic_profile_picture);
             forum_topic_picture = view.findViewById(R.id.forum_topic_picture);
             forum_topic_approve = view.findViewById(R.id.forum_topic_approve);
             forum_topic_reject = view.findViewById(R.id.forum_topic_reject);
+            forum_topic_moderator = view.findViewById(R.id.forum_topic_moderator);
+            forum_topic_target_audience = view.findViewById(R.id.forum_topic_target_audience);
 
             forum_topic_document_link.setOnClickListener(v -> {
                 ForumTopic topic = topicsList.get(getAdapterPosition());
@@ -126,8 +127,22 @@ public class ForumTopicApprovalAdapter extends RecyclerView.Adapter<ForumTopicAp
     public void onBindViewHolder(@NonNull ForumTopicApprovalAdapter.MyViewHolder holder, final int position) {
         final ForumTopic topic = topicsList.get(position);
         holder.forum_topic_title.setText(topic.getTitle());
-        holder.forum_topic_posted_by.setText("Posted by: " + topic.getName());
-        holder.forum_topic_timestamp.setText(topic.getName());
+        holder.forum_topic_moderator.setText("Moderator: " + topic.getModerator());
+
+        switch (topic.getTargetAudience()) {
+            case "0":
+                holder.forum_topic_target_audience.setText("Target Audience: All");
+                break;
+            case "1":
+                holder.forum_topic_target_audience.setText("Target Audience: Administrators");
+                break;
+            case "2":
+                holder.forum_topic_target_audience.setText("Target Audience: Pharmacists");
+                break;
+            case "3":
+                holder.forum_topic_target_audience.setText("Target Audience: Pharmacy Owners");
+                break;
+        }
 
         if (!topic.getDocument_url().equals("0")){
             holder.forum_topic_document_link.setText(topic.getDocument_name());
@@ -146,7 +161,7 @@ public class ForumTopicApprovalAdapter extends RecyclerView.Adapter<ForumTopicAp
         CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
                 Long.parseLong(topic.getTimestamp()),
                 System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
-        holder.forum_topic_timestamp.setText(timeAgo);
+        holder.forum_topic_info.setText("Posted by: " + topic.getName() + " " + timeAgo);
 
         // get the profile picture
         Glide.with(context)

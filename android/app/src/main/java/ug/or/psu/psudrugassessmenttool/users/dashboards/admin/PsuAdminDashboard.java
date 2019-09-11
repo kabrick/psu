@@ -304,17 +304,17 @@ public class PsuAdminDashboard extends AppCompatActivity
                 helperFunctions.signAdminUsersOut();
                 break;
             case R.id.psu_admin_privacy_policy:
-                Intent privacy_policy_intent = new Intent(this, PrivacyPolicyActivity.class);
-                startActivity(privacy_policy_intent);
+                startActivity(new Intent(this, PrivacyPolicyActivity.class));
                 break;
             case R.id.psu_admin_post_forum:
-                Intent forum_intent = new Intent(this, ForumPostActivity.class);
-                startActivity(forum_intent);
+                startActivity(new Intent(this, ForumPostActivity.class));
                 break;
             case R.id.psu_admin_review_forum_topic:
                 startActivity(new Intent(this, ApproveForumTopicActivity.class));
+                break;
             case R.id.psu_admin_view_forum_topic:
                 startActivity(new Intent(this, ForumTopicsActivity.class));
+                break;
             default:
                 //
                 break;
