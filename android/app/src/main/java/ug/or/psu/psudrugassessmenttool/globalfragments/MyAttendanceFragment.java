@@ -156,14 +156,7 @@ public class MyAttendanceFragment extends Fragment {
 
         view_your_practice_centers.setOnClickListener(view12 -> viewPharmacyLocations());
 
-        view_general_attendance.setOnClickListener(view1 -> {
-            if(preferenceManager.getMemberCategory().equals("1")){
-                Intent intent = new Intent(getContext(), ViewGeneralAttendanceActivity.class);
-                startActivity(intent);
-            } else {
-                helperFunctions.genericDialog("You are not allowed to view general attendance");
-            }
-        });
+        view_general_attendance.setOnClickListener(view1 -> startActivity(new Intent(getContext(), ViewGeneralAttendanceActivity.class)));
 
         support_supervision_checklist.setOnClickListener(view18 -> {
             String[] mStringArray = {"Wholesale Pharmacies", "Retail Pharmacies"};

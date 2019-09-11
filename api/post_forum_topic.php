@@ -13,6 +13,8 @@ $documentsUrl = "discussion_forum/documents/".$documentsOriginalImgName;
 $title = $_POST['title'];
 $author_id = $_POST['author_id'];
 $timestamp = $_POST['timestamp'];
+$target_audience = $_POST['target_audience'];
+$moderator = $_POST['moderator'];
 
 if(!move_uploaded_file($picturesTempName,$picturesFolder.$picturesOriginalImgName)){
     $picturesUrl = 0;
@@ -24,7 +26,7 @@ if(!move_uploaded_file($documentsTempName,$documentsFolder.$documentsOriginalImg
     $documentsOriginalImgName = 0;
 }
 
-$sql = "INSERT INTO psu_forums (title, picture_url, picture_name, document_url, document_name, author, created_at) VALUES ('$title','$picturesUrl','$picturesOriginalImgName','$documentsUrl','$documentsOriginalImgName','$author_id','$timestamp')";
+$sql = "INSERT INTO psu_forums (title, picture_url, picture_name, document_url, document_name, target_audience, moderator, author, created_at) VALUES ('$title','$picturesUrl','$picturesOriginalImgName','$documentsUrl','$documentsOriginalImgName','$target_audience','$moderator','$author_id','$timestamp')";
 
 if($conn->query($sql) === TRUE){
     echo "1";

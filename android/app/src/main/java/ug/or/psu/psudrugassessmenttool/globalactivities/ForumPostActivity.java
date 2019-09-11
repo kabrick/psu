@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
@@ -56,6 +57,8 @@ public class ForumPostActivity extends AppCompatActivity {
     private Uri filePath;
     Bitmap bitmap;
     boolean correct_characters = false;
+    int target_audience = 0;
+    String moderator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,8 @@ public class ForumPostActivity extends AppCompatActivity {
 
         helperFunctions = new HelperFunctions(this);
         preferenceManager = new PreferenceManager(this);
+
+        moderator = preferenceManager.getPsuId();
 
         picture_imageview = findViewById(R.id.picture_imageview);
         picture_imageview.setOnClickListener(pictureListener);
@@ -159,10 +164,42 @@ public class ForumPostActivity extends AppCompatActivity {
                 filename = filename.substring(0, filename.lastIndexOf("."));
             }
         }
+
+        if(requestCode == 3){
+            moderator = data.getStringExtra("user_id");
+            Toast.makeText(this, data.getStringExtra("user_name") + " has been assigned as moderator", Toast.LENGTH_LONG).show();
+        }
     }
 
     private final View.OnClickListener pollListener = v -> {
-        Toast.makeText(this, "Feature not ready", Toast.LENGTH_SHORT).show();
+        String[] mStringArray = {"Choose Moderator", "Specify Target Audience"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose action");
+
+        builder.setItems(mStringArray, (dialogInterface, i) -> {
+            if (i == 0){
+                startActivityForResult(new Intent(this, ForumChooseModeratorActivity.class), 3);
+            } else if (i == 1){
+                String[] mStringArray1 = {"All", "Administrators", "Pharmacists", "Pharmacy Owners"};
+
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+                builder1.setTitle("Choose action");
+
+                builder1.setItems(mStringArray1, (dialogInterface1, i1) -> {
+                    target_audience = i1;
+                    Toast.makeText(this, "Target audience has been set", Toast.LENGTH_LONG).show();
+                });
+
+                // create and show the alert dialog
+                AlertDialog dialog1 = builder1.create();
+                dialog1.show();
+            }
+        });
+
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     };
 
     private final View.OnClickListener postForumListener = v -> {
@@ -198,6 +235,8 @@ public class ForumPostActivity extends AppCompatActivity {
                     // add the psu_id
                     params.put("title", forum_title.getText().toString());
                     params.put("author_id", preferenceManager.getPsuId());
+                    params.put("moderator", moderator);
+                    params.put("target_audience", String.valueOf(target_audience));
                     params.put("timestamp", String.valueOf(System.currentTimeMillis()));
                     return params;
                 }
