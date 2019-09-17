@@ -316,10 +316,29 @@
                     android:text="CwPAS App"/>
             </RelativeLayout>
 
-            <View
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:id="@+id/mobile_payments_website"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:alpha="1"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:id="@+id/mobile_payments_image"
+                    android:src="@drawable/internet_blue"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_below="@id/mobile_payments_image"
+                    android:text="Mobile Payments"/>
+            </RelativeLayout>
 
             <View
                 android:layout_width="0dp"

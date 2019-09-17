@@ -3,55 +3,39 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="5dp"
     android:layout_margin="2dp"
     android:background="@drawable/rounded_corners"
+    android:id="@+id/linear_layout"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
-        android:layout_width="0dp"
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/news_comments_profile_picture"
-        android:src="@drawable/psu_logo"
-        android:layout_weight="0.5"/>
+        android:autoLink="all"
+        android:id="@+id/news_comments_comment"/>
 
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_weight="2"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autoLink="all"
-            android:id="@+id/news_comments_comment"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:id="@+id/news_comments_author"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/news_comments_comment"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textColor="@color/timestamp"
+            android:id="@+id/news_comments_timestamp"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:id="@+id/news_comments_author"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:textColor="@color/timestamp"
-                android:id="@+id/news_comments_timestamp"/>
-
-        </LinearLayout>
-
-    </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

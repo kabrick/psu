@@ -5,10 +5,13 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -17,6 +20,7 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.List;
 
 import ug.or.psu.psudrugassessmenttool.R;
+import ug.or.psu.psudrugassessmenttool.globalactivities.ForumTopicViewActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.models.NewsComments;
 
@@ -27,14 +31,16 @@ public class NewsCommentsAdapter extends RecyclerView.Adapter<NewsCommentsAdapte
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView news_comments_comment, news_comments_author, news_comments_timestamp;
-        ImageView news_comments_profile_picture;
+        //ImageView news_comments_profile_picture;
+        LinearLayout linear_layout;
 
         MyViewHolder(View view) {
             super(view);
+            linear_layout = view.findViewById(R.id.linear_layout);
             news_comments_comment = view.findViewById(R.id.news_comments_comment);
             news_comments_author = view.findViewById(R.id.news_comments_author);
             news_comments_timestamp = view.findViewById(R.id.news_comments_timestamp);
-            news_comments_profile_picture = view.findViewById(R.id.news_comments_profile_picture);
+            //news_comments_profile_picture = view.findViewById(R.id.news_comments_profile_picture);
         }
     }
 
@@ -61,17 +67,32 @@ public class NewsCommentsAdapter extends RecyclerView.Adapter<NewsCommentsAdapte
         holder.news_comments_comment.setText(comments.getComment());
         holder.news_comments_author.setText(comments.getAuthor());
 
-        @SuppressLint("SimpleDateFormat")
-        String timeAgo = new java.text.SimpleDateFormat("dd MMMM yyyy").format(new java.util.Date (Long.parseLong(comments.getTimestamp())));
-
+        CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
+                Long.parseLong(comments.getTimestamp()),
+                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
         holder.news_comments_timestamp.setText(timeAgo);
 
-        String image_url = helperFunctions.getIpAddress() + comments.getPhoto();
+        /*// for forums only
+        if (comments.getPhoto().equals("0")){
+            String moderator = ((ForumTopicViewActivity)context).moderator;
 
-        Glide.with(context)
-                .load(image_url)
-                .apply(RequestOptions.circleCropTransform())
-                .into(holder.news_comments_profile_picture);
+            if (moderator.equals(comments.getId())){
+                holder.linear_layout.setGravity(Gravity.END);
+            }
+        }*/
+
+        /*if (comments.getPhoto().equals("0")){
+            // remove profile picture
+            holder.news_comments_profile_picture.setVisibility(View.GONE);
+            holder.news_comments_relative_layout.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        } else {
+            String image_url = helperFunctions.getIpAddress() + comments.getPhoto();
+
+            Glide.with(context)
+                    .load(image_url)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(holder.news_comments_profile_picture);
+        }*/
     }
 
     @Override

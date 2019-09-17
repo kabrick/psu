@@ -39,6 +39,7 @@ import ug.or.psu.psudrugassessmenttool.globalactivities.CustomAdrReportsActivity
 import ug.or.psu.psudrugassessmenttool.globalactivities.EcpdCreateActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EcpdFeedActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourPharmacies;
+import ug.or.psu.psudrugassessmenttool.globalactivities.MobilePaymentsWebsiteActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.ViewPharmacyCoordinatesActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.ViewSubmittedCpdActivity;
@@ -66,7 +67,7 @@ public class MyAttendanceFragment extends Fragment {
     RelativeLayout add_practice_center, set_practice_center_location, attendance_login,
             view_individual_attendance, view_your_practice_centers, attendance_logout,
             view_general_attendance, support_supervision_checklist, adr_forms, ecpd,
-            view_commonwealth_website;
+            view_commonwealth_website, mobile_payments_website;
     View balance_view;
 
     public MyAttendanceFragment() {
@@ -94,6 +95,7 @@ public class MyAttendanceFragment extends Fragment {
         ecpd = view.findViewById(R.id.ecpd);
         layout3 = view.findViewById(R.id.layout3);
         balance_view = view.findViewById(R.id.balance_view);
+        mobile_payments_website = view.findViewById(R.id.mobile_payments_website);
         view_commonwealth_website = view.findViewById(R.id.view_commonwealth_website);
 
         ecpd.setOnClickListener(view1 -> {
@@ -221,6 +223,8 @@ public class MyAttendanceFragment extends Fragment {
         }
 
         view_commonwealth_website.setOnClickListener(v -> startActivity(new Intent(getContext(), CommonwealthWebsiteActivity.class)));
+
+        mobile_payments_website.setOnClickListener(v -> startActivity(new Intent(getContext(), MobilePaymentsWebsiteActivity.class)));
 
         return view;
     }

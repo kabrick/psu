@@ -112,25 +112,24 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:id="@+id/topic_response_layout"
-        android:background="@color/colorPrimary"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp">
 
         <EditText
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="4"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/white"
+            android:layout_marginStart="5dp"
+            android:padding="4dp"
+            android:background="@drawable/edittext_background"
             android:id="@+id/topic_response"/>
 
-        <TextView
+        <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="Send"
-            android:onClick="sendResponse"
-            android:textColor="@color/white"/>
+            android:src="@drawable/send_message"
+            android:onClick="sendResponse"/>
     </LinearLayout>
 
     <ImageView

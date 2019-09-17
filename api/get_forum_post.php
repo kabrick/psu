@@ -25,6 +25,7 @@ $responce['title'] = $result_assoc['title'];
 $responce['picture_url'] = $result_assoc['picture_url'];
 $responce['document_url'] = $result_assoc['document_url'];
 $responce['document_name'] = $result_assoc['document_name'];
+$responce['moderator'] = $result_assoc['moderator'];
 $responce['timestamp'] = $result_assoc['created_at'];
 
 echo json_encode($responce);

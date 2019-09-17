@@ -63,7 +63,7 @@ public class ForumTopicsActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
         helperFunctions.genericProgressBar("Fetching forum topics...");
-        String url = helperFunctions.getIpAddress() + "get_forum_posts.php";
+        String url = helperFunctions.getIpAddress() + "get_forum_posts.php?id=" + preferenceManager.getMemberCategory();
 
         JsonArrayRequest request = new JsonArrayRequest(url,
                 response -> {

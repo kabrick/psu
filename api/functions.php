@@ -6,10 +6,7 @@ function send_push_notification($title, $message) {
 				"title" => $title,
 				"body" => $message
 			),
-		"to" => "/topics/all",
-		"android" => array(
-				"priority" => "high"
-		)
+		"to" => "/topics/all"
 	);
 
 	// Set POST variables

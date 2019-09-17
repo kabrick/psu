@@ -23,8 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -33,17 +31,16 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
-import ug.or.psu.psudrugassessmenttool.adapters.NewsCommentsAdapter;
+import ug.or.psu.psudrugassessmenttool.adapters.ForumResponsesAdapter;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
-import ug.or.psu.psudrugassessmenttool.models.NewsComments;
+import ug.or.psu.psudrugassessmenttool.models.ForumResponses;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
 public class ForumTopicViewActivity extends AppCompatActivity {
@@ -57,12 +54,14 @@ public class ForumTopicViewActivity extends AppCompatActivity {
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
 
-    private List<NewsComments> responsesList;
-    private NewsCommentsAdapter mAdapter;
+    private List<ForumResponses> responsesList;
+    private ForumResponsesAdapter mAdapter;
 
     private Animator currentAnimator;
     private int shortAnimationDuration;
     RecyclerView recyclerView;
+
+    public String moderator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +109,7 @@ public class ForumTopicViewActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.responses_recycler);
         responsesList = new ArrayList<>();
-        mAdapter = new NewsCommentsAdapter(responsesList, this);
+        mAdapter = new ForumResponsesAdapter(responsesList, this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -118,7 +117,6 @@ public class ForumTopicViewActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
         fetchTopic();
-        fetchResponses();
     }
 
     public void fetchTopic() {
@@ -153,11 +151,15 @@ public class ForumTopicViewActivity extends AppCompatActivity {
                                 Long.parseLong(response.getString("timestamp")),
                                 System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
                         forum_topic_view_timestamp.setText(timeAgo);
+
+                        moderator = response.getString("moderator");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
                     helperFunctions.stopProgressBar();
+
+                    fetchResponses();
                 }, error -> {
                     helperFunctions.stopProgressBar();
                     Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
@@ -287,7 +289,7 @@ public class ForumTopicViewActivity extends AppCompatActivity {
                 response -> {
 
             if (response.length() > 0){
-                List<NewsComments> items = new Gson().fromJson(response.toString(), new TypeToken<List<NewsComments>>() {
+                List<ForumResponses> items = new Gson().fromJson(response.toString(), new TypeToken<List<ForumResponses>>() {
                 }.getType());
 
                 responsesList.clear();

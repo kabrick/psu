@@ -1,7 +1,9 @@
 <?php
 include 'dbconfig.php';
 
-$sql = "SELECT * FROM psu_forums WHERE approved = '1' ORDER BY id DESC";
+$category = $_GET['id'];
+
+$sql = "SELECT * FROM psu_forums WHERE approved = '1' AND target_audience = '0' OR target_audience = '$category' ORDER BY id DESC";
 
 $arr = array();
 $counter = 0;
