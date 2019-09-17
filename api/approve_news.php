@@ -13,7 +13,7 @@ $result_assoc = $result->fetch_assoc();
 $sql = "UPDATE psu_news SET approved = '1' WHERE id = '$id'";
 
 if ($conn->query($sql) === TRUE) {
-	send_push_notification("PSU Notification", $result_assoc['title']);
+	send_push_notification("PSU Notification", $result_assoc['title'], 0);
     echo "1";
 } else {
     echo "0";

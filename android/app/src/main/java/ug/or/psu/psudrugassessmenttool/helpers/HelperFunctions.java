@@ -1,6 +1,7 @@
 package ug.or.psu.psudrugassessmenttool.helpers;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -13,6 +14,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
@@ -28,6 +31,7 @@ import org.json.JSONException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 import ug.or.psu.psudrugassessmenttool.services.TrackPharmacistService;
 import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
@@ -473,6 +477,48 @@ public class HelperFunctions {
                     Uri.parse("https://play.google.com/store/apps/details?id="+appId));
             context.startActivity(webIntent);
         }
+    }
+
+    public void checkDeviceId(){
+        if (prefManager.getDeviceId().equals("0")){
+            // device id is not yet set
+            String device_id = String.valueOf(System.currentTimeMillis());
+
+            String network_address = getIpAddress()
+                    + "set_device_id.php?user_id=" + prefManager.getPsuId()
+                    + "&device_id=" + device_id
+                    + "&user_category=" + prefManager.getMemberCategory();
+
+            // Request a string response from the provided URL.
+            StringRequest request = new StringRequest(network_address,
+                    response -> {
+                        //check if device id was registered successfully
+                        if(response.equals("1")){
+                            prefManager.setDeviceId(device_id);
+                        }
+                    }, error -> {
+                //
+            });
+
+            VolleySingleton.getInstance(context).addToRequestQueue(request);
+        } else {
+            // check for updates if available
+            context.sendBroadcast(new Intent().setAction("ug.or.psu.psudrugassessmenttool.services.start_application_service"));
+        }
+    }
+
+    public void displayNotification(Context mContext, String title, String text){
+        Notification notification = new NotificationCompat.Builder(mContext, "fcm")
+                .setContentTitle(title)
+                .setContentText(text)
+                .setSmallIcon(R.drawable.logo)
+                .setColor(mContext.getResources().getColor(R.color.colorPrimary))
+                .build();
+
+        NotificationManagerCompat manager = NotificationManagerCompat.from(mContext.getApplicationContext());
+        int id = prefManager.getNotificationCounter();
+        prefManager.setNotificationCounter(id + 1);
+        manager.notify(id, notification);
     }
 
 }

@@ -11,19 +11,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
-
-import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -46,11 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         prefManager = new PreferenceManager(this);
         helperFunctions = new HelperFunctions(this);
-
-        FirebaseMessaging.getInstance().subscribeToTopic("all")
-                .addOnCompleteListener(task -> {
-                    //
-                });
 
         // check if permission has been accepted
         if(checkPermission()){
@@ -93,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             } else {
                 if(prefManager.isSignedIn()){
+                    // check if device id has not been registered yet
+                    helperFunctions.checkDeviceId();
+
                     // user is signed in so check member category and go to respective dashboard
                     helperFunctions.getDefaultDashboard(prefManager.getMemberCategory());
                 } else {

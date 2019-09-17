@@ -11,7 +11,7 @@ $result_assoc = $result->fetch_assoc();
 $sql = "UPDATE psu_forums SET approved = '1' WHERE id = '$id'";
 
 if ($conn->query($sql) === TRUE) {
-	send_push_notification("PSU Forum", $result_assoc['title']);
+	send_push_notification("PSU Forum", $result_assoc['title'], $result_assoc['target_audience']);
     echo "1";
 } else {
     echo "0";

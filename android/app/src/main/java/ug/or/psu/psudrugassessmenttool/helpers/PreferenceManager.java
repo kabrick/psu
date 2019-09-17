@@ -11,6 +11,8 @@ public class PreferenceManager {
 
     private static final String PREF_NAME = "psu_preferences";
     private static final String IS_SIGNED_IN = "logged_in";
+    private static final String DEVICE_ID = "device_id";
+    private static final String NOTIFICATION_COUNTER = "notification_counter";
     private static final String MEMBER_CATEGORY = "member_category";
     private static final String PSU_PASSMARK = "psu_passmark";
     private static final String PSU_ID = "psu_id";
@@ -64,22 +66,30 @@ public class PreferenceManager {
         this.editor.commit();
     }
 
-    /**
-     * get the passmark for the students
-     *
-     * @return int passmark for the cpd tests
-     */
     public int getPassmark(){
         return this.pref.getInt(PSU_PASSMARK, 60);
     }
 
-    /**
-     * set user sign in status
-     *
-     * @param passmark int state of user sign in
-     */
     public void setPassmark(int passmark){
         this.editor.putInt(PSU_PASSMARK, passmark);
+        this.editor.commit();
+    }
+
+    public int getNotificationCounter(){
+        return this.pref.getInt(NOTIFICATION_COUNTER, 1);
+    }
+
+    public void setNotificationCounter(int counter){
+        this.editor.putInt(NOTIFICATION_COUNTER, counter);
+        this.editor.commit();
+    }
+
+    public String getDeviceId(){
+        return this.pref.getString(DEVICE_ID, "0");
+    }
+
+    public void setDeviceId(String id){
+        this.editor.putString(DEVICE_ID, id);
         this.editor.commit();
     }
 

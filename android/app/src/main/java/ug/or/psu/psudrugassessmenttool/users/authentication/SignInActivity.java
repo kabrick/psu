@@ -122,6 +122,9 @@ public class SignInActivity extends AppCompatActivity {
                                 //set the user's name
                                 prefManager.setPsuName(s[2]);
 
+                                // check if device id has not been registered yet
+                                helperFunctions.checkDeviceId();
+
                                 switch (s[1]) {
                                     case "1": {
                                         // go to admin dashboard

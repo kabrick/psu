@@ -11,7 +11,7 @@ $timestamp = mysqli_real_escape_string($conn, $_POST['timestamp']);
 $sql = "INSERT INTO psu_jobs (title, text, author_id, timestamp, source) VALUES ('$title','$text','$author_id','$timestamp','$source')";
 
 if ($conn->query($sql) === TRUE) {
-	send_push_notification("PSU Notification", $title);
+	send_push_notification("PSU Jobs Notification", $title, 0);
 
     echo $conn->insert_id;
 } else {
