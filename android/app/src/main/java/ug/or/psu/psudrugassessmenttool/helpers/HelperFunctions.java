@@ -261,29 +261,26 @@ public class HelperFunctions {
      */
     public void getDefaultDashboard(String member_category){
         switch (member_category) {
-            case "1": {
+            case "1":
                 // go to psu administrator dashboard
                 Intent intent_admin = new Intent(context, PsuAdminDashboard.class);
                 context.startActivity(intent_admin);
                 break;
-            }
-            case "2": {
+            case "2":
+            case "4":
                 // go to pharmacist dashboard
                 Intent intent_pharmacist = new Intent(context, PsuPharmacistDashboard.class);
                 context.startActivity(intent_pharmacist);
                 break;
-            }
-            case "3": {
+            case "3":
                 // go to pharmacy owner dashboard
                 Intent intent_pharmacy_owner = new Intent(context, PsuPharmacyOwnerDashboard.class);
                 context.startActivity(intent_pharmacy_owner);
                 break;
-            }
-            default: {
+            default:
                 // user details not set so clear all prefs and log out
                 signAdminUsersOut();
                 break;
-            }
         }
     }
 

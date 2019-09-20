@@ -5,13 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
@@ -65,7 +65,7 @@ public class SignUpActivity extends AppCompatActivity {
         sign_up_full_name = findViewById(R.id.sign_up_full_name);
         sign_up_mem_status = findViewById(R.id.sign_up_mem_status);
 
-        sign_up_mem_status.setItems("Pharmacist", "Pharmacy Owner");
+        sign_up_mem_status.setItems("Pharmacist", "Pharmacy Owner", "Intern Pharmacist");
 
         //add validation for the fields
         mAwesomeValidation = new AwesomeValidation(BASIC);
@@ -136,6 +136,9 @@ public class SignUpActivity extends AppCompatActivity {
                     case "Pharmacy Owner":
                         mem_status = "pharmdirector";
                         break;
+                    case "Intern Pharmacist":
+                        mem_status = "internpharma";
+                        break;
                     default:
                         helperFunctions.stopProgressBar();
                         helperFunctions.genericDialog("Select membership status");
@@ -157,12 +160,10 @@ public class SignUpActivity extends AppCompatActivity {
                                 }
                                 case "1": {
                                     // user registered successfully
-                                    AlertDialog.Builder alert = new AlertDialog.Builder(getApplicationContext());
+                                    Toast.makeText(this, "Your profile has been created. Sign in to continue", Toast.LENGTH_LONG).show();
 
-                                    alert.setMessage("Your profile has been created. Sign in to continue").setPositiveButton("Okay", (dialogInterface, i) -> {
-                                        Intent sign_in_intent = new Intent(SignUpActivity.this, SignInActivity.class);
-                                        startActivity(sign_in_intent);
-                                    }).show();
+                                    Intent sign_in_intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                                    startActivity(sign_in_intent);
                                     break;
                                 }
                                 case "2": {

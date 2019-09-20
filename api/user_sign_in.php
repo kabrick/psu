@@ -22,6 +22,8 @@ if ($result->num_rows > 0){
 		$type_value = '2';
 	} else if ($type == 'pharmdirector'){
 		$type_value = '3';
+	} else if ($type == 'internpharma'){
+		$type_value = '4';
 	} else {
 		$type_value = '0';
 	}
