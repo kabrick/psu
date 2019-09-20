@@ -125,31 +125,8 @@ public class SignInActivity extends AppCompatActivity {
                                 // check if device id has not been registered yet
                                 helperFunctions.checkDeviceId();
 
-                                switch (s[1]) {
-                                    case "1": {
-                                        // go to admin dashboard
-                                        Intent intent_admin = new Intent(SignInActivity.this, PsuAdminDashboard.class);
-                                        startActivity(intent_admin);
-                                        break;
-                                    }
-                                    case "2": {
-                                        // go to the pharmacist dashboard
-                                        Intent intent_pharmacist = new Intent(SignInActivity.this, PsuPharmacistDashboard.class);
-                                        startActivity(intent_pharmacist);
-                                        break;
-                                    }
-                                    case "3": {
-                                        // go to pharmacy owner dashboard
-                                        Intent intent_pharmacy_owner = new Intent(SignInActivity.this, PsuPharmacyOwnerDashboard.class);
-                                        startActivity(intent_pharmacy_owner);
-                                        break;
-                                    }
-                                    default: {
-                                        // user details not set so clear all prefs and log out
-                                        helperFunctions.signAdminUsersOut();
-                                        break;
-                                    }
-                                }
+                                // user is signed in so check member category and go to respective dashboard
+                                helperFunctions.getDefaultDashboard(s[1]);
                             } else {
                                 //user credentials are wrong
                                 helperFunctions.genericDialog("Username or password is incorrect");

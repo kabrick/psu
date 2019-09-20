@@ -3,6 +3,7 @@ package ug.or.psu.psudrugassessmenttool.users.dashboards.admin;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -23,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -61,6 +63,7 @@ public class PsuAdminDashboard extends AppCompatActivity
 
     HelperFunctions helperFunctions;
     DrawerLayout drawer;
+    boolean exit_application = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +145,19 @@ public class PsuAdminDashboard extends AppCompatActivity
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else {
+            if (exit_application) {
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+
+            exit_application = true;
+            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(() -> exit_application = false, 2000);
         }
     }
 

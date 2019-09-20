@@ -1,6 +1,7 @@
 package ug.or.psu.psudrugassessmenttool.users.dashboards.pharmacyowner;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -53,6 +55,7 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
     DrawerLayout drawer;
+    boolean exit_application = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +146,16 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else {
+            if (exit_application) {
+                super.onBackPressed();
+                return;
+            }
+
+            exit_application = true;
+            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(() -> exit_application = false, 2000);
         }
     }
 
@@ -212,8 +225,10 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
                 break;
             case R.id.pharmacy_owner_view_forum_topic:
                 startActivity(new Intent(this, ForumTopicsActivity.class));
+                break;
             case R.id.pharmacy_owner_link_pharmacy:
                 startActivity(new Intent(this, LinkPharmacyOwnerActivity.class));
+                break;
             default:
                 //
                 break;
