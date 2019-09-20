@@ -17,6 +17,8 @@
             android:title="View Practice Centre Coordinates" />
         <item android:id="@+id/psu_admin_eresources"
             android:title="E Resources" />
+        <item android:id="@+id/psu_admin_communication"
+            android:title="Send PSU Communication" />
     </group>
 
     <item android:title="News">

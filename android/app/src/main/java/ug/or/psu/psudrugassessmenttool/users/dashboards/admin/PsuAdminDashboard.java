@@ -31,6 +31,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import org.json.JSONException;
 
@@ -179,6 +180,7 @@ public class PsuAdminDashboard extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -250,7 +252,7 @@ public class PsuAdminDashboard extends AppCompatActivity
 
                             try {
                                 LayoutInflater inflater = getLayoutInflater();
-                                @SuppressLint("InflateParams")
+
                                 View view = inflater.inflate(R.layout.layout_add_eresource, null);
 
                                 final EditText passmark = view.findViewById(R.id.title);
@@ -258,7 +260,7 @@ public class PsuAdminDashboard extends AppCompatActivity
                                 passmark.setText(response.getString("passmark"));
                                 passmark.setHint("Passmark");
 
-                                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+                                AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
                                 builder.setView(view);
                                 builder.setTitle("Edit Passmark");
 
@@ -266,7 +268,7 @@ public class PsuAdminDashboard extends AppCompatActivity
                                         .setPositiveButton("Save", null)
                                         .setNegativeButton("Cancel", (dialog, ids) -> dialog.cancel());
 
-                                final android.app.AlertDialog dialog = builder.create();
+                                final AlertDialog dialog = builder.create();
 
                                 dialog.setOnShowListener(dialogInterface -> {
 
@@ -315,6 +317,96 @@ public class PsuAdminDashboard extends AppCompatActivity
                 });
 
                 VolleySingleton.getInstance(this).addToRequestQueue(request);
+                break;
+            case R.id.psu_admin_communication:
+                LayoutInflater inflater = getLayoutInflater();
+
+                View view = inflater.inflate(R.layout.layout_send_communication, null);
+
+                final EditText title = view.findViewById(R.id.communication_title);
+                final EditText message = view.findViewById(R.id.communication_text);
+                final MaterialSpinner category = view.findViewById(R.id.communication_category);
+
+                category.setItems("All", "Administrators", "Pharmacists", "Pharmacy Owners", "Intern Pharmacists");
+
+                AlertDialog.Builder builder1 = new android.app.AlertDialog.Builder(this);
+                builder1.setView(view);
+                builder1.setTitle("Send Communication");
+
+                builder1.setCancelable(false)
+                        .setPositiveButton("Send", null)
+                        .setNegativeButton("Cancel", (dialog, ids) -> dialog.cancel());
+
+                final AlertDialog dialog1 = builder1.create();
+
+                dialog1.setOnShowListener(dialogInterface -> {
+                    Button button = dialog1.getButton(AlertDialog.BUTTON_POSITIVE);
+                    button.setOnClickListener(view1 -> {
+                        String title_string = title.getText().toString();
+                        String message_string = message.getText().toString();
+
+                        if(TextUtils.isEmpty(title_string)) {
+                            helperFunctions.genericDialog("Please fill in the title");
+                            return;
+                        }
+
+                        if(TextUtils.isEmpty(message_string)) {
+                            helperFunctions.genericDialog("Please fill in the message");
+                            return;
+                        }
+
+                        String category_text = category.getText().toString();
+
+                        switch (category_text) {
+                            case "Administrators":
+                                category_text = "1";
+                                break;
+                            case "Pharmacist":
+                                category_text = "2";
+                                break;
+                            case "Pharmacy Owner":
+                                category_text = "3";
+                                break;
+                            case "Intern Pharmacist":
+                                category_text = "4";
+                                break;
+                            case "All":
+                            default:
+                                category_text = "0";
+                                break;
+                        }
+
+                        final String category_text_final = category_text;
+
+                        //show progress dialog
+                        helperFunctions.genericProgressBar("Sending communication...");
+
+                        String url = helperFunctions.getIpAddress() + "send_communication.php";
+
+                        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+                        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, response1 -> {
+                            helperFunctions.stopProgressBar();
+                            helperFunctions.genericDialog("Communication has been sent");
+                            dialog1.dismiss();
+                        }, error -> {
+                            helperFunctions.stopProgressBar();
+                            helperFunctions.genericDialog(error.toString());
+                        }) {
+                            protected Map<String, String> getParams() {
+                                Map<String, String> data = new HashMap<>();
+                                data.put("title", title_string);
+                                data.put("message", message_string);
+                                data.put("category", category_text_final);
+                                return data;
+                            }
+                        };
+
+                        requestQueue.add(MyStringRequest);
+                    });
+                });
+
+                dialog1.show();
                 break;
             case R.id.psu_admin_log_out:
                 helperFunctions.signAdminUsersOut();
