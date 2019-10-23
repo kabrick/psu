@@ -330,14 +330,14 @@
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
                     android:id="@+id/mobile_payments_image"
-                    android:src="@drawable/internet_blue"/>
+                    android:src="@drawable/dollar2"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_below="@id/mobile_payments_image"
-                    android:text="Mobile Payments"/>
+                    android:text="Online Payments"/>
             </RelativeLayout>
 
             <View
