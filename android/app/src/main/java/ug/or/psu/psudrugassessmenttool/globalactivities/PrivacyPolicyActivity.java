@@ -37,7 +37,8 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
         web_view.getSettings().setLoadsImagesAutomatically(true);
         web_view.getSettings().setJavaScriptEnabled(true);
         web_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        web_view.loadUrl("http://www.psucop.com/app/Privacy_Policy.pdf");
+        //web_view.loadUrl("http://www.psucop.com/app/Privacy_Policy.pdf");
+        web_view.loadUrl("https://psucop.com/psu_assessment_tool/privacy_policy.html");
     }
 
     private class MyBrowser extends WebViewClient {
