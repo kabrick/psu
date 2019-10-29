@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -358,6 +359,8 @@ public class MyAttendanceFragment extends Fragment {
                             FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getContext()));
 
                             if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                helperFunctions.stopProgressBar();
+                                Toast.makeText(getContext(), "Please enable location permissions to continue", Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             mFusedLocationClient.getLastLocation()

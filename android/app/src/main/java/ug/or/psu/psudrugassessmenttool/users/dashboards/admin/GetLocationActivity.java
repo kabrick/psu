@@ -4,8 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +36,8 @@ import java.util.Objects;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
+
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 
 public class GetLocationActivity extends AppCompatActivity implements GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
@@ -110,16 +115,19 @@ public class GetLocationActivity extends AppCompatActivity implements GoogleMap.
         getLocationButton.setVisibility(View.VISIBLE);
     }
 
-    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        assert googleMap != null;
-        googleMap.setMyLocationEnabled(true);
-        googleMap.setOnMyLocationButtonClickListener(this);
-        googleMap.setOnMyLocationClickListener(this);
+        if (ContextCompat.checkSelfPermission(this, ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{ACCESS_COARSE_LOCATION}, 1);
+        } else {
+            assert googleMap != null;
+            googleMap.setMyLocationEnabled(true);
+            googleMap.setOnMyLocationButtonClickListener(this);
+            googleMap.setOnMyLocationClickListener(this);
 
-        //zoom into uganda
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(1.3733, 32.2903), 6));
+            //zoom into uganda
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(1.3733, 32.2903), 6));
+        }
     }
 
     public void getLocation(View view){
@@ -199,5 +207,20 @@ public class GetLocationActivity extends AppCompatActivity implements GoogleMap.
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 1) {
+            if (grantResults.length > 0) {
+                boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+
+                if (!locationAccepted) {
+                    onBackPressed();
+                } else {
+                    recreate();
+                }
+            }
+        }
     }
 }

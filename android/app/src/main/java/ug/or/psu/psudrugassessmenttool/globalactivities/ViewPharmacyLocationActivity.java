@@ -1,9 +1,14 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
-import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +26,8 @@ import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.admin.GetLocationActivity;
+
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 
 public class ViewPharmacyLocationActivity extends AppCompatActivity implements GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
@@ -77,20 +84,23 @@ public class ViewPharmacyLocationActivity extends AppCompatActivity implements G
         //
     }
 
-    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        assert googleMap != null;
-        googleMap.setMyLocationEnabled(true);
-        googleMap.setOnMyLocationButtonClickListener(this);
-        googleMap.setOnMyLocationClickListener(this);
+        if (ContextCompat.checkSelfPermission(this, ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{ACCESS_COARSE_LOCATION}, 1);
+        } else {
+            assert googleMap != null;
+            googleMap.setMyLocationEnabled(true);
+            googleMap.setOnMyLocationButtonClickListener(this);
+            googleMap.setOnMyLocationClickListener(this);
 
-        //zoom into location
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15));
+            //zoom into location
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15));
 
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(latitude, longitude))
-                .title(pharmacy_name));
+            googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(latitude, longitude))
+                    .title(pharmacy_name));
+        }
     }
 
     public void editLocation(View view){
@@ -99,5 +109,20 @@ public class ViewPharmacyLocationActivity extends AppCompatActivity implements G
         intent.putExtra("pharmacy_id", pharmacy_id);
         intent.putExtra("status", "1");
         startActivity(intent);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 1) {
+            if (grantResults.length > 0) {
+                boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+
+                if (!locationAccepted) {
+                    onBackPressed();
+                } else {
+                    recreate();
+                }
+            }
+        }
     }
 }

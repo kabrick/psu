@@ -4,8 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -39,6 +42,8 @@ import java.util.Objects;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
+
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 
 public class PharmaciesMapActivity extends AppCompatActivity implements GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
@@ -88,55 +93,58 @@ public class PharmaciesMapActivity extends AppCompatActivity implements GoogleMa
     @Override
     public void onMyLocationClick(@NonNull Location location) {}
 
-    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(final GoogleMap googleMap) {
 
-        assert googleMap != null;
-        googleMap.setMyLocationEnabled(true);
-        googleMap.setOnMyLocationButtonClickListener(this);
-        googleMap.setOnMyLocationClickListener(this);
+        if (ContextCompat.checkSelfPermission(this, ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{ACCESS_COARSE_LOCATION}, 1);
+        } else {
+            assert googleMap != null;
+            googleMap.setMyLocationEnabled(true);
+            googleMap.setOnMyLocationButtonClickListener(this);
+            googleMap.setOnMyLocationClickListener(this);
 
-        String network_address = helperFunctions.getIpAddress() + "get_pharmacies_locations.php";
+            String network_address = helperFunctions.getIpAddress() + "get_pharmacies_locations.php";
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, network_address, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        JSONObject obj;
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, network_address, null,
+                    new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            JSONObject obj;
 
-                        for (int i = 0; i < response.length(); i++){
+                            for (int i = 0; i < response.length(); i++){
 
-                            try {
-                                obj = response.getJSONObject(i);
+                                try {
+                                    obj = response.getJSONObject(i);
 
-                                String pharmacy_name = obj.getString("pharmacy");
-                                String location = obj.getString("location");
-                                double latitude = Double.parseDouble(obj.getString("latitude"));
-                                double longitude = Double.parseDouble(obj.getString("longitude"));
+                                    String pharmacy_name = obj.getString("pharmacy");
+                                    String location = obj.getString("location");
+                                    double latitude = Double.parseDouble(obj.getString("latitude"));
+                                    double longitude = Double.parseDouble(obj.getString("longitude"));
 
-                                //set map locations here
-                                googleMap.addMarker(new MarkerOptions()
-                                        .position(new LatLng(latitude, longitude))
-                                        .title(pharmacy_name)
-                                        .snippet(location));
+                                    //set map locations here
+                                    googleMap.addMarker(new MarkerOptions()
+                                            .position(new LatLng(latitude, longitude))
+                                            .title(pharmacy_name)
+                                            .snippet(location));
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //
-            }
-        });
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //
+                }
+            });
 
-        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
+            VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
 
-        //zoom into uganda
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(1.3733, 32.2903), 6));
+            //zoom into uganda
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(1.3733, 32.2903), 6));
+        }
     }
 
     @Override
@@ -217,5 +225,20 @@ public class PharmaciesMapActivity extends AppCompatActivity implements GoogleMa
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         //
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 1) {
+            if (grantResults.length > 0) {
+                boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+
+                if (!locationAccepted) {
+                    onBackPressed();
+                } else {
+                    recreate();
+                }
+            }
+        }
     }
 }
