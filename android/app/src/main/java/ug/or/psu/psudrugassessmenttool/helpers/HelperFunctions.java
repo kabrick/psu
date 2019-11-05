@@ -2,6 +2,8 @@ package ug.or.psu.psudrugassessmenttool.helpers;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -13,6 +15,7 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -512,10 +515,19 @@ public class HelperFunctions {
                 .setColor(mContext.getResources().getColor(R.color.colorPrimary))
                 .build();
 
-        NotificationManagerCompat manager = NotificationManagerCompat.from(mContext.getApplicationContext());
         int id = prefManager.getNotificationCounter();
         prefManager.setNotificationCounter(id + 1);
-        manager.notify(id, notification);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("fcm", "psu_notifications", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager notificationManager = mContext.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+            notificationManager.notify(id, notification);
+        } else {
+            // for lower builds
+            NotificationManagerCompat manager = NotificationManagerCompat.from(mContext.getApplicationContext());
+            manager.notify(id, notification);
+        }
     }
 
 }
