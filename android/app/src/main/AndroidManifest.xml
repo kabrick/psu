@@ -3,14 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ug.or.psu.psudrugassessmenttool">
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission
+        android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission
+        android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE" />
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission
+        android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -34,7 +41,8 @@
         <activity
             android:name=".globalactivities.ForumTopicViewActivity"
             android:label="Forum Topic" />
-        <activity android:name=".users.dashboards.pharmacyowner.LinkPharmacyOwnerActivity" />
+        <activity
+            android:name=".users.dashboards.pharmacyowner.LinkPharmacyOwnerActivity" />
         <activity
             android:name=".globalactivities.ForumTopicsActivity"
             android:label="Forum Topics" />
@@ -51,11 +59,13 @@
         <activity
             android:name=".globalactivities.PrivacyPolicyActivity"
             android:label="Privacy Policy" />
-        <activity android:name=".globalactivities.EResourcesViewActivity" />
+        <activity
+            android:name=".globalactivities.EResourcesViewActivity" />
         <activity
             android:name=".globalactivities.EcpdTakeExamActivity"
             android:label="Take Test" />
-        <activity android:name=".globalactivities.EcpdMainViewActivity" />
+        <activity
+            android:name=".globalactivities.EcpdMainViewActivity" />
         <activity
             android:name=".globalactivities.EcpdAddQuestionsActivity"
             android:label="e-CPD Questions" />
@@ -71,17 +81,25 @@
         <activity
             android:name=".globalactivities.ViewEcpdResultsActivity"
             android:label="e-CPD Results" />
-        <activity android:name=".globalactivities.EcpdFeedActivity" />
-        <activity android:name=".globalactivities.AdrReportFormDetailsActivity" />
-        <activity android:name=".globalactivities.AdrReportFormFeedActivity" />
-        <activity android:name=".globalactivities.AdrReportFormActivity" />
-        <activity android:name=".globalactivities.ViewWholesaleInspectionChecklistActivity" />
-        <activity android:name=".globalactivities.WholesaleInspectionFeedActivity" />
-        <activity android:name=".globalactivities.ViewAllPharmacyCoordinatesActivity" />
+        <activity
+            android:name=".globalactivities.EcpdFeedActivity" />
+        <activity
+            android:name=".globalactivities.AdrReportFormDetailsActivity" />
+        <activity
+            android:name=".globalactivities.AdrReportFormFeedActivity" />
+        <activity
+            android:name=".globalactivities.AdrReportFormActivity" />
+        <activity
+            android:name=".globalactivities.ViewWholesaleInspectionChecklistActivity" />
+        <activity
+            android:name=".globalactivities.WholesaleInspectionFeedActivity" />
+        <activity
+            android:name=".globalactivities.ViewAllPharmacyCoordinatesActivity" />
         <activity
             android:name=".users.authentication.ForgotPasswordActivity"
             android:label="Password Reset" />
-        <activity android:name=".globalactivities.ViewPharmacyCoordinatesActivity" />
+        <activity
+            android:name=".globalactivities.ViewPharmacyCoordinatesActivity" />
         <activity
             android:name=".globalactivities.EditYourNewsActivity"
             android:label="View Your News" />
@@ -100,17 +118,23 @@
         <activity
             android:name=".globalactivities.EResourcesActivity"
             android:label="E-Resources" />
-        <activity android:name=".globalactivities.ViewYourPharmacyActivity" />
-        <activity android:name=".globalactivities.EditPharmacyInformationActivity" />
-        <activity android:name=".globalactivities.EditYourPharmacies" />
-        <activity android:name=".globalactivities.ViewPharmacyLocationActivity" />
-        <activity android:name=".users.dashboards.admin.ViewGeneralAttendanceActivity" />
+        <activity
+            android:name=".globalactivities.ViewYourPharmacyActivity" />
+        <activity
+            android:name=".globalactivities.EditPharmacyInformationActivity" />
+        <activity
+            android:name=".globalactivities.EditYourPharmacies" />
+        <activity
+            android:name=".globalactivities.ViewPharmacyLocationActivity" />
+        <activity
+            android:name=".users.dashboards.admin.ViewGeneralAttendanceActivity" />
         <activity
             android:name=".users.dashboards.admin.ChoosePharmacyActivity"
             android:label="Choose || Add pharmacy" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -119,16 +143,20 @@
         </activity>
         <activity
             android:name=".users.authentication.SignInActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".users.dashboards.admin.GetLocationActivity" />
-        <activity android:name=".globalactivities.NewsViewActivity" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:noHistory="true"/>
+        <activity
+            android:name=".users.dashboards.admin.GetLocationActivity" />
+        <activity
+            android:name=".globalactivities.NewsViewActivity" />
         <activity
             android:name=".globalactivities.CreateNewsActivity"
             android:label="Submit News" />
         <activity
             android:name=".globalactivities.PharmacistAttendanceActivity"
             android:label="View Attendance" />
-        <activity android:name=".globalactivities.PharmaciesMapActivity" />
+        <activity
+            android:name=".globalactivities.PharmaciesMapActivity" />
         <activity
             android:name=".users.dashboards.admin.PsuAdminDashboard"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -138,37 +166,53 @@
         <activity
             android:name=".users.dashboards.pharmacist.PsuPharmacistDashboard"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".globalactivities.FeedbackActivity" />
+        <activity
+            android:name=".globalactivities.FeedbackActivity" />
         <activity
             android:name=".globalactivities.CreateJobsActivity"
             android:label="Add Job Advert" />
         <activity
             android:name=".globalactivities.JobsViewActivity"
             android:label="View Job Advert" />
-        <activity android:name=".globalactivities.WholesaleInspectionActivity" />
-        <activity android:name=".globalactivities.FeedbackDetailsActivity" />
-        <activity android:name=".globalactivities.NewsViewPostedActivity" />
-        <activity android:name=".globalactivities.EditNewsActivity" />
-        <activity android:name=".globalactivities.EditProfileActivity" />
+        <activity
+            android:name=".globalactivities.WholesaleInspectionActivity" />
+        <activity
+            android:name=".globalactivities.FeedbackDetailsActivity" />
+        <activity
+            android:name=".globalactivities.NewsViewPostedActivity" />
+        <activity
+            android:name=".globalactivities.EditNewsActivity" />
+        <activity
+            android:name=".globalactivities.EditProfileActivity" />
         <activity
             android:name=".globalactivities.UserNewsActivity"
             android:label="View News" />
-        <activity android:name=".users.dashboards.admin.SetPharmacyLocationActivity" />
-        <activity android:name=".users.dashboards.admin.ViewPharmacyActivity" />
+        <activity
+            android:name=".users.dashboards.admin.SetPharmacyLocationActivity" />
+        <activity
+            android:name=".users.dashboards.admin.ViewPharmacyActivity" />
         <activity
             android:name=".users.dashboards.admin.ApproveNewsActivity"
             android:label="Approve News" />
         <activity
             android:name=".users.dashboards.admin.ApproveNewsItemActivity"
             android:label="Approve News" />
-        <activity android:name=".globalactivities.PharmacistAssessmentFormActivity" />
-        <activity android:name=".globalactivities.ConfirmPharmacistAssessmentFormActivity" />
-        <activity android:name=".globalactivities.PharmacistAssessmentFormFeedActivity" />
-        <activity android:name=".globalactivities.PharmacistAssessmentFormFeedOwnerActivity" />
-        <activity android:name=".globalactivities.ViewPharmacistAssessmentFormOwnerActivity" />
-        <activity android:name=".globalactivities.EditPharmacistAssessmentFormActivity" />
-        <activity android:name=".globalactivities.ViewPharmacistAssessmentFormActivity" />
-        <activity android:name=".globalactivities.SearchPharmacistAssessmentFormsActivity" />
+        <activity
+            android:name=".globalactivities.PharmacistAssessmentFormActivity" />
+        <activity
+            android:name=".globalactivities.ConfirmPharmacistAssessmentFormActivity" />
+        <activity
+            android:name=".globalactivities.PharmacistAssessmentFormFeedActivity" />
+        <activity
+            android:name=".globalactivities.PharmacistAssessmentFormFeedOwnerActivity" />
+        <activity
+            android:name=".globalactivities.ViewPharmacistAssessmentFormOwnerActivity" />
+        <activity
+            android:name=".globalactivities.EditPharmacistAssessmentFormActivity" />
+        <activity
+            android:name=".globalactivities.ViewPharmacistAssessmentFormActivity" />
+        <activity
+            android:name=".globalactivities.SearchPharmacistAssessmentFormsActivity" />
         <activity
             android:name=".users.authentication.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -176,12 +220,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBd46NlOmxCgW6mbzbpAViSjfxV8FbGgY0" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/logo" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
 
         <receiver
             android:name=".services.StartApplicationService"
