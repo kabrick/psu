@@ -19,7 +19,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.Volley;
-import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.io.ByteArrayOutputStream;
@@ -32,11 +31,8 @@ import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.network.VolleyMultipartRequest;
 
-import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
-
 public class SignUpActivity extends AppCompatActivity {
 
-    AwesomeValidation mAwesomeValidation;
     PreferenceManager prefManager;
     HelperFunctions helperFunctions;
     MaterialSpinner sign_up_mem_status;
@@ -66,14 +62,6 @@ public class SignUpActivity extends AppCompatActivity {
         sign_up_mem_status = findViewById(R.id.sign_up_mem_status);
 
         sign_up_mem_status.setItems("Pharmacist", "Pharmacy Owner", "Intern Pharmacist");
-
-        //add validation for the fields
-        mAwesomeValidation = new AwesomeValidation(BASIC);
-        //mAwesomeValidation.addValidation(this, R.id.sign_up_password, "[a-zA-Z0-9\\s]+", R.string.missing_password);
-        //mAwesomeValidation.addValidation(this, R.id.sign_up_username,"[a-zA-Z0-9\\s]+", R.string.missing_username);
-        mAwesomeValidation.addValidation(this, R.id.sign_up_phone, "[a-zA-Z0-9\\s]+", R.string.missing_telephone);
-        mAwesomeValidation.addValidation(this, R.id.sign_up_full_name, "[a-zA-Z0-9\\s]+", R.string.missing_fullname);
-        // missing_mem_type
     }
 
     public void changeProfilePicture(View view){
@@ -108,126 +96,124 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void signUp(View view){
-        if (mAwesomeValidation.validate()){
-            if(helperFunctions.getConnectionStatus()){
+        if(helperFunctions.getConnectionStatus()){
 
-                final String username = sign_up_username.getText().toString();
-                final String password = sign_up_password.getText().toString();
+            final String username = sign_up_username.getText().toString();
+            final String password = sign_up_password.getText().toString();
 
-                if(TextUtils.isEmpty(username)) {
-                    sign_up_username.setError("Please fill in the username");
-                    return;
-                }
-
-                if(TextUtils.isEmpty(password)) {
-                    sign_up_password.setError("Please fill in the password");
-                    return;
-                }
-
-                //show progress dialog
-                helperFunctions.genericProgressBar("Signing you up...");
-
-                String mem_status = sign_up_mem_status.getText().toString();
-
-                switch (mem_status) {
-                    case "Pharmacist":
-                        mem_status = "pharmacists";
-                        break;
-                    case "Pharmacy Owner":
-                        mem_status = "pharmdirector";
-                        break;
-                    case "Intern Pharmacist":
-                        mem_status = "internpharma";
-                        break;
-                    default:
-                        helperFunctions.stopProgressBar();
-                        helperFunctions.genericDialog("Select membership status");
-                        return;
-                }
-
-                String upload_URL = helperFunctions.getIpAddress() + "user_sign_up.php";
-
-                final String finalMem_status = mem_status;
-                VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, upload_URL,
-                        response -> {
-                            rQueue.getCache().clear();
-                            helperFunctions.stopProgressBar();
-
-                            switch (response) {
-                                case "0": {
-                                    helperFunctions.genericDialog("Something went wrong. Please try again later");
-                                    break;
-                                }
-                                case "1": {
-                                    // user registered successfully
-                                    Toast.makeText(this, "Your profile has been created. Sign in to continue", Toast.LENGTH_LONG).show();
-
-                                    Intent sign_in_intent = new Intent(SignUpActivity.this, SignInActivity.class);
-                                    startActivity(sign_in_intent);
-                                    break;
-                                }
-                                case "2": {
-                                    // email already taken
-                                    helperFunctions.genericDialog("Email address has already been registered");
-                                    break;
-                                }
-                                case "3": {
-                                    // username already taken
-                                    helperFunctions.genericDialog("User name has already been registered");
-                                    break;
-                                }
-                                case "4": {
-                                    // phone number already taken
-                                    helperFunctions.genericDialog("Phone number has already been registered");
-                                    break;
-                                }
-                                default:
-                                    helperFunctions.genericDialog("Something went wrong. Please try again later");
-                                    break;
-                            }
-                        },
-                        error -> {
-                            helperFunctions.stopProgressBar();
-
-                            if (error instanceof TimeoutError || error instanceof NetworkError) {
-                                helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
-                            } else {
-                                helperFunctions.genericDialog("Something went wrong. Please try again later");
-                            }
-                        }) {
-                    @Override
-                    protected Map<String, String> getParams(){
-                        Map<String, String> params = new HashMap<>();
-                        params.put("full_names", sign_up_full_name.getText().toString());
-                        params.put("email", sign_up_email.getText().toString());
-                        params.put("phone", sign_up_phone.getText().toString());
-                        params.put("password", sign_up_password.getText().toString());
-                        params.put("username", sign_up_username.getText().toString());
-                        params.put("mem_status", finalMem_status);
-                        return params;
-                    }
-
-                    /*
-                     *pass files using below method
-                     * */
-                    @Override
-                    protected Map<String, DataPart> getByteData() {
-                        Map<String, DataPart> params = new HashMap<>();
-                        long imagename = System.currentTimeMillis();
-                        params.put("filename", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
-                        return params;
-                    }
-                };
-
-                volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(
-                        0,
-                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                rQueue = Volley.newRequestQueue(this);
-                rQueue.add(volleyMultipartRequest);
-            } else {
-                helperFunctions.genericDialog("Internet connection has been lost!");
+            if(TextUtils.isEmpty(username)) {
+                sign_up_username.setError("Please fill in the username");
+                return;
             }
+
+            if(TextUtils.isEmpty(password)) {
+                sign_up_password.setError("Please fill in the password");
+                return;
+            }
+
+            //show progress dialog
+            helperFunctions.genericProgressBar("Signing you up...");
+
+            String mem_status = sign_up_mem_status.getText().toString();
+
+            switch (mem_status) {
+                case "Pharmacist":
+                    mem_status = "pharmacists";
+                    break;
+                case "Pharmacy Owner":
+                    mem_status = "pharmdirector";
+                    break;
+                case "Intern Pharmacist":
+                    mem_status = "internpharma";
+                    break;
+                default:
+                    helperFunctions.stopProgressBar();
+                    helperFunctions.genericDialog("Select membership status");
+                    return;
+            }
+
+            String upload_URL = helperFunctions.getIpAddress() + "user_sign_up.php";
+
+            final String finalMem_status = mem_status;
+            VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, upload_URL,
+                    response -> {
+                        rQueue.getCache().clear();
+                        helperFunctions.stopProgressBar();
+
+                        switch (response) {
+                            case "0": {
+                                helperFunctions.genericDialog("Something went wrong. Please try again later");
+                                break;
+                            }
+                            case "1": {
+                                // user registered successfully
+                                Toast.makeText(this, "Your profile has been created. Sign in to continue", Toast.LENGTH_LONG).show();
+
+                                Intent sign_in_intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                                startActivity(sign_in_intent);
+                                break;
+                            }
+                            case "2": {
+                                // email already taken
+                                helperFunctions.genericDialog("Email address has already been registered");
+                                break;
+                            }
+                            case "3": {
+                                // username already taken
+                                helperFunctions.genericDialog("User name has already been registered");
+                                break;
+                            }
+                            case "4": {
+                                // phone number already taken
+                                helperFunctions.genericDialog("Phone number has already been registered");
+                                break;
+                            }
+                            default:
+                                helperFunctions.genericDialog("Something went wrong. Please try again later");
+                                break;
+                        }
+                    },
+                    error -> {
+                        helperFunctions.stopProgressBar();
+
+                        if (error instanceof TimeoutError || error instanceof NetworkError) {
+                            helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+                        } else {
+                            helperFunctions.genericDialog("Something went wrong. Please try again later");
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams(){
+                    Map<String, String> params = new HashMap<>();
+                    params.put("full_names", sign_up_full_name.getText().toString());
+                    params.put("email", sign_up_email.getText().toString());
+                    params.put("phone", sign_up_phone.getText().toString());
+                    params.put("password", sign_up_password.getText().toString());
+                    params.put("username", sign_up_username.getText().toString());
+                    params.put("mem_status", finalMem_status);
+                    return params;
+                }
+
+                /*
+                 *pass files using below method
+                 * */
+                @Override
+                protected Map<String, DataPart> getByteData() {
+                    Map<String, DataPart> params = new HashMap<>();
+                    long imagename = System.currentTimeMillis();
+                    params.put("filename", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                    return params;
+                }
+            };
+
+            volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    0,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            rQueue = Volley.newRequestQueue(this);
+            rQueue.add(volleyMultipartRequest);
+        } else {
+            helperFunctions.genericDialog("Internet connection has been lost!");
         }
     }
 

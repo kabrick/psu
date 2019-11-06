@@ -11,23 +11,16 @@ import android.widget.EditText;
 import com.android.volley.NetworkError;
 import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.StringRequest;
-import com.basgeekball.awesomevalidation.AwesomeValidation;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.admin.PsuAdminDashboard;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.pharmacist.PsuPharmacistDashboard;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.pharmacyowner.PsuPharmacyOwnerDashboard;
-
-import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 
 public class SignInActivity extends AppCompatActivity {
 
     EditText username;
     EditText password;
-    AwesomeValidation mAwesomeValidation;
     PreferenceManager prefManager;
     HelperFunctions helperFunctions;
     View activityView;
@@ -54,11 +47,6 @@ public class SignInActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-        //add validation for the fields
-        mAwesomeValidation = new AwesomeValidation(BASIC);
-        //mAwesomeValidation.addValidation(this, R.id.signin_username, "[a-zA-Z0-9\\s]+", R.string.missing_username);
-        //mAwesomeValidation.addValidation(this, R.id.signin_password,"[a-zA-Z0-9\\s]+", R.string.missing_password);
     }
 
     public void signUp(View view){
@@ -76,77 +64,75 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void signInLogic(){
-        if (mAwesomeValidation.validate()){
-            if(helperFunctions.getConnectionStatus()){
+        if(helperFunctions.getConnectionStatus()){
 
-                final String username_string = username.getText().toString();
-                final String password_string = password.getText().toString();
+            final String username_string = username.getText().toString();
+            final String password_string = password.getText().toString();
 
-                if(TextUtils.isEmpty(username_string)) {
-                    username.setError("Please fill in the username");
-                    return;
-                }
-
-                if(TextUtils.isEmpty(password_string)) {
-                    password.setError("Please fill in the password");
-                    return;
-                }
-
-                //show progress dialog
-                helperFunctions.genericProgressBar("Signing you in...");
-
-                String network_address = helperFunctions.getIpAddress()
-                        + "user_sign_in.php?username="
-                        + username.getText().toString()
-                        + "&password=" + password.getText().toString();
-
-                // Request a string response from the provided URL.
-                StringRequest request = new StringRequest(network_address,
-                        response -> {
-                            //dismiss progress dialog
-                            helperFunctions.stopProgressBar();
-
-                            if(!response.equals("0")){
-                                //user credentials correct so set sign in to true
-                                prefManager.setSignedIn(true);
-
-                                //split csv string
-                                String[] s = response.split(",");
-
-                                //set user psu id
-                                prefManager.setPsuId(s[0]);
-
-                                //set user member category
-                                prefManager.setMemberCategory(s[1]);
-
-                                //set the user's name
-                                prefManager.setPsuName(s[2]);
-
-                                // check if device id has not been registered yet
-                                helperFunctions.checkDeviceId();
-
-                                // user is signed in so check member category and go to respective dashboard
-                                helperFunctions.getDefaultDashboard(s[1]);
-                            } else {
-                                //user credentials are wrong
-                                helperFunctions.genericDialog("Username or password is incorrect");
-                            }
-                        }, error -> {
-                            //dismiss progress dialog
-                            helperFunctions.stopProgressBar();
-
-                            if (error instanceof TimeoutError || error instanceof NetworkError) {
-                                helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
-                            } else {
-                                helperFunctions.genericDialog("Something went wrong. Please try again later");
-                            }
-                        });
-
-                //add to request queue in singleton class
-                VolleySingleton.getInstance(this).addToRequestQueue(request);
-            } else {
-                helperFunctions.genericDialog("Internet connection has been lost!");
+            if(TextUtils.isEmpty(username_string)) {
+                username.setError("Please fill in the username");
+                return;
             }
+
+            if(TextUtils.isEmpty(password_string)) {
+                password.setError("Please fill in the password");
+                return;
+            }
+
+            //show progress dialog
+            helperFunctions.genericProgressBar("Signing you in...");
+
+            String network_address = helperFunctions.getIpAddress()
+                    + "user_sign_in.php?username="
+                    + username.getText().toString()
+                    + "&password=" + password.getText().toString();
+
+            // Request a string response from the provided URL.
+            StringRequest request = new StringRequest(network_address,
+                    response -> {
+                        //dismiss progress dialog
+                        helperFunctions.stopProgressBar();
+
+                        if(!response.equals("0")){
+                            //user credentials correct so set sign in to true
+                            prefManager.setSignedIn(true);
+
+                            //split csv string
+                            String[] s = response.split(",");
+
+                            //set user psu id
+                            prefManager.setPsuId(s[0]);
+
+                            //set user member category
+                            prefManager.setMemberCategory(s[1]);
+
+                            //set the user's name
+                            prefManager.setPsuName(s[2]);
+
+                            // check if device id has not been registered yet
+                            helperFunctions.checkDeviceId();
+
+                            // user is signed in so check member category and go to respective dashboard
+                            helperFunctions.getDefaultDashboard(s[1]);
+                        } else {
+                            //user credentials are wrong
+                            helperFunctions.genericDialog("Username or password is incorrect");
+                        }
+                    }, error -> {
+                //dismiss progress dialog
+                helperFunctions.stopProgressBar();
+
+                if (error instanceof TimeoutError || error instanceof NetworkError) {
+                    helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+                } else {
+                    helperFunctions.genericDialog("Something went wrong. Please try again later");
+                }
+            });
+
+            //add to request queue in singleton class
+            VolleySingleton.getInstance(this).addToRequestQueue(request);
+        } else {
+            helperFunctions.genericDialog("Internet connection has been lost!");
         }
     }
 
