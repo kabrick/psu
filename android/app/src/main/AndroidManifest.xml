@@ -29,6 +29,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon">
+
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
         <activity
             android:name=".globalactivities.MobilePaymentsWebsiteActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -228,8 +231,6 @@
             <intent-filter>
                 <action android:name="ug.or.psu.psudrugassessmenttool.services.start_application_service" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
             </intent-filter>
         </receiver>
         <service
@@ -237,13 +238,6 @@
             android:enabled="true"
             android:exported="false" />
 
-        <service
-            android:name=".services.MyFirebaseMessagingService"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
         <service android:name=".services.PushNotificationService" />
     </application>
 
