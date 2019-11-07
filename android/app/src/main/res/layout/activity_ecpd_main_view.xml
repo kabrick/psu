@@ -15,7 +15,7 @@
         android:layout_alignParentTop="true"
         android:orientation="vertical">
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             card_view:contentPaddingLeft="20dp"
             card_view:contentPaddingRight="20dp"
             card_view:contentPaddingBottom="10dp"
@@ -49,9 +49,9 @@
                     android:id="@+id/ecpd_timestamp"/>
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             card_view:contentPaddingLeft="20dp"
             card_view:contentPaddingRight="20dp"
             card_view:contentPaddingBottom="10dp"
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/resource_text_textview" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
     <LinearLayout

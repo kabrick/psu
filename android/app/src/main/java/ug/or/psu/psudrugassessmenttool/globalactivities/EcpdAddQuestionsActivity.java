@@ -2,26 +2,22 @@ package ug.or.psu.psudrugassessmenttool.globalactivities;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -216,7 +212,7 @@ public class EcpdAddQuestionsActivity extends AppCompatActivity implements Singl
 
         String[] mStringArray = {"View || Edit Question", "Delete Question"};
 
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(EcpdAddQuestionsActivity.this);
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(EcpdAddQuestionsActivity.this);
         builder.setTitle("Choose your action");
 
         builder.setItems(mStringArray, (dialogInterface, i) -> {
@@ -228,7 +224,7 @@ public class EcpdAddQuestionsActivity extends AppCompatActivity implements Singl
         });
 
         // create and show the alert dialog
-        android.support.v7.app.AlertDialog dialog = builder.create();
+        androidx.appcompat.app.AlertDialog dialog = builder.create();
         dialog.show();
     }
 
@@ -359,7 +355,7 @@ public class EcpdAddQuestionsActivity extends AppCompatActivity implements Singl
                     helperFunctions.stopProgressBar();
 
                     if(response.equals("1")){
-                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(EcpdAddQuestionsActivity.this);
+                        androidx.appcompat.app.AlertDialog.Builder alert = new androidx.appcompat.app.AlertDialog.Builder(EcpdAddQuestionsActivity.this);
 
                         alert.setMessage("Question deleted").setPositiveButton("Okay", (dialogInterface, i) -> {
                             progressBar.setVisibility(View.VISIBLE);

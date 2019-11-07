@@ -6,7 +6,7 @@
     android:background="@color/background"
     tools:context=".globalfragments.FeedbackFragment">
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_feedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

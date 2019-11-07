@@ -23,7 +23,7 @@
             android:layout_marginBottom="10dp"
             android:textColor="@color/colorPrimaryDark"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -35,9 +35,9 @@
                 android:id="@+id/patient_name"
                 android:hint="Patient Name"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -49,9 +49,9 @@
                 android:id="@+id/patient_number"
                 android:hint="Patient Number"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -63,9 +63,9 @@
                 android:id="@+id/age"
                 android:hint="Age at time of onset(yrs)"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -77,9 +77,9 @@
                 android:id="@+id/weight"
                 android:hint="Weight(Kg)"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -91,9 +91,9 @@
                 android:id="@+id/health_facility"
                 android:hint="Health Facility"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -105,7 +105,7 @@
                 android:id="@+id/district"
                 android:hint="District"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -138,7 +138,7 @@
 
         </RadioGroup>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -150,9 +150,9 @@
                 android:id="@+id/last_menstrual_period"
                 android:hint="Last Menstrual Period"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -164,7 +164,7 @@
                 android:id="@+id/trimester"
                 android:hint="Trimester (If Pregnant)"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View
             android:background="@color/colorPrimaryDark"
@@ -180,7 +180,7 @@
             android:layout_marginBottom="10dp"
             android:textColor="@color/colorPrimaryDark"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -192,9 +192,9 @@
                 android:id="@+id/suspected_drug_generic_name"
                 android:hint="Generic Name"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -206,9 +206,9 @@
                 android:id="@+id/suspected_drug_brand_name"
                 android:hint="Brand Name"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -220,9 +220,9 @@
                 android:id="@+id/suspected_drug_dose"
                 android:hint="Dose, Route Frequency"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -234,9 +234,9 @@
                 android:id="@+id/suspected_drug_date_started"
                 android:hint="Date Started"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -248,9 +248,9 @@
                 android:id="@+id/suspected_drug_date_stopped"
                 android:hint="Date Stopped"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -262,9 +262,9 @@
                 android:id="@+id/suspected_drug_prescribed_for"
                 android:hint="Prescribed For"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -276,9 +276,9 @@
                 android:id="@+id/suspected_drug_expiry_date"
                 android:hint="Expiry Date"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -290,7 +290,7 @@
                 android:id="@+id/suspected_drug_batch_number"
                 android:hint="Batch No."/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View
             android:background="@color/colorPrimaryDark"
@@ -306,7 +306,7 @@
             android:layout_marginBottom="10dp"
             android:textColor="@color/colorPrimaryDark"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -318,7 +318,7 @@
                 android:id="@+id/reaction_and_treatment"
                 android:hint="Reaction observed and treatment given to manage it"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -364,7 +364,7 @@
 
         </RadioGroup>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -376,9 +376,9 @@
                 android:id="@+id/date_reaction_started"
                 android:hint="Date reaction started"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -390,9 +390,9 @@
                 android:id="@+id/date_reaction_stopped"
                 android:hint="Date reaction stopped"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -404,7 +404,7 @@
                 android:id="@+id/notification_date"
                 android:hint="Date of notification"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View
             android:background="@color/colorPrimaryDark"
@@ -483,7 +483,7 @@
             android:layout_height="wrap_content"
             android:text="Please give information on the drug(s) the patient has been taking together with the suspected drug including those taken for chronic disease (including self medication and herbal preparations)"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -495,9 +495,9 @@
                 android:id="@+id/other_drug_generic_name"
                 android:hint="Generic Name"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -509,9 +509,9 @@
                 android:id="@+id/other_drug_brand_name"
                 android:hint="Brand Name"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -523,9 +523,9 @@
                 android:id="@+id/other_drug_dosage"
                 android:hint="Dosage"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -537,9 +537,9 @@
                 android:id="@+id/other_drug_date_started"
                 android:hint="Date Started"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -551,9 +551,9 @@
                 android:id="@+id/other_drug_date_stopped"
                 android:hint="Date Stopped"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -565,7 +565,7 @@
                 android:id="@+id/other_drug_indication"
                 android:hint="Indication"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View
             android:background="@color/colorPrimaryDark"
@@ -621,7 +621,7 @@
             android:layout_marginBottom="10dp"
             android:textColor="@color/colorPrimaryDark"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -633,9 +633,9 @@
                 android:id="@+id/reporter_name"
                 android:hint="Name/designation"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -647,9 +647,9 @@
                 android:id="@+id/reporter_contacts"
                 android:hint="Telephone and email address"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -661,9 +661,9 @@
                 android:id="@+id/reporter_date"
                 android:hint="Date of reporting"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp">
@@ -675,7 +675,7 @@
                 android:id="@+id/reporter_health_facility"
                 android:hint="Health Facility"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:layout_width="wrap_content"

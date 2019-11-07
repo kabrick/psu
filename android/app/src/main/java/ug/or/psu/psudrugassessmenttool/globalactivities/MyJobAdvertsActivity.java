@@ -1,11 +1,10 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -20,12 +19,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
-import ug.or.psu.psudrugassessmenttool.adapters.EditYourPharmaciesAdapter;
 import ug.or.psu.psudrugassessmenttool.adapters.MyJobAdvertsAdapter;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.models.MyJobAdverts;
-import ug.or.psu.psudrugassessmenttool.models.Pharmacies;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
 public class MyJobAdvertsActivity extends AppCompatActivity {

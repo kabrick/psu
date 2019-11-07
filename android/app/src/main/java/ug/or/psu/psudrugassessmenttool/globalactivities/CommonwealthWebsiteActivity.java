@@ -3,7 +3,7 @@ package ug.or.psu.psudrugassessmenttool.globalactivities;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.net.http.SslError;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.SslErrorHandler;

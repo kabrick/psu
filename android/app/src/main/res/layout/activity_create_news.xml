@@ -19,7 +19,7 @@
             android:padding="10dp"
             tools:context=".globalactivities.CreateNewsActivity">
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_marginTop="20dp">
@@ -31,9 +31,9 @@
                     android:hint="News Title"
                     android:id="@+id/news_title"/>
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp">
@@ -45,9 +45,9 @@
                     android:hint="News Text"
                     android:id="@+id/news_text"/>
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_marginTop="20dp">
@@ -59,7 +59,7 @@
                     android:hint="News Source"
                     android:id="@+id/news_source"/>
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <ImageView
                 android:layout_width="300dp"

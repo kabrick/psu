@@ -9,7 +9,7 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_marginTop="20dp">
@@ -21,9 +21,9 @@
             android:inputType="text"
             android:hint="Title"/>
 
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_marginTop="20dp">
@@ -35,7 +35,7 @@
             android:inputType="text"
             android:hint="Message"/>
 
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.jaredrummler.materialspinner.MaterialSpinner
         android:id="@+id/communication_category"

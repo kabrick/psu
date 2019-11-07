@@ -1,8 +1,8 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
 import android.annotation.SuppressLint;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -101,7 +101,7 @@ public class EcpdTakeExamActivity extends AppCompatActivity {
                         response -> {
                             //dismiss progress dialog
                             helperFunctions.stopProgressBar();
-                            android.support.v7.app.AlertDialog.Builder alert = new AlertDialog.Builder(EcpdTakeExamActivity.this);
+                            androidx.appcompat.app.AlertDialog.Builder alert = new AlertDialog.Builder(EcpdTakeExamActivity.this);
 
                             alert.setMessage(message).setPositiveButton("Okay", (dialogInterface, i) -> helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory())).show();
                         }, error -> {

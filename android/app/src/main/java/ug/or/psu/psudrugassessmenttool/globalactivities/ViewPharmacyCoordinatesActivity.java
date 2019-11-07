@@ -1,10 +1,10 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -14,19 +14,15 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
-import ug.or.psu.psudrugassessmenttool.adapters.AttendanceSessionAdapter;
 import ug.or.psu.psudrugassessmenttool.adapters.PharmacyCoordinatesAdapter;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
-import ug.or.psu.psudrugassessmenttool.models.AttendanceSession;
 import ug.or.psu.psudrugassessmenttool.models.PharmacyCoordinates;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 

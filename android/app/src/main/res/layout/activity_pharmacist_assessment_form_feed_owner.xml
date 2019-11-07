@@ -8,7 +8,7 @@
     android:background="@color/background"
     tools:context=".globalactivities.PharmacistAssessmentFormFeedOwnerActivity">
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_assessment_owner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         android:layout_centerInParent="true"
         android:id="@+id/progressBarAssessmentOwner" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/assessment_owner_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

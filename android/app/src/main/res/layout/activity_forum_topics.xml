@@ -9,7 +9,7 @@
     android:background="@color/background"
     tools:context=".globalactivities.ForumTopicsActivity">
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/view_forum_topics_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

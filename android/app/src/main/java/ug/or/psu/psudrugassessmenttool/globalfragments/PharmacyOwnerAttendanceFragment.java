@@ -2,9 +2,9 @@ package ug.or.psu.psudrugassessmenttool.globalfragments;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
-import android.util.Log;
+import androidx.fragment.app.Fragment;
+import androidx.cardview.widget.CardView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

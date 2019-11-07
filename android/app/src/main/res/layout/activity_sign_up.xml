@@ -13,7 +13,7 @@
     android:background="@color/background"
     tools:context=".users.authentication.SignUpActivity">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:paddingBottom="40dp"
         android:layout_height="wrap_content">
@@ -37,7 +37,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/credentials_card"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -46,7 +46,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -90,7 +90,7 @@
                         android:layout_marginTop="10dp"
                         android:onClick="changeProfilePicture"/>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:layout_marginTop="30dp"
@@ -103,9 +103,9 @@
                             android:inputType="textPersonName"
                             android:hint="Full Names"/>
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:layout_marginTop="20dp"
@@ -118,9 +118,9 @@
                             android:inputType="textEmailAddress"
                             android:hint="Email"/>
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:layout_marginTop="20dp"
@@ -133,9 +133,9 @@
                             android:inputType="phone"
                             android:hint="Phone Number"/>
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:layout_marginTop="20dp"
@@ -148,9 +148,9 @@
                             android:inputType="textPersonName"
                             android:hint="Username"/>
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -163,7 +163,7 @@
                             android:hint="Password"
                             android:id="@+id/sign_up_password"/>
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <com.jaredrummler.materialspinner.MaterialSpinner
                         android:id="@+id/sign_up_mem_status"
@@ -178,9 +178,9 @@
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/sign_up"
@@ -212,5 +212,5 @@
             android:text="Already have an account? Sign in here"
             android:textSize="16sp" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

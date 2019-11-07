@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="15dp">
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         xmlns:android="http://schemas.android.com/apk/res/android">
@@ -17,9 +17,9 @@
             android:hint="Pharmacy Name"
             android:id="@+id/pharmacy_name"/>
 
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
@@ -31,6 +31,6 @@
             android:hint="Pharmacy Location"
             android:id="@+id/pharmacy_location"/>
 
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>
