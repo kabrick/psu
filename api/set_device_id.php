@@ -25,11 +25,11 @@ if ($result->num_rows < 1){
 	$id = $result_assoc['id'];
 	$current_device_id = $result_assoc['device_id'];
 
-	$sql_delete = "DELETE FROM psu_device_id_messages WHERE device_id = '$current_device_id'";
+	$sql_update_1 = "UPDATE psu_device_id_messages SET device_id='$device_id' WHERE device_id = '$current_device_id'";
 
-	$sql = "UPDATE psu_device_ids SET device_id='$device_id', last_seen='$device_id' WHERE id = '$id'";
+	$sql_update_2 = "UPDATE psu_device_ids SET device_id='$device_id', last_seen='$device_id' WHERE id = '$id'";
 
-	if ($conn->query($sql) === TRUE && $conn->query($sql_delete) === TRUE) {
+	if ($conn->query($sql_update_1) === TRUE && $conn->query($sql_update_2) === TRUE) {
 		echo "1";
 	} else {
 	    echo "0";

@@ -10,6 +10,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+
 import android.os.Bundle;
 
 import com.google.android.play.core.appupdate.AppUpdateInfo;
@@ -19,8 +25,11 @@ import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
 
+import java.util.concurrent.TimeUnit;
+
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
+import ug.or.psu.psudrugassessmenttool.workers.FetchPushNotifications;
 import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -39,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
 
         prefManager = new PreferenceManager(this);
         helperFunctions = new HelperFunctions(this);
+
+        // set up the worker to check for notifications regularly
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork("fetch_push_notifications",
+                ExistingPeriodicWorkPolicy.KEEP,
+                new PeriodicWorkRequest.Builder(FetchPushNotifications.class, 6,
+                        TimeUnit.HOURS, 30, TimeUnit.MINUTES).setConstraints(new Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build()).build());
 
         // check if permission has been accepted
         if(checkPermission()){
@@ -97,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode != RESULT_OK) {
                 // close the app if update is not applied

@@ -36,6 +36,7 @@ import java.util.concurrent.TimeUnit;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
+import ug.or.psu.psudrugassessmenttool.services.PushNotificationService;
 import ug.or.psu.psudrugassessmenttool.services.TrackPharmacistService;
 import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.admin.PsuAdminDashboard;
@@ -64,7 +65,8 @@ public class HelperFunctions {
      * @return ip address string
      */
     public String getIpAddress() {
-        return "https://psucop.com/psu_assessment_tool/";
+        //return "https://psucop.com/psu_assessment_tool/";
+        return "http://192.168.0.100/psu/";
     }
 
     /**
@@ -503,7 +505,11 @@ public class HelperFunctions {
             VolleySingleton.getInstance(context).addToRequestQueue(request);
         } else {
             // check for updates if available
-            context.sendBroadcast(new Intent().setAction("ug.or.psu.psudrugassessmenttool.services.start_application_service"));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(new Intent(context, PushNotificationService.class));
+            } else {
+                context.startService(new Intent(context, PushNotificationService.class));
+            }
         }
     }
 

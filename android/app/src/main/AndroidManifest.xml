@@ -223,15 +223,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBd46NlOmxCgW6mbzbpAViSjfxV8FbGgY0" />
 
-        <receiver
-            android:name=".services.StartApplicationService"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="ug.or.psu.psudrugassessmenttool.services.start_application_service" />
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
         <service
             android:name=".services.TrackPharmacistService"
             android:enabled="true"

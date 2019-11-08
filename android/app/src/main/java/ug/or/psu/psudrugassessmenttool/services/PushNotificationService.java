@@ -37,8 +37,6 @@ public class PushNotificationService extends Service {
 
         JsonArrayRequest request = new JsonArrayRequest(url,
                 response -> {
-                    stopSelf();
-
                     if (response.length() > 0){
                         JSONObject obj;
                         for (int i = 0; i < response.length(); i++){
@@ -52,6 +50,8 @@ public class PushNotificationService extends Service {
                             }
                         }
                     }
+
+                    stopSelf();
                 }, error -> stopSelf());
 
         VolleySingleton.getInstance(this).addToRequestQueue(request);
