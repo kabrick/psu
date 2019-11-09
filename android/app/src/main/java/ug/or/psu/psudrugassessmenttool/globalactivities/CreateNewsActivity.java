@@ -156,65 +156,63 @@ public class CreateNewsActivity extends AppCompatActivity {
         //show progress dialog
         helperFunctions.genericProgressBar("Posting your news article...");
 
-        //get the current timestamp
-        final Long timestamp_long = System.currentTimeMillis();
-
         String url = helperFunctions.getIpAddress() + "post_news.php";
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, url,
+                response -> {
+                    rQueue.getCache().clear();
 
-        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if(response.equals("0")){
-                    helperFunctions.genericSnackbar("Posting news article failed!", activityView);
                     helperFunctions.stopProgressBar();
-                } else {
-                    // check if image is selected
-                    if(is_picture_set){
-                        // upload picture
-                        uploadProfilePicture(bitmap, response);
+
+                    if (response.equals("1")){
+                        AlertDialog.Builder alert = new AlertDialog.Builder(CreateNewsActivity.this);
+                        alert.setMessage("Your news article has been posted. It will be reviewed later for approval").setPositiveButton("Okay", (dialogInterface, i) -> helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory())).show();
                     } else {
-                        if(is_attachment_set){
-                            uploadAttachment(response);
-                        } else {
-                            helperFunctions.stopProgressBar();
-                            AlertDialog.Builder alert = new AlertDialog.Builder(CreateNewsActivity.this);
-
-                            alert.setMessage("Your news submission has been made. It will be posted after approval").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
-                                }
-                            }).show();
-                        }
+                        helperFunctions.genericDialog("Something went wrong. Please try again later");
                     }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                helperFunctions.stopProgressBar();
+                },
+                error -> {
+                    helperFunctions.stopProgressBar();
 
-                if (error instanceof TimeoutError || error instanceof NetworkError) {
-                    helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
-                } else {
-                    helperFunctions.genericDialog("Something went wrong. Please try again later");
-                }
+                    if (error instanceof TimeoutError || error instanceof NetworkError) {
+                        helperFunctions.genericDialog("Connection Error! Please make sure you are connected to a working internet connection.");
+                    } else {
+                        helperFunctions.genericDialog("Something went wrong. Please try again later");
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<>();
+                params.put("title", title);
+                params.put("text", text);
+                params.put("source", source);
+                params.put("author_id", preferenceManager.getPsuId());
+                params.put("timestamp", String.valueOf(System.currentTimeMillis()));
+                return params;
             }
-        }) {
-            protected Map<String, String> getParams() {
-                Map<String, String> data = new HashMap<>();
-                data.put("title", title);
-                data.put("text", text);
-                data.put("source", source);
-                data.put("author_id", preferenceManager.getPsuId());
-                data.put("timestamp", timestamp_long.toString());
-                return data;
+
+            @Override
+            protected Map<String, DataPart> getByteData() throws IOException {
+                Map<String, DataPart> params = new HashMap<>();
+
+                if (is_picture_set){
+                    params.put("picture_filename", new DataPart(picture_name + ".png", getFileDataFromDrawable(bitmap)));
+                }
+
+                if (is_attachment_set){
+                    params.put("document_filename", new DataPart(filename + "."  + fileExtension, getBytesFromFile(filePath)));
+                }
+
+                return params;
             }
         };
 
-        requestQueue.add(MyStringRequest);
+        volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        rQueue = Volley.newRequestQueue(CreateNewsActivity.this);
+        rQueue.add(volleyMultipartRequest);
     }
 
     public void addPicture(){
@@ -300,54 +298,6 @@ public class CreateNewsActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadAttachment(String id){
-        String upload_URL = helperFunctions.getIpAddress() + "upload_news_attachment.php";
-
-        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, upload_URL,
-                response -> {
-                    rQueue.getCache().clear();
-
-                    helperFunctions.stopProgressBar();
-
-                    AlertDialog.Builder alert = new AlertDialog.Builder(CreateNewsActivity.this);
-
-                    alert.setMessage("Your news article has been posted. It will be reviewed later for approval").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
-                        }
-                    }).show();
-                },
-                error -> {
-                    //
-                }) {
-            @Override
-            protected Map<String, String> getParams(){
-                Map<String, String> params = new HashMap<>();
-                // add the psu_id
-                params.put("id", id);
-                return params;
-            }
-
-            /*
-             *pass files using below method
-             * */
-            @Override
-            protected Map<String, DataPart> getByteData() throws IOException {
-                Map<String, DataPart> params = new HashMap<>();
-                params.put("filename", new DataPart(filename + "."  + fileExtension, getBytesFromFile(filePath)));
-                return params;
-            }
-        };
-
-        volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(
-                0,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        rQueue = Volley.newRequestQueue(CreateNewsActivity.this);
-        rQueue.add(volleyMultipartRequest);
-    }
-
     private Uri getImageUri(Context context, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
@@ -372,8 +322,8 @@ public class CreateNewsActivity extends AppCompatActivity {
         try {
             InputStream inputStream = context.getContentResolver().openInputStream(uri);
             FileOutputStream outputStream = new FileOutputStream(file);
-            int read = 0;
-            int maxBufferSize = 1 * 1024 * 1024;
+            int read;
+            int maxBufferSize = 1024 * 1024;
             assert inputStream != null;
             int bytesAvailable = inputStream.available();
 
@@ -391,67 +341,6 @@ public class CreateNewsActivity extends AppCompatActivity {
             //
         }
         return file.getPath();
-    }
-
-    private void uploadProfilePicture(final Bitmap bitmap, final String id){
-        String upload_URL = helperFunctions.getIpAddress() + "upload_news_picture.php";
-
-        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, upload_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        rQueue.getCache().clear();
-
-                        if(is_attachment_set){
-                            // upload pdf
-                            uploadAttachment(id);
-                        } else {
-                            helperFunctions.stopProgressBar();
-
-                            AlertDialog.Builder alert = new AlertDialog.Builder(CreateNewsActivity.this);
-
-                            alert.setMessage("Your news article has been posted. It will be reviewed later for approval").setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory());
-                                }
-                            }).show();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams(){
-                Map<String, String> params = new HashMap<>();
-                // add the psu_id
-                params.put("id", id);
-                return params;
-            }
-
-            /*
-             *pass files using below method
-             * */
-            @Override
-            protected Map<String, DataPart> getByteData() {
-                Map<String, DataPart> params = new HashMap<>();
-                long imagename = System.currentTimeMillis();
-                params.put("filename", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
-                return params;
-            }
-        };
-
-        volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(
-                0,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        rQueue = Volley.newRequestQueue(CreateNewsActivity.this);
-        rQueue.add(volleyMultipartRequest);
     }
 
     public byte[] getFileDataFromDrawable(Bitmap bitmap) {

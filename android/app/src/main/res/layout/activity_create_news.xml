@@ -5,7 +5,6 @@
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/create_news"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/background"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ScrollView
@@ -19,47 +18,35 @@
             android:padding="10dp"
             tools:context=".globalactivities.CreateNewsActivity">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_height="wrap_content"
+            <EditText
                 android:layout_width="match_parent"
-                android:layout_marginTop="20dp">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:hint="News Title"
-                    android:id="@+id/news_title"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="News Title"
+                android:background="@null"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:id="@+id/news_title"/>
+
+            <EditText
                 android:layout_width="match_parent"
-                android:layout_marginTop="10dp">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:hint="News Text"
-                    android:id="@+id/news_text"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:hint="News Text"
+                android:background="@null"
+                android:id="@+id/news_text"
+                android:layout_marginTop="10dp"/>
+
+            <EditText
                 android:layout_width="match_parent"
-                android:layout_marginTop="20dp">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:hint="News Source"
-                    android:id="@+id/news_source"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="News Source"
+                android:background="@null"
+                android:layout_marginTop="20dp"
+                android:textStyle="italic"
+                android:id="@+id/news_source"/>
 
             <ImageView
                 android:layout_width="300dp"

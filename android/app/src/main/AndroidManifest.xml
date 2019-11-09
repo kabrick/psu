@@ -172,7 +172,7 @@
             android:name=".globalactivities.FeedbackActivity" />
         <activity
             android:name=".globalactivities.CreateJobsActivity"
-            android:label="Add Job Advert" />
+            android:label="Submit Job" />
         <activity
             android:name=".globalactivities.JobsViewActivity"
             android:label="View Job Advert" />

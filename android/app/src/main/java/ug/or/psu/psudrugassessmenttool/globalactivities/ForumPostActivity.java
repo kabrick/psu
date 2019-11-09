@@ -222,7 +222,7 @@ public class ForumPostActivity extends AppCompatActivity {
                         helperFunctions.stopProgressBar();
 
                         if (error instanceof TimeoutError || error instanceof NetworkError) {
-                            helperFunctions.genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
+                            helperFunctions.genericDialog("Connection Error! Please make sure you are connected to a working internet connection.");
                         } else {
                             helperFunctions.genericDialog("Something went wrong. Please try again later");
                         }

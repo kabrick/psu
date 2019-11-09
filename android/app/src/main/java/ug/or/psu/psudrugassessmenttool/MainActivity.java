@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         // set up the worker to check for notifications regularly
         WorkManager.getInstance(this).enqueueUniquePeriodicWork("fetch_push_notifications",
                 ExistingPeriodicWorkPolicy.KEEP,
-                new PeriodicWorkRequest.Builder(FetchPushNotifications.class, 6,
+                new PeriodicWorkRequest.Builder(FetchPushNotifications.class, 2,
                         TimeUnit.HOURS, 30, TimeUnit.MINUTES).setConstraints(new Constraints.Builder()
                         .setRequiredNetworkType(NetworkType.CONNECTED)
                         .build()).build());
