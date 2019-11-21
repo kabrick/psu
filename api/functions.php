@@ -19,4 +19,40 @@ function send_push_notification($title, $message, $user_category) {
 
 }
 
+function send_admin_notifications_news($news_title) {
+
+	include 'dbconfig.php';
+
+	$admins = $conn->query("SELECT name,email FROM psu_admin WHERE type = 'admin'");
+
+	if ($admins->num_rows > 0) {
+		while($row = $admins->fetch_assoc()) {
+			$subject = 'PSU Approval Needed';
+			$message = "Hello " . $row['name'] . "\n" . "A news post with the title " . $news_title . " has been posted and requires your approval." . "\n" . "You are receiving this email because you are an admin for the PSU Practice App.";
+			$headers = 'From: psumis2018@gmail.com';
+
+			mail($row['email'],$subject,$message,$headers);
+		}
+	}
+
+}
+
+function send_admin_notifications_jobs($jobs_title) {
+
+	include 'dbconfig.php';
+
+	$admins = $conn->query("SELECT name,email FROM psu_admin WHERE type = 'admin'");
+
+	if ($admins->num_rows > 0) {
+		while($row = $admins->fetch_assoc()) {
+			$subject = 'PSU Approval Needed';
+			$message = "Hello " . $row['name'] . "\n" . "A job post with the title " . $jobs_title . " has been posted and requires your approval." . "\n" . "You are receiving this email because you are an admin for the PSU Practice App.";
+			$headers = 'From: psumis2018@gmail.com';
+
+			mail($row['email'],$subject,$message,$headers);
+		}
+	}
+
+}
+
 ?>

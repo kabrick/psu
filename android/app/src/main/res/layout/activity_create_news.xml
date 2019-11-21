@@ -15,7 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             tools:context=".globalactivities.CreateNewsActivity">
 
             <EditText
@@ -24,19 +25,18 @@
                 android:inputType="text"
                 android:hint="News Title"
                 android:background="@null"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginTop="20dp"
                 android:id="@+id/news_title"/>
 
-            <EditText
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:hint="News Text"
-                android:background="@null"
-                android:id="@+id/news_text"
-                android:layout_marginTop="10dp"/>
+                android:layout_height="0.2dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/timestamp"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -46,13 +46,40 @@
                 android:background="@null"
                 android:layout_marginTop="20dp"
                 android:textStyle="italic"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:id="@+id/news_source"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/timestamp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:hint="News Text"
+                android:background="@null"
+                android:id="@+id/news_text"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_marginTop="10dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/timestamp"/>
 
             <ImageView
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 android:layout_gravity="center"
                 android:visibility="gone"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:id="@+id/create_news_image"
                 android:layout_marginTop="20dp"/>
 
@@ -62,6 +89,8 @@
                 android:visibility="gone"
                 android:layout_marginTop="10dp"
                 android:textSize="20sp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:id="@+id/attachment_name"/>
 
         </LinearLayout>

@@ -9,13 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,29 +71,23 @@ public class ApproveNewsActivity extends AppCompatActivity implements ApproveNew
         String url = helperFunctions.getIpAddress() + "get_approve_news.php";
 
         JsonArrayRequest request = new JsonArrayRequest(url,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
+                response -> {
 
-                        //news has been got so stop progress bar
-                        progressBar.setVisibility(View.GONE);
+                    //news has been got so stop progress bar
+                    progressBar.setVisibility(View.GONE);
 
-                        List<ApproveNewsFeed> items = new Gson().fromJson(response.toString(), new TypeToken<List<ApproveNewsFeed>>() {
-                        }.getType());
+                    List<ApproveNewsFeed> items = new Gson().fromJson(response.toString(), new TypeToken<List<ApproveNewsFeed>>() {
+                    }.getType());
 
-                        newsList.clear();
-                        newsList.addAll(items);
+                    newsList.clear();
+                    newsList.addAll(items);
 
-                        // refreshing recycler view
-                        mAdapter.notifyDataSetChanged();
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // error in getting json, so recursive call till successful
-                fetchNews();
-            }
-        });
+                    // refreshing recycler view
+                    mAdapter.notifyDataSetChanged();
+                }, error -> {
+                    // error in getting json, so recursive call till successful
+                    fetchNews();
+                });
 
         VolleySingleton.getInstance(this).addToRequestQueue(request);
     }

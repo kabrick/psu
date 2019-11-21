@@ -1,5 +1,6 @@
 <?php
 include 'dbconfig.php';
+include 'functions.php';
 
 $picturesOriginalImgName = $_FILES['picture_filename']['name'];
 $picturesTempName = $_FILES['picture_filename']['tmp_name'];
@@ -29,6 +30,10 @@ if(!move_uploaded_file($documentsTempName,$documentsFolder.$documentsOriginalImg
 $sql = "INSERT INTO psu_jobs (title, text, author_id, timestamp, source, attachment_url, attachment_name, photo) VALUES ('$title','$text','$author_id','$timestamp','$source','$documentsUrl','$documentsOriginalImgName','$picturesUrl')";
 
 if ($conn->query($sql) === TRUE) {
+	send_admin_notifications_jobs($title);
+
+	send_push_notification('PSU Approval Needed', 'Job post has been submitted that needs your approval.', '1');
+
 	echo "1";
 } else {
     echo "0";

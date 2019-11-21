@@ -164,7 +164,7 @@ public class CreateNewsActivity extends AppCompatActivity {
 
                     helperFunctions.stopProgressBar();
 
-                    if (response.equals("1")){
+                    if (!response.equals("0")){
                         AlertDialog.Builder alert = new AlertDialog.Builder(CreateNewsActivity.this);
                         alert.setMessage("Your news article has been posted. It will be reviewed later for approval").setPositiveButton("Okay", (dialogInterface, i) -> helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory())).show();
                     } else {

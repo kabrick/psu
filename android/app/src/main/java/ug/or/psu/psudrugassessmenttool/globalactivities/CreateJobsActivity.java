@@ -164,7 +164,7 @@ public class CreateJobsActivity extends AppCompatActivity {
 
                     helperFunctions.stopProgressBar();
 
-                    if (response.equals("1")){
+                    if (!response.equals("0")){
                         AlertDialog.Builder alert = new AlertDialog.Builder(CreateJobsActivity.this);
 
                         alert.setMessage("Job has been posted successfully and will be reviewed later").setPositiveButton("Okay", (dialogInterface, i) -> helperFunctions.getDefaultDashboard(preferenceManager.getMemberCategory())).show();
