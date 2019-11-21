@@ -198,7 +198,8 @@
             android:label="Approve News" />
         <activity
             android:name=".users.dashboards.admin.ApproveNewsItemActivity"
-            android:label="Approve News" />
+            android:label="Approve News"
+            android:noHistory="true"/>
         <activity
             android:name=".globalactivities.PharmacistAssessmentFormActivity" />
         <activity

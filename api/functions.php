@@ -19,6 +19,21 @@ function send_push_notification($title, $message, $user_category) {
 
 }
 
+function send_single_push_notification($title, $message, $psu_id) {
+
+	include 'dbconfig.php';
+
+	$device_ids = $conn->query("SELECT * FROM psu_device_ids WHERE psu_id = '$psu_id'");
+
+	if ($device_ids->num_rows > 0) {
+		while($row = $device_ids->fetch_assoc()) {
+			$device_id = $row['device_id'];
+			$conn->query("INSERT INTO psu_device_id_messages (device_id, title, message) VALUES ('$device_id','$title','$message')");
+		}
+	}
+
+}
+
 function send_admin_notifications_news($news_title) {
 
 	include 'dbconfig.php';

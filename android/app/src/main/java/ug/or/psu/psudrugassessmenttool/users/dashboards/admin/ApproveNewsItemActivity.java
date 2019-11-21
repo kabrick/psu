@@ -132,7 +132,7 @@ public class ApproveNewsItemActivity extends AppCompatActivity {
         //show progress dialog
         helperFunctions.genericProgressBar("Approving news article...");
 
-        String network_address = helperFunctions.getIpAddress() + "approve_news.php?id=" + id;
+        String network_address = helperFunctions.getIpAddress() + "approve_news.php?id=" + id + "&psu_id=" + preferenceManager.getPsuId();
 
         // Request a string response from the provided URL.
         StringRequest request = new StringRequest(network_address,
@@ -152,7 +152,7 @@ public class ApproveNewsItemActivity extends AppCompatActivity {
         //show progress dialog
         helperFunctions.genericProgressBar("Rejecting news article...");
 
-        String network_address = helperFunctions.getIpAddress() + "reject_news.php?id=" + id;
+        String network_address = helperFunctions.getIpAddress() + "reject_news.php?id=" + id + "&psu_id=" + preferenceManager.getPsuId();
 
         // Request a string response from the provided URL.
         StringRequest request = new StringRequest(network_address,
