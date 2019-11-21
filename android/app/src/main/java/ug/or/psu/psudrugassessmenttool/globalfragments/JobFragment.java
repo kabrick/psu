@@ -40,10 +40,9 @@ public class JobFragment extends Fragment implements JobsFeedAdapter.JobsFeedAda
     private List<JobsFeed> jobsList;
     private JobsFeedAdapter mAdapter;
 
-    HelperFunctions helperFunctions;
+    private HelperFunctions helperFunctions;
 
-    ProgressBar progressBar;
-    FloatingActionButton fab;
+    private ProgressBar progressBar;
 
     public JobFragment() {
         // Required empty public constructor
@@ -61,14 +60,11 @@ public class JobFragment extends Fragment implements JobsFeedAdapter.JobsFeedAda
 
         progressBar = view.findViewById(R.id.progressBarJobs);
 
-        fab = view.findViewById(R.id.add_jobs_fab);
+        FloatingActionButton fab = view.findViewById(R.id.add_jobs_fab);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent post_jobs_intent = new Intent(getContext(), CreateJobsActivity.class);
-                Objects.requireNonNull(getContext()).startActivity(post_jobs_intent);
-            }
+        fab.setOnClickListener(view -> {
+            Intent post_jobs_intent = new Intent(getContext(), CreateJobsActivity.class);
+            Objects.requireNonNull(getContext()).startActivity(post_jobs_intent);
         });
 
         helperFunctions = new HelperFunctions(getContext());
@@ -86,35 +82,29 @@ public class JobFragment extends Fragment implements JobsFeedAdapter.JobsFeedAda
         String url = helperFunctions.getIpAddress() + "get_jobs.php";
 
         JsonArrayRequest request = new JsonArrayRequest(url,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
+                response -> {
 
-                        // stop progress bar
-                        progressBar.setVisibility(View.GONE);
+                    // stop progress bar
+                    progressBar.setVisibility(View.GONE);
 
-                        if (response == null) {
-                            // toast message about information not being found
-                            helperFunctions.genericSnackbar("No jobs available", view);
-                            return;
-                        }
-
-                        List<JobsFeed> items = new Gson().fromJson(response.toString(), new TypeToken<List<JobsFeed>>() {
-                        }.getType());
-
-                        jobsList.clear();
-                        jobsList.addAll(items);
-
-                        // refreshing recycler view
-                        mAdapter.notifyDataSetChanged();
+                    if (response == null) {
+                        // toast message about information not being found
+                        helperFunctions.genericSnackbar("No jobs available", view);
+                        return;
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // error in getting json, so recursive call till successful
-                fetchJobs();
-            }
-        });
+
+                    List<JobsFeed> items = new Gson().fromJson(response.toString(), new TypeToken<List<JobsFeed>>() {
+                    }.getType());
+
+                    jobsList.clear();
+                    jobsList.addAll(items);
+
+                    // refreshing recycler view
+                    mAdapter.notifyDataSetChanged();
+                }, error -> {
+                    // error in getting json, so recursive call till successful
+                    fetchJobs();
+                });
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
     }

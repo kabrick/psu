@@ -411,6 +411,10 @@ public class PsuAdminDashboard extends AppCompatActivity
             case R.id.psu_admin_view_forum_topic:
                 startActivity(new Intent(this, ForumTopicsActivity.class));
                 break;
+            case R.id.psu_admin_approve_job_posts:
+                Intent approve_jobs_intent = new Intent(this, ApproveJobsActivity.class);
+                startActivity(approve_jobs_intent);
+                break;
             default:
                 //
                 break;
