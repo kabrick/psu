@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="10dp"
-    android:background="@color/background"
     android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -45,7 +44,7 @@
         android:inputType="text"
         android:background="@drawable/edit_text_background"
         app:ms_hint="Member Category"
-        app:ms_dropdown_max_height="200dp"
+        app:ms_dropdown_max_height="100dp"
         tools:ignore="RtlSymmetry" />
 
 </LinearLayout>

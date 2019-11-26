@@ -21,7 +21,12 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon">
-        <activity android:name=".users.dashboards.admin.ApproveJobsItemActivity"></activity>
+        <activity
+            android:name=".users.dashboards.admin.AdminCommunicationsActivity"
+            android:label="Communications"/>
+        <activity
+            android:name=".users.dashboards.admin.ApproveJobsItemActivity"
+            android:label="Approve Jobs"/>
         <activity
             android:name=".users.dashboards.admin.ApproveJobsActivity"
             android:label="Approve Jobs" />
