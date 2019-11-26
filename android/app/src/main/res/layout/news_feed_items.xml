@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="5dp"
-    android:background="@drawable/rounded_corners"
+    android:layout_marginBottom="10dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
@@ -19,8 +18,11 @@
         android:layout_width="0dp"
         android:layout_weight="2"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:orientation="vertical">
+        android:paddingTop="5dp"
+        android:paddingStart="5dp"
+        android:paddingBottom="5dp"
+        android:orientation="vertical"
+        tools:ignore="RtlSymmetry">
 
         <TextView
             android:layout_width="match_parent"
@@ -44,8 +46,15 @@
             android:layout_height="wrap_content"
             android:gravity="end"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
             android:textColor="@color/timestamp"
             android:id="@+id/news_feed_timestamp_list"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/timestamp"/>
 
     </LinearLayout>
 </LinearLayout>

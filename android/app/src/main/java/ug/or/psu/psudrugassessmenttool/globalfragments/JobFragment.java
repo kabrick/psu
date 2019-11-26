@@ -4,6 +4,8 @@ package ug.or.psu.psudrugassessmenttool.globalfragments;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -41,8 +43,8 @@ public class JobFragment extends Fragment implements JobsFeedAdapter.JobsFeedAda
     private JobsFeedAdapter mAdapter;
 
     private HelperFunctions helperFunctions;
-
-    private ProgressBar progressBar;
+    private ShimmerFrameLayout shimmer_view_container;
+    private RecyclerView recyclerView;
 
     public JobFragment() {
         // Required empty public constructor
@@ -53,12 +55,11 @@ public class JobFragment extends Fragment implements JobsFeedAdapter.JobsFeedAda
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_job, container, false);
+        shimmer_view_container = view.findViewById(R.id.jobs_shimmer_view_container);
 
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_jobs);
+        recyclerView = view.findViewById(R.id.recycler_view_jobs);
         jobsList = new ArrayList<>();
         mAdapter = new JobsFeedAdapter(jobsList, this, getContext());
-
-        progressBar = view.findViewById(R.id.progressBarJobs);
 
         FloatingActionButton fab = view.findViewById(R.id.add_jobs_fab);
 
@@ -85,7 +86,8 @@ public class JobFragment extends Fragment implements JobsFeedAdapter.JobsFeedAda
                 response -> {
 
                     // stop progress bar
-                    progressBar.setVisibility(View.GONE);
+                    shimmer_view_container.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
 
                     if (response == null) {
                         // toast message about information not being found

@@ -3,6 +3,8 @@ package ug.or.psu.psudrugassessmenttool.globalfragments;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -14,15 +16,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +31,6 @@ import ug.or.psu.psudrugassessmenttool.globalactivities.CreateNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.EditYourNewsActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.NewsViewActivity;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
-import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.models.NewsFeed;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
@@ -43,12 +39,11 @@ public class NewsFragment extends Fragment implements NewsFeedAdapter.NewsFeedAd
     private View view;
     private List<NewsFeed> newsList;
     private NewsFeedAdapter mAdapter;
+    private HelperFunctions helperFunctions;
+    private ShimmerFrameLayout news_shimmer_view_container;
 
-    HelperFunctions helperFunctions;
-    PreferenceManager preferenceManager;
-
-    ProgressBar progressBar;
-    FloatingActionButton fab;
+    private FloatingActionButton fab;
+    private RecyclerView recyclerView;
 
     public NewsFragment() {
         // Required empty public constructor
@@ -62,24 +57,16 @@ public class NewsFragment extends Fragment implements NewsFeedAdapter.NewsFeedAd
 
         setHasOptionsMenu(true);
 
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_news);
+        recyclerView = view.findViewById(R.id.recycler_view_news);
         newsList = new ArrayList<>();
         mAdapter = new NewsFeedAdapter(getContext(), newsList, this);
 
-        progressBar = view.findViewById(R.id.progressBarNews);
-
         fab = view.findViewById(R.id.add_news_fab);
+        news_shimmer_view_container = view.findViewById(R.id.news_shimmer_view_container);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent post_news_intent = new Intent(getContext(), CreateNewsActivity.class);
-                Objects.requireNonNull(getContext()).startActivity(post_news_intent);
-            }
-        });
+        fab.setOnClickListener(view -> Objects.requireNonNull(getContext()).startActivity(new Intent(getContext(), CreateNewsActivity.class)));
 
         helperFunctions = new HelperFunctions(getContext());
-        preferenceManager = new PreferenceManager((Objects.requireNonNull(getContext())));
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -95,35 +82,30 @@ public class NewsFragment extends Fragment implements NewsFeedAdapter.NewsFeedAd
         String url = helperFunctions.getIpAddress() + "get_news.php";
 
         JsonArrayRequest request = new JsonArrayRequest(url,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
+                response -> {
 
-                        //news has been got so stop progress bar
-                        progressBar.setVisibility(View.GONE);
+                    //news has been got so stop progress bar
+                    news_shimmer_view_container.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
 
-                        if (response == null) {
-                            //toast message about information not being found
-                            helperFunctions.genericSnackbar("No news available", view);
-                            return;
-                        }
-
-                        List<NewsFeed> items = new Gson().fromJson(response.toString(), new TypeToken<List<NewsFeed>>() {
-                        }.getType());
-
-                        newsList.clear();
-                        newsList.addAll(items);
-
-                        // refreshing recycler view
-                        mAdapter.notifyDataSetChanged();
+                    if (response == null) {
+                        //toast message about information not being found
+                        helperFunctions.genericSnackbar("No news available", view);
+                        return;
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // error in getting json, so recursive call till successful
-                fetchNews();
-            }
-        });
+
+                    List<NewsFeed> items = new Gson().fromJson(response.toString(), new TypeToken<List<NewsFeed>>() {
+                    }.getType());
+
+                    newsList.clear();
+                    newsList.addAll(items);
+
+                    // refreshing recycler view
+                    mAdapter.notifyDataSetChanged();
+                }, error -> {
+                    // error in getting json, so recursive call till successful
+                    fetchNews();
+                });
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
     }
@@ -146,21 +128,16 @@ public class NewsFragment extends Fragment implements NewsFeedAdapter.NewsFeedAd
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_fragment_news, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
-            case R.id.action_view_own_news:
-                Intent intent_own_news = new Intent(getContext(), EditYourNewsActivity.class);
-                Objects.requireNonNull(getContext()).startActivity(intent_own_news);
-                break;
-            default:
-                //
-                break;
+        if (item.getItemId() == R.id.action_view_own_news) {
+            Intent intent_own_news = new Intent(getContext(), EditYourNewsActivity.class);
+            Objects.requireNonNull(getContext()).startActivity(intent_own_news);
         }
 
         return super.onOptionsItemSelected(item);
