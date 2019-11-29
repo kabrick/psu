@@ -6,14 +6,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -54,24 +53,22 @@ import ug.or.psu.psudrugassessmenttool.users.dashboards.admin.GetLocationActivit
 import ug.or.psu.psudrugassessmenttool.users.dashboards.admin.ChoosePharmacyActivity;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.admin.ViewGeneralAttendanceActivity;
 
-public class MyAttendanceFragment extends Fragment {
+public class PracticeFragment extends Fragment {
 
-    HelperFunctions helperFunctions;
-    PreferenceManager preferenceManager;
-    ArrayList<String> pharmacy_names;
-    ArrayList<String> pharmacy_id;
-    ArrayList<String> pharmacy_names_admin;
-    ArrayList<String> pharmacy_id_admin;
-    ArrayList<String> pharmacy_names_attendance;
-    ArrayList<String> pharmacy_id_attendance;
-    LinearLayout layout3;
-    RelativeLayout add_practice_center, set_practice_center_location, attendance_login,
-            view_individual_attendance, view_your_practice_centers, attendance_logout,
-            view_general_attendance, support_supervision_checklist, adr_forms, ecpd,
-            view_commonwealth_website, mobile_payments_website;
-    View balance_view;
+    private HelperFunctions helperFunctions;
+    private PreferenceManager preferenceManager;
+    private ArrayList<String> pharmacy_names;
+    private ArrayList<String> pharmacy_id;
+    private ArrayList<String> pharmacy_names_admin;
+    private ArrayList<String> pharmacy_id_admin;
+    private ArrayList<String> pharmacy_names_attendance;
+    private ArrayList<String> pharmacy_id_attendance;
+    private CardView add_practice_center, set_practice_center_location, attendance_login,
+            view_your_attendance, view_your_practice_centers, attendance_logout,
+            view_general_attendance, support_supervision_checklist, view_adr_form, view_ecpd,
+            view_commonwealth_website, make_online_payments;
 
-    public MyAttendanceFragment() {
+    public PracticeFragment() {
         // Required empty public constructor
     }
 
@@ -79,7 +76,7 @@ public class MyAttendanceFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_my_attendance, container, false);
+        View view = inflater.inflate(R.layout.fragment_practice, container, false);
 
         helperFunctions = new HelperFunctions(getContext());
         preferenceManager = new PreferenceManager(Objects.requireNonNull(getContext()));
@@ -87,19 +84,17 @@ public class MyAttendanceFragment extends Fragment {
         add_practice_center = view.findViewById(R.id.add_practice_center);
         set_practice_center_location = view.findViewById(R.id.set_practice_center_location);
         attendance_login = view.findViewById(R.id.attendance_login);
-        view_individual_attendance = view.findViewById(R.id.view_individual_attendance);
+        view_your_attendance = view.findViewById(R.id.view_your_attendance);
         view_your_practice_centers = view.findViewById(R.id.view_your_practice_centers);
         attendance_logout = view.findViewById(R.id.attendance_logout);
         view_general_attendance = view.findViewById(R.id.view_general_attendance);
         support_supervision_checklist = view.findViewById(R.id.support_supervision_checklist);
-        adr_forms = view.findViewById(R.id.adr_forms);
-        ecpd = view.findViewById(R.id.ecpd);
-        layout3 = view.findViewById(R.id.layout3);
-        balance_view = view.findViewById(R.id.balance_view);
-        mobile_payments_website = view.findViewById(R.id.mobile_payments_website);
+        view_adr_form = view.findViewById(R.id.view_adr_form);
+        view_ecpd = view.findViewById(R.id.view_ecpd);
+        make_online_payments = view.findViewById(R.id.make_online_payments);
         view_commonwealth_website = view.findViewById(R.id.view_commonwealth_website);
 
-        ecpd.setOnClickListener(view1 -> {
+        view_ecpd.setOnClickListener(view1 -> {
 
             if(preferenceManager.getMemberCategory().equals("2")){
                 String[] mStringArray = {"Add e-CPD", "View Submitted e-CPD","View e-CPD Resources"};
@@ -155,7 +150,7 @@ public class MyAttendanceFragment extends Fragment {
             }).show();
         });
 
-        view_individual_attendance.setOnClickListener(view13 -> viewIndividualAttendance());
+        view_your_attendance.setOnClickListener(view13 -> viewIndividualAttendance());
 
         view_your_practice_centers.setOnClickListener(view12 -> viewPharmacyLocations());
 
@@ -184,7 +179,7 @@ public class MyAttendanceFragment extends Fragment {
             dialog.show();
         });
 
-        adr_forms.setOnClickListener(view19 -> {
+        view_adr_form.setOnClickListener(view19 -> {
 
             String[] mStringArray = {"Fill ADR Form", "Withdraw || Edit Filled Form", "View Submitted ADR Forms", "ADR Reports"};
 
@@ -220,12 +215,11 @@ public class MyAttendanceFragment extends Fragment {
 
         if(!preferenceManager.getMemberCategory().equals("1")){
             view_general_attendance.setVisibility(View.GONE);
-            balance_view.setVisibility(View.VISIBLE);
         }
 
         view_commonwealth_website.setOnClickListener(v -> startActivity(new Intent(getContext(), CommonwealthWebsiteActivity.class)));
 
-        mobile_payments_website.setOnClickListener(v -> startActivity(new Intent(getContext(), MobilePaymentsWebsiteActivity.class)));
+        make_online_payments.setOnClickListener(v -> startActivity(new Intent(getContext(), MobilePaymentsWebsiteActivity.class)));
 
         return view;
     }

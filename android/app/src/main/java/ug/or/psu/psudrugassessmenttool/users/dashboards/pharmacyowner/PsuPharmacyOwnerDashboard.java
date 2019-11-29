@@ -42,7 +42,7 @@ import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAssessmentForm
 import ug.or.psu.psudrugassessmenttool.globalactivities.PharmacistAttendanceActivity;
 import ug.or.psu.psudrugassessmenttool.globalactivities.PrivacyPolicyActivity;
 import ug.or.psu.psudrugassessmenttool.globalfragments.JobFragment;
-import ug.or.psu.psudrugassessmenttool.globalfragments.MyAttendanceFragment;
+import ug.or.psu.psudrugassessmenttool.globalfragments.PracticeFragment;
 import ug.or.psu.psudrugassessmenttool.globalfragments.NewsFragment;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
@@ -54,7 +54,6 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
     DrawerLayout drawer;
-    boolean exit_application = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,9 +105,10 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
+            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
             switch (position) {
@@ -117,9 +117,9 @@ public class PsuPharmacyOwnerDashboard extends AppCompatActivity
                 case 1:
                     return new JobFragment();
                 case 2:
-                    return new MyAttendanceFragment();
+                default:
+                    return new PracticeFragment();
             }
-            return null;
         }
 
         @Override
