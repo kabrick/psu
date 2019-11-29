@@ -66,8 +66,8 @@ public class HelperFunctions {
      */
     public String getIpAddress() {
         //return "https://psucop.com/psu_assessment_tool/";
-        return "http://192.168.0.100/psu/";
-        //return "http://192.168.1.121/psu/";
+        //return "http://192.168.0.100/psu/";
+        return "http://192.168.1.121/psu/";
     }
 
     /**

@@ -29,8 +29,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -64,8 +63,7 @@ public class CreateNewsActivity extends AppCompatActivity {
     private final int ATTACHMENT_REQUEST_CODE = 2;
     private Uri filePath;
     Bitmap bitmap;
-    FloatingActionMenu fam;
-    FloatingActionButton add_picture_fab, add_attachments_fab, remove_attachments_fab;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,26 +83,30 @@ public class CreateNewsActivity extends AppCompatActivity {
 
         attachment_name = findViewById(R.id.attachment_name);
 
-        add_attachments_fab = findViewById(R.id.add_attachments_fab);
-        add_picture_fab = findViewById(R.id.add_picture_fab);
-        remove_attachments_fab = findViewById(R.id.remove_attachments_fab);
-        fam = findViewById(R.id.news_fam);
+        fab = findViewById(R.id.news_fam);
 
-        add_picture_fab.setOnClickListener(view -> {
-            addPicture();
-            fam.close(true);
-        });
+        fab.setOnClickListener(view -> {
+            String[] mStringArray = {"Add Photo", "Add Attachment", "Remove Attachment"};
 
-        add_attachments_fab.setOnClickListener(view -> {
-            addAttachment();
-            fam.close(true);
-        });
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Choose action");
 
-        remove_attachments_fab.setOnClickListener(view -> {
-            attachment_name.setText("");
-            attachment_name.setVisibility(View.GONE);
-            is_attachment_set = false;
-            Toast.makeText(CreateNewsActivity.this, "Attachment has been removed", Toast.LENGTH_LONG).show();
+            builder.setItems(mStringArray, (dialogInterface, i) -> {
+                if (i == 0){
+                    addPicture();
+                } else if (i == 1){
+                    addAttachment();
+                } else if (i == 2){
+                    attachment_name.setText("");
+                    attachment_name.setVisibility(View.GONE);
+                    is_attachment_set = false;
+                    Toast.makeText(CreateNewsActivity.this, "Attachment has been removed", Toast.LENGTH_LONG).show();
+                }
+            });
+
+            // create and show the alert dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
 
         helperFunctions = new HelperFunctions(this);
