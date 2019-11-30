@@ -135,7 +135,9 @@
             android:name=".users.authentication.SignInActivity"
             android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".users.dashboards.admin.GetLocationActivity" />
+        <activity
+            android:name=".users.dashboards.admin.GetLocationActivity"
+            android:label="Get Location"/>
         <activity android:name=".globalactivities.NewsViewActivity" />
         <activity
             android:name=".globalactivities.CreateNewsActivity"

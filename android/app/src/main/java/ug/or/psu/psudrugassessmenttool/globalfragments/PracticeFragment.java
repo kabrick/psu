@@ -63,10 +63,6 @@ public class PracticeFragment extends Fragment {
     private ArrayList<String> pharmacy_id_admin;
     private ArrayList<String> pharmacy_names_attendance;
     private ArrayList<String> pharmacy_id_attendance;
-    private CardView add_practice_center, set_practice_center_location, attendance_login,
-            view_your_attendance, view_your_practice_centers, attendance_logout,
-            view_general_attendance, support_supervision_checklist, view_adr_form, view_ecpd,
-            view_commonwealth_website, make_online_payments;
 
     public PracticeFragment() {
         // Required empty public constructor
@@ -81,18 +77,18 @@ public class PracticeFragment extends Fragment {
         helperFunctions = new HelperFunctions(getContext());
         preferenceManager = new PreferenceManager(Objects.requireNonNull(getContext()));
 
-        add_practice_center = view.findViewById(R.id.add_practice_center);
-        set_practice_center_location = view.findViewById(R.id.set_practice_center_location);
-        attendance_login = view.findViewById(R.id.attendance_login);
-        view_your_attendance = view.findViewById(R.id.view_your_attendance);
-        view_your_practice_centers = view.findViewById(R.id.view_your_practice_centers);
-        attendance_logout = view.findViewById(R.id.attendance_logout);
-        view_general_attendance = view.findViewById(R.id.view_general_attendance);
-        support_supervision_checklist = view.findViewById(R.id.support_supervision_checklist);
-        view_adr_form = view.findViewById(R.id.view_adr_form);
-        view_ecpd = view.findViewById(R.id.view_ecpd);
-        make_online_payments = view.findViewById(R.id.make_online_payments);
-        view_commonwealth_website = view.findViewById(R.id.view_commonwealth_website);
+        CardView add_practice_center = view.findViewById(R.id.add_practice_center);
+        CardView set_practice_center_location = view.findViewById(R.id.set_practice_center_location);
+        CardView attendance_login = view.findViewById(R.id.attendance_login);
+        CardView view_your_attendance = view.findViewById(R.id.view_your_attendance);
+        CardView view_your_practice_centers = view.findViewById(R.id.view_your_practice_centers);
+        CardView attendance_logout = view.findViewById(R.id.attendance_logout);
+        CardView view_general_attendance = view.findViewById(R.id.view_general_attendance);
+        CardView support_supervision_checklist = view.findViewById(R.id.support_supervision_checklist);
+        CardView view_adr_form = view.findViewById(R.id.view_adr_form);
+        CardView view_ecpd = view.findViewById(R.id.view_ecpd);
+        CardView make_online_payments = view.findViewById(R.id.make_online_payments);
+        CardView view_commonwealth_website = view.findViewById(R.id.view_commonwealth_website);
 
         view_ecpd.setOnClickListener(view1 -> {
 
@@ -430,7 +426,7 @@ public class PracticeFragment extends Fragment {
         dialog.show();
     }
 
-    public void getUnsetPharmacies(){
+    private void getUnsetPharmacies(){
         helperFunctions.genericProgressBar("Retrieving practice centres");
 
         String network_address = helperFunctions.getIpAddress() + "get_unlocated_pharmacies.php?id=" + preferenceManager.getPsuId();
@@ -460,7 +456,7 @@ public class PracticeFragment extends Fragment {
                     }
 
                     //continue to display
-                    choosePharmacyAdmin();
+                    choosePharmacyToSetLocation();
                 }, error -> {
                     //
                 });
@@ -468,7 +464,7 @@ public class PracticeFragment extends Fragment {
         VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
     }
 
-    public void choosePharmacyAdmin(){
+    private void choosePharmacyToSetLocation(){
         //convert array list to string array
         String[] mStringArray = new String[pharmacy_names_admin.size()];
         mStringArray = pharmacy_names_admin.toArray(mStringArray);
@@ -480,7 +476,7 @@ public class PracticeFragment extends Fragment {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
-        builder.setTitle("Choose your practice centre");
+        builder.setTitle("Choose a practice centre");
 
         builder.setItems(mStringArray, (dialogInterface, i) -> {
             Intent intent = new Intent(getContext(), GetLocationActivity.class);
