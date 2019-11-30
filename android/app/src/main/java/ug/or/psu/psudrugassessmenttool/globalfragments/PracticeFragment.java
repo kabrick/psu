@@ -124,7 +124,7 @@ public class PracticeFragment extends Fragment {
             }
         });
 
-        add_practice_center.setOnClickListener(view17 -> isUserValid());
+        add_practice_center.setOnClickListener(view17 -> checkNumberOfUserPharmacies());
 
         set_practice_center_location.setOnClickListener(view16 -> getUnsetPharmacies());
 
@@ -224,7 +224,7 @@ public class PracticeFragment extends Fragment {
         return view;
     }
 
-    public void isUserValid(){
+    private void checkNumberOfUserPharmacies(){
         // check if the user has not exceeded the limit of 2 pharmacies
 
         //show progress dialog

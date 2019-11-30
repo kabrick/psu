@@ -10,7 +10,8 @@ if ($result->num_rows > 0) {
  		$json = json_encode($row);
  	}
 } else {
-	//
+	// encode empty array
+	$json = json_encode([]);
 }
 
 echo $json;

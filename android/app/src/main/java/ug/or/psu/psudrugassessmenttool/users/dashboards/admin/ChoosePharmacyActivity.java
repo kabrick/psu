@@ -1,5 +1,6 @@
 package ug.or.psu.psudrugassessmenttool.users.dashboards.admin;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,11 +9,15 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -36,7 +41,8 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
     PreferenceManager preferenceManager;
     List<Pharmacy> pharmaciesList;
     PharmacyAdapter mAdapter;
-    ProgressBar progressBar;
+    ShimmerFrameLayout shimmer;
+    LinearLayout activity_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +58,9 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
         helperFunctions = new HelperFunctions(this);
         preferenceManager = new PreferenceManager(this);
 
-        progressBar = findViewById(R.id.progressBarChoosePharmacy);
-
         add_pharmacy_fab = findViewById(R.id.add_pharmacy_fab);
+        shimmer = findViewById(R.id.choose_pharmacy_shimmer_view_container);
+        activity_layout = findViewById(R.id.choose_primary_linear_layout);
 
         add_pharmacy_fab.setOnClickListener(view -> {
             LayoutInflater inflater1 = LayoutInflater.from(ChoosePharmacyActivity.this);
@@ -132,7 +138,7 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
                     if(response.equals("1")){
                         AlertDialog.Builder alert = new AlertDialog.Builder(ChoosePharmacyActivity.this);
 
-                        alert.setMessage("Pharmacy info saved successfully").setPositiveButton("Okay", (dialogInterface, i) -> onBackPressed()).show();
+                        alert.setMessage("Pharmacy info saved successfully").setPositiveButton("Okay", (dialogInterface, i) -> fetchPharmacies()).show();
                     } else {
                         //did not save
                         helperFunctions.genericDialog("Something went wrong! Please try again");
@@ -152,10 +158,11 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
         JsonArrayRequest request = new JsonArrayRequest(url,
                 response -> {
 
-                    //hide the progress bar
-                    progressBar.setVisibility(View.GONE);
+                    shimmer.setVisibility(View.GONE);
+                    activity_layout.setVisibility(View.VISIBLE);
 
-                    if (response == null) {
+                    if (response.length() < 1) {
+                        helperFunctions.genericDialog("No pharmacies are available. You can create one using the plus symbol");
                         return;
                     }
 
@@ -170,6 +177,7 @@ public class ChoosePharmacyActivity extends AppCompatActivity implements Pharmac
                 }, error -> {
                     // error in getting json, so recursive call till successful
                     fetchPharmacies();
+                    Toast.makeText(this, "Something went wrong with the network connection", Toast.LENGTH_SHORT).show();
                 });
 
         VolleySingleton.getInstance(this).addToRequestQueue(request);
