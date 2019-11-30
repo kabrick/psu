@@ -311,7 +311,7 @@ public class PracticeFragment extends Fragment {
         VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
     }
 
-    public void choosePharmacy(){
+    private void choosePharmacy(){
 
         //convert array list to string array
         String[] mStringArray = new String[pharmacy_names.size()];
