@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.net.Uri;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.EditText;
@@ -61,7 +62,6 @@ public class NewsViewActivity extends AppCompatActivity {
     HelperFunctions helperFunctions;
     CardView attachment_card;
     TextView attachment_name;
-    FloatingActionButton create_comment_fab, share_news_fab;
 
     PreferenceManager preferenceManager;
 
@@ -94,42 +94,10 @@ public class NewsViewActivity extends AppCompatActivity {
         shortAnimationDuration = getResources().getInteger(
                 android.R.integer.config_shortAnimTime);
 
-        create_comment_fab = findViewById(R.id.create_comment_fab);
-        share_news_fab = findViewById(R.id.share_news_fab);
         attachment_card = findViewById(R.id.attachment_card);
         attachment_name = findViewById(R.id.attachment_name);
 
         attachment_card.setOnClickListener(view -> downloadAttachment());
-
-        share_news_fab.setOnClickListener(view -> {
-            String share_string = title_string + "\n\n" + text_string + "\n\n" + image_string;
-            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-            sharingIntent.setType("text/plain");
-            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, title_string);
-            sharingIntent.putExtra(Intent.EXTRA_TEXT, share_string);
-            startActivity(Intent.createChooser(sharingIntent, "Share Article"));
-        });
-
-        create_comment_fab.setOnClickListener(view -> {
-            LayoutInflater inflater1 = LayoutInflater.from(NewsViewActivity.this);
-            View view1 = inflater1.inflate(R.layout.add_news_comment, null);
-
-            final EditText editText = view1.findViewById(R.id.comment_text);
-
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewsViewActivity.this);
-            alertDialog.setTitle("Post your comment");
-            alertDialog.setView(view1);
-            alertDialog.setCancelable(false)
-                    .setPositiveButton("Okay",
-                            (dialog, id) -> {
-                                // get user input and set it to result
-                                postComment(editText.getText().toString());
-                            })
-                    .setNegativeButton("Cancel",
-                            (dialog, id) -> dialog.cancel());
-            AlertDialog alertDialog1 = alertDialog.create();
-            alertDialog1.show();
-        });
 
         title = findViewById(R.id.news_feed_title_single);
         text = findViewById(R.id.news_feed_text_single);
@@ -187,6 +155,49 @@ public class NewsViewActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_activity_news_view, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_share_view_news) {
+            // @TODO after migration to laravel, turn this into link for news
+            String share_string = title_string + "\n\n" + text_string + "\n\n" + image_string;
+            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, title_string);
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, share_string);
+            startActivity(Intent.createChooser(sharingIntent, "Share Article"));
+        } else if (id == R.id.action_comment_view_news) {
+            LayoutInflater inflater1 = LayoutInflater.from(NewsViewActivity.this);
+            View view1 = inflater1.inflate(R.layout.add_news_comment, null);
+
+            final EditText editText = view1.findViewById(R.id.comment_text);
+
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewsViewActivity.this);
+            alertDialog.setTitle("Post your comment");
+            alertDialog.setView(view1);
+            alertDialog.setCancelable(false)
+                    .setPositiveButton("Okay",
+                            (dialog, id2) -> {
+                                // get user input and set it to result
+                                postComment(editText.getText().toString());
+                            })
+                    .setNegativeButton("Cancel",
+                            (dialog, id2) -> dialog.cancel());
+            AlertDialog alertDialog1 = alertDialog.create();
+            alertDialog1.show();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void fetchNewsImage(){

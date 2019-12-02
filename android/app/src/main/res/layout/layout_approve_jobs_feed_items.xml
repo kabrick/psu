@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp"
-    android:layout_margin="10dp"
-    android:background="@drawable/rounded_corners"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
@@ -20,14 +21,11 @@
         android:ellipsize="end"
         android:id="@+id/approve_jobs_feed_text_list"
         android:layout_marginBottom="5dp"
-        android:layout_below="@id/approve_jobs_feed_title_list"
         android:maxLines="2"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/approve_jobs_feed_text_list"
-        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <TextView
@@ -47,4 +45,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

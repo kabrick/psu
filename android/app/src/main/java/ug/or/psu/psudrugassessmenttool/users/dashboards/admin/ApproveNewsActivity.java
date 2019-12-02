@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -32,7 +34,8 @@ public class ApproveNewsActivity extends AppCompatActivity implements ApproveNew
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
 
-    ProgressBar progressBar;
+    ShimmerFrameLayout shimmer;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +47,11 @@ public class ApproveNewsActivity extends AppCompatActivity implements ApproveNew
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_approve_news);
+        recyclerView = findViewById(R.id.recycler_approve_news);
         newsList = new ArrayList<>();
         mAdapter = new ApproveNewsFeedAdapter(this, newsList, this);
 
-        progressBar = findViewById(R.id.progressBarApproveNews);
+        shimmer = findViewById(R.id.news_shimmer_view_container);
 
         helperFunctions = new HelperFunctions(this);
         preferenceManager = new PreferenceManager(this);
@@ -73,8 +76,13 @@ public class ApproveNewsActivity extends AppCompatActivity implements ApproveNew
         JsonArrayRequest request = new JsonArrayRequest(url,
                 response -> {
 
-                    //news has been got so stop progress bar
-                    progressBar.setVisibility(View.GONE);
+                    shimmer.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+
+                    if (response.length() < 1){
+                        Toast.makeText(this, "No news posts to approve at this time", Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
                     List<ApproveNewsFeed> items = new Gson().fromJson(response.toString(), new TypeToken<List<ApproveNewsFeed>>() {
                     }.getType());

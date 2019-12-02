@@ -251,7 +251,7 @@ public class PracticeFragment extends Fragment {
         VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
     }
 
-    public void viewPharmacyLocations(){
+    private void viewPharmacyLocations(){
         String[] mStringArray = {"Edit || Remove Practice Centres", "View Your Practice Centre Locations", "View Your Practice Centre Coordinates"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));

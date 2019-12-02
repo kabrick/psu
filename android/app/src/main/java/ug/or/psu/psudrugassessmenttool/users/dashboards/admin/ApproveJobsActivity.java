@@ -9,8 +9,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -33,7 +35,8 @@ public class ApproveJobsActivity extends AppCompatActivity implements ApproveJob
     HelperFunctions helperFunctions;
     PreferenceManager preferenceManager;
 
-    ProgressBar progressBar;
+    ShimmerFrameLayout shimmer_view;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +48,11 @@ public class ApproveJobsActivity extends AppCompatActivity implements ApproveJob
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_approve_jobs);
+        recyclerView = findViewById(R.id.recycler_approve_jobs);
         jobsList = new ArrayList<>();
         mAdapter = new ApproveJobsFeedAdapter(this, jobsList, this);
 
-        progressBar = findViewById(R.id.progressBarApproveJobs);
+        shimmer_view = findViewById(R.id.shimmer_view);
 
         helperFunctions = new HelperFunctions(this);
         preferenceManager = new PreferenceManager(this);
@@ -74,7 +77,13 @@ public class ApproveJobsActivity extends AppCompatActivity implements ApproveJob
         JsonArrayRequest request = new JsonArrayRequest(url,
                 response -> {
 
-                    progressBar.setVisibility(View.GONE);
+                    shimmer_view.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+
+                    if (response.length() < 1){
+                        Toast.makeText(this, "No job posts to approve at this time", Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
                     List<ApproveJobsFeed> items = new Gson().fromJson(response.toString(), new TypeToken<List<ApproveJobsFeed>>() {
                     }.getType());

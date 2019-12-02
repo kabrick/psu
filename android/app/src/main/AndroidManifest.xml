@@ -94,7 +94,9 @@
         <activity
             android:name=".users.authentication.ForgotPasswordActivity"
             android:label="Password Reset" />
-        <activity android:name=".globalactivities.ViewPharmacyCoordinatesActivity" />
+        <activity
+            android:name=".globalactivities.ViewPharmacyCoordinatesActivity"
+            android:label="Pharmacies"/>
         <activity
             android:name=".globalactivities.EditYourNewsActivity"
             android:label="View Your News" />
@@ -113,7 +115,9 @@
         <activity
             android:name=".globalactivities.EResourcesActivity"
             android:label="E-Resources" />
-        <activity android:name=".globalactivities.ViewYourPharmacyActivity" />
+        <activity
+            android:name=".globalactivities.ViewYourPharmacyActivity"
+            android:label="Pharmacies"/>
         <activity android:name=".globalactivities.EditPharmacyInformationActivity" />
         <activity android:name=".globalactivities.EditYourPharmacies" />
         <activity android:name=".globalactivities.ViewPharmacyLocationActivity" />
@@ -138,10 +142,13 @@
         <activity
             android:name=".users.dashboards.admin.GetLocationActivity"
             android:label="Get Location"/>
-        <activity android:name=".globalactivities.NewsViewActivity" />
+        <activity
+            android:name=".globalactivities.NewsViewActivity"
+            android:label="News"/>
         <activity
             android:name=".globalactivities.CreateNewsActivity"
-            android:label="Submit News" />
+            android:label="Submit News"
+            android:noHistory="true" />
         <activity
             android:name=".globalactivities.PharmacistAttendanceActivity"
             android:label="View Attendance" />
@@ -158,7 +165,8 @@
         <activity android:name=".globalactivities.FeedbackActivity" />
         <activity
             android:name=".globalactivities.CreateJobsActivity"
-            android:label="Submit Job" />
+            android:label="Submit Job"
+            android:noHistory="true" />
         <activity
             android:name=".globalactivities.JobsViewActivity"
             android:label="View Job Advert" />
