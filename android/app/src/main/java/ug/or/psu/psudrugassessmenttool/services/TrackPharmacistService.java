@@ -66,7 +66,7 @@ public class TrackPharmacistService extends Service {
                 float distance = getDistance(latitude, longitude ,pharmacy_latitude, pharmacy_longitude);
 
                 //check if distance is more than 50m and add to counter
-                if(distance > 50){
+                if(distance > 100){
                     //user out of range, increment by 1
                     check_out_of_range++;
                 } else {
@@ -80,7 +80,7 @@ public class TrackPharmacistService extends Service {
                 //if counter is more than 2 or 6 hours have passed then log the user out
                 if(check_out_of_range > 2 || minutes_taken > 360){
                     //log the user out
-                    helperFunctions.signPharmacistOutService();
+                    helperFunctions.signPharmacistOut(true);
                 }
             }
         };
@@ -100,7 +100,17 @@ public class TrackPharmacistService extends Service {
             stopSelf();
         }
 
-        createNotificationChannel();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel serviceChannel = new NotificationChannel(
+                    CHANNEL_ID,
+                    "Track Pharmacist Channel",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(serviceChannel);
+        }
+
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 0, notificationIntent, 0);
@@ -127,19 +137,6 @@ public class TrackPharmacistService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
-    }
-
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel serviceChannel = new NotificationChannel(
-                    CHANNEL_ID,
-                    "Track Pharmacist Channel",
-                    NotificationManager.IMPORTANCE_DEFAULT
-            );
-
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(serviceChannel);
-        }
     }
 
     @SuppressLint("RestrictedApi")

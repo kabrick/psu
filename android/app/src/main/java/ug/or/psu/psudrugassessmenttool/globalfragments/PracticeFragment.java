@@ -10,6 +10,8 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,7 +141,7 @@ public class PracticeFragment extends Fragment {
 
             alert.setMessage("Are you sure you want to log out").setPositiveButton("Yes", (dialogInterface, i) -> {
                 if(preferenceManager.isPharmacyLocationSet()){
-                    helperFunctions.signPharmacistOut();
+                    helperFunctions.signPharmacistOut(false);
                 } else {
                     helperFunctions.genericDialog("You are not logged in to any practice centre");
                 }
@@ -187,7 +189,7 @@ public class PracticeFragment extends Fragment {
                     Intent adr_intent = new Intent(getContext(), AdrReportFormActivity.class);
                     startActivity(adr_intent);
                 } else if (i == 1){
-                    //
+                    Toast.makeText(getContext(), "Functionality not implemented", Toast.LENGTH_SHORT).show();
                 } else if (i == 2){
                     Intent view_adr_intent = new Intent(getContext(), AdrReportFormFeedActivity.class);
                     startActivity(view_adr_intent);
@@ -275,7 +277,7 @@ public class PracticeFragment extends Fragment {
         dialog.show();
     }
 
-    public void getPharmacies(){
+    private void getPharmacies(){
         String network_address = helperFunctions.getIpAddress() + "get_pharmacist_pharmacies.php?id=" + preferenceManager.getPsuId();
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, network_address, null,
@@ -355,7 +357,6 @@ public class PracticeFragment extends Fragment {
                             }
                             mFusedLocationClient.getLastLocation()
                                     .addOnSuccessListener(location -> {
-                                        // Get last known location. In some rare situations this can be null.
                                         if (location != null) {
                                             double current_latitude = location.getLatitude();
                                             double current_longitude = location.getLongitude();
@@ -366,8 +367,8 @@ public class PracticeFragment extends Fragment {
                                             //calculate distance here
                                             float distance = helperFunctions.getDistance(current_latitude, current_longitude ,pharmacy_latitude, pharmacy_longitude);
 
-                                            //check if distance is more than 50m and add to counter
-                                            if(distance > 50){
+                                            //check if distance is more than 100m and add to counter
+                                            if(distance > 100){
                                                 helperFunctions.genericDialog("You are out of bounds. Please make sure you are at the pharmacy premises before you log in");
 
                                                 //dismiss dialog and snack success
@@ -394,7 +395,7 @@ public class PracticeFragment extends Fragment {
                                                 intent.setAction("start");
                                                 Objects.requireNonNull(getActivity()).startService(intent);
 
-                                                //dismiss dialog and snack success
+                                                //dismiss dialog
                                                 helperFunctions.stopProgressBar();
 
                                                 @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
@@ -402,6 +403,11 @@ public class PracticeFragment extends Fragment {
 
                                                 helperFunctions.genericDialog("You have been logged in at " + currentTime);
                                             }
+                                        } else {
+                                            helperFunctions.genericDialog("Something went wrong. Please try again");
+
+                                            //dismiss dialog
+                                            helperFunctions.stopProgressBar();
                                         }
                                     })
                                     .addOnFailureListener(e -> {
@@ -491,7 +497,7 @@ public class PracticeFragment extends Fragment {
         dialog.show();
     }
 
-    public void viewIndividualAttendance(){
+    private void viewIndividualAttendance(){
         helperFunctions.genericProgressBar("Retrieving practice centres");
 
         String network_address = helperFunctions.getIpAddress() + "get_pharmacist_pharmacies.php?id=" + preferenceManager.getPsuId();
@@ -528,7 +534,7 @@ public class PracticeFragment extends Fragment {
         VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
     }
 
-    public void viewAttendanceAdmin(){
+    private void viewAttendanceAdmin(){
 
         //convert array list to string array
         String[] mStringArray = new String[pharmacy_names_attendance.size()];

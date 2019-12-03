@@ -20,6 +20,12 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.appcompat.app.AlertDialog;
+import androidx.work.Constraints;
+import androidx.work.Data;
+import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+
 import android.view.View;
 
 import com.android.volley.NetworkError;
@@ -42,6 +48,7 @@ import ug.or.psu.psudrugassessmenttool.users.authentication.SignInActivity;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.admin.PsuAdminDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.pharmacist.PsuPharmacistDashboard;
 import ug.or.psu.psudrugassessmenttool.users.dashboards.pharmacyowner.PsuPharmacyOwnerDashboard;
+import ug.or.psu.psudrugassessmenttool.workers.UploadPharmacistPracticeTime;
 
 public class HelperFunctions {
 
@@ -328,113 +335,48 @@ public class HelperFunctions {
                 });
     }
 
-    public void signPharmacistOut(){
-        //start progress bar
-        genericProgressBar("Logging you out...");
-
+    public void signPharmacistOut(boolean isFromService){
         //get the timestamp out
-        Long time_out = System.currentTimeMillis();
-        Long time_in = prefManager.getTimeIn();
-        Long time_diff = time_out - time_in;
+        long time_out = System.currentTimeMillis();
+        long time_in = prefManager.getTimeIn();
+        long time_diff = time_out - time_in;
 
         //get working hours
-        Long working_hours = TimeUnit.MILLISECONDS.toHours(time_diff);
-        Long working_minutes = TimeUnit.MILLISECONDS.toMinutes(time_diff) % 60;
+        long working_hours = TimeUnit.MILLISECONDS.toHours(time_diff);
+        long working_minutes = TimeUnit.MILLISECONDS.toMinutes(time_diff) % 60;
 
         final String content_text = "You have been logged out after a duration of " + working_hours + " hour(s) and " + working_minutes + " minute(s)";
 
-        String network_address = getIpAddress()
-                + "set_new_attendance.php?psu_id=" + prefManager.getPsuId()
-                + "&time_in=" + time_in
-                + "&time_out=" + time_out
-                + "&latitude_in=" + prefManager.getCurrentLatitude()
-                + "&longitude_in=" + prefManager.getCurrentLongitude()
-                + "&latitude_out=" + prefManager.getLastLatitude()
-                + "&longitude_out=" + prefManager.getLastLongitude()
-                + "&working_hours=" + working_hours
-                + "&pharmacy_id=" + prefManager.getPharmacyId()
-                + "&day_id=" + prefManager.getDayIn();
+        // set constraint for internet as a must
+        Constraints.Builder constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED);
 
-        // Request a string response from the provided URL.
-        StringRequest request = new StringRequest(network_address,
-                response -> {
-                    //stop progress bar
-                    stopProgressBar();
+        // add data for the worker
+        Data.Builder data = new Data.Builder();
+        data.putString("time_in", String.valueOf(time_in));
+        data.putString("time_out", String.valueOf(time_out));
+        data.putString("working_hours", String.valueOf(working_hours));
 
-                    //check if location has been saved successfully
-                    if(response.equals("1")){
+        // create new work manager instance
+        WorkManager.getInstance(context).enqueue(new OneTimeWorkRequest.Builder(UploadPharmacistPracticeTime.class)
+                .addTag("UploadPharmacistPracticeTime")
+                .setInputData(data.build())
+                .setConstraints(constraints.build())
+                .build());
 
-                        //set location set to false
-                        prefManager.setIsPharmacyLocationSet(false);
+        //clear the service
+        Intent intent = new Intent(context, TrackPharmacistService.class);
+        intent.setAction("stop");
+        context.startService(intent);
 
-                        //clear the service
-                        Intent intent = new Intent(context, TrackPharmacistService.class);
-                        intent.setAction("stop");
-                        context.startService(intent);
+        prefManager.setIsPharmacyLocationSet(false);
 
-                        genericDialog(content_text);
-                    } else {
-                        //did not save
-                        genericDialog("Something went wrong! Please try again");
-                    }
-                }, error -> {
-                    //stop progress bar
-                    stopProgressBar();
-
-                    if (error instanceof TimeoutError || error instanceof NetworkError) {
-                        genericDialog("Something went wrong. Please make sure you are connected to a working internet connection.");
-                    } else {
-                        genericDialog("Something went wrong. Please try again later");
-                    }
-                });
-
-        VolleySingleton.getInstance(context).addToRequestQueue(request);
-    }
-
-    // sign out pharmacists using the service
-    public void signPharmacistOutService(){
-        //get the timestamp out
-        Long time_out = System.currentTimeMillis();
-        Long time_in = prefManager.getTimeIn();
-        Long time_diff = time_out - time_in;
-
-        //get working hours
-        Long working_hours = TimeUnit.MILLISECONDS.toHours(time_diff);
-        Long working_minutes = TimeUnit.MILLISECONDS.toMinutes(time_diff) % 60;
-
-        String network_address = getIpAddress()
-                + "set_new_attendance.php?psu_id=" + prefManager.getPsuId()
-                + "&time_in=" + time_in
-                + "&time_out=" + time_out
-                + "&latitude_in=" + prefManager.getCurrentLatitude()
-                + "&longitude_in=" + prefManager.getCurrentLongitude()
-                + "&latitude_out=" + prefManager.getLastLatitude()
-                + "&longitude_out=" + prefManager.getLastLongitude()
-                + "&working_hours=" + working_hours
-                + "&pharmacy_id=" + prefManager.getPharmacyId()
-                + "&day_id=" + prefManager.getDayIn();
-
-        // Request a string response from the provided URL.
-        StringRequest request = new StringRequest(network_address,
-                response -> {
-                    //check if location has been saved successfully
-                    if(response.equals("1")){
-
-                        //set location set to false
-                        prefManager.setIsPharmacyLocationSet(false);
-
-                        //clear the service
-                        Intent intent = new Intent(context, TrackPharmacistService.class);
-                        intent.setAction("stop");
-                        context.startService(intent);
-                    } else {
-                        //did not save
-                    }
-                }, error -> {
-            //stop progress bar
-        });
-
-        VolleySingleton.getInstance(context).addToRequestQueue(request);
+        // if from service, use notification as generic dialog context will not be available
+        if (isFromService){
+            displayNotification(context, "PSU App", content_text);
+        } else {
+            genericDialog(content_text);
+        }
     }
 
     public void openAppStore(Context context) {
