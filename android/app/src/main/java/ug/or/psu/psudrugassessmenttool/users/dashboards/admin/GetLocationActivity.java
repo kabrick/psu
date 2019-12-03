@@ -17,6 +17,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
@@ -27,6 +28,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.Objects;
 
@@ -55,6 +58,8 @@ public class GetLocationActivity extends AppCompatActivity implements GoogleMap.
     GoogleApiClient mGoogleApiClient;
     PendingResult<LocationSettingsResult> result;
     final static int REQUEST_LOCATION = 199;
+    private Location mLastKnownLocation;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +100,10 @@ public class GetLocationActivity extends AppCompatActivity implements GoogleMap.
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this).build();
+
         mGoogleApiClient.connect();
+
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
     }
 
     @Override
@@ -122,8 +130,19 @@ public class GetLocationActivity extends AppCompatActivity implements GoogleMap.
             googleMap.setOnMyLocationButtonClickListener(this);
             googleMap.setOnMyLocationClickListener(this);
 
-            //zoom into uganda
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(1.3733, 32.2903), 6));
+            Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
+            locationResult.addOnCompleteListener(this, task -> {
+                if (task.isSuccessful()) {
+                    // Set the map's camera position to the current location of the device.
+                    mLastKnownLocation = task.getResult();
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                            new LatLng(mLastKnownLocation.getLatitude(),
+                                    mLastKnownLocation.getLongitude()), 20));
+                } else {
+                    //zoom into uganda
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(1.3733, 32.2903), 6));
+                }
+            });
         }
     }
 
@@ -181,13 +200,6 @@ public class GetLocationActivity extends AppCompatActivity implements GoogleMap.
             }
         });
 
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //final LocationSettingsStates states = LocationSettingsStates.fromIntent(data);
-        // All required changes were successfully made
-        // The user was asked to change settings, but chose not to
     }
 
     @Override
