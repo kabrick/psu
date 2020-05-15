@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -40,6 +41,7 @@ import org.json.JSONException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import ug.or.psu.psudrugassessmenttool.MainActivity;
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 import ug.or.psu.psudrugassessmenttool.services.PushNotificationService;
@@ -72,9 +74,8 @@ public class HelperFunctions {
      * @return ip address string
      */
     public String getIpAddress() {
-        //return "https://psucop.com/psu_assessment_tool/";
-        return "http://192.168.0.100/psu/";
-        //return "http://192.168.1.101/psu/";
+        return "https://psucop.com/psu_assessment_tool/";
+        //return "http://192.168.0.100/psu/";
     }
 
     /**
@@ -457,11 +458,16 @@ public class HelperFunctions {
     }
 
     public void displayNotification(Context mContext, String title, String text){
+        Intent notificationIntent = new Intent(mContext, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(mContext,
+                0, notificationIntent, 0);
+
         Notification notification = new NotificationCompat.Builder(mContext, "fcm")
                 .setContentTitle(title)
                 .setContentText(text)
                 .setSmallIcon(R.drawable.logo)
                 .setColor(mContext.getResources().getColor(R.color.colorPrimary))
+                .setContentIntent(pendingIntent)
                 .build();
 
         int id = prefManager.getNotificationCounter();

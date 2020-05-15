@@ -158,6 +158,22 @@ public class NewsViewActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewsViewActivity.this);
+        alertDialog.setTitle("Hey There!");
+        alertDialog.setMessage("Thank you for reading this news article. Would you consider leaving a comment?");
+        alertDialog.setCancelable(false)
+                .setPositiveButton("Of Course",
+                        (dialog, id) -> {
+                            //
+                        })
+                .setNegativeButton("Not Really",
+                        (dialog, id) -> super.onBackPressed());
+        alertDialog.create();
+        alertDialog.show();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_activity_news_view, menu);

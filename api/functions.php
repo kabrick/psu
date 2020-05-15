@@ -70,4 +70,22 @@ function send_admin_notifications_jobs($jobs_title) {
 
 }
 
+function send_email_global($title, $text) {
+
+	include 'dbconfig.php';
+
+	$admins = $conn->query("SELECT name,email FROM psu_admin");
+
+	if ($admins->num_rows > 0) {
+		while($row = $admins->fetch_assoc()) {
+			$subject = 'PSU News: ' . $title;
+			$message = $text;
+			$headers = 'From: psumis2018@gmail.com';
+
+			mail($row['email'],$subject,$message,$headers);
+		}
+	}
+
+}
+
 ?>

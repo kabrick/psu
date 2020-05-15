@@ -52,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
         // set up the worker to check for notifications regularly
         WorkManager.getInstance(this).enqueueUniquePeriodicWork("fetch_push_notifications",
                 ExistingPeriodicWorkPolicy.KEEP,
-                new PeriodicWorkRequest.Builder(FetchPushNotifications.class, 2,
-                        TimeUnit.HOURS, 30, TimeUnit.MINUTES).setConstraints(new Constraints.Builder()
+                new PeriodicWorkRequest.Builder(FetchPushNotifications.class, 6,
+                        TimeUnit.HOURS, 2, TimeUnit.HOURS).setConstraints(new Constraints.Builder()
                         .setRequiredNetworkType(NetworkType.CONNECTED)
                         .build()).build());
 
@@ -71,7 +71,18 @@ public class MainActivity extends AppCompatActivity {
      * user authentication method for sign in or sign up depending on user status
      */
     public void userAuthentication(){
-        // allow play store to handle app update
+        if(prefManager.isSignedIn()){
+            // check if device id has not been registered yet
+            helperFunctions.checkDeviceId();
+
+            // user is signed in so check member category and go to respective dashboard
+            helperFunctions.getDefaultDashboard(prefManager.getMemberCategory());
+        } else {
+            // user is not signed in so go to sign in page
+            Intent intent_sign_in = new Intent(MainActivity.this, SignInActivity.class);
+            startActivity(intent_sign_in);
+        }
+        /*// allow play store to handle app update
         AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(this);
 
         // Returns an intent object that you use to check for an update.
@@ -109,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent_sign_in);
                 }
             }
-        });
+        });*/
     }
 
     @Override
