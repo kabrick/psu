@@ -18,7 +18,7 @@
         <item android:id="@+id/psu_admin_eresources"
             android:title="E Resources" />
         <item android:id="@+id/psu_admin_communication"
-            android:title="Send PSU Communication" />
+            android:title="View/Send PSU Communication" />
         <item android:id="@+id/psu_admin_approve_job_posts"
             android:title="Verify Job Posts" />
     </group>

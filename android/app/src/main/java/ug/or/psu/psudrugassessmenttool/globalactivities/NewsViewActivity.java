@@ -163,11 +163,11 @@ public class NewsViewActivity extends AppCompatActivity {
         alertDialog.setTitle("Hey There!");
         alertDialog.setMessage("Thank you for reading this news article. Would you consider leaving a comment?");
         alertDialog.setCancelable(false)
-                .setPositiveButton("Of Course",
+                .setPositiveButton("Yes",
                         (dialog, id) -> {
-                            //
+                            addComment();
                         })
-                .setNegativeButton("Not Really",
+                .setNegativeButton("No",
                         (dialog, id) -> super.onBackPressed());
         alertDialog.create();
         alertDialog.show();
@@ -193,27 +193,31 @@ public class NewsViewActivity extends AppCompatActivity {
             sharingIntent.putExtra(Intent.EXTRA_TEXT, share_string);
             startActivity(Intent.createChooser(sharingIntent, "Share Article"));
         } else if (id == R.id.action_comment_view_news) {
-            LayoutInflater inflater1 = LayoutInflater.from(NewsViewActivity.this);
-            View view1 = inflater1.inflate(R.layout.add_news_comment, null);
-
-            final EditText editText = view1.findViewById(R.id.comment_text);
-
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewsViewActivity.this);
-            alertDialog.setTitle("Post your comment");
-            alertDialog.setView(view1);
-            alertDialog.setCancelable(false)
-                    .setPositiveButton("Okay",
-                            (dialog, id2) -> {
-                                // get user input and set it to result
-                                postComment(editText.getText().toString());
-                            })
-                    .setNegativeButton("Cancel",
-                            (dialog, id2) -> dialog.cancel());
-            AlertDialog alertDialog1 = alertDialog.create();
-            alertDialog1.show();
+            addComment();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void addComment() {
+        LayoutInflater inflater1 = LayoutInflater.from(NewsViewActivity.this);
+        View view1 = inflater1.inflate(R.layout.add_news_comment, null);
+
+        final EditText editText = view1.findViewById(R.id.comment_text);
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewsViewActivity.this);
+        alertDialog.setTitle("Post your comment");
+        alertDialog.setView(view1);
+        alertDialog.setCancelable(false)
+                .setPositiveButton("Okay",
+                        (dialog, id2) -> {
+                            // get user input and set it to result
+                            postComment(editText.getText().toString());
+                        })
+                .setNegativeButton("Cancel",
+                        (dialog, id2) -> dialog.cancel());
+        AlertDialog alertDialog1 = alertDialog.create();
+        alertDialog1.show();
     }
 
     public void fetchNewsImage(){

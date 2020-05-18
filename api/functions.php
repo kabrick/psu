@@ -44,7 +44,7 @@ function send_admin_notifications_news($news_title) {
 		while($row = $admins->fetch_assoc()) {
 			$subject = 'PSU Approval Needed';
 			$message = "Hello " . $row['name'] . "\n" . "A news post with the title " . $news_title . " has been posted and requires your approval." . "\n" . "You are receiving this email because you are an admin for the PSU Practice App.";
-			$headers = 'From: psumis2018@gmail.com';
+			$headers = 'From: PSU APP<psuapp2020@gmail.com>';
 
 			mail($row['email'],$subject,$message,$headers);
 		}
@@ -62,7 +62,7 @@ function send_admin_notifications_jobs($jobs_title) {
 		while($row = $admins->fetch_assoc()) {
 			$subject = 'PSU Approval Needed';
 			$message = "Hello " . $row['name'] . "\n" . "A job post with the title " . $jobs_title . " has been posted and requires your approval." . "\n" . "You are receiving this email because you are an admin for the PSU Practice App.";
-			$headers = 'From: psumis2018@gmail.com';
+			$headers = 'From:  PSU APP<psuapp2020@gmail.com>';
 
 			mail($row['email'],$subject,$message,$headers);
 		}
@@ -80,7 +80,7 @@ function send_email_global($title, $text) {
 		while($row = $admins->fetch_assoc()) {
 			$subject = 'PSU News: ' . $title;
 			$message = $text;
-			$headers = 'From: psumis2018@gmail.com';
+			$headers = 'From:  PSU APP<psuapp2020@gmail.com>';
 
 			mail($row['email'],$subject,$message,$headers);
 		}
