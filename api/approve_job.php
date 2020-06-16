@@ -15,7 +15,7 @@ $sql = "UPDATE psu_jobs SET approved = '1', reviewed_by = '$reviewed_by' WHERE i
 if ($conn->query($sql) === TRUE) {
 	send_single_push_notification("PSU Notification", "A job post you made has been approved", $result_assoc['author_id']);
 	send_push_notification("PSU Notification", $result_assoc['title'], 0);
-	send_email_global($result_assoc['title'], mb_strimwidth($result_assoc['text'], 0, 97, '...'));
+	send_email_global("PSU Job Alert", "A new job has been posted on the PSU app with title " . $result_assoc['title'] . ". Please visit the application to view it");
     echo "1";
 } else {
     echo "0";

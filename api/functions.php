@@ -78,7 +78,7 @@ function send_email_global($title, $text) {
 
 	if ($admins->num_rows > 0) {
 		while($row = $admins->fetch_assoc()) {
-			$subject = 'PSU News: ' . $title;
+			$subject = $title;
 			$message = $text;
 			$headers = 'From:  PSU APP<psuapp2020@gmail.com>';
 
