@@ -1,7 +1,10 @@
 package ug.or.psu.psudrugassessmenttool.globalactivities;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.net.http.SslError;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -56,13 +59,21 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
 
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-            // ignore ssl error
-            progressBar.dismiss();
-            if (handler != null){
+            AlertDialog.Builder builder = new AlertDialog.Builder(PrivacyPolicyActivity.this);
+            String message = "The website you are visiting may be insecure. Do you want to continue";
+
+            builder.setTitle("SSL Certificate Error");
+            builder.setMessage(message);
+            builder.setPositiveButton("continue", (dialog, which) -> {
+                assert handler != null;
                 handler.proceed();
-            } else {
-                super.onReceivedSslError(view, null, error);
-            }
+            });
+            builder.setNegativeButton("cancel", (dialog, which) -> {
+                assert handler != null;
+                handler.cancel();
+            });
+            final AlertDialog dialog = builder.create();
+            dialog.show();
         }
     }
 
