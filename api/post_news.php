@@ -5,7 +5,7 @@ include 'functions.php';
 $picturesOriginalImgName = $_FILES['picture_filename']['name'];
 $picturesTempName = $_FILES['picture_filename']['tmp_name'];
 $picturesFolder = "news/pictures/";
-$picturesUrl = "news/pictures/".$picturesOriginalImgName;
+$picturesUrl = "https://psucop.com/psu_assessment_tool/news/pictures/".$picturesOriginalImgName;
 $documentsOriginalImgName = $_FILES['document_filename']['name'];
 $documentsTempName = $_FILES['document_filename']['tmp_name'];
 $documentsFolder = "news/documents/";

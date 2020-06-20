@@ -237,7 +237,7 @@ public class NewsViewActivity extends AppCompatActivity {
                         if(response.getString("photo").equals("0")){
                             //
                         } else {
-                            image_string = helperFunctions.getIpAddress() + response.getString("photo");
+                            image_string = response.getString("photo");
 
                             Glide.with(NewsViewActivity.this)
                                     .load(image_string)
