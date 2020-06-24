@@ -485,4 +485,14 @@ public class HelperFunctions {
         }
     }
 
+    public boolean displayCommentPrompt() {
+        if (prefManager.getNewsCommentPrompt() == 3){
+            prefManager.setNewsCommentPrompt(0);
+            return true;
+        } else {
+            prefManager.setNewsCommentPrompt(prefManager.getNewsCommentPrompt() + 1);
+            return false;
+        }
+    }
+
 }

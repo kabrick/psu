@@ -29,6 +29,7 @@ public class PreferenceManager {
     private static final String PHARMACY_LATITUDE = "pharmacy_latitude";
     private static final String PHARMACY_LONGITUDE = "pharmacy_longitude";
     private static final String DAY_IN = "day_in";
+    private static final String NEWS_COMMENT_PROMPT = "news_comment_prompt";
 
     private SharedPreferences.Editor editor;
     private SharedPreferences pref;
@@ -243,6 +244,15 @@ public class PreferenceManager {
 
     public void setPharmacyId(String value){
         this.editor.putString(PHARMACY_ID, value);
+        this.editor.commit();
+    }
+
+    public int getNewsCommentPrompt(){
+        return this.pref.getInt(NEWS_COMMENT_PROMPT, 0);
+    }
+
+    public void setNewsCommentPrompt(int value){
+        this.editor.putInt(NEWS_COMMENT_PROMPT, value);
         this.editor.commit();
     }
 

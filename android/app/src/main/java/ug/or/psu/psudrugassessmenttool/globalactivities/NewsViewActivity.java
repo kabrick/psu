@@ -159,18 +159,22 @@ public class NewsViewActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewsViewActivity.this);
-        alertDialog.setTitle("Hey There!");
-        alertDialog.setMessage("Thank you for reading this news article. Would you consider leaving a comment?");
-        alertDialog.setCancelable(false)
-                .setPositiveButton("Yes",
-                        (dialog, id) -> {
-                            addComment();
-                        })
-                .setNegativeButton("No",
-                        (dialog, id) -> super.onBackPressed());
-        alertDialog.create();
-        alertDialog.show();
+        if (helperFunctions.displayCommentPrompt()){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewsViewActivity.this);
+            alertDialog.setTitle("Hey There!");
+            alertDialog.setMessage("Thank you for reading this news article. Would you consider leaving a comment?");
+            alertDialog.setCancelable(false)
+                    .setPositiveButton("Yes",
+                            (dialog, id) -> {
+                                addComment();
+                            })
+                    .setNegativeButton("No",
+                            (dialog, id) -> super.onBackPressed());
+            alertDialog.create();
+            alertDialog.show();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
