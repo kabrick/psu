@@ -3,6 +3,8 @@ package ug.or.psu.psudrugassessmenttool.users.dashboards.admin;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,29 +87,30 @@ public class PharmacyAdapter extends RecyclerView.Adapter<PharmacyAdapter.MyView
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
-                String charString = charSequence.toString();
+                FilterResults filterResults = new FilterResults();
+                String charString = charSequence.toString().toLowerCase();
                 if (charString.isEmpty()) {
-                    pharmacyListFiltered = pharmacyList;
+                    filterResults.values = pharmacyList;
                 } else {
                     List<Pharmacy> filteredList = new ArrayList<>();
                     for (Pharmacy row : pharmacyList) {
-                        if (row.getName().toLowerCase().contains(charString.toLowerCase()) || row.getLocation().contains(charSequence)) {
+                        if (row.getName().toLowerCase().contains(charString) || row.getLocation().toLowerCase().contains(charString)) {
                             filteredList.add(row);
                         }
                     }
 
-                    pharmacyListFiltered = filteredList;
+                    filterResults.values = filteredList;
                 }
 
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = pharmacyListFiltered;
                 return filterResults;
             }
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                pharmacyListFiltered = (ArrayList<Pharmacy>) filterResults.values;
-                notifyDataSetChanged();
+                if (filterResults.count > 0) {
+                    pharmacyListFiltered = (ArrayList<Pharmacy>) filterResults.values;
+                    notifyDataSetChanged();
+                }
             }
         };
     }
