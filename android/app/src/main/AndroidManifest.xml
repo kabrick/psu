@@ -3,13 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ug.or.psu.psudrugassessmenttool">
 
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the "MyLocation" functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -21,12 +26,25 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:icon">
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
         <activity
             android:name=".users.dashboards.admin.AdminCommunicationsActivity"
-            android:label="Communications"/>
+            android:label="Communications" />
         <activity
             android:name=".users.dashboards.admin.ApproveJobsItemActivity"
-            android:label="Approve Jobs"/>
+            android:label="Approve Jobs" />
         <activity
             android:name=".users.dashboards.admin.ApproveJobsActivity"
             android:label="Approve Jobs" />
@@ -96,7 +114,7 @@
             android:label="Password Reset" />
         <activity
             android:name=".globalactivities.ViewPharmacyCoordinatesActivity"
-            android:label="Pharmacies"/>
+            android:label="Pharmacies" />
         <activity
             android:name=".globalactivities.EditYourNewsActivity"
             android:label="View Your News" />
@@ -117,7 +135,7 @@
             android:label="E-Resources" />
         <activity
             android:name=".globalactivities.ViewYourPharmacyActivity"
-            android:label="Pharmacies"/>
+            android:label="Pharmacies" />
         <activity android:name=".globalactivities.EditPharmacyInformationActivity" />
         <activity android:name=".globalactivities.EditYourPharmacies" />
         <activity android:name=".globalactivities.ViewPharmacyLocationActivity" />
@@ -141,10 +159,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".users.dashboards.admin.GetLocationActivity"
-            android:label="Get Location"/>
+            android:label="Get Location" />
         <activity
             android:name=".globalactivities.NewsViewActivity"
-            android:label="News"/>
+            android:label="News" />
         <activity
             android:name=".globalactivities.CreateNewsActivity"
             android:label="Submit News"
@@ -198,10 +216,6 @@
         <activity
             android:name=".users.authentication.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBd46NlOmxCgW6mbzbpAViSjfxV8FbGgY0" />
 
         <service
             android:name=".services.TrackPharmacistService"
