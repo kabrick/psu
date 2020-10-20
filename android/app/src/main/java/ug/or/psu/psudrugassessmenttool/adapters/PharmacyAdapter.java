@@ -1,10 +1,9 @@
-package ug.or.psu.psudrugassessmenttool.users.dashboards.admin;
+package ug.or.psu.psudrugassessmenttool.adapters;
 
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,7 @@ import java.util.List;
 
 import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
+import ug.or.psu.psudrugassessmenttool.models.Pharmacy;
 
 public class PharmacyAdapter extends RecyclerView.Adapter<PharmacyAdapter.MyViewHolder>
         implements Filterable {

@@ -29,7 +29,9 @@ import java.util.List;
 import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
+import ug.or.psu.psudrugassessmenttool.adapters.PharmacyAdapter;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
+import ug.or.psu.psudrugassessmenttool.models.Pharmacy;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
 public class SetLocationsFragment extends Fragment implements PharmacyAdapter.SupervisorPharmacyAdapterListener {

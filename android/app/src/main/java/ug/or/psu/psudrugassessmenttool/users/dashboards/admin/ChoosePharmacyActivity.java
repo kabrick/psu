@@ -10,12 +10,10 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -29,8 +27,10 @@ import java.util.List;
 import java.util.Objects;
 
 import ug.or.psu.psudrugassessmenttool.R;
+import ug.or.psu.psudrugassessmenttool.adapters.PharmacyAdapter;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
+import ug.or.psu.psudrugassessmenttool.models.Pharmacy;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
 
 public class ChoosePharmacyActivity extends AppCompatActivity implements PharmacyAdapter.SupervisorPharmacyAdapterListener {

@@ -27,8 +27,8 @@ import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 import ug.or.psu.psudrugassessmenttool.network.VolleySingleton;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.admin.Pharmacy;
-import ug.or.psu.psudrugassessmenttool.users.dashboards.admin.PharmacyAdapter;
+import ug.or.psu.psudrugassessmenttool.models.Pharmacy;
+import ug.or.psu.psudrugassessmenttool.adapters.PharmacyAdapter;
 
 public class LinkPharmacyOwnerActivity extends AppCompatActivity implements PharmacyAdapter.SupervisorPharmacyAdapterListener {
 

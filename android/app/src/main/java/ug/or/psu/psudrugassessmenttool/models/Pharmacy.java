@@ -1,4 +1,4 @@
-package ug.or.psu.psudrugassessmenttool.users.dashboards.admin;
+package ug.or.psu.psudrugassessmenttool.models;
 
 public class Pharmacy {
     private String name;
