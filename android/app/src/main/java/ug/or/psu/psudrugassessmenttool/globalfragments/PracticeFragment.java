@@ -368,7 +368,7 @@ public class PracticeFragment extends Fragment {
 
                                             //check if distance is more than 100m and add to counter
                                             if(distance > 100){
-                                                helperFunctions.genericDialog("You are out of bounds. Please make sure you are at the pharmacy premises before you log in");
+                                                helperFunctions.genericDialog("You are out of bounds. Please make sure you are at the pharmacy premises before you log in. If you still can't, open google maps and then open the PSU app again");
 
                                                 //dismiss dialog and snack success
                                                 helperFunctions.stopProgressBar();

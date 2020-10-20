@@ -1,7 +1,7 @@
 package ug.or.psu.psudrugassessmenttool.users.dashboards.admin;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import androidx.annotation.NonNull;
@@ -9,27 +9,21 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 import java.util.Objects;
 
@@ -37,12 +31,11 @@ import ug.or.psu.psudrugassessmenttool.R;
 import ug.or.psu.psudrugassessmenttool.helpers.HelperFunctions;
 import ug.or.psu.psudrugassessmenttool.helpers.PreferenceManager;
 
-import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class GetLocationActivity extends AppCompatActivity implements GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
-        OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+        OnMapReadyCallback {
 
     PreferenceManager prefManager;
     HelperFunctions util;
@@ -54,13 +47,10 @@ public class GetLocationActivity extends AppCompatActivity implements GoogleMap.
     String pharmacy_name;
     String location_status;
     TextView initial_text;
-    LocationRequest mLocationRequest;
-    GoogleApiClient mGoogleApiClient;
-    PendingResult<LocationSettingsResult> result;
-    final static int REQUEST_LOCATION = 199;
-    private Location mLastKnownLocation;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
+    GoogleMap googleMap;
+    String instructions_text = "";
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,24 +76,16 @@ public class GetLocationActivity extends AppCompatActivity implements GoogleMap.
         getLocationButton = findViewById(R.id.get_location_button);
         initial_text = findViewById(R.id.pharmacy_location_map_guide_text);
 
-        //set initial text with pharmacy name
-        String text = "Setting location for " + pharmacy_name +
+        // set initial text with pharmacy name
+        instructions_text = "Setting location for " + pharmacy_name +
                 ". When on pharmacy premises, click on blue marker icon in the map to continue";
 
-        initial_text.setText(text);
+        initial_text.setText("Please wait while we try to find your location...");
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.pharmacy_location_map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(LocationServices.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this).build();
-
-        mGoogleApiClient.connect();
-
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
     }
 
     @Override
@@ -122,29 +104,38 @@ public class GetLocationActivity extends AppCompatActivity implements GoogleMap.
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        if (ContextCompat.checkSelfPermission(this, ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{ACCESS_COARSE_LOCATION}, 1);
+        if (ContextCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION}, 1);
         } else {
-            assert googleMap != null;
-            googleMap.setMyLocationEnabled(true);
-            googleMap.setOnMyLocationButtonClickListener(this);
-            googleMap.setOnMyLocationClickListener(this);
+            this.googleMap = googleMap;
+            this.googleMap.setMyLocationEnabled(true);
+            this.googleMap.setOnMyLocationButtonClickListener(this);
+            this.googleMap.setOnMyLocationClickListener(this);
 
-            Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
-            locationResult.addOnCompleteListener(this, task -> {
-                if (task.isSuccessful()) {
-                    // Set the map's camera position to the current location of the device.
-                    mLastKnownLocation = task.getResult();
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                            new LatLng(mLastKnownLocation.getLatitude(),
-                                    mLastKnownLocation.getLongitude()), 20));
-                } else {
-                    //zoom into uganda
-                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(1.3733, 32.2903), 6));
-                }
-            });
+            // zoom into uganda
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(1.3733, 32.2903), 6));
+
+            LocationRequest locationRequest = new LocationRequest();
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            locationRequest.setInterval(1);
+            locationRequest.setFastestInterval(0);
+            //locationRequest.setNumUpdates(1);
+            LocationServices.getFusedLocationProviderClient(this)
+                    .requestLocationUpdates(
+                            locationRequest, locationCallback, Looper.getMainLooper()
+                    );
         }
     }
+
+    private LocationCallback locationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            Location location = locationResult.getLastLocation();
+            LatLng deviceLocation = new LatLng(location.getLatitude(), location.getLongitude());
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(deviceLocation, 20));
+            initial_text.setText(instructions_text);
+        }
+    };
 
     public void getLocation(View view){
         //check if it is a new record or editing
@@ -155,61 +146,6 @@ public class GetLocationActivity extends AppCompatActivity implements GoogleMap.
             //update record
             util.editPharmacyLocations(latitude, longitude, altitude, pharmacy_id);
         }
-    }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-
-        mLocationRequest = LocationRequest.create();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(30 * 1000);
-        mLocationRequest.setFastestInterval(5 * 1000);
-
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                .addLocationRequest(mLocationRequest);
-        builder.setAlwaysShow(true);
-
-        result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
-
-        result.setResultCallback(result -> {
-            final Status status = result.getStatus();
-            switch (status.getStatusCode()) {
-                case LocationSettingsStatusCodes.SUCCESS:
-                    // All location settings are satisfied. The client can initialize location
-                    // requests here.
-                    //...
-                    break;
-                case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                    // Location settings are not satisfied. But could be fixed by showing the user
-                    // a dialog.
-                    try {
-                        // Show the dialog by calling startResolutionForResult(),
-                        // and check the result in onActivityResult().
-                        status.startResolutionForResult(
-                                GetLocationActivity.this,
-                                REQUEST_LOCATION);
-                    } catch (IntentSender.SendIntentException e) {
-                        // Ignore the error.
-                    }
-                    break;
-                case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                    // Location settings are not satisfied. However, we have no way to fix the
-                    // settings so we won't show the dialog.
-                    //...
-                    break;
-            }
-        });
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        //
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        //
     }
 
     @Override
