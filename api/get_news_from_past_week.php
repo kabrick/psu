@@ -1,7 +1,9 @@
 <?php
 include 'dbconfig.php';
 
-$sql = "SELECT * FROM psu_news WHERE approved = '1' ORDER BY timestamp DESC";
+$searched_timestamp = $_GET['searched_timestamp'];
+
+$sql = "SELECT * FROM psu_news WHERE timestamp > '$searched_timestamp'";
 
 $arr = array();
 $counter = 0;
